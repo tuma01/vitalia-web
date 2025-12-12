@@ -1,0 +1,3209 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "OpenAPI specification - vitalia-app",
+        "description": "This API exposes endpoints to manage vitalia-app",
+        "termsOfService": "https://www.amachi.com/terms",
+        "contact": {
+            "name": "Juan Amachi",
+            "url": "https://www.amachi.com",
+            "email": "juan.amachi@gmail.com"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "https://www.amachi.com/license"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8088/api/v1",
+            "description": "Development Server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Departamento",
+            "description": "REST API para gestionar detalles de departamentos: crear, actualizar, obtener y eliminar."
+        },
+        {
+            "name": "Authentication",
+            "description": "Gestión de autenticación de usuarios (login, registro, tokens)"
+        },
+        {
+            "name": "Municipio",
+            "description": "REST API para gestionar detalles del municipio: crear, actualizar, obtener y eliminar."
+        },
+        {
+            "name": "Provincia",
+            "description": "REST API para gestionar detalles de provincias: crear, actualizar, obtener y eliminar."
+        },
+        {
+            "name": "Country",
+            "description": "REST API para gestionar detalles de países: crear, actualizar, obtener y eliminar."
+        },
+        {
+            "name": "Account",
+            "description": "Gestión de cuentas de usuario (activación, contraseñas, perfil)"
+        }
+    ],
+    "paths": {
+        "/tenants/{tenantCode}/theme": {
+            "get": {
+                "tags": [
+                    "theme-controller"
+                ],
+                "operationId": "getTheme",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "theme-controller"
+                ],
+                "operationId": "updateTheme",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TenantThemeUpdateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/super-admin/tenants/{id}": {
+            "get": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "summary": "Obtener información de un tenant",
+                "operationId": "getTenant",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TenantResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "summary": "Actualizar tenant",
+                "operationId": "updateTenant",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TenantUpdateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TenantResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "operationId": "softDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/provincias/{id}": {
+            "get": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Obtener un Provincia por ID",
+                "description": "Devuelve un objeto Provincia por ID especificado.",
+                "operationId": "getProvinciaById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Provincia a recuperar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Provincia encontrado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Provincia no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Actualizar un Provincia por ID",
+                "description": "Actualiza un Provincia  existente usando su ID y los datos proporcionados.",
+                "operationId": "updateProvincia",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Provincia a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Provincia"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Provincia actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Provincia no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Provincia a eliminar por ID",
+                "description": "Elimina un Provincia existente usando su ID.",
+                "operationId": "deleteProvincia",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Provincia a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Provincia eliminado con éxito (sin contenido)."
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o no válido."
+                    },
+                    "404": {
+                        "description": "Provincia no encontrado."
+                    },
+                    "500": {
+                        "description": "Error interno del servidor."
+                    }
+                }
+            }
+        },
+        "/municipios/{id}": {
+            "get": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Obtener un Municipio por ID",
+                "description": "Devuelve un objeto Municipio por ID especificado.",
+                "operationId": "getMunicipioById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Municipio a recuperar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Municipio encontrado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Municipio no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Actualizar un Municipio por ID",
+                "description": "Actualiza un Municipio  existente usando su ID y los datos proporcionados.",
+                "operationId": "updateMunicipio",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Municipio a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Municipio actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Municipio no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Municipio a eliminar por ID",
+                "description": "Elimina un Municipio existente usando su ID.",
+                "operationId": "deleteMunicipio",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Municipio a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Municipio eliminado con éxito (sin contenido)."
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o no válido."
+                    },
+                    "404": {
+                        "description": "Municipio no encontrado."
+                    },
+                    "500": {
+                        "description": "Error interno del servidor."
+                    }
+                }
+            }
+        },
+        "/departamentos/{id}": {
+            "get": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Obtener un Departamento por ID",
+                "description": "Devuelve un objeto Departamento por ID especificado.",
+                "operationId": "getDepartamentoById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Departamento a recuperar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Departamento encontrado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Departamento no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Actualizar un Departamento por ID",
+                "description": "Actualiza un Departamento  existente usando su ID y los datos proporcionados.",
+                "operationId": "updateDepartamento",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Departamento a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Departamento"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Departamento actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Departamento no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Departamento a eliminar por ID",
+                "description": "Elimina un Departamento existente usando su ID.",
+                "operationId": "deleteDepartamento",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Departamento a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Departamento eliminado con éxito (sin contenido)."
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o no válido."
+                    },
+                    "404": {
+                        "description": "Departamento no encontrado."
+                    },
+                    "500": {
+                        "description": "Error interno del servidor."
+                    }
+                }
+            }
+        },
+        "/countries/{id}": {
+            "get": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Obtener un Country por ID",
+                "description": "Devuelve un objeto Country por ID especificado.",
+                "operationId": "getCountryById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Country a recuperar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Country encontrado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Country no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Actualizar un Country por ID",
+                "description": "Actualiza un Country  existente usando su ID y los datos proporcionados.",
+                "operationId": "updateCountry",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Country a actualizar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Country"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Country actualizado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o datos incompletos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Country no encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Country a eliminar por ID",
+                "description": "Elimina un Country existente usando su ID.",
+                "operationId": "deleteCountry",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID del Country a eliminar.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Country eliminado con éxito (sin contenido)."
+                    },
+                    "400": {
+                        "description": "Solicitud inválida: ID nulo o no válido."
+                    },
+                    "404": {
+                        "description": "Country no encontrado."
+                    },
+                    "500": {
+                        "description": "Error interno del servidor."
+                    }
+                }
+            }
+        },
+        "/avatars/upload": {
+            "put": {
+                "tags": [
+                    "avatar-controller"
+                ],
+                "operationId": "updateAvatar",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Avatar"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "avatar-controller"
+                ],
+                "operationId": "uploadOwnAvatar",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "tenantCode",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Avatar"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tenants/{tenantCode}/theme/logo": {
+            "post": {
+                "tags": [
+                    "theme-controller"
+                ],
+                "operationId": "uploadLogo",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "required": [
+                                    "file"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/super-admin/tenants": {
+            "get": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "summary": "Listar tenants (paged)",
+                "operationId": "listTenants",
+                "parameters": [
+                    {
+                        "name": "pageable",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/Pageable"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageTenantResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "summary": "Crear tenant + tenant admin (solo SUPER_ADMIN)",
+                "operationId": "createTenant",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TenantCreateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TenantResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/super-admin/tenants/{id}/admin/reset-password": {
+            "post": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "operationId": "resetAdminPassword",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "newPassword",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/provincias": {
+            "get": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Obtiene una lista paginada de Provincia",
+                "description": "Devuelve una lista paginada de Provincia",
+                "operationId": "getPaginatedProvincias",
+                "parameters": [
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "Índice de la página a recuperar.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Tamaño de la página.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Provincia recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoProvincia"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Parámetros de paginación inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoProvincia"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoProvincia"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Crear un Provincia",
+                "description": "Crea un nuevo Provincia usando los datos proporcionados en el cuerpo de la solicitud.",
+                "operationId": "createProvincia",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Provincia"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Provincia creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Provincia"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/municipios": {
+            "get": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Obtiene una lista paginada de Municipio",
+                "description": "Devuelve una lista paginada de Municipio",
+                "operationId": "getPaginatedMunicipios",
+                "parameters": [
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "Índice de la página a recuperar.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Tamaño de la página.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Municipio recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoMunicipio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Parámetros de paginación inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoMunicipio"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoMunicipio"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Crear un Municipio",
+                "description": "Crea un nuevo Municipio usando los datos proporcionados en el cuerpo de la solicitud.",
+                "operationId": "createMunicipio",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Municipio"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Municipio creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Municipio"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/departamentos": {
+            "get": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Obtiene una lista paginada de Departamento",
+                "description": "Devuelve una lista paginada de Departamento",
+                "operationId": "getPaginatedDepartamentos",
+                "parameters": [
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "Índice de la página a recuperar.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Tamaño de la página.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Departamento recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoDepartamento"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Parámetros de paginación inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoDepartamento"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoDepartamento"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Crear un Departamento",
+                "description": "Crea un nuevo Departamento usando los datos proporcionados en el cuerpo de la solicitud.",
+                "operationId": "createDepartamento",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Departamento"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Departamento creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Departamento"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/countries": {
+            "get": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Obtiene una lista paginada de Country",
+                "description": "Devuelve una lista paginada de Country",
+                "operationId": "getPaginatedCountries",
+                "parameters": [
+                    {
+                        "name": "pageIndex",
+                        "in": "query",
+                        "description": "Índice de la página a recuperar.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "description": "Tamaño de la página.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        },
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de Country recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoCountry"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Parámetros de paginación inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoCountry"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PageResponseDtoCountry"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Crear un Country",
+                "description": "Crea un nuevo Country usando los datos proporcionados en el cuerpo de la solicitud.",
+                "operationId": "createCountry",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Country"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Country creado con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Datos de entrada inválidos.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Country"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Registrar usuario",
+                "description": "Registra un nuevo usuario dentro del tenant especificado",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegisterRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Refrescar token",
+                "description": "Genera un nuevo access token usando el refresh token válido",
+                "operationId": "refresh",
+                "parameters": [
+                    {
+                        "name": "refreshToken",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Cerrar sesión",
+                "description": "Invalida el refresh token actual",
+                "operationId": "logout",
+                "parameters": [
+                    {
+                        "name": "refreshToken",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Autenticar usuario",
+                "description": "Verifica las credenciales del usuario y devuelve el JWT",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthenticationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/account/reset-password": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Restablecer contraseña",
+                "description": "Permite restablecer la contraseña mediante un token recibido por correo",
+                "operationId": "resetPassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetConfirmationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/account/request-reset-password": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Solicitar restablecimiento de contraseña",
+                "description": "Envía un token o enlace para restablecer la contraseña",
+                "operationId": "requestPasswordReset",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PasswordResetRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/account/change-password": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Cambiar contraseña",
+                "description": "Permite al usuario autenticado cambiar su contraseña actual",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/account/activate": {
+            "post": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Activar cuenta",
+                "description": "Activa una cuenta de usuario a partir del token de activación",
+                "operationId": "activate",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/super-admin/tenants/{id}/enable": {
+            "patch": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "operationId": "enable",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/super-admin/tenants/{id}/disable": {
+            "patch": {
+                "tags": [
+                    "tenant-management-controller"
+                ],
+                "operationId": "disable",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tenants/config": {
+            "get": {
+                "tags": [
+                    "theme-controller"
+                ],
+                "operationId": "getThemeByResolvedTenant",
+                "parameters": [
+                    {
+                        "name": "X-Tenant-ID",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ThemeDTO"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/provincias/all": {
+            "get": {
+                "tags": [
+                    "Provincia"
+                ],
+                "summary": "Obtiene todos los Provincia",
+                "description": "Devuelve la lista completa de Provincia",
+                "operationId": "getAllProvincias",
+                "responses": {
+                    "200": {
+                        "description": "Lista de Provincia recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Provincia"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Provincia"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/municipios/all": {
+            "get": {
+                "tags": [
+                    "Municipio"
+                ],
+                "summary": "Obtiene todos los Municipio",
+                "description": "Devuelve la lista completa de Municipio",
+                "operationId": "getAllMunicipios",
+                "responses": {
+                    "200": {
+                        "description": "Lista de Municipio recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Municipio"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Municipio"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/departamentos/all": {
+            "get": {
+                "tags": [
+                    "Departamento"
+                ],
+                "summary": "Obtiene todos los Departamento",
+                "description": "Devuelve la lista completa de Departamento",
+                "operationId": "getAllDepartamentos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de Departamento recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Departamento"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Departamento"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/countries/all": {
+            "get": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Obtiene todos los Country",
+                "description": "Devuelve la lista completa de Country",
+                "operationId": "getAllCountries",
+                "responses": {
+                    "200": {
+                        "description": "Lista de Country recuperada con éxito.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Country"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Country"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/avatars": {
+            "get": {
+                "tags": [
+                    "avatar-controller"
+                ],
+                "operationId": "getAvatar",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "byte"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "avatar-controller"
+                ],
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "tenantCode",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/avatars/avatar-user": {
+            "get": {
+                "tags": [
+                    "avatar-controller"
+                ],
+                "operationId": "getByUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    },
+                    {
+                        "name": "tenantCode",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "byte"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/validate": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Validar token",
+                "description": "Verifica si un JWT sigue siendo válido (útil para mantener sesión)",
+                "operationId": "validateToken",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/account/profile": {
+            "get": {
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Obtener perfil de usuario",
+                "description": "Devuelve la información básica del usuario autenticado",
+                "operationId": "getProfile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserSummary"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TenantThemeUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "primaryColor": {
+                        "type": "string"
+                    },
+                    "secondaryColor": {
+                        "type": "string"
+                    },
+                    "accentColor": {
+                        "type": "string"
+                    },
+                    "warnColor": {
+                        "type": "string"
+                    },
+                    "backgroundColor": {
+                        "type": "string"
+                    },
+                    "textColor": {
+                        "type": "string"
+                    },
+                    "linkColor": {
+                        "type": "string"
+                    },
+                    "buttonTextColor": {
+                        "type": "string"
+                    },
+                    "fontFamily": {
+                        "type": "string"
+                    },
+                    "themeMode": {
+                        "type": "string",
+                        "enum": [
+                            "LIGHT",
+                            "DARK",
+                            "AUTO"
+                        ]
+                    },
+                    "propertiesJson": {
+                        "type": "string"
+                    }
+                }
+            },
+            "ThemeDTO": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "logoUrl": {
+                        "type": "string"
+                    },
+                    "faviconUrl": {
+                        "type": "string"
+                    },
+                    "primaryColor": {
+                        "type": "string"
+                    },
+                    "accentColor": {
+                        "type": "string"
+                    },
+                    "warnColor": {
+                        "type": "string"
+                    },
+                    "secondaryColor": {
+                        "type": "string"
+                    },
+                    "backgroundColor": {
+                        "type": "string"
+                    },
+                    "textColor": {
+                        "type": "string"
+                    },
+                    "linkColor": {
+                        "type": "string"
+                    },
+                    "buttonTextColor": {
+                        "type": "string"
+                    },
+                    "fontFamily": {
+                        "type": "string"
+                    },
+                    "themeMode": {
+                        "type": "string",
+                        "enum": [
+                            "LIGHT",
+                            "DARK",
+                            "AUTO"
+                        ]
+                    },
+                    "propertiesJson": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TenantUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 0
+                    },
+                    "description": {
+                        "type": "string",
+                        "maxLength": 1000,
+                        "minLength": 0
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "HOSPITAL",
+                            "CLINIC",
+                            "LABORATORY",
+                            "PHARMACY",
+                            "GLOBAL"
+                        ]
+                    },
+                    "fallbackHeader": {
+                        "type": "string",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "allowLocal": {
+                        "type": "boolean"
+                    },
+                    "defaultDomain": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "minLength": 0
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "TenantResponse": {
+                "type": "object",
+                "properties": {
+                    "tenantId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "HOSPITAL",
+                            "CLINIC",
+                            "LABORATORY",
+                            "PHARMACY",
+                            "GLOBAL"
+                        ]
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "isActive": {
+                        "type": "boolean"
+                    },
+                    "fallbackHeader": {
+                        "type": "string"
+                    },
+                    "allowLocal": {
+                        "type": "boolean"
+                    },
+                    "defaultDomain": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "Provincia": {
+                "type": "object",
+                "description": "Detalles del Provincia a crear.",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "ID de una Provincia",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "description": "Nombre del Provincia",
+                        "example": "Cercado",
+                        "minLength": 1
+                    },
+                    "poblacion": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Poblacion de la Provincia",
+                        "example": 4567
+                    },
+                    "superficie": {
+                        "type": "number",
+                        "description": "Superficie de la Provincia",
+                        "example": 12345
+                    },
+                    "departamentoId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "ID Departamento al que pertenece la Provincia",
+                        "example": 1
+                    }
+                },
+                "required": [
+                    "departamentoId",
+                    "nombre"
+                ]
+            },
+            "Municipio": {
+                "type": "object",
+                "description": "Detalles del municipio a crear.",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Id Municipio de un Municipio",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "description": "Nombre del Municipio",
+                        "example": "Cercado",
+                        "minLength": 1
+                    },
+                    "direccion": {
+                        "type": "string",
+                        "description": "Direccion del Municipio",
+                        "example": 4567
+                    },
+                    "codigoMunicipio": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Codigo del Municipio",
+                        "example": 12345
+                    },
+                    "poblacion": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Poblacion del Municipio",
+                        "example": 4567
+                    },
+                    "superficie": {
+                        "type": "number",
+                        "description": "Superficie del Municipio",
+                        "example": 12345
+                    },
+                    "provinciaId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "ID Provincia al que pertenece el Municipio",
+                        "example": 1
+                    }
+                },
+                "required": [
+                    "nombre",
+                    "provinciaId"
+                ]
+            },
+            "Departamento": {
+                "type": "object",
+                "description": "Detalles del Departamento a crear.",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Id del Departamento",
+                        "example": 1
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "description": "Nombre del Departamento",
+                        "example": "La Paz",
+                        "minLength": 1
+                    },
+                    "poblacion": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Poblacion del Departamento",
+                        "example": 4567
+                    },
+                    "superficie": {
+                        "type": "number",
+                        "description": "Superficie del Departamento",
+                        "example": 12345
+                    },
+                    "countryId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Pais al que pertenece el Departamento"
+                    }
+                },
+                "required": [
+                    "nombre"
+                ]
+            },
+            "Country": {
+                "type": "object",
+                "description": "Detalles del Country a crear.",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Identificador unico",
+                        "example": 1
+                    },
+                    "iso": {
+                        "type": "string",
+                        "description": "ISO code of Country",
+                        "example": "BO",
+                        "maxLength": 2,
+                        "minLength": 2
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of Country",
+                        "example": "BOLIVIA",
+                        "minLength": 1
+                    },
+                    "niceName": {
+                        "type": "string",
+                        "description": "Nice name of Country",
+                        "example": "Bolivia",
+                        "minLength": 1
+                    },
+                    "iso3": {
+                        "type": "string",
+                        "description": "ISO3 of Country",
+                        "example": "BOL",
+                        "maxLength": 3,
+                        "minLength": 1
+                    },
+                    "numCode": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Num Code of Country",
+                        "example": 68
+                    },
+                    "phoneCode": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Phone code of the Country",
+                        "example": 591,
+                        "minimum": 1
+                    }
+                },
+                "required": [
+                    "iso",
+                    "name",
+                    "niceName",
+                    "phoneCode"
+                ]
+            },
+            "Avatar": {
+                "type": "object",
+                "description": "Schema to hold Avatar information",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Identificador único del avatar",
+                        "example": 1
+                    },
+                    "content": {
+                        "type": "string",
+                        "format": "byte",
+                        "description": "Contenido del avatar en bytes. Representa la imagen codificada",
+                        "example": "byte array"
+                    },
+                    "mimeType": {
+                        "type": "string",
+                        "description": "Tipo MIME de la imagen, por ejemplo 'image/jpeg' o 'image/png'",
+                        "example": "image/jpeg"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "description": "Nombre original del archivo subido",
+                        "example": "profile.jpg"
+                    },
+                    "userId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Identificador del usuario al que pertenece el avatar",
+                        "example": 42
+                    },
+                    "tenantCode": {
+                        "type": "string",
+                        "description": "Code del tenant al que pertenece el usuario",
+                        "example": "HOS_JeanTalon"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Tamaño del archivo en bytes",
+                        "example": 102400
+                    }
+                }
+            },
+            "TenantCreateRequest": {
+                "type": "object",
+                "description": "Request para crear un Tenant y su TenantAdmin inicial",
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "example": "HOSP_B",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Hospital B",
+                        "maxLength": 200,
+                        "minLength": 0
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "HOSPITAL",
+                            "CLINIC",
+                            "LABORATORY",
+                            "PHARMACY",
+                            "GLOBAL"
+                        ],
+                        "example": "HOSPITAL",
+                        "minLength": 1
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Hospital B - sucursal",
+                        "maxLength": 1000,
+                        "minLength": 0
+                    },
+                    "fallbackHeader": {
+                        "type": "string",
+                        "example": "X-Tenant-Code",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "allowLocal": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "defaultDomain": {
+                        "type": "string",
+                        "example": "hospitalb.local",
+                        "maxLength": 200,
+                        "minLength": 0
+                    },
+                    "adminEmail": {
+                        "type": "string",
+                        "format": "email",
+                        "example": "admin@hospitalb.com",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "adminPassword": {
+                        "type": "string",
+                        "example": "ChangeMe123!",
+                        "maxLength": 100,
+                        "minLength": 8
+                    },
+                    "adminFirstName": {
+                        "type": "string",
+                        "example": "Tenant",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "adminLastName": {
+                        "type": "string",
+                        "example": "Administrator",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "adminPersonType": {
+                        "type": "string",
+                        "example": "TENANT_ADMIN"
+                    }
+                },
+                "required": [
+                    "adminEmail",
+                    "adminFirstName",
+                    "adminLastName",
+                    "code",
+                    "name",
+                    "type"
+                ]
+            },
+            "UserRegisterRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 100,
+                        "minLength": 0
+                    },
+                    "password": {
+                        "type": "string",
+                        "maxLength": 2147483647,
+                        "minLength": 8
+                    },
+                    "nombre": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "segundoNombre": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "apellidoPaterno": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "apellidoMaterno": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 0
+                    },
+                    "personType": {
+                        "type": "string",
+                        "enum": [
+                            "DOCTOR",
+                            "NURSE",
+                            "PATIENT",
+                            "EMPLOYEE",
+                            "SUPER_ADMIN",
+                            "TENANT_ADMIN"
+                        ]
+                    },
+                    "tenantCode": {
+                        "type": "string",
+                        "maxLength": 50,
+                        "minLength": 0
+                    }
+                },
+                "required": [
+                    "apellidoPaterno",
+                    "email",
+                    "nombre",
+                    "password",
+                    "personType",
+                    "tenantCode"
+                ]
+            },
+            "AuthenticationResponse": {
+                "type": "object",
+                "properties": {
+                    "tokens": {
+                        "$ref": "#/components/schemas/TokenPairDto"
+                    },
+                    "user": {
+                        "$ref": "#/components/schemas/UserSummary"
+                    }
+                }
+            },
+            "TokenPairDto": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string"
+                    },
+                    "accessTokenExpiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "refreshToken": {
+                        "type": "string"
+                    },
+                    "refreshTokenExpiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "UserSummary": {
+                "type": "object",
+                "description": "Información básica del usuario autenticado",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "Identificador único del usuario",
+                        "example": 12
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "Correo electrónico del usuario",
+                        "example": "doctor@example.com"
+                    },
+                    "personName": {
+                        "type": "string",
+                        "description": "Nombre completo derivado de la entidad Person"
+                    },
+                    "tenantCode": {
+                        "type": "string",
+                        "description": "Código del tenant (hospital) actual",
+                        "example": "HSP001"
+                    },
+                    "personType": {
+                        "type": "string",
+                        "description": "Tipo de persona (DOCTOR, NURSE, PATIENT, etc.)",
+                        "enum": [
+                            "DOCTOR",
+                            "NURSE",
+                            "PATIENT",
+                            "EMPLOYEE",
+                            "SUPER_ADMIN",
+                            "TENANT_ADMIN"
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "description": "Roles del usuario dentro del tenant actual",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "enabled": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "AuthenticationRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    },
+                    "password": {
+                        "type": "string",
+                        "maxLength": 2147483647,
+                        "minLength": 8
+                    },
+                    "tenantCode": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "email",
+                    "password",
+                    "tenantCode"
+                ]
+            },
+            "PasswordResetConfirmationRequest": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "maxLength": 2147483647,
+                        "minLength": 8,
+                        "pattern": "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$"
+                    }
+                },
+                "required": [
+                    "newPassword",
+                    "token"
+                ]
+            },
+            "PasswordResetRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "minLength": 1
+                    },
+                    "tenantCode": {
+                        "type": "string",
+                        "minLength": 1
+                    }
+                },
+                "required": [
+                    "email",
+                    "tenantCode"
+                ]
+            },
+            "ChangePasswordRequest": {
+                "type": "object",
+                "properties": {
+                    "oldPassword": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "maxLength": 2147483647,
+                        "minLength": 8
+                    }
+                },
+                "required": [
+                    "newPassword",
+                    "oldPassword"
+                ]
+            },
+            "ActivationRequest": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "minLength": 1
+                    },
+                    "newPassword": {
+                        "type": "string",
+                        "maxLength": 2147483647,
+                        "minLength": 8
+                    }
+                },
+                "required": [
+                    "newPassword",
+                    "token"
+                ]
+            },
+            "Pageable": {
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 1
+                    },
+                    "sort": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "PageTenantResponse": {
+                "type": "object",
+                "properties": {
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TenantResponse"
+                        }
+                    },
+                    "number": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageable": {
+                        "$ref": "#/components/schemas/PageableObject"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageableObject": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "sort": {
+                        "$ref": "#/components/schemas/SortObject"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageNumber": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "paged": {
+                        "type": "boolean"
+                    },
+                    "unpaged": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "SortObject": {
+                "type": "object",
+                "properties": {
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "sorted": {
+                        "type": "boolean"
+                    },
+                    "unsorted": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "PageResponseDtoProvincia": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Provincia"
+                        }
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "pageIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "PageResponseDtoMunicipio": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Municipio"
+                        }
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "pageIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "PageResponseDtoDepartamento": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Departamento"
+                        }
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "pageIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "PageResponseDtoCountry": {
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Country"
+                        }
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "pageIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageSize": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "first": {
+                        "type": "boolean"
+                    },
+                    "last": {
+                        "type": "boolean"
+                    },
+                    "empty": {
+                        "type": "boolean"
+                    },
+                    "numberOfElements": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            }
+        }
+    }
+}

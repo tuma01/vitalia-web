@@ -1,0 +1,130 @@
+@use 'variables';
+@use 'mixins';
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: variables.$grid-gutter * -.5;
+  margin-left: variables.$grid-gutter * -.5;
+}
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+
+  > .col,
+  > [class*='col-'] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+@include mixins.make-grid-columns();
+
+// xsmall: 0,
+// small:  600px
+// medium: 960px
+// large:  1280px
+// xlarge: 1920px
+
+@each $breakpoint, $infix in variables.$breakpoint-infixs {
+  @if ($breakpoint== 'xsmall') {
+    @include mixins.loop-grid-columns(variables.$grid-columns, $infix);
+  }
+
+  @else {
+    @include mixins.bp-gt($breakpoint) {
+      @include mixins.loop-grid-columns(variables.$grid-columns, $infix);
+    }
+  }
+}
+
+
+
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.6em;
+  // font-size: 0.75em;
+  // font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.375rem;
+}
+
+// Colores pastel actualizados para las insignias
+.badge-solid-male-green { // Para MASCULINO: Verde opaco pastel
+  background-color: #C8E6C9; // Un verde menta suave y desaturado
+  color: #388E3C; // Un verde más oscuro para el texto
+}
+
+.badge-solid-female-violet { // Para FEMENINO: Violeta opaco pastel
+  background-color: #E1BEE7; // Un lavanda/violeta suave y desaturado
+  color: #7B1FA2; // Un morado más oscuro para el texto
+}
+
+.badge-solid-unknown-blue { // Para DESCONOCIDO: Un azul pastel (puedes ajustar si prefieres otro)
+  background-color: #BBDEFB; // Un azul cielo claro
+  color: #1A237E; // Un azul oscuro para el texto
+}
+
+.badge-solid-gray { // Color de reserva (fallback)
+  background-color: #E0E0E0; // Un gris claro
+  color: #616161; // Un gris más oscuro para el texto
+}
+
+.badge-solid-red {
+  color: #fff;
+  background-color: #dc3545; /* O tu #FFCDD2 */
+}
+.badge-solid-green {
+  color: #fff;
+  background-color: #28a745; /* O tu #DCEDC8 */
+}
+.badge-solid-blue {
+  color: #fff;
+  background-color: #007bff; /* O tu #BBDEFB */
+}
+.badge-solid-gray {
+  color: #fff;
+  background-color: #6c757d;
+}
+/* Colores Pastel Suaves */
+
+.badge-solid-coral {
+  color: #fff; // Texto blanco
+  background-color: #ff9a8d; // Un coral suave, no un rojo intenso
+}
+
+.badge-solid-mint {
+  color: #fff; // Texto blanco
+  background-color: #a2e8a2; // Un verde menta suave
+}
+
+.badge-solid-sky {
+  color: #fff; // Texto blanco
+  background-color: #87ceeb; // Un azul cielo claro
+}
+
+.badge-solid-lavender {
+  color: #fff; // Texto blanco
+  background-color: #e6e6fa; // Un lavanda muy suave
+  color: #333; // Considera texto oscuro si el fondo es muy claro
+}
+
+.badge-solid-peach {
+  color: #fff; // Texto blanco
+  background-color: #ffdab9; // Un tono melocotón suave
+  color: #333; // Considera texto oscuro si el fondo es muy claro
+}
+
+mtx-grid {
+  // Apunta a la clase 'material-icons' dentro de las celdas de la tabla de Material
+  .mdc-data-table__cell .material-icons,
+  .mat-mdc-cell .material-icons { /* Selector para asegurar la mayor compatibilidad */
+    color: #297ed8 !important; /* ¡Tu color AZUL deseado, con !important para forzarlo! */
+    // Puedes usar un color hexadecimal específico para tu azul si no es #007bff
+    // Por ejemplo: color: #1976D2 !important; // Un azul común de Material Design
+  }
+}

@@ -1,0 +1,63 @@
+{
+    "menu": [
+        {
+            "route": "dashboard",
+            "name": "dashboard",
+            "type": "link",
+            "icon": "dashboard"
+        },
+        {
+            "route": "patients",
+            "name": "patients",
+            "type": "sub",
+            "icon": "people",
+            "children": [
+                {
+                    "route": "/doctor/patients",
+                    "name": "patients",
+                    "type": "link"
+                },
+                {
+                    "route": "/doctor/appointments",
+                    "name": "appointments",
+                    "type": "link"
+                },
+                {
+                    "route": "/doctor/medical-records",
+                    "name": "medicalRecords",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "schedule",
+            "name": "gestionDeTurnos",
+            "type": "link",
+            "icon": "calendar_today"
+        },
+        {
+            "route": "profile",
+            "name": "profile",
+            "type": "sub",
+            "icon": "account_circle",
+            "children": [
+                {
+                    "route": "overview",
+                    "name": "overview",
+                    "type": "link"
+                },
+                {
+                    "route": "settings",
+                    "name": "settings",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "/logout",
+            "name": "logout",
+            "type": "link",
+            "icon": "exit_to_app"
+        }
+    ]
+}

@@ -1,0 +1,75 @@
+{
+    "menu": [
+        {
+            "route": "dashboard",
+            "name": "dashboard",
+            "type": "link",
+            "icon": "dashboard"
+        },
+        {
+            "route": "tenants",
+            "name": "Tenants",
+            "type": "sub",
+            "icon": "business",
+            "children": [
+                {
+                    "route": "/super-admin/tenants",
+                    "name": "Tenant Management",
+                    "type": "link"
+                },
+                {
+                    "route": "/super-admin/tenant-config",
+                    "name": "Tenant Configuration",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "system",
+            "name": "System",
+            "type": "sub",
+            "icon": "settings_applications",
+            "children": [
+                {
+                    "route": "/super-admin/system-config",
+                    "name": "System Configuration",
+                    "type": "link"
+                },
+                {
+                    "route": "/super-admin/monitoring",
+                    "name": "System Monitoring",
+                    "type": "link"
+                },
+                {
+                    "route": "/super-admin/audit-log",
+                    "name": "auditLog",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "profile",
+            "name": "profile",
+            "type": "sub",
+            "icon": "account_circle",
+            "children": [
+                {
+                    "route": "overview",
+                    "name": "overview",
+                    "type": "link"
+                },
+                {
+                    "route": "settings",
+                    "name": "settings",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "/logout",
+            "name": "logout",
+            "type": "link",
+            "icon": "exit_to_app"
+        }
+    ]
+}

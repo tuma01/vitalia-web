@@ -1,0 +1,208 @@
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthenticationService } from '../../api/services/authentication.service';
+import { AuthenticationResponse } from '../../api/models/authentication-response';
+import { UserSummary } from '../../api/models/user-summary';
+import { Router } from '@angular/router';
+import { TokenService } from '../token/token.service';
+import { SessionService } from './session.service';
+
+/**
+ * Enhanced authentication service wrapper
+ * Provides additional functionality on top of the generated AuthenticationService
+ */
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+
+  constructor(
+      private authApiService: AuthenticationService,
+      private router: Router,
+      // @Inject(PLATFORM_ID) private platformId: Object,
+      private tokenService: TokenService,
+      private sessionService: SessionService
+  ) { }
+
+  /**
+   * Perform login and store tokens
+   */
+  login(email: string, password: string, tenantCode?: string): Observable<AuthenticationResponse> {
+    return this.authApiService.login({
+      body: {
+          email,
+          password,
+          tenantCode: tenantCode || ''
+      }
+    }).pipe(
+      tap(response => {
+        if (response.tokens && response.user) {
+          // ✅ Usar SessionService para manejo completo
+          this.sessionService.login({
+            accessToken: response.tokens.accessToken!,
+            refreshToken: response.tokens.refreshToken,
+            user: response.user
+          });
+        }
+      })
+    );
+  }
+
+  /**
+   * Perform logout
+   */
+  logout(): void {
+      const refreshToken = this.tokenService.refreshToken;
+
+      if (refreshToken) {
+          this.authApiService.logout({ refreshToken }).subscribe({
+            next: () => this.performLogout(),
+            complete: () => this.performLogout(),
+            error: () => this.performLogout()
+          });
+      } else {
+        this.performLogout();
+      }
+  }
+
+  private performLogout(): void {
+    // ✅ Delegar a SessionService
+    this.sessionService.logout();
+    this.router.navigate(['/auth/login']);
+  }
+
+  /**
+   * Refresh access token
+   */
+  refreshToken(): Observable<AuthenticationResponse> {
+      const refreshToken = this.tokenService.refreshToken;
+      if (!refreshToken) {
+          return throwError(() => new Error('No refresh token available'));
+      }
+
+      return this.authApiService.refresh({ refreshToken }).pipe(
+          tap(response => {
+              if (response.tokens) {
+                this.tokenService.setTokens(
+                      response.tokens.accessToken!,
+                      response.tokens.refreshToken!
+                  );
+              }
+          })
+      );
+  }
+
+  /**
+   * Check if user is authenticated (with server validation)
+   */
+  isAuthenticated(): Observable<boolean> {
+    // 1. Quick local validation
+    if (!this.sessionService.isAuthenticated()) {
+      return of(false);
+    }
+
+    // 2. Get token for server validation
+    const token = this.tokenService.accessToken;
+    if (!token) {
+        return of(false);
+    }
+
+    const isTokenValid = this.tokenService.isAccessTokenValid();
+    if (!isTokenValid) {
+        return of(false);
+    }
+
+    // 3. Server validation - token as query parameter
+    return this.authApiService.validateToken({ token }).pipe(
+      map(() => true),
+      catchError((error) => {
+          console.warn('Token validation failed:', error);
+          // Si falla la validación, cerrar sesión
+          this.sessionService.logout();
+          return of(false);
+      })
+    );
+  }
+
+  /**
+   * Quick local authentication check (no HTTP call)
+   */
+  isAuthenticatedSync(): boolean {
+      return this.tokenService.isAccessTokenValid();
+  }
+
+  getCurrentUser(): UserSummary | null {
+    return this.sessionService.getCurrentUser();
+  }
+
+  currentUserRole(): string {
+    const user = this.getCurrentUser();
+    if (!user) return '';
+
+    // Tu UserSummary debería tener roles: string[] o un rol único
+    if (Array.isArray(user.roles) && user.roles.length > 0) {
+      return user.roles[0];  // primer rol
+    }
+
+    // Si el usuario tuviera un único role (string)
+    return (user as any).role ?? '';
+  }
+
+  /**
+   * Store user data in localStorage
+   */
+  private storeUser(user: UserSummary): void {
+      localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  /**
+   * Clear user data
+   */
+  private clearUser(): void {
+      localStorage.removeItem('user');
+      localStorage.removeItem('tenantTheme');
+  }
+
+  /**
+   * Get access token
+   */
+  getAccessToken(): string | null {
+      return this.tokenService.accessToken;
+  }
+
+  /**
+   * Get refresh token
+   */
+  getRefreshToken(): string | null {
+      // if (!isPlatformBrowser(this.platformId)) return null;
+      return this.tokenService.refreshToken;
+  }
+
+  /**
+   * Navigate based on user roles
+   */
+  navigateBasedOnRole(): void {
+    const user = this.sessionService.getCurrentUser();
+
+    if (!user) {
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    // Usar los helpers de SessionService
+    if (this.sessionService.hasRole('ROLE_SUPER_ADMIN')) {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (this.sessionService.hasAnyRole(['ROLE_ADMIN', 'ROLE_TENANT_ADMIN'])) {
+      this.router.navigate(['/admin/hospital-dashboard']);
+    } else if (this.sessionService.hasRole('ROLE_DOCTOR')) {
+      this.router.navigate(['/doctor/dashboard']);
+    } else if (this.sessionService.hasRole('ROLE_NURSE')) {
+      this.router.navigate(['/nurse/dashboard']);
+    } else if (this.sessionService.hasRole('ROLE_EMPLOYEE')) {
+      this.router.navigate(['/employee/dashboard']);
+    } else if (this.sessionService.hasRole('ROLE_PATIENT')) {
+      this.router.navigate(['/patient/portal']);
+    } else {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+}

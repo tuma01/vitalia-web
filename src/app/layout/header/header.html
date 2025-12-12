@@ -1,0 +1,58 @@
+<mat-toolbar class="header" color="primary">
+    <button mat-icon-button (click)="toggleSidebar()" aria-label="Toggle sidebar">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="app-title">{{ 'app.title' | translate }} - {{ 'dashboard.welcome' | translate }}</span>
+
+    <span class="spacer"></span>
+
+    <!-- Search Bar -->
+    <div class="search-container" *ngIf="!isMobile">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" class="search-input" [placeholder]="'header.search' | translate" [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()" />
+    </div>
+
+    <!-- Language Selector -->
+    <button mat-icon-button [matMenuTriggerFor]="languageMenu" aria-label="Change language">
+        <mat-icon>language</mat-icon>
+    </button>
+    <mat-menu #languageMenu="matMenu">
+        <button mat-menu-item *ngFor="let lang of availableLanguages" (click)="switchLanguage(lang.code)">
+            <span>{{ lang.flag }} {{ lang.name }}</span>
+        </button>
+    </mat-menu>
+
+    <!-- Notifications -->
+    <button mat-icon-button aria-label="Notifications">
+        <mat-icon [matBadge]="notificationCount" matBadgeColor="warn" [matBadgeHidden]="notificationCount === 0">
+            notifications
+        </mat-icon>
+    </button>
+
+    <!-- User Menu -->
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User menu">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #userMenu="matMenu">
+        <div class="user-info">
+            <div class="user-name">{{ userName }}</div>
+            <div class="user-role">{{ userRole }}</div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>{{ 'header.profile' | translate }}</span>
+        </button>
+        <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>{{ 'header.settings' | translate }}</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item>
+            <mat-icon>exit_to_app</mat-icon>
+            <span>{{ 'header.logout' | translate }}</span>
+        </button>
+    </mat-menu>
+</mat-toolbar>

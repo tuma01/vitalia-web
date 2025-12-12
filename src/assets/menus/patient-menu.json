@@ -1,0 +1,52 @@
+{
+    "menu": [
+        {
+            "route": "dashboard",
+            "name": "dashboard",
+            "type": "link",
+            "icon": "dashboard"
+        },
+        {
+            "route": "appointments",
+            "name": "appointments",
+            "type": "link",
+            "icon": "calendar_today"
+        },
+        {
+            "route": "medical-records",
+            "name": "medicalRecords",
+            "type": "link",
+            "icon": "description"
+        },
+        {
+            "route": "billing",
+            "name": "billingPayments",
+            "type": "link",
+            "icon": "payment"
+        },
+        {
+            "route": "profile",
+            "name": "profile",
+            "type": "sub",
+            "icon": "account_circle",
+            "children": [
+                {
+                    "route": "overview",
+                    "name": "overview",
+                    "type": "link"
+                },
+                {
+                    "route": "settings",
+                    "name": "settings",
+                    "type": "link"
+                }
+            ]
+        },
+        {
+            "route": "/logout",
+            "name": "logout",
+            "type": "link",
+            "icon": "exit_to_app"
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+.sidenav-container {
+    height: calc(100vh - 64px);
+    /* Ensure container doesn't force scrollbars */
+    overflow: hidden;
+}
+
+.sidenav {
+    width: 260px;
+    background: transparent;
+    /* Let sidebar component handle bg */
+    border: none;
+    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    overflow-x: hidden !important;
+    /* Prevent horizontal scrollbar on the drawer itself */
+
+    /* When collapsed, restrict width */
+    &.collapsed {
+        width: 80px;
+        /* Match sidebar.scss collapsed width */
+        min-width: 80px;
+    }
+}
+
+.content {
+    padding: 24px;
+    background-color: var(--body-background-color, #f4f6f8);
+    transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    margin-left: 260px;
+    /* Match expanded width */
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+    /* Allow content scrolling */
+
+    &.collapsed {
+        margin-left: 80px !important;
+        /* Match collapsed width */
+    }
+}
+
+/* Material overrides to prevent shadow artifacts */
+.mat-drawer-inner-container {
+    overflow-x: hidden !important;
+}

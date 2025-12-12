@@ -1,0 +1,211 @@
+/* 1. Contenedor Principal: Centra y alinea las tarjetas */
+.cards-wrapper {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente */
+    gap: 2px;               /* Espacio entre tarjetas */
+    min-height: 100vh;       /* Centrar en pantalla */
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 2. Estilos comunes de la tarjeta */
+.custom-card {
+    width: 600px;
+    height: 500px;           /* ← Altura fija */
+    display: flex;
+    flex-direction: column;  /* Mantiene orden interno */
+}
+
+/* Mat-card-content debe expandirse para rellenar la altura */
+.custom-card .mat-card-content {
+    flex: 1;                 /* Rellena el espacio disponible */
+    overflow: auto;          /* Por si el contenido se sobrepasa */
+}
+
+/* 3. Tarjeta Azul */
+.card-blue {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(25, 118, 210, 0.2);
+}
+
+.card-blue .mat-card-title {
+    color: #1976D2;
+}
+
+/* 4. Tarjeta Verde */
+.card-green {
+    background-color: #E0F2F1;
+    box-shadow: 0 4px 8px rgba(0, 150, 136, 0.2);
+}
+
+.card-green .mat-card-title {
+    color: #00897B;
+}
+
+
+
+
+
+
+/* 5. ICON */
+.role-container {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.role-btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra el círculo y el texto */
+  cursor: pointer;
+}
+
+.circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #cfcfcf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.25s ease;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* Hover solo sobre el círculo */
+.role-btn-wrapper .circle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Iconos */
+.main-icon {
+  font-size: 32px;  /* tamaño proporcional al círculo */
+  color: #ffffff;    /* icono blanco */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+/* Icono check */
+.check-icon {
+  color: #ffffff;
+  opacity: 0;
+  position: absolute;
+  font-size: 32px; /* igual que main-icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: opacity 0.25s ease;
+}
+
+/* Label centrado debajo del círculo */
+.label {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 300;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #333;
+  text-align: center;
+}
+
+/* Seleccionado */
+.role-btn-wrapper.selected .circle {
+  border-width: 3px;
+}
+
+.role-btn-wrapper.selected .main-icon {
+  opacity: 0;
+}
+
+.role-btn-wrapper.selected .check-icon {
+  opacity: 1;
+}
+
+/* Colores por rol */
+.role-admin .circle {
+  border-color: #6a1b9a;
+  background-color: #8e24aa;
+}
+
+.role-admin.selected .circle {
+  background-color: #6a1b9a;
+}
+
+.role-doctor .circle {
+  border-color: #1976d2;
+  background-color: #2196f3;
+}
+
+.role-doctor.selected .circle {
+  background-color: #1976d2;
+}
+
+.role-nurse .circle {
+  border-color: #00897b;
+  background-color: #00bfa5;
+}
+
+.role-nurse.selected .circle {
+  background-color: #00897b;
+}
+
+.role-employee .circle {
+  border-color: #ef6c00;
+  background-color: #ff9800;
+}
+
+.role-employee.selected .circle {
+  background-color: #ef6c00;
+}
+
+.role-patient .circle {
+  border-color: #c62828;
+  background-color: #e53935;
+}
+
+.role-patient.selected .circle {
+  background-color: #c62828;
+}
+
+/* Iconos principales */
+.main-icon {
+  font-size: 32px;       /* tamaño proporcional al círculo */
+  color: #ffffff;        /* blanco inicial */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+/* Al hacer hover sobre el círculo, icono se vuelve negro/oscuro */
+.role-btn-wrapper .circle:hover .main-icon {
+  color: #333333;        /* negro o gris oscuro */
+}
+
+/* Icono check */
+.check-icon {
+  color: #ffffff;        /* siempre blanco */
+  opacity: 0;
+  position: absolute;
+  font-size: 32px;       /* igual que main-icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: opacity 0.25s ease;
+}
+
