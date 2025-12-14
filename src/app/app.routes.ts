@@ -23,37 +23,49 @@ export const routes: Routes = [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: Dashboard },
 
-            // Future role-based routes
-            // {
-            //     path: 'admin',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'] },
-            //     loadChildren: () => import('./features/admin/admin.routes')
-            // },
-            // {
-            //     path: 'doctor',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_DOCTOR'] },
-            //     loadChildren: () => import('./features/doctor/doctor.routes')
-            // },
-            // {
-            //     path: 'nurse',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_NURSE'] },
-            //     loadChildren: () => import('./features/nurse/nurse.routes')
-            // },
-            // {
-            //     path: 'employee',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_EMPLOYEE'] },
-            //     loadChildren: () => import('./features/employee/employee.routes')
-            // },
-            // {
-            //     path: 'patient',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_PATIENT'] },
-            //     loadChildren: () => import('./features/patient/patient.routes')
-            // }
+            // Role-based dashboards - Mapped to shared Dashboard component for now
+            // TODO: Create specific dashboard components for each role
+            {
+                path: 'admin',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_TENANT_ADMIN'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard },
+                    { path: 'hospital-dashboard', component: Dashboard }
+                ]
+            },
+            {
+                path: 'doctor',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_DOCTOR'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard }
+                ]
+            },
+            {
+                path: 'nurse',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_NURSE'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard }
+                ]
+            },
+            {
+                path: 'employee',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_EMPLOYEE'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard }
+                ]
+            },
+            {
+                path: 'patient',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_PATIENT'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard }
+                ]
+            }
         ]
     },
 

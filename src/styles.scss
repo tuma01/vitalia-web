@@ -1,104 +1,27 @@
-// Custom Theming for Angular Material
-// Prebuilt theme is loaded via angular.json
+@use 'styles/reboot';
+@use 'styles/themes';
+@use 'styles/colors';
+@use 'styles/grid';
+@use 'styles/helpers';
+@use 'styles/plugins';
+@use 'styles/custom';
 
-@use './styles/reboot';
-@use './styles/themes';
-@use './styles/colors';
-@use './styles/grid';
-@use './styles/helpers';
-@use './styles/plugins';
-@use './styles/custom';
 
-@use '@angular/material' as mat;
-@include mat.core();
 
-// Font Awesome loaded via angular.json
+// body, html {
+//   height: 100%;
+//   margin: 0;
+//   display: flex;
+//   justify-content: center; /* centra horizontalmente */
+//   align-items: center;     /* centra verticalmente */
+//   background-color: #f5f5f5; /* color de fondo opcional */
+// }
 
 html,
 body {
   height: 100%;
-  overflow-x: hidden;
-  /* Prevent horizontal scrollbar from sidebar animations */
-}
-
-body {
   margin: 0;
+  background-color: #f4f6f8;
+  /* Ensure background color covers whole page */
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* 
-   --------------------------------------------------------------------------
-   HOLISTIC LAYOUT THEME OVERRIDES
-   These rules ensure the content body matches the selected Layout Mode (Light/Dark),
-   overriding standard Material Theme defaults if they conflict.
-   --------------------------------------------------------------------------
-*/
-
-/* Light Mode Overrides */
-body.light-mode {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  /* Subtle cream/off-white gradient */
-  color: rgba(0, 0, 0, 0.87);
-  /* Standard Dark Text */
-
-  /* Ensure Material Backgrounds adapt */
-  .mat-drawer-container,
-  .mat-sidenav-container,
-  .mat-drawer-content,
-  .mat-sidenav-content {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    color: rgba(0, 0, 0, 0.87);
-  }
-
-  /* Force text color for common elements to prevent white-on-white from dark themes */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  span,
-  div,
-  li,
-  td,
-  th {
-    color: inherit;
-  }
-}
-
-/* Dark Mode Overrides */
-body.dark-mode {
-  background: linear-gradient(135deg, #2a2d3a 0%, #1e1e2d 100%);
-  /* Lighter grey gradient, not pure black */
-  color: #e0e0e0;
-  /* Cream/White Text */
-
-  /* Ensure Material Backgrounds adapt */
-  .mat-drawer-container,
-  .mat-sidenav-container,
-  .mat-drawer-content,
-  .mat-sidenav-content,
-  .mat-card,
-  .mat-dialog-container {
-    background: linear-gradient(135deg, #2a2d3a 0%, #1e1e2d 100%);
-    color: #e0e0e0;
-  }
-
-  /* Force text color for common elements to prevent black-on-dark from light themes */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p,
-  span,
-  div,
-  li,
-  td,
-  th {
-    color: inherit;
-  }
 }

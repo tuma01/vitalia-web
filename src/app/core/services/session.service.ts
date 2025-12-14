@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from "rxjs";
 import { TokenService } from "../token/token.service";
 import { AuthService } from "./auth.service";
@@ -13,10 +14,13 @@ export class SessionService {
   public readonly user$ = this.userSubject.asObservable();
 
   constructor(
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.initializeFromStorage();
-    this.initializeStorageSync();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initializeFromStorage();
+      this.initializeStorageSync();
+    }
   }
 
   // ========== API PÚBLICA ==========
@@ -117,15 +121,17 @@ export class SessionService {
     const tokenValid = this.tokenService.isAccessTokenValid();
     const storedUser = this.getUserFromStorage();
 
+    console.log('[SessionService] initializing...', { tokenValid, hasUser: !!storedUser });
+
     if (tokenValid && storedUser) {
       this.userSubject.next(storedUser);
     } else if (tokenValid && !storedUser) {
       // Token válido pero no hay usuario -> sesión inconsistente
-      console.warn('Valid token but no user found in storage. Clearing session.');
+      console.warn('[SessionService] Valid token but no user found in storage. Clearing session.');
       this.logout();
     } else if (!tokenValid && storedUser) {
       // Usuario almacenado pero token inválido -> limpiar
-      console.warn('User found but token is invalid. Clearing session.');
+      console.warn('[SessionService] User found but token is invalid/missing. Clearing session.');
       this.clearUser();
     }
     // Si no hay token ni usuario, no hacer nada (ya está en null)

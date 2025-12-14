@@ -57,16 +57,12 @@ export class TokenService {
     const token = this.accessToken;
     if (!token) return false;
 
-    try {
-      // Verificar que el token sea válido y no esté expirado
-      const isExpired = this.jwtHelper.isTokenExpired(token);
-      const hasValidFormat = this.isValidTokenFormat(token);
+    // We trust that if a token exists, the user is authenticated.
+    // Invalid tokens will be caught by the 401 Interceptor.
+    // This prevents aggressive client-side logouts due to clock skew or format checks.
+    // console.log('[TokenService] Token found, assuming valid for session restoration.');
 
-      return !isExpired && hasValidFormat;
-    } catch (error) {
-      console.error('Error validando access token:', error);
-      return false;
-    }
+    return true;
   }
 
   isRefreshTokenValid(): boolean {

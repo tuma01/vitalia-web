@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, inject, signal, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +11,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '../../core/services/language.service';
 import { ThemeService, Theme } from '../../core/services/theme.service';
+import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -36,6 +38,8 @@ export class Header implements OnDestroy {
   private languageService = inject(LanguageService);
   private themeService = inject(ThemeService);
   private translateService = inject(TranslateService);
+  private sessionService = inject(SessionService); // Injected SessionService
+  private router = inject(Router); // Injected Router
   private cdr = inject(ChangeDetectorRef);
   private langSubscription?: Subscription;
 
@@ -97,5 +101,10 @@ export class Header implements OnDestroy {
 
   openSettings(): void {
     this.toggleSettingsFn.emit();
+  }
+
+  logout(): void {
+    this.sessionService.logout();
+    this.router.navigate(['/login']);
   }
 }

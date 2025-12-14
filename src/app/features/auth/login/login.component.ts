@@ -8,12 +8,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from "@angular/material/icon";
 import { MatRippleModule } from '@angular/material/core'; // Add this import
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ButtonRole } from '../../../core/models/button-role.model';
 import { Tenant } from 'app/api/models/tenant';
 import { TenantControllerService } from 'app/api/services';
+import { TranslateModule } from '@ngx-translate/core';
+import { ThemeService } from '@core/services/theme.service';
 
 
 
@@ -31,16 +35,25 @@ interface TenantOption {
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatButtonModule, MatIcon, MatRippleModule],
+    MatButtonModule,
+    MatInputModule,
+    MatIcon,
+    MatRippleModule,
+    MatProgressSpinnerModule,
+    TranslateModule,
+    MatCheckboxModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
   private tenantService = inject(TenantControllerService);
   private authService = inject(AuthService);
   private tenantThemeService = inject(TenantThemeService);
   private readonly router = inject(Router);
   private fb = inject(FormBuilder);
+
+  themeService = inject(ThemeService);
 
   loginForm!: FormGroup;
   tenants: Tenant[] = [];
@@ -53,9 +66,9 @@ export class LoginComponent implements OnInit {
 
   selectedTenant: string = '';
   showPassword: boolean = false;
-  rememberMe: boolean = false;
   isLoading: boolean = false;
   errorMessage: string = '';
+  isSubmitting = false;
   buttonRoles: ButtonRole[] = [
     { id: 'TENANT_ADMIN', label: 'Admin', icon: 'admin_panel_settings', colorClass: 'role-admin' },
     { id: 'DOCTOR', label: 'Doctor', icon: 'medical_services', colorClass: 'role-doctor' },
@@ -80,6 +93,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.themeService.initTheme();
     this.initForm();
     this.getTenants();
   }
@@ -92,7 +106,6 @@ export class LoginComponent implements OnInit {
         // Precalcular opciones para el template
         this.tenantsOptions = this.tenants.map(t => ({ code: t.code, name: t.name }));
         console.log('Tenants filtrados:', this.tenantsOptions);
-        console.log('apres Filtered tenants:', this.tenants);
       },
       error: err => console.error('Error cargando tenants', err)
     });
@@ -100,10 +113,11 @@ export class LoginComponent implements OnInit {
 
   private initForm(): void {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['admin.hospa@system.com', [Validators.required, Validators.email]],
+      password: ['ChangeMe123!', [Validators.required, Validators.minLength(6)]],
       tenantCode: ['', [Validators.required]],
-      role: ['', [Validators.required]]
+      role: ['', [Validators.required]],
+      rememberMe: [false]
     });
   }
 
@@ -111,10 +125,16 @@ export class LoginComponent implements OnInit {
     this.selectedRole = role;
     this.errorMessage = '';
 
+    const tenantControl = this.loginForm.get('tenantCode');
+
     // Reset tenant selection when changing roles
     if (!this.requiresTenant) {
       this.selectedTenant = '';
+      tenantControl?.clearValidators(); // Remove required if not needed
+    } else {
+      tenantControl?.setValidators([Validators.required]); // Add required back
     }
+    tenantControl?.updateValueAndValidity(); // Update validity status
   }
 
   get requiresTenant(): boolean {
@@ -132,7 +152,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    if (this.requiresTenant && !this.selectedTenant) {
+    const formTenantCode = this.loginForm.value.tenantCode;
+
+    if (this.requiresTenant && !formTenantCode) {
       this.errorMessage = 'Please select a hospital/clinic';
       return;
     }
@@ -140,9 +162,11 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
+
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
-    const tenantCode = this.requiresTenant ? this.selectedTenant : undefined;
+
+    const tenantCode = this.requiresTenant ? formTenantCode : undefined;
 
     this.authService.login(email, password, tenantCode).subscribe({
       next: (response) => {
@@ -173,8 +197,6 @@ export class LoginComponent implements OnInit {
           this.errorMessage = 'Invalid email or password';
         } else if (error.status === 403) {
           this.errorMessage = 'Access denied. Please check your credentials and tenant selection.';
-        } else if (error.status === 0) {
-          this.errorMessage = 'Cannot connect to server. Please try again later.';
         } else {
           this.errorMessage = error.error?.message || 'An error occurred during login. Please try again.';
         }
@@ -184,10 +206,11 @@ export class LoginComponent implements OnInit {
 
   private navigateBasedOnRole(roles: string[]): void {
     this.isLoading = false;
+    console.log('Navigating based on roles:', roles);
 
     if (roles.includes('ROLE_SUPER_ADMIN')) {
       this.router.navigate(['/admin/dashboard']);
-    } else if (roles.includes('ROLE_ADMIN')) {
+    } else if (roles.includes('ROLE_TENANT_ADMIN') || roles.includes('ROLE_ADMIN')) {
       this.router.navigate(['/admin/hospital-dashboard']);
     } else if (roles.includes('ROLE_DOCTOR')) {
       this.router.navigate(['/doctor/dashboard']);
@@ -196,17 +219,36 @@ export class LoginComponent implements OnInit {
     } else if (roles.includes('ROLE_EMPLOYEE')) {
       this.router.navigate(['/employee/dashboard']);
     } else if (roles.includes('ROLE_PATIENT')) {
-      this.router.navigate(['/patient/portal']);
+      this.router.navigate(['/patient/dashboard']);
     } else {
-      // Default fallback
-      this.router.navigate(['/dashboard']);
+      console.warn('No matching role found for navigation:', roles);
+      this.errorMessage = 'Login successful but no valid role found for redirection.';
     }
   }
-
-
+  register(): void {
+    console.log('register');
+    this.router.navigate(['register']);
+  }
 
   selectButtonRole(roleId: string) {
     this.selectedButtonRole = roleId;
+    this.loginForm.get('role')?.setValue(roleId);
+    this.selectRole(roleId as UserRole);
   }
 
+  get email() {
+    return this.loginForm.get('email')!;
+  }
+
+  get password() {
+    return this.loginForm.get('password')!;
+  }
+
+  get rememberMe() {
+    return this.loginForm.get('rememberMe')!;
+  }
+
+  forgotPassword() {
+    this.router.navigate(['forgot-password']);
+  }
 }
