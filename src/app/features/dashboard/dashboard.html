@@ -1,1 +1,57 @@
-<p>dashboard works!</p>
+<div class="dashboard-container" *ngIf="currentUser$ | async as user">
+    <div class="welcome-section">
+        <h1 class="mat-display-1">Welcome back, {{ user.personName || user.email }}!</h1>
+        <p class="subtitle">Role: {{ user.roles?.[0] || 'User' }} | Tenant: {{ user.tenantCode || 'Vitalia' }}</p>
+    </div>
+
+    <div class="stats-grid">
+        <!-- Card 1 -->
+        <mat-card class="dashboard-card action-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="primary">calendar_today</mat-icon>
+                <mat-card-title>Appointments</mat-card-title>
+                <mat-card-subtitle>Manage schedule</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>You have 3 upcoming appointments today.</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary">VIEW CALENDAR</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <!-- Card 2 -->
+        <mat-card class="dashboard-card info-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar class="accent-icon">people</mat-icon>
+                <mat-card-title>Patients</mat-card-title>
+                <mat-card-subtitle>Active records</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">1,240</h2>
+                <p>New patients this month: +12</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="accent">SEARCH PATIENTS</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <!-- Card 3 -->
+        <mat-card class="dashboard-card warning-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="warn">notifications</mat-icon>
+                <mat-card-title>Alerts</mat-card-title>
+                <mat-card-subtitle>System notifications</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="alert-item">
+                    <mat-icon class="small-icon">error_outline</mat-icon>
+                    <span>System maintenance scheduled for tonight.</span>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="warn">DISMISS ALL</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

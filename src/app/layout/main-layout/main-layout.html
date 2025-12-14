@@ -7,7 +7,7 @@
         <app-sidebar #sidebar (hoverChange)="onSidebarHover($event)"></app-sidebar>
     </mat-sidenav>
 
-    <mat-sidenav-content class="content" [class.collapsed]="sidebarCollapsed && !sidebarHovered">
+    <mat-sidenav-content class="content" [class.collapsed]="sidebarCollapsed">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,81 +1,116 @@
-<div class="cards-wrapper">
-
-
-
-<!-- <mat-form-field appearance="fill" class="w-full">
-  <mat-label>Selecciona un Rol</mat-label>
-  <mat-select formControlName="role">
-    <mat-option *ngFor="let r of roles" [value]="r">{{ r }}</mat-option>
-  </mat-select>
-</mat-form-field> -->
-
-
-
-
-
-
-
-    <mat-card class="custom-card card-blue">
-        <mat-card-header>
-            <mat-card-title>Sign in</mat-card-title>
-            <mat-card-subtitle>Enter your credentials to access your account</mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <form class="form-field-full" [formGroup]="loginForm">
-            <div class="role-container">
-              <div class="role-btn-wrapper"
-                  *ngFor="let role of buttonRoles"
-                  [ngClass]="[role.colorClass, selectedButtonRole === role.id ? 'selected' : '']"
-                  (click)="selectButtonRole(role.id)"
-                >
-                  <div class="circle">
-                    <mat-icon class="main-icon">{{ role.icon }}</mat-icon>
-                    <mat-icon class="check-icon">check</mat-icon>
-                  </div>
-                  <span class="label">{{ role.label }}</span>
+<div class="login-container">
+  <mat-card class="custom-card">
+    <div class="card-content-horizontal">
+      <!-- Sección izquierda: formulario -->
+      <div class="form-section">
+        <div class="form-section">
+          <h2>Sign In</h2>
+          <p style="color: rgb(166, 169, 168);">Enter your credentials to access your account</p>
+        </div>
+        <form [formGroup]="loginForm">
+          <div class="role-container">
+            <div class="role-btn-wrapper" *ngFor="let role of buttonRoles"
+              [ngClass]="[role.colorClass, selectedButtonRole === role.id ? 'selected' : '']"
+              (click)="selectButtonRole(role.id)">
+              <div class="circle">
+                <mat-icon class="main-icon">{{ role.icon }}</mat-icon>
+                <mat-icon class="check-icon">check</mat-icon>
               </div>
+              <span class="label">{{ role.label }}</span>
             </div>
-          </form>
+          </div>
 
-          <mat-form-field appearance="fill" class="w-full">
+          <!-- <mat-form-field appearance="fill" class="w-full"> -->
+          <mat-form-field appearance="outline" color="primary" class="w-full">
             <mat-label>Selecciona un Tenant</mat-label>
-            <mat-select formControlName="tenantCode">
+            <mat-select formControlName="tenantCode" color="primary">
               <mat-option *ngFor="let t of tenantsOptions" [value]="t.code">
                 {{ t.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
+          <!-- <mat-form-field appearance="outline" color="primary"> -->
+          <mat-form-field appearance="outline" color="primary" class="w-full">
+            <mat-label>{{ 'email' | translate }}:</mat-label>
+            <input matInput placeholder="email" formControlName="email" required />
+            @if (email.invalid) {
+            <mat-error>
+              @if (email.errors?.['required']) {
+              <span>
+                {{ 'common.field_isRequired' | translate:{ fieldName: 'Email' } }}
+              </span>
+              }
+              @if (email.errors?.['remote']) {
+              <span>{{ email.errors?.['remote'] }}</span>
+              }
+            </mat-error>
+            }
+          </mat-form-field>
 
+          <mat-form-field appearance="outline" color="primary" class="w-full">
+            <mat-label>{{ 'password' | translate }}: </mat-label>
+            <input matInput placeholder="entre your password" type="password" formControlName="password" required />
+            @if (password.invalid) {
+            <mat-error>
+              @if (password.errors?.['required']) {
+              <span>
+                {{ 'common.field_isRequired' | translate:{ fieldName: 'Password' } }}
+              </span>
+              }
+              @if (password.errors?.['remote']) {
+              <span>{{ password.errors?.['remote'] }}</span>
+              }
+            </mat-error>
+            }
+          </mat-form-field>
 
-        </mat-card-content>
+          <div class="remember-forgot-row">
+            <mat-checkbox formControlName="rememberMe" color="primary">
+              {{ 'common.remember_me' | translate }}
+            </mat-checkbox>
 
-        <mat-card-actions>
-            <button mat-button color="primary">SABER MÁS</button>
-            <button mat-button>CONTACTO</button>
-        </mat-card-actions>
+            <a class="forgot-link" (click)="forgotPassword()">
+              {{ 'common.forgot_password' | translate }}
+            </a>
+          </div>
+          <button matFab extended color="primary" class="w-full" (click)="onLogin()"
+            [disabled]="!!loginForm.invalid"><!-- [disabled]="loginForm.invalid || isSubmitting" -->
+            <mat-icon>login</mat-icon>
+            @if (!isSubmitting) {
+            <span>{{ 'common.login' | translate }}</span>
+            } @else {
+            <mat-progress-spinner diameter="20" mode="indeterminate" color="accent">
+            </mat-progress-spinner>
+            }
+          </button>
 
-    </mat-card>
+        </form>
+        <div class="social-buttons-material">
+          <button mat-mini-fab class="social-btn-google" aria-label="Login with Google">
+            <mat-icon>account_circle</mat-icon>
+          </button>
 
-    <mat-card class="custom-card card-green">
+          <button mat-mini-fab class="social-btn-facebook" aria-label="Login with Facebook">
+            <mat-icon>people</mat-icon>
+          </button>
 
-        <mat-card-header>
-            <mat-card-title>Tarjeta de Promoción</mat-card-title>
-            <mat-card-subtitle>Oferta por tiempo limitado</mat-card-subtitle>
-        </mat-card-header>
+          <button mat-mini-fab class="social-btn-apple" aria-label="Login with Apple">
+            <mat-icon>lock_open</mat-icon>
+          </button>
+        </div>
+      </div>
 
-        <mat-card-content>
-            <p>
-                La segunda tarjeta usa un color de fondo diferente para llamar la atención
-                sobre una promoción o información secundaria importante.
-            </p>
-        </mat-card-content>
+      <!-- Línea de separación -->
+      <!-- <div class="separator"></div> -->
 
-        <mat-card-actions>
-            <button mat-flat-button color="accent">¡COMPRAR AHORA!</button>
-        </mat-card-actions>
-
-    </mat-card>
-
+      <!-- Sección derecha: imagen con texto -->
+      <div class="image-section">
+        <div class="overlay-text">
+          <h2>Welcome!</h2>
+          <p>Access your account easily</p>
+        </div>
+      </div>
+    </div>
+  </mat-card>
 </div>

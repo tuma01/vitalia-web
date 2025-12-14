@@ -16,23 +16,27 @@ import { SessionService } from './session.service';
 export class AuthService {
 
   constructor(
-      private authApiService: AuthenticationService,
-      private router: Router,
-      // @Inject(PLATFORM_ID) private platformId: Object,
-      private tokenService: TokenService,
-      private sessionService: SessionService
+    private authApiService: AuthenticationService,
+    private router: Router,
+    // @Inject(PLATFORM_ID) private platformId: Object,
+    private tokenService: TokenService,
+    private sessionService: SessionService
   ) { }
 
   /**
    * Perform login and store tokens
    */
   login(email: string, password: string, tenantCode?: string): Observable<AuthenticationResponse> {
+    const body = {
+      email,
+      password,
+      tenantCode: tenantCode // Send undefined if not provided, don't force empty string
+    } as any;
+
+    console.log('[AuthService] Logging in with:', body);
+
     return this.authApiService.login({
-      body: {
-          email,
-          password,
-          tenantCode: tenantCode || ''
-      }
+      body
     }).pipe(
       tap(response => {
         if (response.tokens && response.user) {
@@ -51,17 +55,17 @@ export class AuthService {
    * Perform logout
    */
   logout(): void {
-      const refreshToken = this.tokenService.refreshToken;
+    const refreshToken = this.tokenService.refreshToken;
 
-      if (refreshToken) {
-          this.authApiService.logout({ refreshToken }).subscribe({
-            next: () => this.performLogout(),
-            complete: () => this.performLogout(),
-            error: () => this.performLogout()
-          });
-      } else {
-        this.performLogout();
-      }
+    if (refreshToken) {
+      this.authApiService.logout({ refreshToken }).subscribe({
+        next: () => this.performLogout(),
+        complete: () => this.performLogout(),
+        error: () => this.performLogout()
+      });
+    } else {
+      this.performLogout();
+    }
   }
 
   private performLogout(): void {
@@ -74,60 +78,39 @@ export class AuthService {
    * Refresh access token
    */
   refreshToken(): Observable<AuthenticationResponse> {
-      const refreshToken = this.tokenService.refreshToken;
-      if (!refreshToken) {
-          return throwError(() => new Error('No refresh token available'));
-      }
+    const refreshToken = this.tokenService.refreshToken;
+    if (!refreshToken) {
+      return throwError(() => new Error('No refresh token available'));
+    }
 
-      return this.authApiService.refresh({ refreshToken }).pipe(
-          tap(response => {
-              if (response.tokens) {
-                this.tokenService.setTokens(
-                      response.tokens.accessToken!,
-                      response.tokens.refreshToken!
-                  );
-              }
-          })
-      );
+    return this.authApiService.refresh({ refreshToken }).pipe(
+      tap(response => {
+        if (response.tokens) {
+          this.tokenService.setTokens(
+            response.tokens.accessToken!,
+            response.tokens.refreshToken!
+          );
+        }
+      })
+    );
   }
 
   /**
    * Check if user is authenticated (with server validation)
    */
   isAuthenticated(): Observable<boolean> {
-    // 1. Quick local validation
-    if (!this.sessionService.isAuthenticated()) {
-      return of(false);
-    }
-
-    // 2. Get token for server validation
-    const token = this.tokenService.accessToken;
-    if (!token) {
-        return of(false);
-    }
-
-    const isTokenValid = this.tokenService.isAccessTokenValid();
-    if (!isTokenValid) {
-        return of(false);
-    }
-
-    // 3. Server validation - token as query parameter
-    return this.authApiService.validateToken({ token }).pipe(
-      map(() => true),
-      catchError((error) => {
-          console.warn('Token validation failed:', error);
-          // Si falla la validación, cerrar sesión
-          this.sessionService.logout();
-          return of(false);
-      })
-    );
+    // 1. Quick local validation (Standard for SPAs)
+    // We trust the token is valid if it exists and hasn't expired according to its claims.
+    // If the server rejects it later (401), the HttpInterceptor should handle the logout.
+    const isValid = this.tokenService.isAccessTokenValid();
+    return of(isValid);
   }
 
   /**
    * Quick local authentication check (no HTTP call)
    */
   isAuthenticatedSync(): boolean {
-      return this.tokenService.isAccessTokenValid();
+    return this.tokenService.isAccessTokenValid();
   }
 
   getCurrentUser(): UserSummary | null {
@@ -151,30 +134,30 @@ export class AuthService {
    * Store user data in localStorage
    */
   private storeUser(user: UserSummary): void {
-      localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   /**
    * Clear user data
    */
   private clearUser(): void {
-      localStorage.removeItem('user');
-      localStorage.removeItem('tenantTheme');
+    localStorage.removeItem('user');
+    localStorage.removeItem('tenantTheme');
   }
 
   /**
    * Get access token
    */
   getAccessToken(): string | null {
-      return this.tokenService.accessToken;
+    return this.tokenService.accessToken;
   }
 
   /**
    * Get refresh token
    */
   getRefreshToken(): string | null {
-      // if (!isPlatformBrowser(this.platformId)) return null;
-      return this.tokenService.refreshToken;
+    // if (!isPlatformBrowser(this.platformId)) return null;
+    return this.tokenService.refreshToken;
   }
 
   /**
