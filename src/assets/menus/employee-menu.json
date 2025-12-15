@@ -1,0 +1,50 @@
+{
+    "version": "1.0",
+    "role": "employee",
+    "menu": [
+        {
+            "id": "dashboard",
+            "name": "dashboard",
+            "type": "link",
+            "icon": "dashboard",
+            "route": "/dashboard",
+            "visible": true
+        },
+        {
+            "id": "my-tasks",
+            "name": "my_tasks",
+            "type": "link",
+            "icon": "assignment",
+            "route": "/employee/tasks",
+            "visible": true,
+            "badge": {
+                "value": "5",
+                "color": "#ff9800"
+            }
+        },
+        {
+            "id": "schedule",
+            "name": "shift_schedule",
+            "type": "link",
+            "icon": "calendar_month",
+            "route": "/employee/schedule",
+            "visible": true
+        },
+        {
+            "id": "directory",
+            "name": "staff_directory",
+            "type": "link",
+            "icon": "contact_phone",
+            "route": "/employee/directory",
+            "visible": true
+        },
+        {
+            "id": "settings",
+            "name": "settings",
+            "type": "link",
+            "icon": "settings",
+            "route": "/settings",
+            "visible": true
+        }
+    ]
+}
