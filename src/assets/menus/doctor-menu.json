@@ -1,63 +1,58 @@
 {
+    "version": "1.0",
+    "role": "doctor",
     "menu": [
         {
-            "route": "dashboard",
+            "id": "dashboard",
             "name": "dashboard",
             "type": "link",
-            "icon": "dashboard"
+            "icon": "dashboard",
+            "route": "/dashboard",
+            "visible": true
         },
         {
-            "route": "patients",
-            "name": "patients",
-            "type": "sub",
+            "id": "my-patients",
+            "name": "my_patients",
+            "type": "link",
             "icon": "people",
-            "children": [
-                {
-                    "route": "/doctor/patients",
-                    "name": "patients",
-                    "type": "link"
-                },
-                {
-                    "route": "/doctor/appointments",
-                    "name": "appointments",
-                    "type": "link"
-                },
-                {
-                    "route": "/doctor/medical-records",
-                    "name": "medicalRecords",
-                    "type": "link"
-                }
-            ]
+            "route": "/doctor/patients",
+            "visible": true
         },
         {
-            "route": "schedule",
-            "name": "gestionDeTurnos",
+            "id": "appointments",
+            "name": "appointments",
             "type": "link",
-            "icon": "calendar_today"
+            "icon": "calendar_today",
+            "route": "/doctor/appointments",
+            "visible": true,
+            "badge": {
+                "value": "3",
+                "color": "#1976d2"
+            }
         },
         {
-            "route": "profile",
-            "name": "profile",
-            "type": "sub",
-            "icon": "account_circle",
-            "children": [
-                {
-                    "route": "overview",
-                    "name": "overview",
-                    "type": "link"
-                },
-                {
-                    "route": "settings",
-                    "name": "settings",
-                    "type": "link"
-                }
-            ]
-        },
-        {
-            "route": "/logout",
-            "name": "logout",
+            "id": "medical-records",
+            "name": "medical_records",
             "type": "link",
-            "icon": "exit_to_app"
+            "icon": "description",
+            "route": "/doctor/medical-records",
+            "visible": true
+        },
+        {
+            "id": "prescriptions",
+            "name": "prescriptions",
+            "type": "link",
+            "icon": "medication",
+            "route": "/doctor/prescriptions",
+            "visible": true
+        },
+        {
+            "id": "settings",
+            "name": "settings",
+            "type": "link",
+            "icon": "settings",
+            "route": "/settings",
+            "visible": true
         }
     ]
 }

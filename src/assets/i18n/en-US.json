@@ -27,7 +27,10 @@
         "have_no_account": "Don't have an account?",
         "create_one_account": "Click here to create one",
         "sign_up": "Sign Up",
-        "forgot_password": "Forgot Password?"
+        "sign_in": "Sign In",
+        "forgot_password": "Forgot Password?",
+        "enter_your_credentials": "Enter your credentials to access your account",
+        "select_health_center": "Select Health Center"
     },
     "header": {
         "search": "Search...",
@@ -125,6 +128,13 @@
         "auditLog": "Audit Log",
         "backupRestore": "Backup & Restore",
         "profile": "Profile",
+        "my_patients": "My Patients",
+        "triage": "Triage",
+        "vitals": "Vital Signs",
+        "shift_schedule": "Shift Schedule",
+        "medical_records": "Medical Records",
+        "patient_list": "Patient List",
+        "billingPayments": "Billing & Payments",
         "overview": "Overview",
         "settings": "Settings",
         "logout": "Logout"

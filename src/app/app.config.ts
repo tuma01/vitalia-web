@@ -26,7 +26,7 @@ import {
 
 // Loader para traducciones
 export class WebpackTranslateLoader implements TranslateLoader {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   getTranslation(lang: string): Observable<Translation> {
     return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
   }
@@ -36,6 +36,11 @@ export class WebpackTranslateLoader implements TranslateLoader {
 export function initializeTheme(themeService: TenantThemeService, authService: AuthService) {
   return () => {
     const user = authService.getCurrentUser();
+    // Skip for mock users
+    if (user?.email?.includes('@test.com')) {
+      return Promise.resolve();
+    }
+
     if (user && user.tenantCode && user.tenantCode !== 'GLOBAL') {
       return themeService.loadThemeForTenant(user.tenantCode).toPromise();
     }

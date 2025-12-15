@@ -27,7 +27,10 @@
         "have_no_account": "Vous n'avez pas de compte ?",
         "create_one_account": "Cliquez ici pour en créer un",
         "sign_up": "S'inscrire",
-        "forgot_password": "Mot de passe oublié ?"
+        "sign_in": "Connexion",
+        "forgot_password": "Mot de passe oublié ?",
+        "enter_your_credentials": "Entrez vos identifiants pour accéder à votre compte",
+        "select_health_center": "Sélectionnez le centre de santé"
     },
     "header": {
         "search": "Rechercher...",
@@ -122,6 +125,13 @@
         "auditLog": "Journal d'Audit",
         "backupRestore": "Sauvegarde et Restauration",
         "profile": "Profil",
+        "my_patients": "Mes Patients",
+        "triage": "Triage",
+        "vitals": "Signes Vitaux",
+        "shift_schedule": "Horaires",
+        "medical_records": "Dossiers Médicaux",
+        "patient_list": "Liste des Patients",
+        "billingPayments": "Facturation",
         "overview": "Aperçu",
         "settings": "Paramètres",
         "logout": "Déconnexion"

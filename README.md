@@ -2,6 +2,24 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0-next.1.
 
+## 🚀 Key Features & Updates
+
+### 📱 Responsive Dashboard
+*   **Mobile & Tablet Support**: The dashboard sidebar automatically switches to a hidden "drawer" mode on screens smaller than **992px**.
+*   **Push-on-Hover**: On desktop, hovering over the collapsed sidebar triggers a smooth content push animation instead of an overlay, ensuring content remains visible.
+*   **Auto-Close**: Sidebar automatically closes on mobile navigation.
+
+### 🌑 Dark Mode Enhancements
+*   **Seamless Transitions**: Fixed background flashing issues during sidebar collapse/expand.
+*   **Global Theme Sync**: The root body background now dynamically adapts to the selected theme (Light/Dark).
+
+### 🔒 Authentication & UX
+*   **Secure Login**: Implemented strict role validation to prevent unauthorized dashboard access.
+*   **Loading States**: Login buttons disable during processing to prevent double-submission errors.
+*   **Modern Alerts**: Replaced inline error messages with non-intrusive red `MatSnackBar` notifications.
+
+---
+
 ## Development server
 
 To start a local development server, run:

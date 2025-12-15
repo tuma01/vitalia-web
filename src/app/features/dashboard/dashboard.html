@@ -4,54 +4,202 @@
         <p class="subtitle">Role: {{ user.roles?.[0] || 'User' }} | Tenant: {{ user.tenantCode || 'Vitalia' }}</p>
     </div>
 
-    <div class="stats-grid">
-        <!-- Card 1 -->
+    <!-- ADMIN DASHBOARD -->
+    <div class="stats-grid" *ngIf="isAdmin">
+        <mat-card class="dashboard-card info-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar class="accent-icon">people</mat-icon>
+                <mat-card-title>All Patients</mat-card-title>
+                <mat-card-subtitle>Active records</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">1,240</h2>
+                <p>+12 this month</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card action-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="primary">medical_services</mat-icon>
+                <mat-card-title>Staff</mat-card-title>
+                <mat-card-subtitle>Doctors & Nurses</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">45</h2>
+                <p>Active Staff Members</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card warning-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="warn">warning</mat-icon>
+                <mat-card-title>System Alerts</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>2 servers require maintenance.</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- DOCTOR DASHBOARD -->
+    <div class="stats-grid" *ngIf="isDoctor">
         <mat-card class="dashboard-card action-card">
             <mat-card-header>
                 <mat-icon mat-card-avatar color="primary">calendar_today</mat-icon>
-                <mat-card-title>Appointments</mat-card-title>
-                <mat-card-subtitle>Manage schedule</mat-card-subtitle>
+                <mat-card-title>My Appointments</mat-card-title>
+                <mat-card-subtitle>Today's Schedule</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <p>You have 3 upcoming appointments today.</p>
+                <h2 class="stat-number">8</h2>
+                <p>Next: 10:30 AM - Patient J. Doe</p>
             </mat-card-content>
             <mat-card-actions>
                 <button mat-button color="primary">VIEW CALENDAR</button>
             </mat-card-actions>
         </mat-card>
 
-        <!-- Card 2 -->
         <mat-card class="dashboard-card info-card">
             <mat-card-header>
-                <mat-icon mat-card-avatar class="accent-icon">people</mat-icon>
-                <mat-card-title>Patients</mat-card-title>
-                <mat-card-subtitle>Active records</mat-card-subtitle>
+                <mat-icon mat-card-avatar class="accent-icon">assignment_ind</mat-icon>
+                <mat-card-title>My Patients</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <h2 class="stat-number">1,240</h2>
-                <p>New patients this month: +12</p>
+                <h2 class="stat-number">154</h2>
+                <p>Assigned to you</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar>science</mat-icon>
+                <mat-card-title>Lab Results</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>3 New reports available for review.</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- NURSE DASHBOARD -->
+    <div class="stats-grid" *ngIf="isNurse">
+        <mat-card class="dashboard-card warning-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="warn">priority_high</mat-icon>
+                <mat-card-title>Triage Queue</mat-card-title>
+                <mat-card-subtitle>Waiting Area</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">12</h2>
+                <p>Avg Wait: 15 mins</p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button color="accent">SEARCH PATIENTS</button>
+                <button mat-button color="warn">START TRIAGE</button>
             </mat-card-actions>
         </mat-card>
 
-        <!-- Card 3 -->
-        <mat-card class="dashboard-card warning-card">
+        <mat-card class="dashboard-card info-card">
             <mat-card-header>
-                <mat-icon mat-card-avatar color="warn">notifications</mat-icon>
-                <mat-card-title>Alerts</mat-card-title>
-                <mat-card-subtitle>System notifications</mat-card-subtitle>
+                <mat-icon mat-card-avatar class="accent-icon">monitor_heart</mat-icon>
+                <mat-card-title>Vitals Pending</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <div class="alert-item">
-                    <mat-icon class="small-icon">error_outline</mat-icon>
-                    <span>System maintenance scheduled for tonight.</span>
-                </div>
+                <p>Room 304 needs BP check.</p>
+                <p>Room 305 needs Temp check.</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar>meeting_room</mat-icon>
+                <mat-card-title>Occupancy</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">85%</h2>
+                <p>2 Beds Available</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- PATIENT DASHBOARD -->
+    <div class="stats-grid" *ngIf="isPatient">
+        <mat-card class="dashboard-card action-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="primary">event</mat-icon>
+                <mat-card-title>Next Appointment</mat-card-title>
+                <mat-card-subtitle>Dr. House - Cardiology</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">Oct 24</h2>
+                <p>10:00 AM - Room 302</p>
             </mat-card-content>
             <mat-card-actions>
-                <button mat-button color="warn">DISMISS ALL</button>
+                <button mat-button color="primary">RESCHEDULE</button>
             </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="dashboard-card info-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar class="accent-icon">description</mat-icon>
+                <mat-card-title>Latest Reports</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Blood Test Results (10/12)</p>
+                <p>Ready to view.</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="accent">VIEW RECORDS</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="dashboard-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar>medication</mat-icon>
+                <mat-card-title>Prescriptions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>2 Active Prescriptions</p>
+                <p>Refill available in 5 days.</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <!-- EMPLOYEE DASHBOARD -->
+    <div class="stats-grid" *ngIf="isEmployee">
+        <mat-card class="dashboard-card action-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar color="primary">assignment</mat-icon>
+                <mat-card-title>My Tasks</mat-card-title>
+                <mat-card-subtitle>Pending Actions</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <h2 class="stat-number">5</h2>
+                <p>3 High Priority</p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color="primary">VIEW TASKS</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="dashboard-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar>calendar_month</mat-icon>
+                <mat-card-title>Shift</mat-card-title>
+                <mat-card-subtitle>This Week</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Today: 08:00 - 16:00</p>
+                <p>Tomorrow: 08:00 - 16:00</p>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="dashboard-card info-card">
+            <mat-card-header>
+                <mat-icon mat-card-avatar class="accent-icon">campaign</mat-icon>
+                <mat-card-title>Announcements</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p>Staff meeting on Friday at 3PM.</p>
+            </mat-card-content>
         </mat-card>
     </div>
 </div>
