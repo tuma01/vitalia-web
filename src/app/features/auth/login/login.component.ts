@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -7,18 +7,19 @@ import { TenantThemeService } from '../../../core/services/tenant-theme.service'
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from "@angular/material/icon";
-import { MatRippleModule } from '@angular/material/core'; // Add this import
+import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ButtonRole } from '../../../core/models/button-role.model';
 import { Tenant } from 'app/api/models/tenant';
 import { TenantControllerService } from 'app/api/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { ThemeService } from '@core/services/theme.service';
-
+import { SessionService } from '../../../core/services/session.service';
 
 
 type UserRole = 'SUPER_ADMIN' | 'TENANT_ADMIN' | 'DOCTOR' | 'NURSE' | 'EMPLOYEE' | 'PATIENT';
@@ -41,7 +42,8 @@ interface TenantOption {
     MatRippleModule,
     MatProgressSpinnerModule,
     TranslateModule,
-    MatCheckboxModule],
+    MatCheckboxModule,
+    MatSnackBarModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -49,9 +51,12 @@ export class LoginComponent implements OnInit {
 
   private tenantService = inject(TenantControllerService);
   private authService = inject(AuthService);
+  private sessionService = inject(SessionService);
   private tenantThemeService = inject(TenantThemeService);
   private readonly router = inject(Router);
   private fb = inject(FormBuilder);
+  private cd = inject(ChangeDetectorRef);
+  private snackBar = inject(MatSnackBar);
 
   themeService = inject(ThemeService);
 
@@ -61,14 +66,14 @@ export class LoginComponent implements OnInit {
   roles: string[] = ['ROLE_TENANT_ADMIN', 'ROLE_DOCTOR', 'ROLE_PATIENT', 'ROLE_NURSE', 'ROLE_EMPLOYEE'];
 
 
-  selectedRole: UserRole = 'PATIENT'; // Default to PATIENT role
+  selectedRole: UserRole = 'PATIENT';
   selectedButtonRole: string | null = null;
 
   selectedTenant: string = '';
   showPassword: boolean = false;
   isLoading: boolean = false;
-  errorMessage: string = '';
   isSubmitting = false;
+
   buttonRoles: ButtonRole[] = [
     { id: 'TENANT_ADMIN', label: 'Admin', icon: 'admin_panel_settings', colorClass: 'role-admin' },
     { id: 'DOCTOR', label: 'Doctor', icon: 'medical_services', colorClass: 'role-doctor' },
@@ -77,10 +82,6 @@ export class LoginComponent implements OnInit {
     { id: 'PATIENT', label: 'Patient', icon: 'person', colorClass: 'role-patient' }
   ];
 
-  // Note: SUPER_ADMIN role is hidden from public login for security
-  // SUPER_ADMIN users should access via a separate admin portal URL
-
-  // Available tenants (in production, this should come from an API)
   availableTenants: TenantOption[] = [
     { code: 'HOSPITAL_CENTRAL', name: 'Hospital Central' },
     { code: 'CLINICA_SAN_JOSE', name: 'Clínica San José' },
@@ -88,9 +89,7 @@ export class LoginComponent implements OnInit {
     { code: 'CLINICA_DEL_NORTE', name: 'Clínica del Norte' }
   ];
 
-  constructor(
-
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.themeService.initTheme();
@@ -98,52 +97,39 @@ export class LoginComponent implements OnInit {
     this.getTenants();
   }
 
-  private getTenants(): void {
-    this.tenantService.getTenants().subscribe({
-      next: (tenants: Tenant[]) => {
-        console.log('getTenants response:', tenants);
-        this.tenants = tenants.filter(t => t.isActive && t.code !== 'GLOBAL');
-        // Precalcular opciones para el template
-        this.tenantsOptions = this.tenants.map(t => ({ code: t.code, name: t.name }));
-        console.log('Tenants filtrados:', this.tenantsOptions);
-      },
-      error: err => console.error('Error cargando tenants', err)
-    });
-  }
-
-  private initForm(): void {
+  initForm(): void {
     this.loginForm = this.fb.group({
       email: ['admin.hospa@system.com', [Validators.required, Validators.email]],
-      password: ['ChangeMe123!', [Validators.required, Validators.minLength(6)]],
-      tenantCode: ['', [Validators.required]],
-      role: ['', [Validators.required]],
-      rememberMe: [false]
+      password: ['ChangeMe123!', Validators.required],
+      rememberMe: [false],
+      tenantCode: ['']
     });
   }
 
-  selectRole(role: UserRole): void {
-    this.selectedRole = role;
-    this.errorMessage = '';
+  getTenants(): void {
+    this.tenantService.getTenants().subscribe({
+      next: (data: Tenant[]) => {
+        this.tenants = data;
+        this.tenantsOptions = data.map((t: Tenant) => ({ code: t.code!, name: t.name! }));
+      },
+      error: (err: any) => console.error('Error fetching tenants', err)
+    });
+  }
 
-    const tenantControl = this.loginForm.get('tenantCode');
 
-    // Reset tenant selection when changing roles
-    if (!this.requiresTenant) {
-      this.selectedTenant = '';
-      tenantControl?.clearValidators(); // Remove required if not needed
-    } else {
-      tenantControl?.setValidators([Validators.required]); // Add required back
-    }
-    tenantControl?.updateValueAndValidity(); // Update validity status
+  selectButtonRole(roleId: string): void {
+    this.selectedButtonRole = roleId;
   }
 
   get requiresTenant(): boolean {
-    // SUPER_ADMIN doesn't need to select a tenant
-    return this.selectedRole !== 'SUPER_ADMIN';
+    return true;
   }
 
-  togglePassword(): void {
-    this.showPassword = !this.showPassword;
+  get email() { return this.loginForm.get('email')!; }
+  get password() { return this.loginForm.get('password')!; }
+
+  forgotPassword(): void {
+    console.log('Forgot password clicked');
   }
 
   onLogin(): void {
@@ -155,13 +141,11 @@ export class LoginComponent implements OnInit {
     const formTenantCode = this.loginForm.value.tenantCode;
 
     if (this.requiresTenant && !formTenantCode) {
-      this.errorMessage = 'Please select a hospital/clinic';
+      this.snackBar.open('Please select a hospital/clinic', 'Close', { duration: 3000, verticalPosition: 'top' });
       return;
     }
 
     this.isLoading = true;
-    this.errorMessage = '';
-
 
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
@@ -172,20 +156,70 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         console.log('Login successful:', response);
 
-        // Load theme if user has a tenant (not SUPER_ADMIN with GLOBAL)
-        if (response.user?.tenantCode && response.user.tenantCode !== 'GLOBAL') {
+        const userRoles = response.user?.roles || [];
+        const selectedRole = this.selectedButtonRole;
+        let isAuthorized = false;
+
+        console.log('[Login Debug] Validating Role:', { selectedRole, userRoles });
+
+        switch (selectedRole) {
+          case 'TENANT_ADMIN':
+            isAuthorized = userRoles.some(r => ['ROLE_TENANT_ADMIN', 'ROLE_ADMIN', 'ROLE_SUPER_ADMIN'].includes(r));
+            break;
+          case 'DOCTOR':
+            isAuthorized = userRoles.includes('ROLE_DOCTOR');
+            break;
+          case 'NURSE':
+            isAuthorized = userRoles.includes('ROLE_NURSE');
+            break;
+          case 'PATIENT':
+            isAuthorized = userRoles.includes('ROLE_PATIENT');
+            break;
+          case 'EMPLOYEE':
+            isAuthorized = userRoles.includes('ROLE_EMPLOYEE');
+            break;
+          default:
+            isAuthorized = true;
+        }
+
+        if (!isAuthorized) {
+          console.warn(`[Login] Role mismatch! Selected: ${selectedRole}, Actual: ${userRoles}`);
+
+          const roleName = selectedRole ? selectedRole.toUpperCase() : 'USER';
+
+          this.snackBar.open(`Access denied. You are not authorized as a ${roleName}.`, 'Close', {
+            duration: 5000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
+
+          this.isLoading = false;
+          this.cd.detectChanges();
+          return;
+        }
+
+        if (response.user && response.tokens) {
+          this.sessionService.login({
+            accessToken: response.tokens.accessToken!,
+            refreshToken: response.tokens.refreshToken,
+            user: response.user
+          });
+        }
+
+        const isMockUser = this.loginForm.value.email.includes('@test.com');
+
+        if (response.user?.tenantCode && response.user.tenantCode !== 'GLOBAL' && !isMockUser) {
           this.tenantThemeService.loadThemeForTenant(response.user.tenantCode).subscribe({
             next: () => {
               this.navigateBasedOnRole(response.user?.roles || []);
             },
             error: (error) => {
               console.error('Error loading theme:', error);
-              // Continue to dashboard even if theme loading fails
               this.navigateBasedOnRole(response.user?.roles || []);
             }
           });
         } else {
-          // SUPER_ADMIN or no tenant - navigate directly
           this.navigateBasedOnRole(response.user?.roles || []);
         }
       },
@@ -193,13 +227,23 @@ export class LoginComponent implements OnInit {
         this.isLoading = false;
         console.error('Login error:', error);
 
+        let msg = '';
         if (error.status === 401) {
-          this.errorMessage = 'Invalid email or password';
+          msg = 'Invalid email or password';
         } else if (error.status === 403) {
-          this.errorMessage = 'Access denied. Please check your credentials and tenant selection.';
+          msg = 'Access denied. Please check your credentials and tenant selection.';
         } else {
-          this.errorMessage = error.error?.message || 'An error occurred during login. Please try again.';
+          msg = error.error?.message || 'An error occurred during login. Please try again.';
         }
+
+        this.snackBar.open(msg, 'Close', {
+          duration: 5000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['error-snackbar']
+        });
+
+        this.cd.detectChanges();
       }
     });
   }
@@ -216,39 +260,13 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/doctor/dashboard']);
     } else if (roles.includes('ROLE_NURSE')) {
       this.router.navigate(['/nurse/dashboard']);
-    } else if (roles.includes('ROLE_EMPLOYEE')) {
-      this.router.navigate(['/employee/dashboard']);
     } else if (roles.includes('ROLE_PATIENT')) {
       this.router.navigate(['/patient/dashboard']);
+    } else if (roles.includes('ROLE_EMPLOYEE')) {
+      this.router.navigate(['/employee/dashboard']);
     } else {
-      console.warn('No matching role found for navigation:', roles);
-      this.errorMessage = 'Login successful but no valid role found for redirection.';
+      this.router.navigate(['/dashboard']);
     }
   }
-  register(): void {
-    console.log('register');
-    this.router.navigate(['register']);
-  }
 
-  selectButtonRole(roleId: string) {
-    this.selectedButtonRole = roleId;
-    this.loginForm.get('role')?.setValue(roleId);
-    this.selectRole(roleId as UserRole);
-  }
-
-  get email() {
-    return this.loginForm.get('email')!;
-  }
-
-  get password() {
-    return this.loginForm.get('password')!;
-  }
-
-  get rememberMe() {
-    return this.loginForm.get('rememberMe')!;
-  }
-
-  forgotPassword() {
-    this.router.navigate(['forgot-password']);
-  }
 }

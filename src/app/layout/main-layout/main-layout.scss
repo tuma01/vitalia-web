@@ -2,6 +2,7 @@
     height: calc(100vh - 64px);
     /* Ensure container doesn't force scrollbars */
     overflow: hidden;
+    background-color: transparent !important; // Fix for white flash in dark mode
 }
 
 .sidenav {
@@ -33,7 +34,15 @@
     }
 }
 
-/* Material overrides to prevent shadow artifacts */
+/* Material overrides to prevent shadow artifacts and white flash */
 .mat-drawer-inner-container {
     overflow-x: hidden !important;
+    background-color: transparent !important;
+    /* Force transparent inner container */
+}
+
+/* Force the drawer itself to be transparent so our sidebar component handles the bg */
+.mat-drawer,
+.mat-sidenav {
+    background-color: transparent !important;
 }

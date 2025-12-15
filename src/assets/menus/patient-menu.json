@@ -1,52 +1,63 @@
 {
+    "version": "1.0",
+    "role": "patient",
     "menu": [
         {
-            "route": "dashboard",
+            "id": "dashboard",
             "name": "dashboard",
             "type": "link",
-            "icon": "dashboard"
+            "icon": "dashboard",
+            "route": "/dashboard",
+            "visible": true
         },
         {
-            "route": "appointments",
+            "id": "appointments",
             "name": "appointments",
             "type": "link",
-            "icon": "calendar_today"
+            "icon": "calendar_today",
+            "route": "/patient/appointments",
+            "visible": true,
+            "badge": {
+                "value": "1",
+                "color": "#1976d2"
+            }
         },
         {
-            "route": "medical-records",
-            "name": "medicalRecords",
+            "id": "medical-records",
+            "name": "medical_records",
             "type": "link",
-            "icon": "description"
+            "icon": "description",
+            "route": "/patient/medical-records",
+            "visible": true
         },
         {
-            "route": "billing",
+            "id": "billing",
             "name": "billingPayments",
             "type": "link",
-            "icon": "payment"
+            "icon": "payment",
+            "route": "/patient/billing",
+            "visible": true
         },
         {
-            "route": "profile",
+            "id": "profile",
             "name": "profile",
             "type": "sub",
             "icon": "account_circle",
+            "visible": true,
             "children": [
                 {
-                    "route": "overview",
+                    "id": "overview",
                     "name": "overview",
-                    "type": "link"
+                    "type": "link",
+                    "route": "/patient/profile/overview"
                 },
                 {
-                    "route": "settings",
+                    "id": "settings",
                     "name": "settings",
-                    "type": "link"
+                    "type": "link",
+                    "route": "/settings"
                 }
             ]
-        },
-        {
-            "route": "/logout",
-            "name": "logout",
-            "type": "link",
-            "icon": "exit_to_app"
         }
     ]
 }

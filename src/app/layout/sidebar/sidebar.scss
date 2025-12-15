@@ -163,20 +163,7 @@
         }
     }
 
-    &.hovering {
-        position: fixed;
-        left: 0;
-        top: 64px;
-        width: 260px;
-        /* Expanded width on hover */
-        height: calc(100vh - 64px);
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.3);
-        z-index: 1000;
-        overflow-y: auto;
-        /* Allow vertical scroll if needed */
-        overflow-x: hidden !important;
-        /* Ensure no horizontal scroll */
-    }
+    // .hovering style REMOVED: managed by parent layout logic for push effect
 }
 
 .sidebar-header {

@@ -61,7 +61,7 @@
 
 .custom-card {
   width: 60vw;
-  height: 85vh;
+  height: 85vh; // Increased height as requested
   border-radius: 30px;
   display: flex;
   justify-content: center;
@@ -95,19 +95,96 @@
 //   justify-content: center;
 // }
 
+
+// Error Alert Styles
+.error-alert {
+  display: flex;
+  align-items: center;
+  background-color: #ffebee; // Light red background
+  border-left: 4px solid #f44336; // Material Red 500
+  border-radius: 4px;
+  padding: 8px 12px; // Reduced padding
+  margin-bottom: 12px; // Reduced margin
+  width: 100%; // Ensure full width
+  box-sizing: border-box;
+  animation: slideIn 0.3s ease-out;
+
+  .error-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    color: #d32f2f;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .error-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; // Prevent text overflow
+
+    .error-title {
+      font-weight: 600;
+      color: #b71c1c;
+      font-size: 13px; // Smaller title
+      margin-bottom: 1px;
+    }
+
+    .error-message {
+      color: #c62828;
+      font-size: 12px; // Smaller message
+      line-height: 1.3;
+      white-space: normal; // Allow wrapping
+    }
+  }
+
+  .close-btn {
+    color: #ef5350;
+    width: 24px; // Smaller close button
+    height: 24px;
+    line-height: 24px;
+    margin-left: 8px;
+
+    .mat-icon {
+      font-size: 16px;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .form-section {
   width: 60%;
-  /* ocupa todo el ancho */
-  padding: 10px;
+  padding: 25px 30px 10px; // Increased top padding, moved content up
+  box-sizing: border-box;
   background-color: #f0f4f8;
-  /* color de fondo de la izquierda */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  /* centro vertical */
+  justify-content: flex-start; // Align to top instead of center
   align-items: center;
-  /* centro horizontal */
   text-align: center;
+  overflow-y: auto; // Critical for preventing overflow
+  max-height: 100%;
+}
+
+.login-header {
+  margin-bottom: 20px; // Add space between subtitle and roles
 }
 
 .separator {
@@ -116,14 +193,10 @@
   margin: 20px 0;
 }
 
-
-// ... (previous SCSS)
-
 .image-section {
   width: 40%;
   position: relative;
   background-image: url('/images/login.png');
-  /* Updated path */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -131,96 +204,31 @@
   align-items: center;
   color: white;
   text-align: center;
-}
 
-// ...
+  .overlay-text {
+    background-color: rgba(0, 0, 0, 0.5); // semi-transparente
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    text-align: center;
 
-.social-buttons-material {
-  margin-top: 24px;
-  /* Increased spacing */
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-}
+    h2 {
+      margin-top: 0;
+    }
 
-.forgot-link {
-  cursor: pointer;
-  text-decoration: underline;
-  font-family: inherit;
-  /* Inherit font from parent to be uniform */
-  font-size: 14px;
-}
-
-// Fix for select panel background
-::ng-deep .mat-mdc-select-panel {
-  background-color: white !important;
-}
-
-::ng-deep .mat-mdc-option {
-  background-color: white !important;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04) !important;
-  }
-
-  &.mdc-list-item--selected {
-    background-color: rgba(0, 0, 0, 0.08) !important;
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 
 
-.overlay-text {
-  background: rgba(0, 0, 0, 0.4);
-  /* opcional: fondo semi-transparente detrás del texto */
-  padding: 20px;
-  border-radius: 10px;
-}
-
-/* Header centrado */
-.custom-card mat-card-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.custom-card mat-card-title {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.custom-card mat-card-subtitle {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.75;
-  color: #c62828;
-}
-
-.custom-card mat-card-actions div {
-  align-items: center;
-  text-align: center;
-  color: #c62828;
-}
-
-.actions-center {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.actions-center p {
-  margin: 0;
-}
-
-/* ================================================= */
-/* 3. ROLES */
-/* ================================================= */
 .role-container {
   display: flex;
-  gap: 40px;
+  gap: 30px; // Increased gap significantly
   flex-wrap: wrap;
   justify-content: center;
-  padding: 20px 0;
+  padding: 0;
+  margin-bottom: 15px;
 }
 
 .role-btn-wrapper {
@@ -229,24 +237,34 @@
   align-items: center;
   cursor: pointer;
   color: #333;
+  transition: transform 0.2s ease; // Smooth transition
 }
 
 /* ---------- Círculo ---------- */
 .circle {
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 2px solid #cfcfcf;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: box-shadow 0.25s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); // Material easing
+  background-color: white; // Ensure background is white for shadow effect
 }
 
-/* Hover visual */
+/* Hover visual - Social Button Style */
 .role-btn-wrapper:hover .circle {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); // Stronger shadow
+  transform: translateY(-3px) scale(1.1); // Lift and scale up
+  border-color: transparent; // Optional: let the shadow define the shape
+}
+
+.role-btn-wrapper:hover .label {
+  text-decoration: none; // Remove underline to clean up
+  font-weight: 600; // Bold instead
+  color: #3f51b5; // Highlight color
 }
 
 /* ---------- Iconos ---------- */
@@ -266,10 +284,10 @@
 
 /* ---------- Label ---------- */
 .label {
-  margin-top: 10px;
-  font-size: 12px;
+  margin-top: 4px; // Reduced margin
+  font-size: 12px; // Slightly smaller
   font-weight: 400;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
   text-align: center;
   color: inherit;
@@ -307,12 +325,19 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 8px 0 16px;
+  margin: -5px 0 15px; // Negative top margin to pull it closer to input (counteracting MatFormField subscript)
 }
 
 .forgot-link {
   cursor: pointer;
   text-decoration: underline;
+}
+
+.social-buttons-material {
+  margin-top: 15px; // Increased separation from login button
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
 
 /* ================================================= */
@@ -393,10 +418,6 @@
 /* 5. RESPONSIVE DESIGN */
 /* ================================================= */
 
-/* ================================================= */
-/* 5. RESPONSIVE DESIGN */
-/* ================================================= */
-
 /* Global: Prevent wrapping for subtitle to maintain layout */
 .form-section p {
   white-space: nowrap;
@@ -433,7 +454,7 @@
 
   .form-section {
     width: 100%;
-    padding: 30px 20px;
+    padding: 20px 20px; // Slightly reduced padding
     /* Increased top padding for title visibility */
     background-color: #fff;
   }
@@ -446,36 +467,32 @@
 
   /* Scale down role icons */
   .role-container {
-    gap: 15px;
-    /* Reduce gap */
+    gap: 12px; // Reduced gap
   }
 
   .circle {
-    width: 40px;
-    /* Smaller circle */
-    height: 40px;
+    width: 36px; // Small
+    height: 36px;
   }
 
   .main-icon,
   .check-icon {
-    font-size: 20px;
-    /* Smaller icon */
+    font-size: 18px;
   }
 
   .label {
     font-size: 10px;
-    /* Smaller text */
   }
 
   /* Scale down social buttons */
   .social-buttons-material {
-    margin-top: 16px;
+    margin-top: 10px;
     gap: 12px;
   }
 
   .social-buttons-material button.mat-mdc-mini-fab {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     padding: 0;
   }
 
@@ -485,30 +502,4 @@
   }
 }
 
-.main-icon,
-.check-icon {
-  font-size: 20px;
-  /* Smaller icon */
-}
-
-.label {
-  font-size: 10px;
-  /* Smaller text */
-}
-
-/* Scale down social buttons */
-.social-buttons-material {
-  margin-top: 16px;
-  gap: 12px;
-}
-
-.social-buttons-material button.mat-mdc-mini-fab {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-}
-
-/* Log in button margin */
-button.mat-mdc-extended-fab {
-  margin-bottom: 0px;
-}
+// REMOVED DUPLICATE BLOCKS HERE

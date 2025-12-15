@@ -22,4 +22,24 @@ import { SessionService } from '../../core/services/session.service';
 export class Dashboard {
   private sessionService = inject(SessionService);
   currentUser$ = this.sessionService.user$;
+
+  get isDoctor(): boolean {
+    return this.sessionService.hasRole('ROLE_DOCTOR');
+  }
+
+  get isNurse(): boolean {
+    return this.sessionService.hasRole('ROLE_NURSE');
+  }
+
+  get isAdmin(): boolean {
+    return this.sessionService.hasAnyRole(['ROLE_ADMIN', 'ROLE_TENANT_ADMIN', 'ROLE_SUPER_ADMIN']);
+  }
+
+  get isPatient(): boolean {
+    return this.sessionService.hasRole('ROLE_PATIENT');
+  }
+
+  get isEmployee(): boolean {
+    return this.sessionService.hasRole('ROLE_EMPLOYEE');
+  }
 }

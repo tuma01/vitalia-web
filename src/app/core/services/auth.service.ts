@@ -35,20 +35,30 @@ export class AuthService {
 
     console.log('[AuthService] Logging in with:', body);
 
+    // --- SIMULACIÓN DE ROLES (SOLO PARA DESARROLLO) ---
+    const normalizedEmail = email.trim().toLowerCase();
+
+    console.log(`[AuthService Debug] Input email: '${email}'`);
+    console.log(`[AuthService Debug] Normalized: '${normalizedEmail}'`);
+    console.log(`[AuthService Debug] Is Nurse? ${normalizedEmail === 'nurse@test.com'}`);
+
+    if (normalizedEmail === 'doctor@test.com') {
+      return this.mockLoginResponse('ROLE_DOCTOR', 'Dr. Gregory House', tenantCode);
+    }
+    if (normalizedEmail === 'nurse@test.com') {
+      console.log('[AuthService Debug] Intercepting Nurse Login');
+      return this.mockLoginResponse('ROLE_NURSE', 'Enf. Florence Nightingale', tenantCode);
+    }
+    if (normalizedEmail === 'patient@test.com') {
+      return this.mockLoginResponse('ROLE_PATIENT', 'Patient John Doe', tenantCode);
+    }
+    if (normalizedEmail === 'employee@test.com') {
+      return this.mockLoginResponse('ROLE_EMPLOYEE', 'Employee Jane Smith', tenantCode);
+    }
+
     return this.authApiService.login({
       body
-    }).pipe(
-      tap(response => {
-        if (response.tokens && response.user) {
-          // ✅ Usar SessionService para manejo completo
-          this.sessionService.login({
-            accessToken: response.tokens.accessToken!,
-            refreshToken: response.tokens.refreshToken,
-            user: response.user
-          });
-        }
-      })
-    );
+    });
   }
 
   /**
@@ -187,5 +197,39 @@ export class AuthService {
     } else {
       this.router.navigate(['/dashboard']);
     }
+  }
+
+  /**
+   * Genera una respuesta simulada para pruebas
+   */
+  private mockLoginResponse(role: string, name: string, tenant?: string): Observable<AuthenticationResponse> {
+    const mockUser: UserSummary = {
+      id: 999,
+      email: role === 'ROLE_DOCTOR' ? 'doctor@test.com' : 'nurse@test.com',
+      personName: name,
+      roles: [role],
+      tenantCode: tenant || 'HOSPITAL_CENTRAL', // Default tenant
+      personType: role.replace('ROLE_', '') as any
+    };
+
+    const mockResponse: AuthenticationResponse = {
+      tokens: {
+        accessToken: 'mock-access-token-' + Date.now(),
+        refreshToken: 'mock-refresh-token-' + Date.now(),
+        // expiresIn: 3600 // Eliminar si da error en tipos
+      },
+      user: mockUser
+    };
+
+    return of(mockResponse).pipe(
+      tap(() => {
+        this.sessionService.login({
+          accessToken: mockResponse.tokens!.accessToken!,
+          refreshToken: mockResponse.tokens!.refreshToken,
+          user: mockUser
+        });
+        console.log(`[AuthService] MOCKED login successful for ${role}`);
+      })
+    );
   }
 }
