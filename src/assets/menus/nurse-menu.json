@@ -1,0 +1,58 @@
+{
+    "version": "1.0",
+    "role": "nurse",
+    "menu": [
+        {
+            "id": "dashboard",
+            "name": "dashboard",
+            "type": "link",
+            "icon": "dashboard",
+            "route": "/dashboard",
+            "visible": true
+        },
+        {
+            "id": "triage",
+            "name": "triage",
+            "type": "link",
+            "icon": "medical_services",
+            "route": "/nurse/triage",
+            "visible": true,
+            "badge": {
+                "value": "2",
+                "color": "#f44336"
+            }
+        },
+        {
+            "id": "patient-list",
+            "name": "patient_list",
+            "type": "link",
+            "icon": "format_list_bulleted",
+            "route": "/nurse/patients",
+            "visible": true
+        },
+        {
+            "id": "vitals",
+            "name": "vitals",
+            "type": "link",
+            "icon": "monitor_heart",
+            "route": "/nurse/vitals",
+            "visible": true
+        },
+        {
+            "id": "shift-schedule",
+            "name": "shift_schedule",
+            "type": "link",
+            "icon": "schedule",
+            "route": "/nurse/schedule",
+            "visible": true
+        },
+        {
+            "id": "settings",
+            "name": "settings",
+            "type": "link",
+            "icon": "settings",
+            "route": "/settings",
+            "visible": true
+        }
+    ]
+}
