@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "2.0",
     "role": "tenant-admin",
     "menu": [
         {
@@ -11,101 +11,140 @@
             "visible": true
         },
         {
-            "id": "patients",
-            "name": "patients",
-            "type": "sub",
-            "icon": "people",
+            "id": "operations",
+            "name": "hospital_operations",
+            "type": "group",
+            "icon": "admin_panel_settings",
             "visible": true,
             "children": [
                 {
-                    "id": "all-patients",
-                    "name": "all_patients",
+                    "id": "departments",
+                    "name": "departments_clinics",
                     "type": "link",
-                    "route": "/patients",
-                    "visible": true
+                    "route": "/admin/ops/departments",
+                    "icon": "apartment"
                 },
                 {
-                    "id": "add-patient",
-                    "name": "add_patient",
+                    "id": "beds",
+                    "name": "bed_management",
                     "type": "link",
-                    "route": "/patients/add",
-                    "visible": true
+                    "route": "/admin/ops/beds",
+                    "icon": "hotel"
+                },
+                {
+                    "id": "schedules",
+                    "name": "facility_scheduling",
+                    "type": "link",
+                    "route": "/admin/ops/schedules",
+                    "icon": "calendar_view_week"
                 }
             ]
         },
         {
-            "id": "appointments",
-            "name": "appointments",
-            "type": "link",
-            "icon": "event",
-            "route": "/appointments",
-            "visible": true,
-            "badge": {
-                "value": "5",
-                "color": "#f44336"
-            }
-        },
-        {
-            "id": "clinical",
-            "name": "clinical",
-            "type": "sub",
-            "icon": "medical_services",
-            "visible": true,
-            "children": [
-                {
-                    "id": "consultations",
-                    "name": "consultations",
-                    "type": "link",
-                    "route": "/clinical/consultations",
-                    "visible": true
-                },
-                {
-                    "id": "lab-tests",
-                    "name": "lab_tests",
-                    "type": "sub",
-                    "icon": "biotech",
-                    "visible": true,
-                    "children": [
-                        {
-                            "id": "blood-tests",
-                            "name": "blood_tests",
-                            "type": "link",
-                            "route": "/clinical/lab-tests/blood",
-                            "visible": true
-                        },
-                        {
-                            "id": "imaging",
-                            "name": "imaging",
-                            "type": "link",
-                            "route": "/clinical/lab-tests/imaging",
-                            "visible": true
-                        }
-                    ]
-                },
-                {
-                    "id": "prescriptions",
-                    "name": "prescriptions",
-                    "type": "link",
-                    "route": "/clinical/prescriptions",
-                    "visible": true
-                }
-            ]
-        },
-        {
-            "id": "employees",
-            "name": "employees",
-            "type": "link",
+            "id": "hr",
+            "name": "human_resources",
+            "type": "group",
             "icon": "badge",
-            "route": "/employees",
-            "visible": true
+            "visible": true,
+            "children": [
+                {
+                    "id": "staff-list",
+                    "name": "staff_directory",
+                    "type": "link",
+                    "route": "/admin/hr/staff",
+                    "icon": "people"
+                },
+                {
+                    "id": "roles",
+                    "name": "roles_permissions",
+                    "type": "link",
+                    "route": "/admin/hr/roles",
+                    "icon": "lock_person"
+                },
+                {
+                    "id": "payroll",
+                    "name": "payroll_benefits",
+                    "type": "link",
+                    "route": "/admin/hr/payroll",
+                    "icon": "payments"
+                }
+            ]
+        },
+        {
+            "id": "clinical-config",
+            "name": "clinical_configuration",
+            "type": "group",
+            "icon": "settings_suggest",
+            "visible": true,
+            "children": [
+                {
+                    "id": "services",
+                    "name": "service_catalog",
+                    "type": "link",
+                    "route": "/admin/clinical/services",
+                    "icon": "list_alt"
+                },
+                {
+                    "id": "medications",
+                    "name": "pharmacy_formulary",
+                    "type": "link",
+                    "route": "/admin/clinical/medications",
+                    "icon": "medication"
+                },
+                {
+                    "id": "pathways",
+                    "name": "care_pathways",
+                    "type": "link",
+                    "route": "/admin/clinical/pathways",
+                    "icon": "alt_route"
+                }
+            ]
         },
         {
             "id": "settings",
             "name": "settings",
-            "type": "link",
+            "type": "group",
             "icon": "settings",
-            "route": "/settings",
-            "visible": true
+            "visible": true,
+            "children": [
+                {
+                    "id": "theme-branding",
+                    "name": "theme_branding",
+                    "type": "link",
+                    "route": "/admin/settings/theme",
+                    "icon": "palette"
+                },
+                {
+                    "id": "general-config",
+                    "name": "general_configuration",
+                    "type": "link",
+                    "route": "/admin/settings/general",
+                    "icon": "tune"
+                }
+            ]
+        },
+        {
+            "id": "reports",
+            "name": "reports_analytics",
+            "type": "group",
+            "icon": "analytics",
+            "visible": true,
+            "children": [
+                {
+                    "id": "financial-reports",
+                    "name": "financial_reports",
+                    "type": "link",
+                    "route": "/admin/reports/financial",
+                    "icon": "bar_chart"
+                },
+                {
+                    "id": "clinical-reports",
+                    "name": "clinical_quality",
+                    "type": "link",
+                    "route": "/admin/reports/clinical",
+                    "icon": "pie_chart"
+                }
+            ]
         }
     ]
 }

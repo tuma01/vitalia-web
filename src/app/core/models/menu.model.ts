@@ -2,10 +2,10 @@
  * Badge configuration for menu items
  */
 export interface MenuBadge {
-    /** Badge color (e.g., 'red-50', 'blue-100') */
-    color: string;
-    /** Badge value/text to display */
-    value: string;
+  /** Badge color (e.g., 'red-50', 'blue-100') */
+  color: string;
+  /** Badge value/text to display */
+  value: string;
 }
 
 /**
@@ -13,7 +13,7 @@ export interface MenuBadge {
  * - 'link': Direct navigation link
  * - 'sub': Submenu with children
  */
-export type MenuItemType = 'link' | 'sub' | 'extLink' | 'extTabLink';
+export type MenuItemType = 'link' | 'sub' | 'extLink' | 'extTabLink' | 'group';
 
 /**
  * Permission configuration for menu items.
@@ -61,6 +61,6 @@ export interface MenuItem {
  * Complete menu configuration
  */
 export interface MenuConfig {
-    /** Array of top-level menu items */
-    menu: MenuItem[];
+  /** Array of top-level menu items */
+  menu: MenuItem[];
 }

@@ -17,7 +17,8 @@
             <!-- Simple Link (no children) - EXPANDED -->
             <a class="menu-item" *ngIf="item.type === 'link' && (!isCollapsed || isHovering)" [routerLink]="item.route"
                 routerLinkActive="active"
-                [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}">
+                [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}"
+                [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
                 <mat-icon class="menu-icon">{{ item.icon || 'circle' }}</mat-icon>
                 <span class="menu-text">{{ 'menu.' + item.name | translate }}</span>
                 <span class="badge" *ngIf="item.badge" [style.background-color]="item.badge.color">
@@ -33,9 +34,10 @@
                 <mat-icon class="menu-icon">{{ item.icon || 'circle' }}</mat-icon>
             </a>
 
-            <!-- Submenu Level 1 (has children) - EXPANDED -->
-            <mat-expansion-panel *ngIf="item.type === 'sub' && (!isCollapsed || isHovering)" class="submenu-panel">
-                <mat-expansion-panel-header>
+            <!-- Submenu/Group Level 1 (has children) - EXPANDED -->
+            <mat-expansion-panel *ngIf="(item.type === 'sub' || item.type === 'group') && (!isCollapsed || isHovering)"
+                class="submenu-panel">
+                <mat-expansion-panel-header [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
                     <mat-panel-title>
                         <mat-icon class="menu-icon">{{ item.icon || 'folder' }}</mat-icon>
                         <span class="menu-text">{{ 'menu.' + item.name | translate }}</span>
@@ -47,13 +49,16 @@
                     <ng-container *ngFor="let subItem of item.children">
                         <!-- Level 2: Simple Link -->
                         <a class="submenu-item" *ngIf="subItem.type === 'link'" [routerLink]="subItem.route"
-                            routerLinkActive="active">
+                            routerLinkActive="active" [matTooltip]="'menu.' + subItem.name | translate"
+                            matTooltipPosition="right">
                             <span class="submenu-text">{{ 'menu.' + subItem.name | translate }}</span>
                         </a>
 
                         <!-- Level 2: Nested Submenu -->
-                        <mat-expansion-panel *ngIf="subItem.type === 'sub'" class="nested-panel">
-                            <mat-expansion-panel-header>
+                        <mat-expansion-panel *ngIf="subItem.type === 'sub' || subItem.type === 'group'"
+                            class="nested-panel">
+                            <mat-expansion-panel-header [matTooltip]="'menu.' + subItem.name | translate"
+                                matTooltipPosition="right">
                                 <mat-panel-title>
                                     <mat-icon class="nested-icon" *ngIf="subItem.icon">{{ subItem.icon }}</mat-icon>
                                     <span class="nested-text">{{ 'menu.' + subItem.name | translate }}</span>
@@ -63,7 +68,8 @@
                             <!-- Level 3: Nested Items -->
                             <div class="nested-list">
                                 <a class="nested-item" *ngFor="let nestedItem of subItem.children"
-                                    [routerLink]="nestedItem.route" routerLinkActive="active">
+                                    [routerLink]="nestedItem.route" routerLinkActive="active"
+                                    [matTooltip]="'menu.' + nestedItem.name | translate" matTooltipPosition="right">
                                     <span class="nested-item-text">{{ 'menu.' + nestedItem.name | translate }}</span>
                                 </a>
                             </div>
@@ -72,8 +78,9 @@
                 </div>
             </mat-expansion-panel>
 
-            <!-- Submenu (has children) - COLLAPSED -->
-            <a class="menu-item collapsed-item" *ngIf="item.type === 'sub' && isCollapsed && !isHovering"
+            <!-- Submenu/Group (has children) - COLLAPSED -->
+            <a class="menu-item collapsed-item"
+                *ngIf="(item.type === 'sub' || item.type === 'group') && isCollapsed && !isHovering"
                 [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
                 <mat-icon class="menu-icon">{{ item.icon || 'folder' }}</mat-icon>
             </a>

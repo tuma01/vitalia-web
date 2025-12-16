@@ -152,6 +152,19 @@
             color: white;
             background-color: #764ba2 !important;
         }
+
+        // Light mode scrollbar overrides
+        .menu-list {
+            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+
+            &::-webkit-scrollbar-thumb {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+        }
     }
 
     &.collapsed {
@@ -205,13 +218,36 @@
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 8px 0;
+    padding: 8px 0; // Reset padding
+    // ... rest of scrollbar styles
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    // Force spacing at the end using pseudo-element
+    &::after {
+        content: '';
+        display: block;
+        min-height: 60px; // Explicit space at the bottom
+        width: 100%;
+    }
+
+    // Custom Thin Scrollbar
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 
     &::-webkit-scrollbar {
-        display: none;
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.5);
     }
 }
 
@@ -297,6 +333,8 @@
             display: flex;
             align-items: center;
             margin: 0;
+            padding-right: 28px; // Fix text overlap with indicator
+            overflow: hidden; // Ensure text truncates properly
         }
     }
 

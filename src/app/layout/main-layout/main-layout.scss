@@ -1,5 +1,6 @@
 .sidenav-container {
     height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
     /* Ensure container doesn't force scrollbars */
     overflow: hidden;
     background-color: transparent !important; // Fix for white flash in dark mode
@@ -23,14 +24,32 @@
 }
 
 .content {
-    padding: 24px;
+    // sidebar-like behavior: simple padding + border-box
+    box-sizing: border-box;
+    padding: 0; // Padding moved to wrapper
+
     background-color: var(--body-background-color, #f4f6f8);
-    height: calc(100vh - 64px);
+
+    // Use 100% to fill the parent .sidenav-container
+    height: 100%;
+
     overflow-y: auto;
+
+    // Transition for collapse animation
     transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     &.collapsed {
         margin-left: 80px !important;
+    }
+}
+
+.main-content-wrapper {
+    min-height: 100%;
+    box-sizing: border-box;
+    padding: 24px 24px 40px 24px; // Bottom padding ensures space at the end
+
+    @media (max-width: 600px) {
+        padding: 16px 16px 40px 16px;
     }
 }
 

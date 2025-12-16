@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { TranslateModule } from '@ngx-translate/core';
 import { SessionService } from '../../core/services/session.service';
 
 @Component({
@@ -14,7 +15,8 @@ import { SessionService } from '../../core/services/session.service';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
-    MatGridListModule
+    MatGridListModule,
+    TranslateModule
   ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
