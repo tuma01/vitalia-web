@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
   selectedButtonRole: string | null = null;
 
   selectedTenant: string = '';
-  showPassword: boolean = false;
+  showPassword = false;
   isLoading: boolean = false;
   isSubmitting = false;
 
@@ -108,9 +108,16 @@ export class LoginComponent implements OnInit {
 
   getTenants(): void {
     this.tenantService.getTenants().subscribe({
-      next: (data: Tenant[]) => {
-        this.tenants = data;
-        this.tenantsOptions = data.map((t: Tenant) => ({ code: t.code!, name: t.name! }));
+      next: (response: any) => {
+        // Handle ApiResponse wrapper if present
+        const data = response.data || response;
+        if (Array.isArray(data)) {
+          this.tenants = data;
+          this.tenantsOptions = data.map((t: Tenant) => ({ code: t.code!, name: t.name! }));
+        } else {
+          console.error('Invalid tenants format', response);
+          this.tenants = [];
+        }
       },
       error: (err: any) => console.error('Error fetching tenants', err)
     });
@@ -130,6 +137,10 @@ export class LoginComponent implements OnInit {
 
   forgotPassword(): void {
     console.log('Forgot password clicked');
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onLogin(): void {
@@ -179,15 +190,28 @@ export class LoginComponent implements OnInit {
             isAuthorized = userRoles.includes('ROLE_EMPLOYEE');
             break;
           default:
-            isAuthorized = true;
+            // If no role is selected, ONLY allow if user is SUPER_ADMIN
+            // Otherwise, force them to select a role.
+            if (userRoles.includes('ROLE_SUPER_ADMIN')) {
+              isAuthorized = true;
+            } else {
+              isAuthorized = false;
+              // If we fail here, we should probably set a distinct error message,
+              // but the generic role mismatch message below can be adapted.
+              console.warn(`[Login] No role selected and user is not SUPER_ADMIN. Actual: ${userRoles}`);
+            }
+            break;
         }
 
         if (!isAuthorized) {
           console.warn(`[Login] Role mismatch! Selected: ${selectedRole}, Actual: ${userRoles}`);
 
           const roleName = selectedRole ? selectedRole.toUpperCase() : 'USER';
+          const msg = selectedRole
+            ? `Access denied. You are not authorized as a ${roleName}.`
+            : 'Please select a role (Doctor, Nurse, etc.) to login.';
 
-          this.snackBar.open(`Access denied. You are not authorized as a ${roleName}.`, 'Close', {
+          this.snackBar.open(msg, 'Close', {
             duration: 5000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
@@ -253,7 +277,7 @@ export class LoginComponent implements OnInit {
     console.log('Navigating based on roles:', roles);
 
     if (roles.includes('ROLE_SUPER_ADMIN')) {
-      this.router.navigate(['/admin/dashboard']);
+      this.router.navigate(['/super-admin/dashboard']);
     } else if (roles.includes('ROLE_TENANT_ADMIN') || roles.includes('ROLE_ADMIN')) {
       this.router.navigate(['/admin/hospital-dashboard']);
     } else if (roles.includes('ROLE_DOCTOR')) {

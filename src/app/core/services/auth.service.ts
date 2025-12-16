@@ -27,20 +27,25 @@ export class AuthService {
    * Perform login and store tokens
    */
   login(email: string, password: string, tenantCode?: string): Observable<AuthenticationResponse> {
-    const body = {
+    // Only include tenantCode if it's provided (not undefined)
+    const body: any = {
       email,
-      password,
-      tenantCode: tenantCode // Send undefined if not provided, don't force empty string
-    } as any;
+      password
+    };
+
+    // Add tenantCode only if it's defined
+    if (tenantCode !== undefined) {
+      body.tenantCode = tenantCode;
+    }
 
     console.log('[AuthService] Logging in with:', body);
 
     // --- SIMULACIÓN DE ROLES (SOLO PARA DESARROLLO) ---
     const normalizedEmail = email.trim().toLowerCase();
 
-    console.log(`[AuthService Debug] Input email: '${email}'`);
-    console.log(`[AuthService Debug] Normalized: '${normalizedEmail}'`);
-    console.log(`[AuthService Debug] Is Nurse? ${normalizedEmail === 'nurse@test.com'}`);
+    // console.log(`[AuthService Debug] Input email: '${email}'`);
+    // console.log(`[AuthService Debug] Normalized: '${normalizedEmail}'`);
+    // console.log(`[AuthService Debug] Is Nurse? ${normalizedEmail === 'nurse@test.com'}`);
 
     if (normalizedEmail === 'doctor@test.com') {
       return this.mockLoginResponse('ROLE_DOCTOR', 'Dr. Gregory House', tenantCode);

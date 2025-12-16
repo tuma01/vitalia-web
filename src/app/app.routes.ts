@@ -13,6 +13,12 @@ export const routes: Routes = [
         redirectTo: 'login',
         pathMatch: 'full'
     },
+    // Super Admin Login (separate from regular login)
+    {
+        path: 'super-admin/login',
+        loadComponent: () => import('./features/auth/super-admin-login/super-admin-login.component').then(m => m.SuperAdminLoginComponent),
+        data: { title: 'Super Admin Login' }
+    },
 
     // Protected routes (authentication required)
     {
@@ -64,6 +70,20 @@ export const routes: Routes = [
                 data: { roles: ['ROLE_PATIENT'] },
                 children: [
                     { path: 'dashboard', component: Dashboard }
+                ]
+            },
+            // Super Admin routes
+            {
+                path: 'super-admin',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_SUPER_ADMIN'] },
+                children: [
+                    { path: 'dashboard', component: Dashboard },
+                    // Geography management routes will be added here
+                    // { path: 'geography/countries', component: CountriesComponent },
+                    // { path: 'geography/departamentos', component: DepartamentosComponent },
+                    // { path: 'geography/provincias', component: ProvinciasComponent },
+                    // { path: 'geography/municipios', component: MunicipiosComponent },
                 ]
             }
         ]

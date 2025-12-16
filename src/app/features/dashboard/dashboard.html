@@ -1,7 +1,8 @@
 <div class="dashboard-container" *ngIf="currentUser$ | async as user">
     <div class="welcome-section">
-        <h1 class="mat-display-1">Welcome back, {{ user.personName || user.email }}!</h1>
-        <p class="subtitle">Role: {{ user.roles?.[0] || 'User' }} | Tenant: {{ user.tenantCode || 'Vitalia' }}</p>
+        <h1 class="mat-display-1">{{ 'dashboard.welcome_back' | translate: {name: user.personName || user.email} }}</h1>
+        <p class="subtitle">{{ 'dashboard.role' | translate }}: {{ user.roles?.[0] || 'User' }} | {{ 'dashboard.tenant'
+            | translate }}: {{ user.tenantCode || 'Vitalia' }}</p>
     </div>
 
     <!-- ADMIN DASHBOARD -->
@@ -9,34 +10,34 @@
         <mat-card class="dashboard-card info-card">
             <mat-card-header>
                 <mat-icon mat-card-avatar class="accent-icon">people</mat-icon>
-                <mat-card-title>All Patients</mat-card-title>
-                <mat-card-subtitle>Active records</mat-card-subtitle>
+                <mat-card-title>{{ 'dashboard.admin.patients.title' | translate }}</mat-card-title>
+                <mat-card-subtitle>{{ 'dashboard.admin.patients.subtitle' | translate }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <h2 class="stat-number">1,240</h2>
-                <p>+12 this month</p>
+                <p>+12 {{ 'dashboard.this_month' | translate }}</p>
             </mat-card-content>
         </mat-card>
 
         <mat-card class="dashboard-card action-card">
             <mat-card-header>
                 <mat-icon mat-card-avatar color="primary">medical_services</mat-icon>
-                <mat-card-title>Staff</mat-card-title>
-                <mat-card-subtitle>Doctors & Nurses</mat-card-subtitle>
+                <mat-card-title>{{ 'dashboard.admin.staff.title' | translate }}</mat-card-title>
+                <mat-card-subtitle>{{ 'dashboard.admin.staff.subtitle' | translate }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <h2 class="stat-number">45</h2>
-                <p>Active Staff Members</p>
+                <p>{{ 'dashboard.admin.staff.active' | translate }}</p>
             </mat-card-content>
         </mat-card>
 
         <mat-card class="dashboard-card warning-card">
             <mat-card-header>
                 <mat-icon mat-card-avatar color="warn">warning</mat-icon>
-                <mat-card-title>System Alerts</mat-card-title>
+                <mat-card-title>{{ 'dashboard.admin.alerts.title' | translate }}</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <p>2 servers require maintenance.</p>
+                <p>2 {{ 'dashboard.admin.alerts.maintenance_needed' | translate }}</p>
             </mat-card-content>
         </mat-card>
     </div>

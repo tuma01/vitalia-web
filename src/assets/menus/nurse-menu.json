@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "2.0",
     "role": "nurse",
     "menu": [
         {
@@ -11,48 +11,141 @@
             "visible": true
         },
         {
-            "id": "triage",
-            "name": "triage",
-            "type": "link",
-            "icon": "medical_services",
-            "route": "/nurse/triage",
+            "id": "workspace",
+            "name": "nursing_station",
+            "type": "group",
+            "icon": "local_hospital",
             "visible": true,
-            "badge": {
-                "value": "2",
-                "color": "#f44336"
-            }
+            "children": [
+                {
+                    "id": "triage",
+                    "name": "triage_queue",
+                    "type": "link",
+                    "route": "/nurse/triage",
+                    "icon": "priority_high",
+                    "badge": {
+                        "value": "5",
+                        "color": "#f44336"
+                    }
+                },
+                {
+                    "id": "active-patients",
+                    "name": "active_patients",
+                    "type": "link",
+                    "route": "/nurse/patients/active",
+                    "icon": "personal_injury"
+                },
+                {
+                    "id": "tasks",
+                    "name": "my_tasks",
+                    "type": "link",
+                    "route": "/nurse/tasks",
+                    "icon": "task_alt",
+                    "badge": {
+                        "value": "12",
+                        "color": "#ff9800"
+                    }
+                }
+            ]
         },
         {
-            "id": "patient-list",
-            "name": "patient_list",
-            "type": "link",
-            "icon": "format_list_bulleted",
-            "route": "/nurse/patients",
-            "visible": true
+            "id": "communication",
+            "name": "communication",
+            "type": "group",
+            "icon": "chat",
+            "visible": true,
+            "children": [
+                {
+                    "id": "inbox",
+                    "name": "clinical_inbox",
+                    "type": "link",
+                    "route": "/nurse/inbox",
+                    "icon": "mail"
+                },
+                {
+                    "id": "chat",
+                    "name": "chat",
+                    "type": "link",
+                    "route": "/nurse/chat",
+                    "icon": "forum"
+                }
+            ]
         },
         {
-            "id": "vitals",
-            "name": "vitals",
-            "type": "link",
-            "icon": "monitor_heart",
-            "route": "/nurse/vitals",
-            "visible": true
+            "id": "inpatient",
+            "name": "inpatient_management",
+            "type": "group",
+            "icon": "bed",
+            "visible": true,
+            "children": [
+                {
+                    "id": "floor-plan",
+                    "name": "floor_view",
+                    "type": "link",
+                    "route": "/nurse/inpatient/floor",
+                    "icon": "grid_view"
+                },
+                {
+                    "id": "emar",
+                    "name": "medication_admin",
+                    "type": "link",
+                    "route": "/nurse/inpatient/emar",
+                    "icon": "medication_liquid"
+                },
+                {
+                    "id": "rounds-notes",
+                    "name": "nursing_notes",
+                    "type": "link",
+                    "route": "/nurse/inpatient/notes",
+                    "icon": "note_alt"
+                }
+            ]
         },
         {
-            "id": "shift-schedule",
-            "name": "shift_schedule",
-            "type": "link",
-            "icon": "schedule",
-            "route": "/nurse/schedule",
-            "visible": true
+            "id": "care-coord",
+            "name": "care_coordination",
+            "type": "group",
+            "icon": "handshake",
+            "visible": true,
+            "children": [
+                {
+                    "id": "care-plans",
+                    "name": "care_plans",
+                    "type": "link",
+                    "route": "/nurse/care/plans",
+                    "icon": "assignment"
+                },
+                {
+                    "id": "appointments",
+                    "name": "scheduled_procedures",
+                    "type": "link",
+                    "route": "/nurse/care/procedures",
+                    "icon": "event"
+                }
+            ]
         },
         {
-            "id": "settings",
-            "name": "settings",
-            "type": "link",
-            "icon": "settings",
-            "route": "/settings",
-            "visible": true
+            "id": "staff",
+            "name": "staff_management",
+            "type": "group",
+            "icon": "badge",
+            "visible": true,
+            "children": [
+                {
+                    "id": "shift-schedule",
+                    "name": "my_shifts",
+                    "type": "link",
+                    "route": "/nurse/schedule",
+                    "icon": "schedule"
+                },
+                {
+                    "id": "handover",
+                    "name": "shift_handover",
+                    "type": "link",
+                    "route": "/nurse/handover",
+                    "icon": "supervisor_account"
+                }
+            ]
         }
     ]
 }

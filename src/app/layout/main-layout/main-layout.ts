@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject, OnInit } from '@angular/core';
+import { Component, ViewChild, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
@@ -18,6 +18,7 @@ import { SettingsPanel } from '../settings-panel/settings-panel';
 export class MainLayout implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
+  private cd = inject(ChangeDetectorRef);
 
   @ViewChild('sidebar') sidebar!: Sidebar;
 
@@ -42,6 +43,9 @@ export class MainLayout implements OnInit {
           this.sidenavOpened = true; // Open by default on desktop
           this.sidebarCollapsed = false; // Expanded by default on desktop init
         }
+
+        // Force UI update to prevent layout glitches on initial load/resize
+        this.cd.detectChanges();
       });
 
     // Close sidenav on navigation (mobile only)

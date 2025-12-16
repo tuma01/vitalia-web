@@ -10,8 +10,8 @@ import { ApiConfiguration } from '../../api/api-configuration';
  */
 const DEFAULT_THEME: ThemeDto = {
     name: 'Vitalia Default Theme',
-    logoUrl: '/assets/images/vitalia-logo.svg',
-    faviconUrl: '/assets/images/favicon.ico',
+    logoUrl: '',
+    faviconUrl: 'favicon.ico',
     primaryColor: '#667eea',
     accentColor: '#764ba2',
     warnColor: '#f44336',

@@ -1,5 +1,5 @@
 {
-    "version": "1.0",
+    "version": "2.0",
     "role": "doctor",
     "menu": [
         {
@@ -7,52 +7,147 @@
             "name": "dashboard",
             "type": "link",
             "icon": "dashboard",
-            "route": "/dashboard",
+            "route": "/doctor/dashboard",
             "visible": true
         },
         {
-            "id": "my-patients",
-            "name": "my_patients",
-            "type": "link",
-            "icon": "people",
-            "route": "/doctor/patients",
-            "visible": true
-        },
-        {
-            "id": "appointments",
-            "name": "appointments",
-            "type": "link",
-            "icon": "calendar_today",
-            "route": "/doctor/appointments",
+            "id": "workspace",
+            "name": "clinical_workspace",
+            "type": "group",
+            "icon": "desktop_mac",
             "visible": true,
-            "badge": {
-                "value": "3",
-                "color": "#1976d2"
-            }
+            "children": [
+                {
+                    "id": "my-queue",
+                    "name": "patient_queue",
+                    "type": "link",
+                    "route": "/doctor/queue",
+                    "icon": "people_alt",
+                    "badge": {
+                        "value": "3",
+                        "color": "#d32f2f"
+                    }
+                },
+                {
+                    "id": "my-schedule",
+                    "name": "my_schedule",
+                    "type": "link",
+                    "route": "/doctor/schedule",
+                    "icon": "calendar_month"
+                },
+                {
+                    "id": "calendar",
+                    "name": "calendar",
+                    "type": "link",
+                    "route": "/doctor/calendar",
+                    "icon": "event"
+                },
+                {
+                    "id": "tasks",
+                    "name": "my_tasks",
+                    "type": "link",
+                    "route": "/doctor/tasks",
+                    "icon": "task_alt",
+                    "badge": {
+                        "value": "8",
+                        "color": "#ff9800"
+                    }
+                }
+            ]
         },
         {
-            "id": "medical-records",
+            "id": "clinical-care",
+            "name": "clinical_care",
+            "type": "group",
+            "icon": "monitor_heart",
+            "visible": true,
+            "children": [
+                {
+                    "id": "my-patients",
+                    "name": "my_patients",
+                    "type": "link",
+                    "route": "/doctor/patients/list",
+                    "icon": "assignment_ind"
+                },
+                {
+                    "id": "rounds",
+                    "name": "inpatient_rounds",
+                    "type": "link",
+                    "route": "/doctor/rounds",
+                    "icon": "bed"
+                },
+                {
+                    "id": "orders",
+                    "name": "orders_entry",
+                    "type": "link",
+                    "route": "/doctor/orders",
+                    "icon": "playlist_add_check"
+                }
+            ]
+        },
+        {
+            "id": "records",
             "name": "medical_records",
-            "type": "link",
-            "icon": "description",
-            "route": "/doctor/medical-records",
-            "visible": true
+            "type": "group",
+            "icon": "folder",
+            "visible": true,
+            "children": [
+                {
+                    "id": "search-record",
+                    "name": "search_records",
+                    "type": "link",
+                    "route": "/doctor/records/search",
+                    "icon": "search"
+                },
+                {
+                    "id": "lab-results",
+                    "name": "lab_results_review",
+                    "type": "link",
+                    "route": "/doctor/results/labs",
+                    "icon": "science"
+                },
+                {
+                    "id": "imaging",
+                    "name": "pacs_imaging",
+                    "type": "link",
+                    "route": "/doctor/results/imaging",
+                    "icon": "imagesearch_roller"
+                }
+            ]
         },
         {
-            "id": "prescriptions",
-            "name": "prescriptions",
-            "type": "link",
-            "icon": "medication",
-            "route": "/doctor/prescriptions",
-            "visible": true
-        },
-        {
-            "id": "settings",
-            "name": "settings",
-            "type": "link",
-            "icon": "settings",
-            "route": "/settings",
-            "visible": true
+            "id": "communication",
+            "name": "communication",
+            "type": "group",
+            "icon": "chat",
+            "visible": true,
+            "children": [
+                {
+                    "id": "inbox",
+                    "name": "clinical_inbox",
+                    "type": "link",
+                    "route": "/doctor/inbox",
+                    "icon": "mail",
+                    "badge": {
+                        "value": "5",
+                        "color": "#1976d2"
+                    }
+                },
+                {
+                    "id": "chat",
+                    "name": "chat",
+                    "type": "link",
+                    "route": "/doctor/chat",
+                    "icon": "chat"
+                },
+                {
+                    "id": "referrals",
+                    "name": "referrals",
+                    "type": "link",
+                    "route": "/doctor/referrals",
+                    "icon": "share"
+                }
+            ]
         }
     ]
 }
