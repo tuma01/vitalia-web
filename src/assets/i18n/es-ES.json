@@ -30,7 +30,9 @@
         "sign_in": "Iniciar Sesión",
         "forgot_password": "¿Olvidaste tu contraseña?",
         "enter_your_credentials": "Ingresa tus credenciales para acceder a tu cuenta",
-        "select_health_center": "Selecciona el centro de salud"
+        "select_health_center": "Selecciona el centro de salud",
+        "confirm_delete_generic": "¿Estás seguro de eliminar este registro?",
+        "confirmation_delete": "Confirmación de eliminación"
     },
     "header": {
         "search": "Buscar...",
@@ -205,36 +207,89 @@
         "reports_analytics": "Informes y Análisis",
         "financial_reports": "Informes Financieros",
         "clinical_quality": "Calidad Clínica",
-        "geography_management": "Gestión Geográfica",
-        "countries": "Países",
-        "countries_list": "Lista de Países",
+        "geography": "Geografía",
+        "geography_management": "Geografía",
+        "countries": "País",
+        "countries_list": "Países",
         "add_country": "Agregar País",
         "edit_country": "Editar País",
-        "departments_states": "Departamentos / Estados",
-        "departments_list": "Lista de Departamentos",
+        "departments_states": "Departamento",
+        "departments_list": "Departamentos",
         "add_department": "Agregar Departamento",
         "edit_department": "Editar Departamento",
-        "provinces": "Provincias",
-        "provinces_list": "Lista de Provincias",
+        "provinces": "Provincia",
+        "provinces_list": "Provincias",
         "add_province": "Agregar Provincia",
         "edit_province": "Editar Provincia",
-        "municipalities": "Municipios",
-        "municipalities_list": "Lista de Municipios",
+        "municipalities": "Municipio",
+        "municipalities_list": "Municipios",
         "add_municipality": "Agregar Municipio",
-        "edit_municipality": "Editar Municipio",
-        "theme_branding": "Tema y Marca",
-        "primary_color": "Color Primario",
-        "accent_color": "Color de Acento",
-        "warn_color": "Color de Advertencia",
-        "upload_logo": "Subir Logo",
-        "upload_favicon": "Subir Favicon",
-        "theme_mode": "Modo de Tema",
-        "light_mode": "Modo Claro",
-        "dark_mode": "Modo Oscuro",
-        "save_theme": "Guardar Tema",
-        "preview_theme": "Vista Previa",
-        "reset_theme": "Restablecer Predeterminado"
+        "edit_municipality": "Editar Municipio"
     },
+    "geography": {
+        "title": "Geografía",
+        "country": {
+            "title": "Países",
+            "singular": "País",
+            "plural": "Países",
+            "list": "Lista de Países",
+            "add": "Agregar País",
+            "edit": "Editar País",
+            "notFound": "No se encontraron países",
+            "fields": {
+                "code": "Código",
+                "code3": "Código ISO3",
+                "name": "Nombre",
+                "niceName": "Nombre Común",
+                "numCode": "Cód. Num",
+                "phoneCode": "Cód. Tel",
+                "currency": "Moneda",
+                "status": "Estado"
+            }
+        },
+        "department": {
+            "title": "Departamentos",
+            "singular": "Departamento",
+            "plural": "Departamentos",
+            "add": "Agregar Departamento",
+            "edit": "Editar Departamento",
+            "fields": {
+                "name": "Nombre",
+                "country": "País",
+                "population": "Población",
+                "surface": "Superficie"
+            }
+        },
+        "province": {
+            "title": "Provincias",
+            "singular": "Provincia",
+            "plural": "Provincias",
+            "add": "Agregar Provincia",
+            "edit": "Editar Provincia",
+            "fields": {
+                "name": "Nombre",
+                "department": "Departamento",
+                "population": "Population",
+                "surface": "Surface"
+            }
+        },
+        "municipality": {
+            "title": "Municipios",
+            "singular": "Municipio",
+            "plural": "Municipios",
+            "add": "Agregar Municipio",
+            "edit": "Editar Municipio",
+            "fields": {
+                "name": "Nombre",
+                "province": "Provincia",
+                "population": "Población",
+                "surface": "Superficie",
+                "code_municipality": "Código del Municipio",
+                "address": "Dirección"
+            }
+        }
+    },
+    "theme_branding": "Tema y Marca",
     "dashboard": {
         "title": "Panel de Control",
         "welcome": "Bienvenido",

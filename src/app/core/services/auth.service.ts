@@ -50,6 +50,9 @@ export class AuthService {
     if (normalizedEmail === 'doctor@test.com') {
       return this.mockLoginResponse('ROLE_DOCTOR', 'Dr. Gregory House', tenantCode);
     }
+    if (normalizedEmail === 'admin@test.com') {
+      return this.mockLoginResponse('ROLE_SUPER_ADMIN', 'Super Admin User', tenantCode);
+    }
     if (normalizedEmail === 'nurse@test.com') {
       console.log('[AuthService Debug] Intercepting Nurse Login');
       return this.mockLoginResponse('ROLE_NURSE', 'Enf. Florence Nightingale', tenantCode);

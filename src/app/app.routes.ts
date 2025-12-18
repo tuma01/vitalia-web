@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from './layout/main-layout/main-layout';
-import { Dashboard } from './features/dashboard/dashboard';
 import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
+import { RoleRedirectGuard } from './core/guards/role-redirect.guard';
 
 export const routes: Routes = [
     // Public routes (no authentication required)
@@ -26,18 +26,33 @@ export const routes: Routes = [
         component: MainLayout,
         canActivate: [authGuard], // Protect all routes under MainLayout
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-            { path: 'dashboard', component: Dashboard },
+            // SMART REDIRECT: '/' and '/dashboard' now automatically send user to their specific role dashboard
+            {
+                path: '',
+                pathMatch: 'full',
+                canActivate: [RoleRedirectGuard],
+                children: [] // Guard handles the redirect, no component needed
+            },
+            {
+                path: 'dashboard',
+                canActivate: [RoleRedirectGuard],
+                children: []
+            },
 
-            // Role-based dashboards - Mapped to shared Dashboard component for now
-            // TODO: Create specific dashboard components for each role
+            // Role-based dashboards - FULLY MIGRATED
             {
                 path: 'admin',
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_TENANT_ADMIN'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard },
-                    { path: 'hospital-dashboard', component: Dashboard }
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+                    },
+                    {
+                        path: 'hospital-dashboard',
+                        loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+                    }
                 ]
             },
             {
@@ -45,7 +60,10 @@ export const routes: Routes = [
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_DOCTOR'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard }
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent)
+                    }
                 ]
             },
             {
@@ -53,7 +71,10 @@ export const routes: Routes = [
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_NURSE'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard }
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/nurse/dashboard/nurse-dashboard.component').then(m => m.NurseDashboardComponent)
+                    }
                 ]
             },
             {
@@ -61,7 +82,10 @@ export const routes: Routes = [
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_EMPLOYEE'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard }
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/employee/dashboard/employee-dashboard.component').then(m => m.EmployeeDashboardComponent)
+                    }
                 ]
             },
             {
@@ -69,7 +93,10 @@ export const routes: Routes = [
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_PATIENT'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard }
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/patient/dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent)
+                    }
                 ]
             },
             // Super Admin routes
@@ -78,22 +105,18 @@ export const routes: Routes = [
                 canActivate: [roleGuard],
                 data: { roles: ['ROLE_SUPER_ADMIN'] },
                 children: [
-                    { path: 'dashboard', component: Dashboard },
-                    // Geography management routes will be added here
-                    // { path: 'geography/countries', component: CountriesComponent },
-                    // { path: 'geography/departamentos', component: DepartamentosComponent },
-                    // { path: 'geography/provincias', component: ProvinciasComponent },
-                    // { path: 'geography/municipios', component: MunicipiosComponent },
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./features/super-admin/dashboard/super-admin-dashboard.component').then(m => m.SuperAdminDashboardComponent)
+                    },
+                    {
+                        path: 'geography',
+                        loadChildren: () => import('./features/super-admin/geography/geography.routes').then(m => m.routes)
+                    }
                 ]
             }
         ]
     },
-
-    // Unauthorized page (TODO: Create UnauthorizedComponent)
-    // {
-    //     path: 'unauthorized',
-    //     loadComponent: () => import('./features/auth/unauthorized/unauthorized').then(m => m.UnauthorizedComponent)
-    // },
 
     // Fallback route
     { path: '**', redirectTo: 'login' }

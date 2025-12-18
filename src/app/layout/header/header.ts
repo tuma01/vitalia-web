@@ -104,7 +104,13 @@ export class Header implements OnDestroy {
   }
 
   logout(): void {
+    const isSuperAdmin = this.sessionService.hasRole('ROLE_SUPER_ADMIN');
     this.sessionService.logout();
-    this.router.navigate(['/login']);
+
+    if (isSuperAdmin) {
+      this.router.navigate(['/super-admin/login']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 }
