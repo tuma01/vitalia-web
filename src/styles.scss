@@ -53,10 +53,180 @@ body {
     font-weight: 500;
   }
 
-  .mat-mdc-snack-bar-actions {
-    .mat-mdc-button.mat-mdc-snack-bar-action {
-      color: #ffffff !important; // "Close" button color
-      font-weight: 700;
+  .mat-mdc-snack-bar-actions {}
+}
+
+// GLOBAL FOCUS REMOVAL - NUCLEAR OPTION
+html,
+body,
+:host,
+*:focus,
+*:active,
+*.cdk-focused,
+*.cdk-program-focused {
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  box-shadow: none !important;
+}
+
+// Enforce global box-sizing for consistent widths
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Custom Delete Confirmation Dialog Styles
+// Custom Delete Confirmation Dialog Styles
+// Custom Delete Confirmation Dialog Styles
+.delete-confirmation-dialog {
+  .mat-mdc-dialog-container {
+    padding: 0;
+
+    .mdc-dialog__surface {
+      border-radius: 16px !important;
+      padding: 0; // Reset padding
+      background-color: #fff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+      .theme-dark & {
+        background-color: #2d3748;
+      }
+    }
+  }
+
+  .mat-mdc-dialog-title {
+    display: flex;
+    flex-direction: row; // CHANGED TO ROW
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    // PADDING + BORDER
+    padding: 16px 24px;
+    margin: 0;
+    border-bottom: 1px solid #e2e8f0;
+
+    .theme-dark & {
+      border-bottom-color: #4a5568;
+    }
+
+    font-weight: 600;
+    font-size: 1.25rem;
+
+    // Icon styling
+    .mat-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 32px;
+      margin: 0;
+      color: #e53e3e;
+    }
+  }
+
+  .mat-mdc-dialog-content {
+    text-align: center;
+    color: #4a5568;
+    font-size: 1rem;
+    padding: 24px; // Consistent padding
+
+    p {
+      margin: 0 0 8px 0;
+
+      strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 1.1em;
+        color: #1a202c;
+
+        .theme-dark & {
+          color: #e2e8f0;
+        }
+      }
+    }
+
+    .warning {
+      margin-top: 16px;
+      padding: 12px;
+      background-color: #fff5f5;
+      color: #c53030;
+      border-radius: 8px;
+      font-size: 0.9em;
+      border: 1px solid #fed7d7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .theme-dark & {
+        background-color: rgba(197, 48, 48, 0.1);
+        border-color: rgba(197, 48, 48, 0.2);
+        color: #fc8181;
+      }
+    }
+  }
+
+  .mat-mdc-dialog-actions {
+    justify-content: center;
+    gap: 16px;
+    // PADDING + BORDER margin
+    padding: 16px 24px;
+    margin: 0;
+    border-top: 1px solid #e2e8f0;
+
+    .theme-dark & {
+      border-top-color: #4a5568;
+    }
+
+    button {
+      height: 44px;
+      padding: 0 32px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: none;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      // Cancel Button
+      &:first-child {
+        background: transparent;
+        color: #718096;
+        border: 1px solid #e2e8f0;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f7fafc;
+          color: #2d3748;
+          border-color: #cbd5e0;
+        }
+
+        .theme-dark & {
+          color: #a0aec0;
+          border-color: #4a5568;
+
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+          }
+        }
+      }
+
+      // OK/Delete Button - Blue Gradient
+      &:last-child {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgba(102, 126, 234, 0.4);
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 15px -3px rgba(102, 126, 234, 0.5);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
     }
   }
 }

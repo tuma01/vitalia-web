@@ -3,35 +3,35 @@ import { BehaviorSubject } from 'rxjs';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 export interface Theme {
-    name: string;
-    className: string;
-    displayName: string;
+  name: string;
+  className: string;
+  displayName: string;
 }
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ThemeService {
-    private readonly THEME_KEY = 'vitalia-theme';
+  private readonly THEME_KEY = 'vitalia-theme';
 
-    // Available themes matching files in src/assets/themes
-    availableThemes: Theme[] = [
-        { name: 'light-theme', className: 'light-theme', displayName: 'Light Mode' },
-        { name: 'dark-theme', className: 'dark-theme', displayName: 'Dark Mode' },
-        { name: 'indigo-pink', className: 'indigo-pink', displayName: 'Indigo & Pink' },
-        { name: 'deeppurple-amber', className: 'deeppurple-amber', displayName: 'Deep Purple & Amber' },
-        { name: 'pink-bluegrey', className: 'pink-bluegrey', displayName: 'Pink & Blue-Grey' },
-        { name: 'purple-green', className: 'purple-green', displayName: 'Purple & Green' }
-    ];
+  // Available themes matching files in src/assets/themes
+  availableThemes: Theme[] = [
+    { name: 'light-theme', className: 'light-theme', displayName: 'Light Mode' },
+    { name: 'dark-theme', className: 'dark-theme', displayName: 'Dark Mode' },
+    { name: 'indigo-pink', className: 'indigo-pink', displayName: 'Indigo & Pink' },
+    { name: 'deeppurple-amber', className: 'deeppurple-amber', displayName: 'Deep Purple & Amber' },
+    { name: 'pink-bluegrey', className: 'pink-bluegrey', displayName: 'Pink & Blue-Grey' },
+    { name: 'purple-green', className: 'purple-green', displayName: 'Purple & Green' }
+  ];
 
-    constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(@Inject(DOCUMENT) private document: Document, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   initTheme(): void {
-      if (isPlatformBrowser(this.platformId)) {
-          const savedTheme = localStorage.getItem(this.THEME_KEY);
-          const themeToApply = savedTheme || 'indigo-pink';
-          this.setTheme(themeToApply);
-      }
+    if (isPlatformBrowser(this.platformId)) {
+      const savedTheme = localStorage.getItem(this.THEME_KEY);
+      const themeToApply = savedTheme || 'indigo-pink';
+      this.setTheme(themeToApply);
+    }
   }
 
   private themeChangeSubject = new BehaviorSubject<string>(this.getCurrentTheme());
@@ -59,7 +59,11 @@ export class ThemeService {
     }
 
     // 4️⃣ Cambia el CSS del theme (Material prebuilt)
-    themeLink.href = `assets/themes/${themeName}.css`;
+    const newHref = `assets/themes/${themeName}.css`;
+    if (themeLink.getAttribute('href') === newHref) {
+      return;
+    }
+    themeLink.href = newHref;
 
     // 5️⃣ Guarda el theme activo
     localStorage.setItem(this.THEME_KEY, themeName);
@@ -69,23 +73,25 @@ export class ThemeService {
 
     // 7️⃣ Ajusta clases del body (layout / overrides globales)
     const body = this.document.body;
-    body.classList.remove('theme-light', 'theme-dark', 'theme-colored');
-
+    let targetClass = 'theme-colored';
     if (themeName === 'light-theme') {
-      body.classList.add('theme-light');
+      targetClass = 'theme-light';
     } else if (themeName === 'dark-theme') {
-      body.classList.add('theme-dark');
-    } else {
-      body.classList.add('theme-colored');
+      targetClass = 'theme-dark';
+    }
+
+    if (!body.classList.contains(targetClass)) {
+      body.classList.remove('theme-light', 'theme-dark', 'theme-colored');
+      body.classList.add(targetClass);
     }
 
     console.log('[ThemeService] Theme applied:', themeName);
   }
 
   getCurrentTheme(): string {
-      if (isPlatformBrowser(this.platformId)) {
-          return localStorage.getItem(this.THEME_KEY) || 'indigo-pink';
-      }
-      return 'indigo-pink';
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.THEME_KEY) || 'indigo-pink';
+    }
+    return 'indigo-pink';
   }
 }

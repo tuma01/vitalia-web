@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.themeService.initTheme();
+
     this.initForm();
     this.getTenants();
   }

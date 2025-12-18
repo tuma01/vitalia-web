@@ -118,123 +118,123 @@
         },
         {
             "id": "geography",
-            "name": "geography_management",
+            "name": "geography",
             "type": "group",
             "icon": "public",
             "visible": true,
             "children": [
                 {
                     "id": "countries",
-                    "name": "countries",
+                    "name": "pais",
                     "type": "sub",
                     "icon": "flag",
                     "children": [
                         {
                             "id": "countries-list",
-                            "name": "countries_list",
+                            "name": "paises",
                             "type": "link",
-                            "route": "/super-admin/geography/countries",
+                            "route": "/super-admin/geography/pais/paises",
                             "visible": true
                         },
                         {
                             "id": "countries-add",
-                            "name": "add_country",
+                            "name": "addPais",
                             "type": "link",
-                            "route": "/super-admin/geography/countries/add",
+                            "route": "/super-admin/geography/pais/add",
                             "visible": true
                         },
                         {
                             "id": "countries-edit",
-                            "name": "edit_country",
+                            "name": "editPais",
                             "type": "link",
-                            "route": "/super-admin/geography/countries/edit",
+                            "route": "/super-admin/geography/pais/edit",
                             "visible": false
                         }
                     ]
                 },
                 {
                     "id": "departamentos",
-                    "name": "departments_states",
+                    "name": "departamento",
                     "type": "sub",
                     "icon": "location_city",
                     "children": [
                         {
                             "id": "departamentos-list",
-                            "name": "departments_list",
+                            "name": "departamentos",
                             "type": "link",
-                            "route": "/super-admin/geography/departamentos",
+                            "route": "/super-admin/geography/departamento/departamentos",
                             "visible": true
                         },
                         {
                             "id": "departamentos-add",
-                            "name": "add_department",
+                            "name": "addDepartamento",
                             "type": "link",
-                            "route": "/super-admin/geography/departamentos/add",
+                            "route": "/super-admin/geography/departamento/add",
                             "visible": true
                         },
                         {
                             "id": "departamentos-edit",
-                            "name": "edit_department",
+                            "name": "editDepartamento",
                             "type": "link",
-                            "route": "/super-admin/geography/departamentos/edit",
+                            "route": "/super-admin/geography/departamento/edit",
                             "visible": false
                         }
                     ]
                 },
                 {
                     "id": "provincias",
-                    "name": "provinces",
+                    "name": "provincia",
                     "type": "sub",
                     "icon": "map",
                     "children": [
                         {
                             "id": "provincias-list",
-                            "name": "provinces_list",
+                            "name": "provincias",
                             "type": "link",
-                            "route": "/super-admin/geography/provincias",
+                            "route": "/super-admin/geography/provincia/provincias",
                             "visible": true
                         },
                         {
                             "id": "provincias-add",
-                            "name": "add_province",
+                            "name": "addProvincia",
                             "type": "link",
-                            "route": "/super-admin/geography/provincias/add",
+                            "route": "/super-admin/geography/provincia/add",
                             "visible": true
                         },
                         {
                             "id": "provincias-edit",
-                            "name": "edit_province",
+                            "name": "editProvincia",
                             "type": "link",
-                            "route": "/super-admin/geography/provincias/edit",
+                            "route": "/super-admin/geography/provincia/edit",
                             "visible": false
                         }
                     ]
                 },
                 {
                     "id": "municipios",
-                    "name": "municipalities",
+                    "name": "municipio",
                     "type": "sub",
                     "icon": "place",
                     "children": [
                         {
                             "id": "municipios-list",
-                            "name": "municipalities_list",
+                            "name": "municipios",
                             "type": "link",
-                            "route": "/super-admin/geography/municipios",
+                            "route": "/super-admin/geography/municipio/municipios",
                             "visible": true
                         },
                         {
                             "id": "municipios-add",
-                            "name": "add_municipality",
+                            "name": "addMunicipio",
                             "type": "link",
-                            "route": "/super-admin/geography/municipios/add",
+                            "route": "/super-admin/geography/municipio/add",
                             "visible": true
                         },
                         {
                             "id": "municipios-edit",
-                            "name": "edit_municipality",
+                            "name": "editMunicipio",
                             "type": "link",
-                            "route": "/super-admin/geography/municipios/edit",
+                            "route": "/super-admin/geography/municipio/edit",
                             "visible": false
                         }
                     ]

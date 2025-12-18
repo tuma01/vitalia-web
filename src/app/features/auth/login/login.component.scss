@@ -21,6 +21,7 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   background: white;
   overflow: hidden;
+  will-change: transform, opacity;
   animation: slideUp 0.5s ease-out;
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, afterNextRender } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
@@ -16,13 +16,19 @@ export class AppComponent implements OnInit {
   private languageService = inject(LanguageService);
   private readonly preloader = inject(PreloaderService);
 
+  constructor() {
+    // Use afterNextRender to avoid forcing reflow before initial paint
+    afterNextRender(() => {
+      this.themeService.initTheme();
+
+      // LanguageService se inicializa al inyectarse; acceder a él asegura que no sea tree-shaken
+      this.languageService;
+
+      // Ocultar el preloader global DESPUÉS del primer render para evitar reflows masivos
+      this.preloader.hide();
+    });
+  }
+
   ngOnInit(): void {
-    // Inicializar tema
-    this.themeService.initTheme();
-
-    this.languageService; // LanguageService se inicializa al inyectarse
-
-    // Ocultar el preloader global
-    this.preloader.hide();
   }
 }

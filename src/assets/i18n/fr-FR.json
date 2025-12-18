@@ -30,7 +30,9 @@
         "sign_in": "Connexion",
         "forgot_password": "Mot de passe oublié ?",
         "enter_your_credentials": "Entrez vos identifiants pour accéder à votre compte",
-        "select_health_center": "Sélectionnez le centre de santé"
+        "select_health_center": "Sélectionnez le centre de santé",
+        "confirm_delete_generic": "Êtes-vous sûr de vouloir supprimer ce registre?",
+        "confirmation_delete": "Confirmation de suppression"
     },
     "header": {
         "search": "Rechercher...",
@@ -200,36 +202,100 @@
         "reports_analytics": "Rapports et Analyses",
         "financial_reports": "Rapports Financiers",
         "clinical_quality": "Qualité Clinique",
-        "geography_management": "Gestion Géographique",
+        "geography": "Géographie",
+        "geography_management": "Géographie",
         "countries": "Pays",
         "countries_list": "Liste des Pays",
         "add_country": "Ajouter un Pays",
-        "edit_country": "Modifier un Pays",
-        "departments_states": "Départements / États",
+        "edit_country": "Modifier le Pays",
+        "departments_states": "Département",
         "departments_list": "Liste des Départements",
         "add_department": "Ajouter un Département",
-        "edit_department": "Modifier un Département",
+        "edit_department": "Modifier le Département",
         "provinces": "Provinces",
         "provinces_list": "Liste des Provinces",
         "add_province": "Ajouter une Province",
-        "edit_province": "Modifier une Province",
+        "edit_province": "Modifier la Province",
         "municipalities": "Municipalités",
         "municipalities_list": "Liste des Municipalités",
         "add_municipality": "Ajouter une Municipalité",
-        "edit_municipality": "Modifier une Municipalité",
-        "theme_branding": "Thème et Image de Marque",
-        "primary_color": "Couleur Primaire",
-        "accent_color": "Couleur d'Accent",
-        "warn_color": "Couleur d'Avertissement",
-        "upload_logo": "Télécharger le Logo",
-        "upload_favicon": "Télécharger le Favicon",
-        "theme_mode": "Mode de Thème",
-        "light_mode": "Mode Clair",
-        "dark_mode": "Mode Sombre",
-        "save_theme": "Enregistrer le Thème",
-        "preview_theme": "Aperçu",
-        "reset_theme": "Réinitialiser par Défaut"
+        "edit_municipality": "Modifier la Municipalité"
     },
+    "geography": {
+        "title": "Géographie",
+        "country": {
+            "title": "Pays",
+            "singular": "Pays",
+            "plural": "Pays",
+            "list": "Liste des Pays",
+            "add": "Ajouter un Pays",
+            "edit": "Modifier le Pays",
+            "notFound": "Aucun pays trouvé",
+            "fields": {
+                "code": "Code",
+                "code3": "Code ISO3",
+                "name": "Nom",
+                "niceName": "Nom usuel",
+                "numCode": "Code Num",
+                "phoneCode": "Code Tel",
+                "currency": "Devise",
+                "status": "Statut"
+            }
+        },
+        "department": {
+            "title": "Départements",
+            "singular": "Département",
+            "plural": "Départements",
+            "add": "Ajouter un Département",
+            "edit": "Modifier le Département",
+            "fields": {
+                "name": "Nom",
+                "country": "Pays",
+                "population": "Population",
+                "surface": "Surface"
+            }
+        },
+        "province": {
+            "title": "Provinces",
+            "singular": "Province",
+            "plural": "Provinces",
+            "add": "Ajouter une Province",
+            "edit": "Modifier la Province",
+            "fields": {
+                "name": "Nom",
+                "department": "Département",
+                "population": "Population",
+                "surface": "Surface"
+            }
+        },
+        "municipality": {
+            "title": "Municipalités",
+            "singular": "Municipalité",
+            "plural": "Municipalités",
+            "add": "Ajouter une Municipalité",
+            "edit": "Modifier la Municipalité",
+            "fields": {
+                "name": "Nom",
+                "province": "Province",
+                "population": "Population",
+                "surface": "Surface",
+                "code_municipality": "Code Municipalité",
+                "address": "Adresse"
+            }
+        }
+    },
+    "theme_branding": "Thème et Image de Marque",
+    "primary_color": "Couleur Primaire",
+    "accent_color": "Couleur d'Accent",
+    "warn_color": "Couleur d'Avertissement",
+    "upload_logo": "Télécharger le Logo",
+    "upload_favicon": "Télécharger le Favicon",
+    "theme_mode": "Mode de Thème",
+    "light_mode": "Mode Clair",
+    "dark_mode": "Mode Sombre",
+    "save_theme": "Enregistrer le Thème",
+    "preview_theme": "Aperçu",
+    "reset_theme": "Réinitialiser par Défaut",
     "dashboard": {
         "title": "Tableau de Bord",
         "welcome_back": "Bienvenue, {{name}} !",
