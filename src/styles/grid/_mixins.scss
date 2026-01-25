@@ -17,6 +17,7 @@
       @content;
     }
   }
+
   @else {
     @content;
   }
@@ -31,6 +32,7 @@
       @content;
     }
   }
+
   @else {
     @content;
   }
@@ -38,9 +40,16 @@
 
 @mixin make-grid-columns($i: 1, $list: '.col') {
   @each $breakpoint, $infix in variables.$breakpoint-infixs {
-    $infix: if($infix == '', '', '-#{$infix}');
+    // $infix: if($infix == '', '', '-#{$infix}');
+    $suffix: '';
 
-    @if ($infix != '') {
+    @if $infix !='' {
+      $suffix: '-#{$infix}';
+    }
+
+    $infix: $suffix;
+
+    @if ($infix !='') {
       $list: '#{$list}, .col#{$infix}';
     }
 
@@ -58,7 +67,12 @@
 }
 
 @mixin loop-grid-columns($columns: $grid-columns, $breakpoint-infix: '') {
-  $infix: if($breakpoint-infix == '', '', '-#{$breakpoint-infix}');
+  // $infix: if($breakpoint-infix == '', '', '-#{$breakpoint-infix}');
+  $infix: '';
+
+  @if $breakpoint-infix !='' {
+    $infix: '-#{$breakpoint-infix}';
+  }
 
   .col#{$infix} {
     flex-grow: 1;

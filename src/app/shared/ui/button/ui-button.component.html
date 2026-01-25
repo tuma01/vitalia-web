@@ -1,0 +1,18 @@
+<button class="ui-button__control" [attr.type]="type" [disabled]="disabled || loading" (click)="handleClick($event)">
+    <!-- Loading Spinner -->
+    @if (loading) {
+    <span class="ui-button__spinner-wrapper">
+        <svg class="ui-button__spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+        </svg>
+    </span>
+    }
+
+    <!-- Content -->
+    <span class="ui-button__content" [class.ui-button__content--hidden]="loading">
+        <ng-content />
+    </span>
+
+    <!-- Ripple Overlay (CSS driven or optional JS) -->
+    <span class="ui-button__overlay"></span>
+</button>

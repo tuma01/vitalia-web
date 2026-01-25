@@ -13,20 +13,24 @@ import { LanguageService, Language } from '../../core/services/language.service'
 import { ThemeService, Theme } from '../../core/services/theme.service';
 import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
+import { VitaliaBadgeComponent } from '../../shared/ui/badge/vitalia-badge.component';
+import { UiToolbarComponent } from '../../shared/ui/toolbar/ui-toolbar.component';
+import { UiIconButtonComponent } from '../../shared/ui/button/ui-icon-button.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
-    MatToolbarModule,
     MatButtonModule,
     MatIconModule,
     MatMenuModule,
     MatBadgeModule,
     MatDividerModule,
-    TranslateModule
+    TranslateModule,
+    VitaliaBadgeComponent,
+    UiToolbarComponent,
+    UiIconButtonComponent
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',

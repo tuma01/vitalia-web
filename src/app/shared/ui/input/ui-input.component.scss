@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  width: 100%;
+  // Atom: No styling container, just the input behavior target
+}
+
+.ui-input__native {
+  width: 100%;
+  height: 100%;
+  padding: 0; // Padding handled by form-field wrapper
+  margin: 0;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  font-family: var(--ui-font-family-sans, inherit);
+  font-size: var(--ui-font-size-md, 1rem);
+  color: var(--ui-color-text, #111827);
+
+  &::placeholder {
+    color: var(--ui-color-text-muted, #9ca3af);
+    opacity: 0; // Hiden by default if floating label is used, managed by form-field usually
+    transition: opacity 0.2s;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--ui-color-text-muted);
+  }
+}
+
+// If form field says "show placeholder" (because focused), we simply show it.
+// This requires a class from parent or just let placeholder be visible only on focus.
+:host-context(.ui-form-field--focused) .ui-input__native::placeholder {
+  opacity: 1;
+}

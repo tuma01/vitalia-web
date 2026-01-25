@@ -1,0 +1,29 @@
+:host {
+    display: block;
+    width: 100%;
+    margin: var(--ui-space-sm, 8px) 0;
+
+    --bar-height: 6px;
+    --bar-radius: 4px;
+}
+
+::ng-deep .mat-mdc-progress-bar {
+    height: var(--bar-height) !important;
+    border-radius: var(--bar-radius);
+    overflow: hidden;
+
+    // Track Background
+    .mdc-linear-progress__buffer-bar {
+        background-color: var(--ui-color-border-subtle, #f3f4f6) !important;
+    }
+
+    // Progress Bar Color
+    .mdc-linear-progress__bar-inner {
+        border-color: var(--ui-color-primary, #2563eb) !important;
+    }
+
+    // Shadow glow effect
+    &.mat-primary {
+        filter: drop-shadow(0 0 2px rgba(var(--ui-color-primary-rgb, 37, 99, 235), 0.15));
+    }
+}

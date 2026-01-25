@@ -1,3 +1,4 @@
+@use 'styles/ds/index' as ds;
 @use 'styles/reboot';
 @use 'styles/themes';
 @use 'styles/colors';
@@ -52,11 +53,9 @@ body {
     color: #ffffff !important;
     font-weight: 500;
   }
-
-  .mat-mdc-snack-bar-actions {}
 }
 
-// GLOBAL FOCUS REMOVAL - NUCLEAR OPTION
+// GLOBAL FOCUS REMOVAL - PREVENT LAYOUT SHIFTS
 html,
 body,
 :host,
@@ -65,9 +64,7 @@ body,
 *.cdk-focused,
 *.cdk-program-focused {
   outline: none !important;
-  border: none !important;
   -webkit-tap-highlight-color: transparent !important;
-  box-shadow: none !important;
 }
 
 // Enforce global box-sizing for consistent widths

@@ -1,152 +1,46 @@
 <div class="login-container">
-  <mat-card class="login-card">
-    <div class="card-content">
-      <!-- Left Side: Form -->
-      <div class="form-section">
+    <div class="login-card">
         <div class="login-header">
-          <h2>{{ 'common.sign_in' | translate }}</h2>
-          <p class="subtitle">{{ 'common.enter_your_credentials' | translate }}</p>
+            <img src="assets/images/logo.png" alt="Vitalia Logo" class="login-logo" onerror="this.style.display='none'">
+            <h2>{{ 'login.title' | translate }}</h2>
+            <p>{{ 'login.subtitle' | translate }}</p>
         </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-          <!-- Role Selection Buttons -->
-          <div class="role-container">
-            <div class="role-btn-wrapper" *ngFor="let role of buttonRoles"
-              [ngClass]="[role.colorClass, selectedButtonRole === role.id ? 'selected' : '']"
-              (click)="selectButtonRole(role.id)">
-              <div class="circle">
-                <mat-icon class="main-icon">{{ role.icon }}</mat-icon>
-                <mat-icon class="check-icon">check</mat-icon>
-              </div>
-              <span class="label">{{ role.label }}</span>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+
+            <!-- Username -->
+            <ui-form-field [label]="'login.username' | translate"
+                [error]="username?.invalid && username?.touched ? ('login.username_required' | translate) : null">
+                <ui-input formControlName="username" type="text"
+                    [placeholder]="'login.username_placeholder' | translate">
+                </ui-input>
+            </ui-form-field>
+
+            <!-- Password -->
+            <ui-form-field [label]="'login.password' | translate"
+                [error]="password?.invalid && password?.touched ? ('login.password_required' | translate) : null">
+                <ui-input formControlName="password" type="password"
+                    [placeholder]="'login.password_placeholder' | translate">
+                </ui-input>
+            </ui-form-field>
+
+            <!-- Actions -->
+            <div class="login-actions">
+                <a routerLink="/forgot-password" class="forgot-password">
+                    {{ 'login.forgot_password' | translate }}
+                </a>
             </div>
-          </div>
 
-          <!-- Tenant Selector -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-icon matPrefix>business</mat-icon>
-            <mat-label>{{ 'common.select_health_center' | translate }}</mat-label>
-            <mat-select formControlName="tenantCode">
-              <mat-option *ngFor="let t of tenantsOptions" [value]="t.code">
-                {{ t.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <!-- Submit Button -->
+            <ui-button type="submit" variant="primary" [fullWidth]="true"
+                [disabled]="loginForm.invalid || loginForm.pending">
+                {{ 'login.submit' | translate }}
+            </ui-button>
 
-          <!-- Email Input -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-icon matPrefix>email</mat-icon>
-            <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="email" required />
-            @if (email.invalid && email.touched) {
-            <mat-error>
-              @if (email.errors?.['required']) {
-              <span>{{ 'common.field_isRequired' | translate:{ fieldName: 'Email' } }}</span>
-              }
-              @if (email.errors?.['email']) {
-              <span>Please enter a valid email</span>
-              }
-            </mat-error>
-            }
-          </mat-form-field>
-
-          <!-- Password Input -->
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-icon matPrefix>lock</mat-icon>
-            <mat-label>Password</mat-label>
-            <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required />
-            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()"
-              [attr.aria-label]="'Toggle password visibility'">
-              <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            @if (password.invalid && password.touched) {
-            <mat-error>
-              @if (password.errors?.['required']) {
-              <span>{{ 'common.field_isRequired' | translate:{ fieldName: 'Password' } }}</span>
-              }
-            </mat-error>
-            }
-          </mat-form-field>
-
-          <!-- Remember Me & Forgot Password -->
-          <div class="remember-forgot-row">
-            <mat-checkbox formControlName="rememberMe" color="primary">
-              {{ 'common.remember_me' | translate }}
-            </mat-checkbox>
-            <a class="forgot-link" (click)="forgotPassword()">
-              {{ 'common.forgot_password' | translate }}
-            </a>
-          </div>
-
-          <!-- Submit Button -->
-          <button mat-raised-button color="primary" class="submit-btn" type="submit"
-            [disabled]="loginForm.invalid || isLoading">
-            @if (isLoading) {
-            <mat-progress-spinner diameter="20" mode="indeterminate" color="accent"
-              style="display: inline-block; vertical-align: middle; margin-right: 8px;"></mat-progress-spinner>
-            <span>Loading...</span>
-            } @else {
-            <span style="display: flex; align-items: center; justify-content: center;">
-              <mat-icon style="margin-right: 8px;">arrow_forward</mat-icon>
-              <span>{{ 'common.sign_in' | translate }}</span>
-            </span>
-            }
-          </button>
-
-          <!-- Social Login Buttons -->
-          <div class="social-buttons">
-            <button mat-icon-button class="social-btn google" type="button">
-              <svg viewBox="0 0 24 24" width="24" height="24">
-                <path fill="#4285F4"
-                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                <path fill="#34A853"
-                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                <path fill="#FBBC05"
-                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
-                <path fill="#EA4335"
-                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
-              </svg>
-            </button>
-
-            <button mat-icon-button class="social-btn facebook" type="button">
-              <svg viewBox="0 0 24 24" width="24" height="24">
-                <path fill="#1877F2"
-                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-            </button>
-
-            <button mat-icon-button class="social-btn apple" type="button">
-              <svg viewBox="0 0 24 24" width="24" height="24">
-                <path fill="#000000"
-                  d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-              </svg>
-            </button>
-          </div>
         </form>
-      </div>
 
-      <!-- Right Side: Image with Welcome Text -->
-      <div class="image-section">
-        <div class="overlay-content">
-          <mat-icon class="welcome-icon">local_hospital</mat-icon>
-          <h2>Welcome to Vitalia</h2>
-          <p>Your comprehensive healthcare management system</p>
-          <div class="features">
-            <div class="feature-item">
-              <mat-icon>check_circle</mat-icon>
-              <span>Secure Access</span>
-            </div>
-            <div class="feature-item">
-              <mat-icon>check_circle</mat-icon>
-              <span>Multi-tenant Support</span>
-            </div>
-            <div class="feature-item">
-              <mat-icon>check_circle</mat-icon>
-              <span>Role-based Access</span>
-            </div>
-          </div>
+        <div class="login-footer">
+            <p>{{ 'login.no_account' | translate }} <a routerLink="/register">{{ 'login.register' | translate }}</a></p>
         </div>
-      </div>
     </div>
-  </mat-card>
 </div>

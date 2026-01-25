@@ -1,0 +1,39 @@
+:host {
+    display: block;
+    padding: var(--ui-space-md);
+    background: var(--ui-background-default);
+    border-radius: var(--ui-radius-lg);
+    box-shadow: var(--ui-elevation-md);
+}
+
+.user-form-widget {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-space-sm);
+}
+
+.text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color: var(--ui-color-text);
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}

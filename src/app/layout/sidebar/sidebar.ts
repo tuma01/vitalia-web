@@ -16,7 +16,6 @@ import { SessionService } from '../../core/services/session.service';
   selector: 'app-sidebar',
   standalone: true,
   imports: [
-    CommonModule,
     RouterModule,
     MatListModule,
     MatIconModule,

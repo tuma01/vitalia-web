@@ -1,0 +1,267 @@
+/* Tokens */
+$field-height: var(--ui-input-height-md, 40px);
+$field-radius: var(--ui-radius-base, 8px);
+$label-scale: 0.75;
+
+// Host is just a wrapper now, styles applied to inner .ui-form-field
+:host {
+    display: block;
+}
+
+.ui-form-field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-family: var(--ui-font-family-sans, sans-serif);
+    margin-bottom: var(--ui-space-md, 16px);
+}
+
+/* --- Control Container --- */
+.ui-form-field__control {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: $field-height;
+    box-sizing: border-box;
+    gap: 0; // Removed gap to allow tighter control via padding
+}
+
+/* --- Input Slot --- */
+/* --- Input Slot --- */
+.ui-form-field__input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0; // Fix flex overflow
+    height: 100%;
+    position: relative;
+
+    // DEFAULT PADDING: To prevent text from touching outlines
+    padding: 0 12px !important; // Reverted to 12px to match UI-SELECT standard
+    transform: translateY(1.5px); // Nudge down to correct "too high" visual alignment
+}
+
+// Adjust padding when Prefix is present
+.ui-form-field--has-prefix .ui-form-field__input {
+    // Prefix has right-padding of 8px.
+    // We want text to start e.g. 8px-12px from Icon.
+    // So if prefix has 8px, input needs maybe 4px or 0.
+    // Prefix has right-padding of 8px.
+    // We want text to start e.g. 8px-12px from Icon.
+    // So if prefix has 8px, input needs maybe 4px or 0.
+    padding-left: 0 !important; // Removed extra padding to bring text closer to icon (8px gap from prefix only)
+}
+
+// Adjust padding when Suffix is present
+.ui-form-field--has-suffix .ui-form-field__input {
+    padding-right: 0; // Suffix provides the spacing
+}
+
+/* --- Label --- */
+.ui-form-field__label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: 0 0;
+
+    color: var(--ui-color-text-secondary, #6b7280);
+    font-size: 1rem;
+    font-weight: 400;
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s, padding 0.2s; // Animate padding too
+
+    padding-left: 12px; // Match Select (12px)
+    z-index: 1; // Above outline
+}
+
+// Shift label if prefix is present so they don't overlap
+.ui-form-field--has-prefix .ui-form-field__label {
+    padding-left: 35px !important; // 35px exact as requested by user
+}
+
+// ...
+
+/* --- Floating Label Logic --- */
+.ui-form-field--focused,
+.ui-form-field--has-value {
+
+    // Open the gap (FieldSet Legend)
+    .ui-form-field__legend {
+        max-width: 100%; // Reveal gap
+        padding: 0 4px; // Spacing around text in gap
+    }
+
+    .ui-form-field__label {
+        transform: translateY(-1.6rem) scale($label-scale);
+        max-width: 133%;
+    }
+
+    // Fix overlap if prefix is present: RESET padding to standard position
+    &.ui-form-field--has-prefix .ui-form-field__label {
+        padding-left: 16px; // Reset to match standard outline start (16px)
+        // Removed translateX hack
+    }
+}
+
+// But when floating, we reset/adjust or let it float from that origin?
+// Material floats to top-left (start).
+// If we float, we usually want it to go back to 12px (start of outline)?
+// Or stay above the content?
+// Let's modify the floating logic next.
+
+.ui-form-field__required {
+    color: var(--ui-color-danger, #ef4444);
+}
+
+/* --- Fieldset Outline --- */
+/* --- Fieldset Outline --- */
+.ui-form-field__outline {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    margin: 0 !important;
+    padding: 0 !important; // Reset
+    padding-left: 8px !important; // Notch Start 8px (Match Radius). +4px Legend = 12px Text.
+
+    border-width: var(--ui-border-width-base, 1px) !important;
+    border-style: var(--ui-border-style-base, solid);
+    border-color: var(--ui-color-border, #9ca3af);
+    border-radius: $field-radius;
+
+    transition: border-color 0.2s, border-width 0.2s;
+
+    // Remove default fieldset styles
+    min-width: 0;
+}
+
+.ui-form-field__legend {
+    // float: left; // Removed: caused gap/width calculation issues
+    width: auto;
+    max-width: 0.01px; // Closed by default (continuous border)
+    height: 11px; // Height for the crop
+    padding: 0; // Reset
+
+    display: block; // Or flex
+    // visibility: hidden; // CAUSES WIDTH BUG
+    color: transparent; // Keeps layout occupied correctly
+
+    font-size: 0.75em; // Match label-scale
+    white-space: nowrap;
+
+    transition: max-width 50ms cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+/* --- Floating Label Logic --- */
+.ui-form-field--focused,
+.ui-form-field--has-value {
+
+    // Open the gap (FieldSet Legend)
+    .ui-form-field__legend {
+        max-width: 0.01px !important; // Collapse gap completely, we use mask now
+        padding: 0 !important;
+    }
+
+    .ui-form-field__label {
+        transform: translateY(-1.8rem) scale($label-scale) !important; // Raised ~5px from -1.5rem
+        max-width: 133% !important;
+        padding: 0 4px !important; // Breathing room for mask
+        margin-left: 8px !important; // Visual start offset (12px total visually)
+        background-color: #ffffff !important; // MASK THE BORDER LINE
+    }
+
+    // Fix overlap if prefix is present
+    &.ui-form-field--has-prefix .ui-form-field__label {
+        margin-left: 8px !important; // consistent logic
+        padding: 0 4px !important;
+        transform: translateY(-1.8rem) scale($label-scale) !important;
+    }
+}
+
+/* --- State Colors --- */
+.ui-form-field--focused {
+    .ui-form-field__label {
+        color: var(--ui-color-primary, #2563eb);
+    }
+
+    .ui-form-field__outline {
+        border-color: var(--ui-color-primary, #2563eb);
+        border-width: var(--ui-border-width-focus, 2px);
+    }
+}
+
+.ui-form-field--error {
+    .ui-form-field__label {
+        color: var(--ui-color-danger, #ef4444);
+    }
+
+    .ui-form-field__outline {
+        border-color: var(--ui-color-danger, #ef4444);
+    }
+}
+
+/* --- Prefix / Suffix --- */
+.ui-form-field__prefix,
+.ui-form-field__suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--ui-color-text-secondary);
+    padding: 0 8px;
+    transition: color 0.2s ease;
+    transform: translateY(1.5px); // Nudge down icons too
+
+    // Force strict centering for icons
+    mat-icon,
+    .mat-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 24px !important; // Explicit size
+        width: 24px !important;
+    }
+}
+
+.ui-form-field--focused {
+
+    .ui-form-field__prefix,
+    .ui-form-field__suffix {
+        color: var(--ui-color-primary, #2563eb);
+    }
+}
+
+.ui-form-field--error {
+
+    .ui-form-field__prefix,
+    .ui-form-field__suffix {
+        color: var(--ui-color-danger, #ef4444);
+    }
+}
+
+/* --- Subscript --- */
+.ui-form-field__subscript {
+    padding: 0 16px;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    min-height: 1.25rem; // Reserved space
+}
+
+.ui-form-field__error {
+    color: var(--ui-color-danger);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ui-form-field__hint {
+    color: var(--ui-color-text-muted);
+}
