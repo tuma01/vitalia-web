@@ -1,147 +1,42 @@
-.header {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-// Default: White text/icons for colored themes (Indigo, Purple, etc.)
-.header {
-    color: white !important;
-
-    .mat-icon {
-        color: white !important;
-    }
-
-    .mat-icon-button {
-        color: white !important;
-    }
-
-    button {
-        color: white !important;
-    }
-
-    .app-title {
-        color: white !important;
-    }
-
-    .search-icon {
-        color: rgba(255, 255, 255, 0.8) !important;
-    }
-
-    .search-input {
-        color: white !important;
-
-        &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-    }
-}
-
-// Light Mode Theme: Dark text/icons on light background
-:host-context(body.theme-light) .header {
-    background-color: #f5f5f5 !important;
-    color: rgba(0, 0, 0, 0.87) !important;
-
-    .mat-icon {
-        color: rgba(0, 0, 0, 0.87) !important;
-    }
-
-    .mat-icon-button {
-        color: rgba(0, 0, 0, 0.87) !important;
-    }
-
-    button {
-        color: rgba(0, 0, 0, 0.87) !important;
-    }
-
-    .app-title {
-        color: rgba(0, 0, 0, 0.87) !important;
-    }
-
-    .search-container {
-        background-color: rgba(0, 0, 0, 0.08);
-
-        &:focus-within {
-            background-color: rgba(0, 0, 0, 0.12);
-        }
-    }
-
-    .search-icon {
-        color: rgba(0, 0, 0, 0.6) !important;
-    }
-
-    .search-input {
-        color: rgba(0, 0, 0, 0.87) !important;
-
-        &::placeholder {
-            color: rgba(0, 0, 0, 0.5);
-        }
-    }
-}
-
-// Dark Mode Theme: White text/icons on dark background
-:host-context(body.theme-dark) .header {
-    background-color: #1e1e2d !important;
-    color: white !important;
-
-    .mat-icon {
-        color: white !important;
-    }
-
-    .mat-icon-button {
-        color: white !important;
-    }
-
-    button {
-        color: white !important;
-    }
-
-    .app-title {
-        color: white !important;
-    }
-
-    .search-icon {
-        color: rgba(255, 255, 255, 0.8) !important;
-    }
-
-    .search-input {
-        color: white !important;
-
-        &::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-    }
+.toolbar-start,
+.toolbar-end {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .app-title {
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-left: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ui-color-text, #1f2937);
+    letter-spacing: -0.01em;
 }
 
-.spacer {
-    flex: 1 1 auto;
-}
-
-// Search Bar
-.search-container {
+// Premium Search Bar
+.header-search {
     display: flex;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.15);
-    border-radius: 24px;
-    padding: 4px 16px;
-    margin: 0 16px;
-    max-width: 400px;
-    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 6px 14px;
+    width: 100%;
+    max-width: 480px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
     &:focus-within {
-        background-color: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        background: #ffffff;
+        border-color: rgba(0, 85, 164, 0.3);
+        box-shadow: 0 4px 12px rgba(0, 85, 164, 0.08);
+        transform: translateY(-1px);
     }
 
     .search-icon {
-        margin-right: 8px;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        color: #9ca3af;
     }
 
     .search-input {
@@ -149,34 +44,68 @@
         border: none;
         outline: none;
         font-size: 14px;
+        font-weight: 500;
         width: 100%;
+        color: #1f2937;
+
+        &::placeholder {
+            color: #9ca3af;
+        }
     }
 }
 
-// User Menu
+// User Menu Info Section
 .user-info {
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 16px;
+    min-width: 200px;
 
     .user-name {
-        font-weight: 500;
+        font-weight: 700;
         font-size: 14px;
-        margin-bottom: 4px;
+        color: #1f2937;
+        margin-bottom: 2px;
     }
 
     .user-role {
         font-size: 12px;
-        color: rgba(0, 0, 0, 0.6);
+        color: #6b7280;
     }
 }
 
-// Responsive
-@media (max-width: 768px) {
+// Dark Mode Overrides
+:host-context(.theme-dark) {
     .app-title {
-        font-size: 1rem;
+        color: #f3f4f6;
     }
 
-    .search-container {
+    .header-search {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.05);
+
+        &:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(0, 85, 164, 0.5);
+            color: white;
+        }
+
+        .search-input {
+            color: white;
+        }
+    }
+
+    .user-info {
+        .user-name {
+            color: white;
+        }
+
+        .user-role {
+            color: #9ca3af;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .app-title {
         display: none;
     }
 }

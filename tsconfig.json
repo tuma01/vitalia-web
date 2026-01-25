@@ -14,18 +14,30 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "baseUrl": "src",    // importante: baseUrl apunta a src
+    "baseUrl": "src", // importante: baseUrl apunta a src
     "paths": {
-      "@core": ["app/core"],
-      "@core/*": ["app/core/*"],
-      // "@shared": ["app/shared"],
-      // "@shared/*": ["app/shared/*"],
+      "@core": [
+        "app/core"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@shared": [
+        "app/shared"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
       // "@theme": ["app/theme"],
       // "@theme/*": ["app/theme/*"],
       // "@testing": ["testing"],
       // "@testing/*": ["testing/*"],
-      "@env": ["environments"],
-      "@env/*": ["environments/*"]
+      "@env": [
+        "environments"
+      ],
+      "@env/*": [
+        "environments/*"
+      ]
     },
   },
   "angularCompilerOptions": {

@@ -1,0 +1,42 @@
+/* Colores abstractos */
+:root {
+    --ui-color-primary: #000;
+    /* Será reemplazado por theme */
+    --ui-color-secondary: #000;
+    --ui-color-danger: #000;
+    --ui-color-ghost: transparent;
+
+    --ui-color-on-primary: #fff;
+    --ui-color-on-secondary: #fff;
+    --ui-color-on-danger: #fff;
+    --ui-color-text: #000;
+    --ui-color-text-secondary: #444;
+    --ui-color-text-muted: #666;
+    --ui-color-border: #ccc;
+
+    --ui-color-bg-hover: #f5f5f5;
+    --ui-color-bg-active: #e5e5e5;
+
+    --ui-background-default: #fff;
+}
+
+/* Dark Theme Overrides */
+.theme-dark {
+    --ui-color-primary: #90caf9; // Lighter blue for dark mode visibility
+    --ui-color-secondary: #ce93d8;
+    --ui-color-danger: #ef9a9a;
+
+    --ui-color-on-primary: #000;
+    --ui-color-on-secondary: #000;
+
+    --ui-color-text: #fff;
+    --ui-color-text-secondary: #b0bec5;
+    --ui-color-text-muted: #78909c;
+
+    --ui-color-border: #424242;
+
+    --ui-color-bg-hover: #374151;
+    --ui-color-bg-active: #1f2937;
+
+    --ui-background-default: #121212; // Dark background
+}

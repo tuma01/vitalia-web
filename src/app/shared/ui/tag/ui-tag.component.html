@@ -1,0 +1,8 @@
+<div [class]="classes">
+    @if (icon) {
+    <mat-icon class="ui-tag__icon">{{ icon }}</mat-icon>
+    }
+    <span class="ui-tag__label">
+        <ng-content></ng-content>
+    </span>
+</div>

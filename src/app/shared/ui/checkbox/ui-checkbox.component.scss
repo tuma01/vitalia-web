@@ -1,0 +1,104 @@
+:host {
+    display: inline-block;
+    font-family: var(--ui-font-family-sans);
+    outline: none;
+    cursor: pointer;
+}
+
+.ui-checkbox__label {
+    display: flex;
+    align-items: center; // Align text with box
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    outline: none;
+}
+
+.ui-checkbox__input {
+    // Visually hidden but accessible
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    z-index: -1;
+}
+
+.ui-checkbox__box {
+    width: var(--ui-checkbox-size);
+    height: var(--ui-checkbox-size);
+    flex-shrink: 0;
+
+    border: 2px solid var(--ui-checkbox-color-border);
+    border-radius: var(--ui-checkbox-radius);
+    background-color: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ui-checkbox__mark {
+    width: 70%;
+    height: 70%;
+    color: var(--ui-checkbox-color-tick);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ui-checkbox__text {
+    margin-left: var(--ui-space-sm, 8px);
+    font-size: var(--ui-font-size-md, 1rem);
+    color: var(--ui-color-text-primary, #374151);
+
+    &:empty {
+        display: none;
+    }
+}
+
+/* --- STATES --- */
+
+/* Checked */
+:host(.ui-checkbox--checked) {
+    .ui-checkbox__box {
+        background-color: var(--ui-checkbox-color-checked);
+        border-color: var(--ui-checkbox-color-checked);
+    }
+
+    .ui-checkbox__mark {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Focused (Keyboard Accessibility) */
+:host(.ui-checkbox--focused) {
+    .ui-checkbox__box {
+        box-shadow: 0 0 0 2px var(--ui-color-bg, #fff), 0 0 0 4px var(--ui-checkbox-color-checked);
+    }
+}
+
+/* Disabled */
+:host(.ui-checkbox--disabled) {
+    cursor: not-allowed;
+    opacity: var(--ui-opacity-disabled, 0.5);
+
+    .ui-checkbox__label {
+        cursor: not-allowed;
+    }
+
+    .ui-checkbox__box {
+        border-color: var(--ui-color-border);
+        background-color: var(--ui-color-bg-disabled, #f3f4f6);
+    }
+
+    // Checked & Disabled
+    &.ui-checkbox--checked .ui-checkbox__box {
+        background-color: var(--ui-color-text-muted, #9ca3af);
+        border-color: transparent;
+    }
+}

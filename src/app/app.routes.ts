@@ -4,6 +4,7 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { RoleRedirectGuard } from './core/guards/role-redirect.guard';
+import { PilotFormComponent } from './features/pilot-form/pilot-form.component';
 
 export const routes: Routes = [
     // Public routes (no authentication required)
@@ -13,12 +14,15 @@ export const routes: Routes = [
         redirectTo: 'login',
         pathMatch: 'full'
     },
+    // Mini-Pilot Route
+    { path: 'pilot', component: PilotFormComponent, data: { title: 'Design System Pilot' } },
+
     // Super Admin Login (separate from regular login)
-    {
-        path: 'super-admin/login',
-        loadComponent: () => import('./features/auth/super-admin-login/super-admin-login.component').then(m => m.SuperAdminLoginComponent),
-        data: { title: 'Super Admin Login' }
-    },
+    // {
+    //     path: 'super-admin/login',
+    //     loadComponent: () => import('./features/auth/super-admin-login/super-admin-login.component').then(m => m.SuperAdminLoginComponent),
+    //     data: { title: 'Super Admin Login' }
+    // },
 
     // Protected routes (authentication required)
     {
@@ -39,7 +43,8 @@ export const routes: Routes = [
                 children: []
             },
 
-            // Role-based dashboards - FULLY MIGRATED
+            // Role-based dashboards - TEMPORARILY DISABLED FOR PILOT
+            /*
             {
                 path: 'admin',
                 canActivate: [roleGuard],
@@ -115,6 +120,7 @@ export const routes: Routes = [
                     }
                 ]
             }
+            */
         ]
     },
 

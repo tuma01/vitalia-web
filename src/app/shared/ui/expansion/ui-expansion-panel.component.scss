@@ -1,0 +1,100 @@
+:host {
+    display: block;
+    width: 100%;
+    background-color: var(--ui-color-surface, #ffffff);
+    border: 1px solid var(--ui-color-border-subtle, #f3f4f6);
+    border-radius: var(--ui-radius-md, 8px);
+    overflow: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: var(--ui-space-sm, 8px);
+
+    &.ui-expansion-panel--expanded {
+        border-color: var(--ui-color-primary, #2563eb);
+        box-shadow: var(--ui-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
+        margin-bottom: var(--ui-space-md, 16px);
+    }
+}
+
+.ui-expansion-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 12px; // Reducido 3px adicionales por lado para bajar ~5px total
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+    min-height: 34px; // Reducido de 40px a 34px (~5px menos)
+
+    &:hover {
+        background-color: var(--ui-color-surface-variant, #f8fafc);
+    }
+}
+
+.ui-expansion-panel__header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.ui-expansion-panel__icon {
+    font-size: 1.25rem;
+    color: var(--ui-color-primary);
+}
+
+.ui-expansion-panel__title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.ui-expansion-panel__title {
+    font-weight: 600;
+    color: var(--ui-color-text, #111827);
+    font-size: 0.9375rem;
+}
+
+.ui-expansion-panel__description {
+    font-size: 0.8125rem;
+    color: var(--ui-color-text-secondary, #64748b);
+}
+
+.ui-expansion-panel__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ui-color-text-secondary);
+    transition: color 0.2s;
+
+    .ui-expansion-panel__toggle-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.5rem;
+    }
+}
+
+.ui-expansion-panel--expanded .ui-expansion-panel__toggle {
+    color: var(--ui-color-primary);
+}
+
+.ui-expansion-panel__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden; // Sello hermético
+    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &>* {
+        min-height: 0; // Obligatorio para colapso a 0px
+    }
+}
+
+.ui-expansion-panel--expanded .ui-expansion-panel__body {
+    grid-template-rows: 1fr;
+}
+
+.ui-expansion-panel__content {
+    padding: 0 16px 16px 16px;
+    color: var(--ui-color-text-secondary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+}

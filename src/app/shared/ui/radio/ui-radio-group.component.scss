@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-space-md, 16px);
+}
+
+:host(.ui-radio-group--horizontal) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+:host(.ui-radio-group--vertical) {
+    flex-direction: column;
+}

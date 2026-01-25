@@ -1,0 +1,62 @@
+:host {
+    display: inline-block;
+}
+
+.ui-toggle-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: var(--ui-space-sm, 8px);
+    user-select: none;
+
+    &--disabled {
+        cursor: not-allowed;
+        opacity: var(--ui-opacity-disabled, 0.5);
+    }
+}
+
+.ui-toggle-input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin: 0;
+
+    &:focus-visible+.ui-toggle-track {
+        box-shadow: 0 0 0 2px var(--ui-card-bg, #fff), 0 0 0 4px var(--ui-toggle-bg-checked, #2563eb);
+    }
+
+    &:checked+.ui-toggle-track {
+        background-color: var(--ui-toggle-bg-checked, #2563eb);
+
+        .ui-toggle-thumb {
+            transform: translateX(calc(var(--ui-toggle-width) - var(--ui-toggle-thumb-size) - 4px));
+        }
+    }
+}
+
+.ui-toggle-track {
+    width: var(--ui-toggle-width, 44px);
+    height: var(--ui-toggle-height, 24px);
+    background-color: var(--ui-toggle-bg, #d1d5db);
+    border-radius: 9999px; // Pill shape
+    position: relative;
+    transition: background-color var(--ui-toggle-anim-duration, 0.2s) ease;
+    padding: 2px; // Internal padding for thumb
+    box-sizing: border-box;
+}
+
+.ui-toggle-thumb {
+    width: var(--ui-toggle-thumb-size, 20px);
+    height: var(--ui-toggle-thumb-size, 20px);
+    background-color: var(--ui-toggle-thumb-color, #ffffff);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform var(--ui-toggle-anim-duration, 0.2s) cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.ui-toggle-text {
+    font-family: var(--ui-font-family-sans);
+    font-size: var(--ui-font-size-md, 16px);
+    color: var(--ui-text-primary, #111827);
+}

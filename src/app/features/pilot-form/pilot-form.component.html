@@ -1,0 +1,378 @@
+<div class="pilot-grid">
+
+    <div class="pilot-header">
+        <h2>Vitalia PAL - Pilot Showcase</h2>
+        <p>Exploring premium components and high-end design patterns.</p>
+    </div>
+
+    <!-- Contextual Toolbar Example -->
+    <div style="grid-column: 1 / -1; margin-bottom: 24px;">
+        <ui-toolbar mode="floating">
+            <div start style="display: flex; align-items: center; gap: 8px;">
+                <mat-icon style="color: var(--ui-color-primary);">dashboard</mat-icon>
+                <span style="font-weight: 700;">Contextual Actions</span>
+            </div>
+
+            <div center style="width: 100%; max-width: 300px;">
+                <ui-input placeholder="Filter results..." style="width: 100%;"></ui-input>
+            </div>
+
+            <div end>
+                <ui-icon-button icon="share" variant="soft"></ui-icon-button>
+                <ui-icon-button icon="file_download" variant="soft"></ui-icon-button>
+            </div>
+        </ui-toolbar>
+    </div>
+
+    <div class="pilot-actions">
+        <ui-button size="sm" variant="secondary" (clicked)="toggleTheme()">
+            Theme: {{ uiConfig.theme() | titlecase }}
+        </ui-button>
+
+        <ui-button size="sm" variant="primary" (clicked)="toggleBrand()">
+            Brand: {{ uiConfig.brand() | titlecase }}
+        </ui-button>
+
+        <ui-button size="sm" variant="outline" (clicked)="toggleDensity()">
+            Density: {{ uiConfig.density() | titlecase }}
+        </ui-button>
+
+        <ui-button size="sm" variant="ghost" (clicked)="toggleInputAppearance()">
+            Inputs: {{ uiConfig.inputAppearance() | titlecase }}
+        </ui-button>
+    </div>
+
+    <!-- Column 1: Static Enterprise Form -->
+    <div class="pilot-card">
+        <h3 class="section-title">Static Enterprise Form (PAL)</h3>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+
+            <ui-form-field label="Email Corporativo"
+                [error]="form.controls['email'].invalid && form.controls['email'].touched ? 'Ingresa un email válido' : null"
+                hint="Tu correo de vitalia.com">
+
+                <ui-input id="pilot-email" name="pilot-email" formControlName="email" type="email"
+                    placeholder="usuario@vitalia.com">
+                </ui-input>
+
+                <span uiSuffix>✉️</span>
+            </ui-form-field>
+
+            <ui-form-field label="Contraseña"
+                [error]="form.controls['password'].invalid && form.controls['password'].touched ? 'La contraseña es requerida' : null">
+
+                <ui-input id="pilot-password" name="pilot-password" formControlName="password" type="password"
+                    placeholder="••••••••">
+                </ui-input>
+
+                <span uiSuffix>🔒</span>
+            </ui-form-field>
+
+            <!-- EXPLICIT DEMO FOR USER REQUEST -->
+            <ui-form-field label="Usuario (Complejo)" hint="Ejemplo con Prefix + Suffix + Placeholder">
+                <span uiPrefix>👤</span>
+                <ui-input id="pilot-username" name="pilot-username" formControlName="role"
+                    placeholder="Nombre de usuario"></ui-input>
+                <span uiSuffix>✅</span>
+            </ui-form-field>
+
+            <!-- Select with Icons -->
+            <ui-select label="Role" placeholder="Select role" formControlName="role" [options]="roleOptions">
+            </ui-select>
+
+            <ui-datepicker label="Birth Date" placeholder="DD/MM/YYYY" formControlName="birthDate">
+            </ui-datepicker>
+
+            <ui-timepicker label="Arrival Time" placeholder="HH:MM" formControlName="birthTime">
+            </ui-timepicker>
+
+            <!-- Select with Images (NEW FEATURE) -->
+            <ui-select label="Asignar Responsable (Imágenes)" [options]="roleOptionsWithImages"
+                placeholder="Busca un responsable">
+            </ui-select>
+
+            <div style="margin-top: var(--ui-space-lg);">
+                <ui-button variant="primary" type="submit" [fullWidth]="true" [loading]="isSaving">
+                    Iniciar Sesión
+                </ui-button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Column 2: Zone Renderer (Dynamic Widgets) -->
+    <ui-card variant="elevated">
+        <div [formGroup]="form">
+            <ui-card-header>
+                <h3 uiCardTitle>Component Showcase</h3>
+                <span uiCardSubtitle>Interactive Demo of PAL Components</span>
+            </ui-card-header>
+
+            <ui-card-content class="flex flex-col gap-4">
+                <!-- Buttons -->
+                <div>
+                    <h4 class="text-sm font-bold mb-2">Buttons</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <ui-button variant="primary" size="sm">Primary</ui-button>
+                        <ui-button variant="secondary" size="sm">Secondary</ui-button>
+                        <ui-button variant="outline" size="sm">Outline</ui-button>
+                        <ui-button variant="danger" size="sm">Danger</ui-button>
+                        <ui-button variant="ghost" size="sm">Ghost</ui-button>
+                    </div>
+                </div>
+
+                <!-- Selections -->
+                <div>
+                    <h4 class="text-sm font-bold mb-2">Selection Controls</h4>
+                    <div class="flex flex-col gap-4">
+                        <ui-checkbox formControlName="terms">Acepto Términos (Checkbox)</ui-checkbox>
+
+                        <ui-toggle formControlName="notifications">Notificaciones (Switch)</ui-toggle>
+
+                        <div>
+                            <label class="text-sm text-gray-500 mb-1 block">Género (Radio)</label>
+                            <ui-radio-group formControlName="gender" orientation="horizontal">
+                                <ui-radio value="male">Male</ui-radio>
+                                <ui-radio value="female">Female</ui-radio>
+                                <ui-radio value="other">Other</ui-radio>
+                            </ui-radio-group>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feedback -->
+                <div>
+                    <h4 class="text-sm font-bold mb-2">Feedback</h4>
+                    <ui-button variant="outline" (click)="openConfirmDialog()">
+                        Open Confirm Dialog
+                    </ui-button>
+                </div>
+
+                <hr style="border-top: 1px solid var(--ui-color-border); margin: 0;">
+
+                <h3 class="section-title">Zone Renderer (Dynamic Widgets)</h3>
+                <p style="color: var(--ui-color-text-secondary); margin-bottom: 1rem;">
+                    Renderizado dinámico de <code>pilot-form-widget</code> via JSON Config.
+                </p>
+
+                <!-- The Zone Renderer Component -->
+                <app-zone-renderer zoneName="pilot-zone" [widgets]="zoneWidgets">
+                </app-zone-renderer>
+
+                <!-- Badges & Tags (NEW LUX) -->
+                <div style="margin-top: 1.5rem;">
+                    <h4 style="font-size: 0.875rem; font-weight: 700; margin-bottom: 0.75rem;">Badges & Tags
+                        (Notification vs Label)</h4>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- Badges Overlay -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                            <v-badge [content]="5" variant="danger" animation="pulse" position="top-right">
+                                <mat-icon>mail</mat-icon>
+                            </v-badge>
+
+                            <v-badge [content]="18" variant="primary" position="top-right">
+                                <mat-icon>notifications</mat-icon>
+                            </v-badge>
+
+                            <v-badge [dot]="true" variant="success" size="md">
+                                <mat-icon>person</mat-icon>
+                            </v-badge>
+
+                            <v-badge [content]="3" variant="warning" position="top-right">
+                                <ui-button size="sm" variant="outline">Messages</ui-button>
+                            </v-badge>
+                        </div>
+
+                        <!-- Tags (Status Labels) -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <ui-tag variant="success" appearance="soft" icon="check_circle">Active</ui-tag>
+                            <ui-tag variant="danger" appearance="soft" icon="cancel">Inactive</ui-tag>
+                            <ui-tag variant="warning" appearance="soft" icon="schedule">Pending</ui-tag>
+                            <ui-tag variant="info" appearance="outline">Info</ui-tag>
+                            <ui-tag variant="primary" appearance="filled" [pill]="true">New</ui-tag>
+                        </div>
+                    </div>
+                </div>
+            </ui-card-content>
+        </div>
+
+    </ui-card>
+
+    <!-- Column 3: Premium Tabs Showcase (NEW) -->
+    <ui-card variant="elevated">
+        <ui-card-header>
+            <h3 uiCardTitle>Premium Navigation (Tabs)</h3>
+            <span uiCardSubtitle>Better than Material - Animated & Responsive</span>
+        </ui-card-header>
+        <ui-card-content class="flex flex-col gap-8">
+
+            <!-- Line Variant -->
+            <div>
+                <h4 style="margin-bottom: 12px; font-weight: 500;">Variant: Line (Classic Premium)</h4>
+                <ui-tab-group variant="line">
+                    <ui-tab label="General" icon="👤">
+                        <div style="padding: 1rem 0; color: var(--ui-color-text-secondary);">
+                            Contenido de la pestaña General. Animación suave de subrayado y transición de opacidad.
+                        </div>
+                    </ui-tab>
+                    <ui-tab label="Seguridad" icon="🔒">
+                        <div style="padding: 1rem 0; color: var(--ui-color-text-secondary);">
+                            Configuración de seguridad y permisos. Totalmente reactivo al estado activo.
+                        </div>
+                    </ui-tab>
+                    <ui-tab label="Notificaciones" icon="🔔" [disabled]="true">
+                        <div style="padding: 1rem 0;">Disabled content</div>
+                    </ui-tab>
+                </ui-tab-group>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--ui-color-border-subtle); margin: 8px 0;">
+
+            <!-- Pills Variant -->
+            <div>
+                <h4 style="margin-bottom: 12px; font-weight: 500;">Variant: Pills (Modern Segmented)</h4>
+                <ui-tab-group variant="pills">
+                    <ui-tab label="Vista Lista" icon="📋">
+                        <div style="padding: 1rem 0; color: var(--ui-color-text-secondary);">
+                            Visualización en formato de lista para gestión rápida.
+                        </div>
+                    </ui-tab>
+                    <ui-tab label="Vista Kanban" icon="📊">
+                        <div style="padding: 1rem 0; color: var(--ui-color-text-secondary);">
+                            Visualización por etapas de flujo de trabajo.
+                        </div>
+                    </ui-tab>
+                </ui-tab-group>
+            </div>
+
+        </ui-card-content>
+    </ui-card>
+
+    <!-- Column 3: Accordion & Disclosure Showcase (NEW) -->
+    <ui-card variant="elevated">
+        <ui-card-header>
+            <h3 uiCardTitle>Accordion & Disclosures</h3>
+            <span uiCardSubtitle>Better than Material - Fluid Layouts</span>
+        </ui-card-header>
+        <ui-card-content class="flex flex-col gap-6">
+
+            <!-- Simple Expansion Panel -->
+            <div>
+                <h4 style="margin-bottom: 12px; font-weight: 500;">Standalone Panel</h4>
+                <ui-expansion-panel title="Información Adicional" icon="ℹ️"
+                    description="Haz click para ver más detalles">
+                    <p>Este es un panel de expansión independiente. Utiliza una transición de altura fluida basada en
+                        CSS moderno para un comportamiento profesional sin saltos de layout.</p>
+                </ui-expansion-panel>
+            </div>
+
+            <hr style="border: none; border-top: 1px solid var(--ui-color-border-subtle); margin: 8px 0;">
+
+            <!-- Accordion Group -->
+            <div>
+                <h4 style="margin-bottom: 12px; font-weight: 500;">Grouped Accordion (Exclusive)</h4>
+                <ui-accordion>
+                    <ui-expansion-panel title="¿Cómo funciona el PAL?" icon="⚙️" [expanded]="true">
+                        <p>El PAL (Product Abstraction Layer) centraliza todos los componentes atómicos para asegurar
+                            uniformidad total y reactividad global en todo Vitalia.</p>
+                    </ui-expansion-panel>
+
+                    <ui-expansion-panel title="Seguridad y Permisos" icon="🔐">
+                        <p>Cada componente está diseñado con la seguridad en mente, siguiendo las mejores prácticas de
+                            Angular y Material Design, pero con una estética premium.</p>
+                    </ui-expansion-panel>
+
+                    <ui-expansion-panel title="Soporte y Ayuda" icon="❓" [disabled]="true">
+                        <p>Contenido bloqueado.</p>
+                    </ui-expansion-panel>
+                </ui-accordion>
+            </div>
+
+        </ui-card-content>
+    </ui-card>
+
+    <!-- Full Width: Progress Indicators (NEW) -->
+    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+        <h3 class="section-title">Progress Indicators (Feedback Atoms)</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+
+            <!-- Spinners -->
+            <ui-card variant="outlined" style="background: var(--ui-color-surface-variant, #f8fafc);">
+                <ui-card-content class="flex flex-col gap-4">
+                    <h4 style="font-weight: 500;">Spinners (sm, md, lg)</h4>
+                    <div class="flex items-center gap-8">
+                        <ui-progress-spinner size="sm"></ui-progress-spinner>
+                        <ui-progress-spinner size="md"></ui-progress-spinner>
+                        <ui-progress-spinner size="lg"></ui-progress-spinner>
+                    </div>
+                    <p class="text-xs text-muted">Alineamiento premium y suavidad de animación garantizada.</p>
+                </ui-card-content>
+            </ui-card>
+
+            <!-- Bars -->
+            <ui-card variant="outlined" style="background: var(--ui-color-surface-variant, #f8fafc);">
+                <ui-card-content class="flex flex-col gap-4">
+                    <h4 style="font-weight: 500;">Progress Bars</h4>
+                    <div>
+                        <span class="text-xs text-muted">Indeterminate</span>
+                        <ui-progress-bar mode="indeterminate"></ui-progress-bar>
+                    </div>
+                    <div>
+                        <span class="text-xs text-muted">Determinate (75%)</span>
+                        <ui-progress-bar mode="determinate" [value]="75"></ui-progress-bar>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+        </div>
+    </div>
+
+    <!-- Full Width: Data Table -->
+    <div class="pilot-card" style="grid-column: 1 / -1;">
+        <h3 class="section-title">Data Table (PAL)</h3>
+
+        <ui-data-table [data]="tableData" [columns]="tableColumns" [actions]="tableActions" [pageSize]="5"
+            [selectable]="true" [searchable]="true" [exportable]="true" (selectionChange)="onSelectionChange($event)"
+            (bulkDelete)="onBulkDelete($event)">
+        </ui-data-table>
+
+    </div>
+
+    <!-- Full Options Card Example -->
+    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 4rem;">
+        <h3 class="section-title">Full Feature Card (All Options)</h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+            <ui-card variant="elevated" [hoverable]="true">
+                <img uiCardImage src="https://picsum.photos/800/400" alt="Random demo image"
+                    style="height: 200px; object-fit: cover;">
+
+                <ui-card-header>
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
+                        <v-badge [dot]="true" variant="success">
+                            <ui-icon-button icon="face" variant="soft" size="sm"></ui-icon-button>
+                        </v-badge>
+                        <div>
+                            <h3 uiCardTitle style="margin: 0;">Rich Card Title</h3>
+                            <span uiCardSubtitle>Subtitle with Context</span>
+                        </div>
+                    </div>
+                </ui-card-header>
+
+                <ui-card-content>
+                    <p style="color: var(--ui-color-text-secondary); line-height: 1.6;">
+                        Este es el ejemplo completo que pediste. Incluye:
+                        <br>• Directiva <code>uiCardImage</code> para el cover.
+                        <br>• Header con avatar y badges.
+                        <br>• Propiedad <code>[hoverable]="true"</code> para efectos.
+                        <br>• Footer con acciones alineadas.
+                    </p>
+                </ui-card-content>
+
+                <ui-card-footer style="display: flex; justify-content: flex-end; gap: 8px;">
+                    <ui-button variant="ghost">Cancel</ui-button>
+                    <ui-button variant="primary">Confirm Action</ui-button>
+                </ui-card-footer>
+            </ui-card>
+        </div>
+    </div>
+</div>
