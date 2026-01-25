@@ -5,9 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 // PAL Components
-import { UiButtonComponent } from '@shared/ui/button';
-import { UiInputComponent } from '@shared/ui/input';
-import { UiFormFieldComponent } from '@shared/ui/form-field';
+import { UiButtonComponent, UiInputComponent, UiFormFieldComponent } from '@ui';
 
 @Component({
   selector: 'app-login',

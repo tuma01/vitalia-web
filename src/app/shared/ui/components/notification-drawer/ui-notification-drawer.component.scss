@@ -1,0 +1,198 @@
+.ui-drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 998;
+    backdrop-filter: blur(2px);
+}
+
+.ui-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background: #fff;
+    z-index: 999;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+        padding: var(--ui-space-lg);
+        border-bottom: 1px solid var(--ui-color-border, #e2e8f0);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--ui-color-text, #0f172a);
+    }
+
+    &__actions {
+        display: flex;
+        gap: var(--ui-space-xs);
+    }
+
+    &__content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0;
+    }
+
+    &__empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--ui-color-text-secondary, #64748b);
+        gap: var(--ui-space-md);
+
+        &-icon {
+            font-size: 48px;
+            width: 48px;
+            height: 48px;
+            opacity: 0.5;
+        }
+    }
+}
+
+.ui-notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ui-notification-item {
+    padding: var(--ui-space-md) var(--ui-space-lg);
+    border-bottom: 1px solid var(--ui-color-border-subtle, #f1f5f9);
+    display: flex;
+    gap: var(--ui-space-md);
+    transition: background-color 0.2s;
+    position: relative;
+
+    &:hover {
+        background-color: var(--ui-color-surface-hover, #f8fafc);
+    }
+
+    &--unread {
+        background-color: var(--ui-color-primary-soft, #f0f9ff);
+
+        &:hover {
+            background-color: #e0f2fe;
+        }
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--ui-color-surface-variant, #f1f5f9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ui-color-text-secondary, #64748b);
+
+        &--info {
+            color: var(--ui-color-primary, #0284c7);
+            background: #e0f2fe;
+        }
+
+        &--success {
+            color: var(--ui-color-success, #16a34a);
+            background: #dcfce7;
+        }
+
+        &--warning {
+            color: var(--ui-color-warning, #d97706);
+            background: #fef3c7;
+        }
+
+        &--error {
+            color: var(--ui-color-danger, #dc2626);
+            background: #fee2e2;
+        }
+    }
+
+    &__body {
+        flex: 1;
+        min-width: 0;
+    }
+
+    &__title {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--ui-color-text, #0f172a);
+    }
+
+    &__message {
+        margin: 0 0 6px;
+        font-size: 0.875rem;
+        color: var(--ui-color-text-secondary, #64748b);
+        line-height: 1.4;
+    }
+
+    &__time {
+        font-size: 0.75rem;
+        color: var(--ui-color-text-muted, #94a3b8);
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+.ui-notification-action {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ui-dot {
+        width: 10px;
+        height: 10px;
+        background-color: var(--ui-color-primary, #0284c7);
+        border-radius: 50%;
+    }
+}
+
+.ui-notification-action-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--ui-color-text-muted, #94a3b8);
+    opacity: 0;
+    transition: opacity 0.2s;
+
+    .ui-notification-item:hover & {
+        opacity: 1;
+    }
+
+    &:hover {
+        color: var(--ui-color-danger, #ef4444);
+    }
+
+    mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+    }
+}

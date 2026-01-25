@@ -1,0 +1,27 @@
+<div class="ui-empty-state" [class.ui-empty-state--card]="config.showCard !== false">
+    <div class="ui-empty-state__image" *ngIf="config.imagePath">
+        <img [src]="config.imagePath" [alt]="config.i18n?.imageAlt || config.title">
+    </div>
+
+    <div class="ui-empty-state__content">
+        <h3 class="ui-empty-state__title">{{ config.title }}</h3>
+        <p class="ui-empty-state__description" *ngIf="config.description">{{ config.description }}</p>
+
+        <div class="ui-empty-state__actions" *ngIf="config.actionLabel || config.secondaryActionLabel">
+            <ui-button *ngIf="config.secondaryActionLabel" variant="outline"
+                [ariaLabel]="config.i18n?.secondaryActionAriaLabel || ''" (clicked)="onSecondaryAction()">
+                {{ config.secondaryActionLabel }}
+            </ui-button>
+
+            <ui-button *ngIf="config.actionLabel" variant="primary" [ariaLabel]="config.i18n?.actionAriaLabel || ''"
+                (clicked)="onPrimaryAction()">
+                <mat-icon *ngIf="config.actionIcon" style="margin-right: 8px;">{{ config.actionIcon }}</mat-icon>
+                {{ config.actionLabel }}
+            </ui-button>
+        </div>
+
+        <div class="ui-empty-state__custom">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

@@ -13,9 +13,7 @@ import { LanguageService, Language } from '../../core/services/language.service'
 import { ThemeService, Theme } from '../../core/services/theme.service';
 import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
-import { VitaliaBadgeComponent } from '../../shared/ui/badge/vitalia-badge.component';
-import { UiToolbarComponent } from '../../shared/ui/toolbar/ui-toolbar.component';
-import { UiIconButtonComponent } from '../../shared/ui/button/ui-icon-button.component';
+import { VitaliaBadgeComponent, UiToolbarComponent, UiIconButtonComponent } from '@ui';
 
 @Component({
   selector: 'app-header',

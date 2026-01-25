@@ -1,0 +1,226 @@
+/* Tokens */
+$field-height: var(--ui-input-height-md, 40px);
+$field-radius: var(--ui-radius-base, 8px);
+$label-scale: 0.75;
+
+// Host is just a wrapper now, styles applied to inner .ui-form-field
+:host {
+    display: block;
+}
+
+.ui-form-field {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    font-family: var(--ui-font-family-sans, sans-serif);
+    margin-bottom: var(--ui-space-md, 16px);
+
+    /* --- Component Tokens (Level 3) --- */
+    --ui-field-height: var(--ui-input-height-md, 45px);
+    --ui-field-radius: var(--ui-radius-base, 8px);
+    --ui-field-border-width: var(--ui-border-width-base, 1px);
+    --ui-field-border-color: var(--ui-color-border, #9ca3af);
+    --ui-field-bg: var(--ui-background-default, #ffffff);
+    --ui-field-label-color: var(--ui-color-text-secondary, #6b7280);
+    --ui-field-primary-color: var(--ui-color-primary, #2563eb);
+    --ui-field-danger-color: var(--ui-color-danger, #ef4444);
+    --ui-field-label-scale: 0.75;
+}
+
+/* --- Control Container --- */
+.ui-form-field__control {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: var(--ui-field-height);
+    box-sizing: border-box;
+    gap: 0;
+}
+
+/* --- Input Slot --- */
+.ui-form-field__input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    height: 100%;
+    position: relative;
+    padding: 0 12px !important;
+    transform: translateY(1.5px);
+}
+
+.ui-form-field--has-prefix .ui-form-field__input {
+    padding-left: 0 !important;
+}
+
+.ui-form-field--has-suffix .ui-form-field__input {
+    padding-right: 0;
+}
+
+/* --- Label --- */
+.ui-form-field__label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: 0 0;
+
+    color: var(--ui-field-label-color);
+    font-size: 1rem;
+    font-weight: 400;
+    pointer-events: none;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s, padding 0.2s;
+
+    padding-left: 12px;
+    z-index: 1;
+}
+
+.ui-form-field--has-prefix .ui-form-field__label {
+    padding-left: 35px !important;
+}
+
+/* --- Floating Label Logic --- */
+.ui-form-field--focused,
+.ui-form-field--has-value {
+    .ui-form-field__label {
+        transform: translateY(-1.8rem) scale(var(--ui-field-label-scale)) !important;
+        max-width: 133% !important;
+        padding: 0 4px !important;
+        margin-left: 8px !important;
+        background-color: var(--ui-field-bg) !important;
+    }
+
+    &.ui-form-field--has-prefix .ui-form-field__label {
+        margin-left: 8px !important;
+        padding: 0 4px !important;
+        transform: translateY(-1.8rem) scale(var(--ui-field-label-scale)) !important;
+    }
+}
+
+.ui-form-field__required {
+    color: var(--ui-field-danger-color);
+}
+
+/* --- Fieldset Outline --- */
+.ui-form-field__outline {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    margin: 0 !important;
+    padding: 0 !important;
+    padding-left: 8px !important;
+
+    border-width: var(--ui-field-border-width) !important;
+    border-style: var(--ui-border-style-base, solid);
+    border-color: var(--ui-field-border-color);
+    border-radius: var(--ui-field-radius);
+
+    transition: border-color 0.2s, border-width 0.2s;
+    min-width: 0;
+}
+
+.ui-form-field__legend {
+    width: auto;
+    max-width: 0.01px;
+    height: 11px;
+    padding: 0;
+
+    display: block;
+    color: transparent;
+    font-size: 0.75em;
+    white-space: nowrap;
+    transition: max-width 50ms cubic-bezier(0.0, 0, 0.2, 1);
+}
+
+/* --- State Colors --- */
+.ui-form-field--focused {
+    .ui-form-field__label {
+        color: var(--ui-field-primary-color);
+    }
+
+    .ui-form-field__outline {
+        border-color: var(--ui-field-primary-color);
+        border-width: var(--ui-border-width-focus, 2px) !important;
+    }
+}
+
+.ui-form-field--error {
+    .ui-form-field__label {
+        color: var(--ui-field-danger-color);
+    }
+
+    .ui-form-field__outline {
+        border-color: var(--ui-field-danger-color);
+    }
+}
+
+/* --- Prefix / Suffix --- */
+.ui-form-field__prefix,
+.ui-form-field__suffix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--ui-color-text-secondary);
+    padding: 0 8px;
+    transition: color 0.2s ease;
+    transform: translateY(1.5px); // Nudge down icons too
+
+    // Force strict centering for icons
+    mat-icon,
+    .mat-icon {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 24px !important; // Explicit size
+        width: 24px !important;
+    }
+}
+
+.ui-form-field--focused {
+
+    .ui-form-field__prefix,
+    .ui-form-field__suffix {
+        color: var(--ui-color-primary, #2563eb);
+    }
+}
+
+.ui-form-field--error {
+
+    .ui-form-field__prefix,
+    .ui-form-field__suffix {
+        color: var(--ui-color-danger, #ef4444);
+    }
+}
+
+/* --- Subscript --- */
+.ui-form-field__subscript {
+    padding: 0 16px;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    line-height: 1.25rem;
+    min-height: 1.25rem; // Reserved space
+
+    @media (max-width: 640px) {
+        font-size: 0.7rem;
+        padding: 0 12px;
+    }
+}
+
+.ui-form-field__error {
+    color: var(--ui-color-danger);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ui-form-field__hint {
+    color: var(--ui-color-text-muted);
+}

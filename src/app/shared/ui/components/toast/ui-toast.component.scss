@@ -1,0 +1,118 @@
+.ui-toast {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--ui-space-md) var(--ui-space-lg);
+    border-radius: var(--ui-radius-lg, 12px);
+    background: #ffffff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--ui-toast-color);
+    min-width: 300px;
+    max-width: 450px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: var(--ui-space-sm);
+    pointer-events: auto;
+
+    &--success {
+        --ui-toast-color: var(--ui-color-success, #22c55e);
+        --ui-toast-bg-soft: rgba(34, 197, 94, 0.05);
+    }
+
+    &--error {
+        --ui-toast-color: var(--ui-color-error, #ef4444);
+        --ui-toast-bg-soft: rgba(239, 68, 68, 0.05);
+    }
+
+    &--info {
+        --ui-toast-color: var(--ui-color-primary, #2563eb);
+        --ui-toast-bg-soft: rgba(37, 99, 235, 0.05);
+    }
+
+    &--warning {
+        --ui-toast-color: var(--ui-color-warning, #f59e0b);
+        --ui-toast-bg-soft: rgba(245, 158, 11, 0.05);
+    }
+
+    &__icon {
+        color: var(--ui-toast-color);
+        margin-right: var(--ui-space-md);
+        display: flex;
+        align-items: center;
+        padding-top: 2px;
+    }
+
+    &__body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--ui-color-text, #1e293b);
+    }
+
+    &__message {
+        font-size: 0.875rem;
+        color: var(--ui-color-text-secondary, #64748b);
+        line-height: 1.4;
+    }
+
+    &__close {
+        background: transparent;
+        border: none;
+        color: var(--ui-color-text-muted, #94a3b8);
+        cursor: pointer;
+        padding: 4px;
+        margin-left: var(--ui-space-sm);
+        border-radius: var(--ui-radius-sm);
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--ui-color-text);
+        }
+
+        mat-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    &__progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &__progress-bar {
+        height: 100%;
+        background: var(--ui-toast-color);
+        width: 100%;
+        animation: ui-toast-progress linear;
+    }
+}
+
+@keyframes ui-toast-progress {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+/* Animations will be handled by Angular, but we define the states here if needed or just use standard fade */
+.ui-toast-container {
+    padding: var(--ui-space-md);
+    z-index: 10000;
+}

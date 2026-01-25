@@ -1,0 +1,30 @@
+<!-- Smart Layout: Image at top if present -->
+@if (hasImage) {
+<div class="ui-card__image-slot">
+    <ng-content select="[uiCardImage]"></ng-content>
+</div>
+}
+
+<div class="ui-card__header-slot" [attr.aria-label]="i18n?.headerAriaLabel">
+    <div class="ui-card__header-content" [class.ui-card__header--with-avatar]="hasAvatar">
+        @if (hasAvatar) {
+        <div class="ui-card__avatar-slot">
+            <ng-content select="[uiCardAvatar]"></ng-content>
+        </div>
+        }
+        <div class="ui-card__titles">
+            <ng-content select="ui-card-header, [uiCardHeader]"></ng-content>
+        </div>
+    </div>
+</div>
+
+<!-- Main content flows normally -->
+<div class="ui-card__content-slot" [attr.aria-label]="i18n?.contentAriaLabel">
+    <ng-content select="ui-card-content, [uiCardContent]"></ng-content>
+</div>
+
+<ng-content></ng-content> <!-- Fallback for unstructured content -->
+
+<div class="ui-card__footer-slot" [attr.aria-label]="i18n?.footerAriaLabel">
+    <ng-content select="ui-card-footer, [uiCardFooter], [uiCardActions]"></ng-content>
+</div>

@@ -1,13 +1,14 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UiSelectComponent } from '../../shared/ui/select/ui-select.component';
-import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
-import { PilotFormWidgetConfig } from './pilot-form-widget.types';
-import { UiConfigService } from '../../core/services/ui-config.service';
-import { WidgetRegistryService } from '../../core/services/widget-registry.service';
+import {
+    UiSelectComponent,
+    UiButtonComponent,
+    UiConfigService,
+    UiDatepickerComponent,
+    UiTimepickerComponent
+} from '@ui';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
-import { UiDatepickerComponent } from '../../shared/ui/datepicker/ui-datepicker.component';
-import { UiTimepickerComponent } from '../../shared/ui/datepicker/ui-timepicker.component';
+import { WidgetRegistryService } from '../../core/services/widget-registry.service';
 
 @Component({
     selector: 'app-pilot-form-widget',
@@ -24,17 +25,17 @@ import { UiTimepickerComponent } from '../../shared/ui/datepicker/ui-timepicker.
     styleUrls: ['./pilot-form-widget.component.scss']
 })
 export class PilotFormWidgetComponent {
-    roleOptions = [
-        { value: 'ADMIN', label: 'Admin' },
-        { value: 'USER', label: 'User' },
-        { value: 'GUEST', label: 'Guest' }
+    priorityOptions = [
+        { value: 'high', label: 'High Priority', icon: 'priority_high' },
+        { value: 'medium', label: 'Medium Priority', icon: 'medium' },
+        { value: 'low', label: 'Low Priority', icon: 'low_priority' }
     ];
 
     private widgetRegistry = inject(WidgetRegistryService); // Added
     uiConfig = inject(UiConfigService);
 
     form = new FormGroup({
-        role: new FormControl(''),
+        priority: new FormControl('medium'),
         birthDate: new FormControl(null),
         targetTime: new FormControl('09:00')
     });

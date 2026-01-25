@@ -1,0 +1,56 @@
+/**
+ * PAL (Presentation Abstraction Layer) - PUBLIC API
+ * 
+ * Este es el punto de entrada oficial para todos los componentes de la interfaz de usuario.
+ * Sigue la arquitectura de Design System de Vitalia.
+ */
+
+// Config & Types
+export * from './config/ui-config.service';
+export * from './config/ui-i18n.types';
+
+// Primitives
+export * from './primitives/badge/vitalia-badge.component';
+export * from './primitives/badge/ui-badge.types';
+export * from './primitives/button/ui-button.component';
+export * from './primitives/button/ui-button.types';
+export * from './primitives/button/ui-icon-button.component';
+export * from './primitives/checkbox/ui-checkbox.component';
+export * from './primitives/input/ui-input.component';
+export * from './primitives/input/ui-input.types';
+export * from './primitives/radio/ui-radio.component';
+export * from './primitives/radio/ui-radio-group.component';
+export * from './primitives/select/ui-select.component';
+export * from './primitives/tag/ui-tag.component';
+export * from './primitives/tag/ui-tag.types';
+export * from './primitives/toggle/ui-toggle.component';
+
+// Molecular Components
+export * from './components/breadcrumbs/ui-breadcrumbs.component';
+export * from './components/breadcrumbs/ui-breadcrumbs.types';
+export * from './components/card/ui-card.component';
+export * from './components/data-table/ui-data-table.component';
+export * from './components/data-table/ui-data-table.types';
+export * from './components/empty-state/ui-empty-state.component';
+export * from './components/empty-state/ui-empty-state.types';
+export * from './components/datepicker/ui-datepicker.component';
+export * from './components/datepicker/ui-timepicker.component';
+export * from './components/dialog/ui-confirm-dialog.component';
+export * from './components/dialog/ui-dialog.service';
+export * from './components/sidenav/ui-sidenav.component';
+export * from './components/sidenav/ui-sidenav.types';
+export * from './components/expansion/ui-expansion-panel.component';
+export * from './components/expansion/ui-accordion.component';
+export * from './components/expansion/ui-expansion.types';
+export * from './components/stepper/ui-stepper.component';
+export * from './components/stepper/ui-stepper.types';
+export * from './components/form-field/ui-form-field.component';
+export * from './components/form-field/ui-form-field.directives';
+export * from './components/progress-bar/ui-progress-bar.component';
+export * from './components/progress-spinner/ui-progress-spinner.component';
+export * from './components/tabs/ui-tab-group.component';
+export * from './components/tabs/ui-tab.component';
+export * from './components/toast/ui-toast.service';
+export * from './components/toast/ui-toast.component';
+export * from './components/toast/ui-toast.types';
+export * from './components/toolbar/ui-toolbar.component';

@@ -1,14 +1,21 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { UiFormFieldComponent } from '../../shared/ui/form-field/ui-form-field.component';
-import { UiInputComponent } from '../../shared/ui/input/ui-input.component';
-import { UiSelectComponent } from '../../shared/ui/select/ui-select.component';
-import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
-import { UiErrorDirective, UiPrefixDirective, UiSuffixDirective } from '../../shared/ui/form-field/ui-form-field.directives';
-import { UiCardComponent, UiCardHeaderComponent, UiCardContentComponent, UiCardFooterComponent } from '../../shared/ui/card/ui-card.component';
-import { UiCheckboxComponent } from '../../shared/ui/checkbox/ui-checkbox.component';
-import { UiDialogService } from '../../shared/ui/dialog/ui-dialog.service';
+import {
+    UiFormFieldComponent,
+    UiInputComponent,
+    UiSelectComponent,
+    UiButtonComponent,
+    UiErrorDirective,
+    UiPrefixDirective,
+    UiSuffixDirective,
+    UiCardComponent,
+    UiCardHeaderComponent,
+    UiCardContentComponent,
+    UiCardFooterComponent,
+    UiCheckboxComponent,
+    UiDialogService
+} from '@ui';
 
 @Component({
     selector: 'app-user-form-widget',
