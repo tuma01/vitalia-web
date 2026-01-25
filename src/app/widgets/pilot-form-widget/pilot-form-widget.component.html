@@ -18,8 +18,9 @@
         </div>
         }
 
-        <!-- Role Select -->
-        <ui-select label="Priority" placeholder="Select priority" formControlName="role">
+        <!-- Priority Select -->
+        <ui-select label="Priority" placeholder="Select priority" formControlName="priority"
+            [options]="priorityOptions">
         </ui-select>
 
         <ui-datepicker label="Target Date" placeholder="Select date" formControlName="birthDate">

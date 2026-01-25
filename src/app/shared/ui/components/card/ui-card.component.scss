@@ -1,0 +1,159 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+
+    background-color: var(--ui-card-bg);
+    border-radius: var(--ui-card-radius);
+
+    font-family: var(--ui-font-family-sans);
+    overflow: hidden;
+    /* For Image cropping */
+    transition: box-shadow var(--ui-motion-fast);
+
+    /* Variant: Elevated (Default) */
+    &.ui-card--elevated {
+        box-shadow: var(--ui-card-elevation);
+        border: none;
+    }
+
+    /* Variant: Outlined */
+    &.ui-card--outlined {
+        box-shadow: none;
+        border: 1px solid var(--ui-card-border-color);
+    }
+
+    /* Variant: Filled */
+    &.ui-card--filled {
+        box-shadow: none;
+        border: none;
+        background-color: var(--ui-color-surface-dim, #f3f4f6);
+        /* Fallback */
+    }
+
+    /* Interaction: Hoverable */
+    &.ui-card--hoverable {
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: var(--ui-elevation-md);
+        }
+    }
+}
+
+/* Children Styling (Enforced Structure) */
+::ng-deep {
+    .ui-card-header {
+        display: flex;
+        flex-direction: column;
+        padding: 0; // Padding handled by slot container for flex control
+        margin: 0;
+    }
+
+    .ui-card-title {
+        margin: 0;
+        font-size: var(--ui-font-size-lg);
+        font-weight: var(--ui-font-weight-bold);
+        color: var(--ui-color-text-primary, #111827);
+        line-height: 1.2;
+    }
+
+    .ui-card-subtitle {
+        margin-top: var(--ui-space-2xs);
+        font-size: var(--ui-font-size-sm);
+        color: var(--ui-color-text-secondary, #6b7280);
+    }
+
+    .ui-card-content {
+        display: block;
+        padding: var(--ui-card-padding);
+        color: var(--ui-color-text-primary, #374151);
+        font-size: var(--ui-font-size-md);
+    }
+
+    .ui-card-footer {
+        display: flex;
+        align-items: center;
+        padding: var(--ui-space-md) var(--ui-card-padding);
+        border-top: 1px solid transparent; // Optional divider slot
+        margin-top: auto; // Push to bottom
+        gap: var(--ui-space-sm);
+
+        // If defined, maybe smaller text or buttons
+    }
+
+    .ui-card-image {
+        display: block;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    // New Avatar Directive
+    .ui-card-avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--ui-color-surface-dim, #f3f4f6);
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        mat-icon {
+            font-size: 24px;
+        }
+    }
+}
+
+/* Layout Utilities */
+.ui-card__image-slot {
+    width: 100%;
+}
+
+.ui-card__header-slot {
+    padding: var(--ui-card-padding) var(--ui-card-padding) 0;
+    margin-bottom: var(--ui-space-sm);
+
+    @media (max-width: 640px) {
+        padding: var(--ui-space-md) var(--ui-space-md) 0;
+    }
+}
+
+.ui-card__header-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ui-space-sm);
+
+    &.ui-card__header--with-avatar {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--ui-space-md);
+
+        @media (max-width: 480px) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--ui-space-sm);
+        }
+    }
+}
+
+.ui-card__content-slot {
+    @media (max-width: 640px) {
+        ::ng-deep .ui-card-content {
+            padding: var(--ui-space-md);
+        }
+    }
+}
+
+.ui-card__footer-slot {
+    margin-top: auto;
+}

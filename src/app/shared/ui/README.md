@@ -9,7 +9,7 @@ Para mantener la integridad del sistema de diseño y la arquitectura hexagonal:
 
 1.  **PROHIBIDO usar Material directamente en Features**:
     *   ❌ `import { MatButtonModule } ...` en `features/` o `widgets/`.
-    *   ✅ Usa `import { UiButtonComponent } from '@shared/ui/button';`.
+    *   ✅ Usa `import { UiButtonComponent } from '@ui';`.
 
 2.  **Usar siempre los componentes `ui-*`**:
     *   Los componentes aquí ya tienen aplicados los tokens de diseño, accesibilidad y comportamiento estándar.
@@ -23,8 +23,8 @@ Para mantener la integridad del sistema de diseño y la arquitectura hexagonal:
 
 ## Catálogo de Componentes
 
-*   [**ui-button**](./button/README.md): Botones de acción.
+*   [**ui-button**](./primitives/button/README.md): Botones de acción.
 *   [**ui-input**](./primitives/input/README.md): Entradas de texto.
-*   [**ui-form-field**](./form-field/README.md): Wrappers semánticos para formularios.
+*   [**ui-form-field**](./components/form-field/README.md): Wrappers semánticos para formularios.
 
 > Para ver estos componentes en acción, revisa la ruta `/pilot` (PilotFormComponent).

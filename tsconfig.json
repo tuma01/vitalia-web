@@ -37,6 +37,12 @@
       ],
       "@env/*": [
         "environments/*"
+      ],
+      "@ui": [
+        "app/shared/ui"
+      ],
+      "@ui/*": [
+        "app/shared/ui/*"
       ]
     },
   },

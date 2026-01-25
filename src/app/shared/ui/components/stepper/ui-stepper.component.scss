@@ -1,0 +1,84 @@
+.ui-stepper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: transparent;
+}
+
+/* Material Stepper Overrides */
+::ng-deep {
+
+    .mat-stepper-horizontal,
+    .mat-stepper-vertical {
+        background: transparent !important;
+        font-family: var(--ui-font-family-sans, sans-serif) !important;
+    }
+
+    .mat-step-header {
+        padding: var(--ui-space-md) !important;
+        border-radius: var(--ui-radius-md, 8px) !important;
+        transition: background-color 0.2s ease !important;
+
+        &:hover {
+            background-color: var(--ui-color-surface-hover, #f8fafc) !important;
+        }
+    }
+
+    .mat-step-icon {
+        background-color: var(--ui-color-surface-variant, #f1f5f9) !important;
+        color: var(--ui-color-text-secondary, #64748b) !important;
+        border: 2px solid transparent !important;
+        width: 32px !important;
+        height: 32px !important;
+
+        &-selected {
+            background-color: var(--ui-color-primary, #2563eb) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 0 4px rgba(var(--ui-color-primary-rgb, 37, 99, 235), 0.15) !important;
+        }
+
+        &-state-done {
+            background-color: var(--ui-color-success, #10b981) !important;
+            color: #ffffff !important;
+        }
+
+        &-state-error {
+            background-color: var(--ui-color-danger, #ef4444) !important;
+            color: #ffffff !important;
+        }
+    }
+
+    .mat-step-label {
+        font-weight: 500 !important;
+        color: var(--ui-color-text-secondary) !important;
+
+        &-selected {
+            color: var(--ui-color-primary) !important;
+            font-weight: 600 !important;
+        }
+    }
+
+    .mat-step-content {
+        padding: var(--ui-space-lg) !important;
+    }
+
+    /* Remove default gray line */
+    .mat-stepper-horizontal-line {
+        border-top-color: var(--ui-color-border-subtle, #e2e8f0) !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    ::ng-deep {
+        .mat-step-label {
+            display: none !important; // Hide labels on very small screens if horizontal
+        }
+
+        .mat-stepper-vertical {
+            .mat-step-label {
+                display: block !important;
+            }
+        }
+    }
+}

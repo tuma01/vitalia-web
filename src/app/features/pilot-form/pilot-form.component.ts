@@ -1,34 +1,55 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { TitleCasePipe } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { UiConfigService } from '../../core/services/ui-config.service';
-import { UiButtonComponent } from '../../shared/ui/button/ui-button.component';
-import { UiInputComponent } from '../../shared/ui/input/ui-input.component';
-import { UiFormFieldComponent } from '../../shared/ui/form-field/ui-form-field.component';
-import { UiErrorDirective, UiPrefixDirective, UiSuffixDirective } from '../../shared/ui/form-field/ui-form-field.directives';
-import { UiSelectComponent } from '../../shared/ui/select/ui-select.component';
-import { UiDataTableComponent } from '../../shared/ui/data-table/ui-data-table.component';
-import { UiProgressSpinnerComponent } from '../../shared/ui/progress-spinner/ui-progress-spinner.component';
-import { UiProgressBarComponent } from '../../shared/ui/progress-bar/ui-progress-bar.component';
-import { UiTabGroupComponent, UiTabComponent } from '../../shared/ui/tabs';
-import { UiAccordionComponent, UiExpansionPanelComponent } from '../../shared/ui/expansion';
-import { UiTableColumn, UiTableAction } from '../../shared/ui/data-table/ui-data-table.types';
-import { UiTagComponent } from '../../shared/ui/tag/ui-tag.component';
-import { VitaliaBadgeComponent } from '../../shared/ui/badge/vitalia-badge.component';
-import { UiDatepickerComponent } from '../../shared/ui/datepicker/ui-datepicker.component';
-import { UiTimepickerComponent } from '../../shared/ui/datepicker/ui-timepicker.component';
-import { UiToolbarComponent } from '../../shared/ui/toolbar/ui-toolbar.component';
-import { UiIconButtonComponent } from '../../shared/ui/button/ui-icon-button.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import {
+  UiConfigService,
+  UiButtonComponent,
+  UiIconButtonComponent,
+  UiInputComponent,
+  UiFormFieldComponent,
+  UiErrorDirective,
+  UiPrefixDirective,
+  UiSuffixDirective,
+  UiSelectComponent,
+  UiDataTableComponent,
+  UiTableColumn,
+  UiTableAction,
+  UiProgressSpinnerComponent,
+  UiProgressBarComponent,
+  UiTabGroupComponent,
+  UiTabComponent,
+  UiAccordionComponent,
+  UiExpansionPanelComponent,
+  UiTagComponent,
+  VitaliaBadgeComponent,
+  UiDatepickerComponent,
+  UiTimepickerComponent,
+  UiToolbarComponent,
+  UiBreadcrumbsComponent,
+  UiBreadcrumbItem,
+  UiSidenavComponent,
+  UiSidenavItem,
+  UiStepperComponent,
+  UiCardComponent,
+  UiCardHeaderComponent,
+  UiCardContentComponent,
+  UiCardFooterComponent,
+  UiCardTitleDirective,
+  UiCardSubtitleDirective,
+  UiCheckboxComponent,
+  UiRadioGroupComponent,
+  UiRadioButtonComponent,
+  UiToggleComponent,
+  UiDialogService,
+  UiToastService,
+  UiEmptyStateComponent,
+  UiEmptyStateConfig
+} from '@ui';
 import { ZoneRendererComponent } from '../../layout/zones/zone-renderer.component';
 import { WidgetRegistryService } from '../../core/services/widget-registry.service';
 import { PilotFormWidgetComponent } from '../../widgets/pilot-form-widget/pilot-form-widget.component';
-import { UiCardComponent, UiCardHeaderComponent, UiCardContentComponent, UiCardFooterComponent, UiCardTitleDirective, UiCardSubtitleDirective } from '../../shared/ui/card/ui-card.component';
-import { UiCheckboxComponent } from '../../shared/ui/checkbox/ui-checkbox.component';
-import { UiRadioGroupComponent } from '../../shared/ui/radio/ui-radio-group.component';
-import { UiRadioButtonComponent } from '../../shared/ui/radio/ui-radio.component';
-import { UiToggleComponent } from '../../shared/ui/toggle/ui-toggle.component';
-import { UiDialogService } from '../../shared/ui/dialog/ui-dialog.service';
 
 interface PilotUser {
   id: number;
@@ -42,32 +63,45 @@ interface PilotUser {
   selector: 'app-pilot-form',
   standalone: true,
   imports: [
+    CommonModule,
     ReactiveFormsModule,
-    TitleCasePipe,
+    MatIconModule,
+    MatStepperModule,
     UiButtonComponent,
+    UiIconButtonComponent,
     UiInputComponent,
     UiFormFieldComponent,
-    UiPrefixDirective, UiSuffixDirective,
+    UiPrefixDirective,
+    UiSuffixDirective,
     UiSelectComponent,
+    UiDataTableComponent,
     UiProgressSpinnerComponent,
     UiProgressBarComponent,
     UiTabGroupComponent,
     UiTabComponent,
     UiAccordionComponent,
     UiExpansionPanelComponent,
-    UiDataTableComponent,
-    ZoneRendererComponent,
-    UiCardComponent, UiCardHeaderComponent, UiCardContentComponent, UiCardFooterComponent, UiCardTitleDirective, UiCardSubtitleDirective,
-    UiCheckboxComponent,
-    UiRadioGroupComponent, UiRadioButtonComponent,
-    MatIconModule,
-    UiToggleComponent,
     UiTagComponent,
     VitaliaBadgeComponent,
     UiDatepickerComponent,
     UiTimepickerComponent,
     UiToolbarComponent,
-    UiIconButtonComponent
+    UiBreadcrumbsComponent,
+    UiSidenavComponent,
+    UiStepperComponent,
+    UiCardComponent,
+    UiCardHeaderComponent,
+    UiCardContentComponent,
+    UiCardFooterComponent,
+    UiCardTitleDirective,
+    UiCardSubtitleDirective,
+    UiCheckboxComponent,
+    UiRadioGroupComponent,
+    UiRadioButtonComponent,
+    UiToggleComponent,
+    UiEmptyStateComponent,
+    ZoneRendererComponent,
+    TitleCasePipe
   ],
   templateUrl: './pilot-form.component.html',
   styles: [`
@@ -135,11 +169,64 @@ interface PilotUser {
 })
 export class PilotFormComponent implements OnInit {
   form: FormGroup;
+  // Phase 1 Examples
+  breadcrumbItems: UiBreadcrumbItem[] = [
+    { label: 'Dashboard', icon: 'dashboard', link: '/' },
+    { label: 'Users', icon: 'people', link: '/users' },
+    { label: 'Pilot Test', link: '/pilot' }
+  ];
+
+  sidenavItems: UiSidenavItem[] = [
+    { id: '1', label: 'Inicio', icon: 'home', route: '/' },
+    {
+      id: '2',
+      label: 'Pacientes',
+      icon: 'medication',
+      badge: 12,
+      children: [
+        { id: '2-1', label: 'Listado Total', icon: 'list', route: '/patients/list' },
+        { id: '2-2', label: 'Ingresos Hoy', icon: 'add_circle', badge: 3, badgeColor: 'warn' },
+        { id: '2-3', label: 'Reportes Médicos', icon: 'description' }
+      ]
+    },
+    { id: '3', label: 'Citas', icon: 'calendar_month' },
+    {
+      id: '4',
+      label: 'Configuración',
+      icon: 'settings',
+      children: [
+        { id: '4-1', label: 'Perfil', icon: 'person' },
+        { id: '4-2', label: 'Seguridad', icon: 'security' },
+        { id: '4-3', label: 'Notificaciones', icon: 'notifications' }
+      ]
+    }
+  ];
+
+  stepperLinear = false;
   isSaving = false;
+  activeSidenavId = '2';
 
   registry = inject(WidgetRegistryService);
+  private toastService = inject(UiToastService);
+  private fb = inject(FormBuilder);
+  public uiConfig = inject(UiConfigService);
+  private dialogService = inject(UiDialogService);
 
-  // Widget Configuration for Zone Renderer
+  showSuccessToast() {
+    this.toastService.success('El paciente ha sido registrado correctamente.', 'Operación Exitosa');
+  }
+
+  showErrorToast() {
+    this.toastService.error('Hubo un problema al conectar con el servidor de Vitalia.', 'Error de Sistema');
+  }
+
+  showInfoToast() {
+    this.toastService.info('Tienes una nueva actualización de software disponible.', 'Información');
+  }
+
+  showWarningToast() {
+    this.toastService.warning('Tu sesión expirará en 5 minutos por inactividad.', 'Advertencia de Seguridad');
+  }
   zoneWidgets = [
     {
       type: 'pilot-form-widget',
@@ -161,22 +248,24 @@ export class PilotFormComponent implements OnInit {
 
   // Table Data
   tableData: any[] = [
-    { id: 1, name: 'John Doe', email: 'john@vitalia.com', role: 'Admin', status: 'Active', salary: 45000, avatar: 'https://i.pravatar.cc/150?u=1', platform: 'Windows', platformIcon: 'desktop_windows' },
-    { id: 2, name: 'Jane Smith', email: 'jane@school.com', role: 'Doctor', status: 'Active', salary: 75000, avatar: 'https://i.pravatar.cc/150?u=2', platform: 'MacOS', platformIcon: 'desktop_mac' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@test.com', role: 'Patient', status: 'Inactive', salary: 0, avatar: 'https://i.pravatar.cc/150?u=3', platform: 'Linux', platformIcon: 'computer' },
-    { id: 4, name: 'Alice Williams', email: 'alice@vitalia.com', role: 'Nurse', status: 'Active', salary: 38000, avatar: 'https://i.pravatar.cc/150?u=4', platform: 'iOS', platformIcon: 'phone_iphone' },
-    { id: 5, name: 'Charlie Brown', email: 'charlie@vitalia.com', role: 'Employee', status: 'Active', salary: 32000, avatar: 'https://i.pravatar.cc/150?u=5', platform: 'Android', platformIcon: 'phone_android' },
-    { id: 6, name: 'David Wilson', email: 'david@vitalia.com', role: 'Patient', status: 'Active', salary: 0, avatar: 'https://i.pravatar.cc/150?u=6', platform: 'Web', platformIcon: 'public' },
-    { id: 7, name: 'Emma Davis', email: 'emma@vitalia.com', role: 'Doctor', status: 'Inactive', salary: 72000, avatar: 'https://i.pravatar.cc/150?u=7', platform: 'Windows', platformIcon: 'desktop_windows' },
-    { id: 8, name: 'Frank Miller', email: 'frank@vitalia.com', role: 'Admin', status: 'Active', salary: 50000, avatar: 'https://i.pravatar.cc/150?u=8', platform: 'MacOS', platformIcon: 'desktop_mac' },
-    { id: 9, name: 'Grace Taylor', email: 'grace@vitalia.com', role: 'Nurse', status: 'Active', salary: 41000, avatar: 'https://i.pravatar.cc/150?u=9', platform: 'iOS', platformIcon: 'phone_iphone' },
-    { id: 10, name: 'Henry Moore', email: 'henry@vitalia.com', role: 'Employee', status: 'Inactive', salary: 28000, avatar: 'https://i.pravatar.cc/150?u=10', platform: 'Android', platformIcon: 'phone_android' },
+    { id: 1, name: 'John Doe', email: 'john@vitalia.com', role: 'Admin', status: 'Active', salary: 45000, avatar: 'https://i.pravatar.cc/150?u=1', platform: 'Windows', platformIcon: 'desktop_windows', bio: 'Experienced administrator with a focus on system integrity and user management.' },
+    { id: 2, name: 'Jane Smith', email: 'jane@school.com', role: 'Doctor', status: 'Active', salary: 75000, avatar: 'https://i.pravatar.cc/150?u=2', platform: 'MacOS', platformIcon: 'desktop_mac', bio: 'Senior surgeon specializing in minimally invasive procedures and medical research.' },
+    { id: 3, name: 'Bob Johnson', email: 'bob@test.com', role: 'Patient', status: 'Inactive', salary: 0, avatar: 'https://i.pravatar.cc/150?u=3', platform: 'Linux', platformIcon: 'computer', bio: 'Regular patient following a long-term rehabilitation program for sports injuries.' },
+    { id: 4, name: 'Alice Williams', email: 'alice@vitalia.com', role: 'Nurse', status: 'Active', salary: 38000, avatar: 'https://i.pravatar.cc/150?u=4', platform: 'iOS', platformIcon: 'phone_iphone', bio: 'Pediatric nurse dedicated to providing compassionate care for children and families.' },
+    { id: 5, name: 'Charlie Brown', email: 'charlie@vitalia.com', role: 'Employee', status: 'Active', salary: 32000, avatar: 'https://i.pravatar.cc/150?u=5', platform: 'Android', platformIcon: 'phone_android', bio: 'Logistics coordinator managing supply chains and medical equipment distribution.' },
+    { id: 6, name: 'David Wilson', email: 'david@vitalia.com', role: 'Patient', status: 'Active', salary: 0, avatar: 'https://i.pravatar.cc/150?u=6', platform: 'Web', platformIcon: 'public', bio: 'Outpatient visiting for routine checkups and preventive health screenings.' },
+    { id: 7, name: 'Emma Davis', email: 'emma@vitalia.com', role: 'Doctor', status: 'Inactive', salary: 72000, avatar: 'https://i.pravatar.cc/150?u=7', platform: 'Windows', platformIcon: 'desktop_windows', bio: 'Specialist in internal medicine with a passion for diagnostic excellence.' },
+    { id: 8, name: 'Frank Miller', email: 'frank@vitalia.com', role: 'Admin', status: 'Active', salary: 50000, avatar: 'https://i.pravatar.cc/150?u=8', platform: 'MacOS', platformIcon: 'desktop_mac', bio: 'IT operations manager overseeing infrastructure and security protocols.' },
+    { id: 9, name: 'Grace Taylor', email: 'grace@vitalia.com', role: 'Nurse', status: 'Active', salary: 41000, avatar: 'https://i.pravatar.cc/150?u=9', platform: 'iOS', platformIcon: 'phone_iphone', bio: 'Specialist in patient care and emergency response with 10 years experience.' },
+    { id: 10, name: 'Henry Moore', email: 'henry@vitalia.com', role: 'Employee', status: 'Inactive', salary: 28000, avatar: 'https://i.pravatar.cc/150?u=10', platform: 'Android', platformIcon: 'phone_android', bio: 'Technical support specialist.' },
+    { id: 11, name: 'Ivy Lee', email: 'ivy@vitalia.com', role: 'Admin', status: 'Active', salary: 52000, avatar: 'https://i.pravatar.cc/150?u=11', platform: 'Web', platformIcon: 'public', bio: 'Platform administrator for global operations.' },
+    { id: 12, name: 'Jack White', email: 'jack@vitalia.com', role: 'Doctor', status: 'Active', salary: 81000, avatar: 'https://i.pravatar.cc/150?u=12', platform: 'MacOS', platformIcon: 'desktop_mac', bio: 'Surgical specialist and researcher.' }
   ];
 
   tableColumns: UiTableColumn<any>[] = [
     { key: 'name', header: 'User', type: 'avatar', imageProperty: 'avatar', sortable: true },
     { key: 'email', header: 'Email', sortable: true },
-    { key: 'platform', header: 'Platform', type: 'icon', iconProperty: 'platformIcon' },
+    { key: 'bio', header: 'Biography (Truncated)', truncate: true, width: '200px' },
     { key: 'salary', header: 'Salary', type: 'currency', align: 'right', sortable: true },
     { key: 'status', header: 'Status', type: 'badge' }
   ];
@@ -209,13 +298,40 @@ export class PilotFormComponent implements OnInit {
     { value: 'doctor', label: 'Jane Medical', image: 'https://i.pravatar.cc/150?u=doctor' },
     { value: 'nurse', label: 'Alice Care', image: 'https://i.pravatar.cc/150?u=nurse' },
     { value: 'patient', label: 'Bob Patient', image: 'https://i.pravatar.cc/150?u=patient' },
+    { value: 'nurse', label: 'Alice Care', image: 'https://i.pravatar.cc/150?u=nurse' },
+    { value: 'patient', label: 'Bob Patient', image: 'https://i.pravatar.cc/150?u=patient' },
   ];
 
-  constructor(
-    private fb: FormBuilder,
-    public uiConfig: UiConfigService,
-    private dialogService: UiDialogService
-  ) {
+  // UiEmptyState Configurations (Phase 2)
+  emptyStateSearch: UiEmptyStateConfig = {
+    title: 'No se encontraron resultados',
+    description: 'Intenta ajustar tus filtros de búsqueda o verifica los términos ingresados.',
+    imagePath: 'assets/ui/illustrations/no-results.png',
+    actionLabel: 'Limpiar filtros',
+    actionIcon: 'filter_alt_off',
+    i18n: { imageAlt: 'Ilustración de lupa sobre burbujas vacías indicando sin resultados' }
+  };
+
+  emptyStateNoData: UiEmptyStateConfig = {
+    title: 'No hay documentos',
+    description: 'Esta carpeta está vacía. Sube tu primer documento para comenzar.',
+    imagePath: 'assets/ui/illustrations/no-data.png',
+    actionLabel: 'Subir Documento',
+    actionIcon: 'upload_file',
+    secondaryActionLabel: 'Aprender más',
+    i18n: { imageAlt: 'Carpeta vacía flotando en el espacio' }
+  };
+
+  emptyStateError: UiEmptyStateConfig = {
+    title: 'Error de Conexión',
+    description: 'No pudimos conectar con el servidor. Por favor revisa tu conexión a internet.',
+    imagePath: 'assets/ui/illustrations/error.png',
+    actionLabel: 'Reintentar',
+    actionIcon: 'refresh',
+    i18n: { imageAlt: 'Señal de alerta roja y eslabón roto' }
+  };
+
+  constructor() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
