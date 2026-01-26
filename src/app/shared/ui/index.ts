@@ -17,6 +17,7 @@ export * from './primitives/button/ui-button.component';
 export * from './primitives/button/ui-button.types';
 export * from './primitives/button/ui-icon-button.component';
 export * from './primitives/checkbox/ui-checkbox.component';
+export * from './primitives/divider/ui-divider.component';
 export * from './primitives/input/ui-input.component';
 export * from './primitives/input/ui-input.types';
 export * from './primitives/radio/ui-radio.component';
@@ -25,6 +26,7 @@ export * from './primitives/icon/ui-icon.component';
 export * from './primitives/select/ui-select.component';
 export * from './primitives/tag/ui-tag.component';
 export * from './primitives/tag/ui-tag.types';
+export * from './primitives/tooltip/ui-tooltip.directive';
 export * from './primitives/toggle/ui-toggle.component';
 
 // Molecular Components
@@ -41,6 +43,8 @@ export * from './components/dialog/ui-confirm-dialog.component';
 export * from './components/dialog/ui-dialog.service';
 export * from './components/sidenav/ui-sidenav.component';
 export * from './components/sidenav/ui-sidenav.types';
+export * from './components/list/ui-list.component';
+export * from './components/menu/ui-menu.component';
 export * from './components/expansion/ui-expansion-panel.component';
 export * from './components/expansion/ui-accordion.component';
 export * from './components/expansion/ui-expansion.types';
