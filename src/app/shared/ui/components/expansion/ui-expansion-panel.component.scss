@@ -1,17 +1,17 @@
 :host {
     display: block;
     width: 100%;
-    background-color: var(--ui-color-surface, #ffffff);
-    border: 1px solid var(--ui-color-border-subtle, #f3f4f6);
+    background-color: var(--ui-background-default, #ffffff);
+    border: 1px solid var(--ui-color-border, #f3f4f6);
     border-radius: var(--ui-radius-md, 8px);
     overflow: hidden;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-bottom: var(--ui-space-sm, 8px);
+    transition: all var(--ui-motion-fast, 0.2s cubic-bezier(0.4, 0, 0.2, 1));
+    margin-bottom: var(--ui-space-sm);
 
     &.ui-expansion-panel--expanded {
-        border-color: var(--ui-color-primary, #2563eb);
-        box-shadow: var(--ui-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
-        margin-bottom: var(--ui-space-md, 16px);
+        border-color: var(--ui-color-primary);
+        box-shadow: var(--ui-elevation-sm);
+        margin-bottom: var(--ui-space-md);
     }
 }
 
@@ -19,14 +19,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 12px; // Reducido 3px adicionales por lado para bajar ~5px total
+    padding: var(--ui-space-2xs) var(--ui-space-md);
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.2s;
-    min-height: 34px; // Reducido de 40px a 34px (~5px menos)
+    transition: background-color var(--ui-motion-fast);
+    min-height: 40px;
 
     &:hover {
-        background-color: var(--ui-color-surface-variant, #f8fafc);
+        background-color: var(--ui-color-bg-hover, #f8fafc);
     }
 }
 

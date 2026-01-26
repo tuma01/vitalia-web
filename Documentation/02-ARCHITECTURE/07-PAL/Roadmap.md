@@ -537,11 +537,38 @@ export class ThemeSelectorComponent {
 
 > **Esto te habilita: hospitales, escuelas, clientes premium.**
 
-- [ ] `UiConfigService` implementado
-- [ ] Themes se inyectan dinámicamente en `<body>`
-- [ ] Toggle de tema funciona en admin
-- [ ] 3+ themes funcionan sin cambios de código
-- [ ] Documentación de white-labeling creada
+- [x] `UiConfigService` implementado
+- [x] Themes se inyectan dinámicamente en `<body>`
+- [x] Toggle de tema funciona en admin
+- [x] 3+ themes funcionan sin cambios de código
+- [x] Documentación de white-labeling creada
+
+---
+
+## 💎 PASO 11 - Visualización y Carga (Data Display & Feedback)
+
+### 🎯 Objetivo
+
+Implementar componentes de alto impacto para la **representación de datos** y el **feedback de sistema**.
+
+### 📋 Componentes a Implementar
+
+| Componente | Tipo | Descripción |
+|------------|------|-------------|
+| **Skeleton** | Atomic | Shimmer effect para carga asíncrona de contenido. |
+| **Progress Spinner** | Atomic | Indicador circular de carga (Refinamiento PAL). |
+| **Progress Bar** | Atomic | Indicador lineal de carga (Refinamiento PAL). |
+| **Badge** | Atomic | Indicadores numéricos o de estado (Auditado). |
+| **Tag / Chip** | Atomic | Etiquetas semánticas para categorización. |
+| **Empty State** | Molecular | Vistas estándar para ausencia de datos (Auditado). |
+| **Toast** | Utility | Notificaciones efímeras persistentes. |
+
+### ✅ Criterio de Salida
+
+- [ ] Todos los componentes portados a `ui-*`
+- [ ] 100% de cumplimiento con tokens GDS
+- [ ] Soporte completo de i18n
+- [ ] Integrados en el Pilot Showcase
 
 ---
 
@@ -549,10 +576,58 @@ export class ThemeSelectorComponent {
 
 ### Corto Plazo (1-2 meses)
 
-- [ ] ✅ 100% de nuevos features usan `ui-*`
-- [ ] ✅ 0 imports de Material en nuevos PRs
-- [ ] ✅ 5+ componentes PAL creados
-- [ ] ✅ 1 feature piloto refactorizado
+- [x] ✅ 100% de nuevos features usan `ui-*`
+- [x] ✅ 0 imports de Material en nuevos PRs
+- [x] ✅ 5+ componentes PAL creados (Expansion: Slider, Rating, Autocomplete, File Uploader)
+- [x] 1 feature piloto refactorizado (Pilot Showcase)
+
+---
+
+## 🧭 PASO 12 - Navegación y Estructura (Navigation & Utility)
+
+### 🎯 Objetivo
+
+Centralizar los componentes de **navegación y organización** de alto nivel.
+
+### 📋 Componentes a Implementar
+
+| Componente | Tipo | Descripción |
+|------------|------|-------------|
+| **Tabs** | Molecular | Navegación horizontal con variantes (Line, Pills) (Auditado). |
+| **Sidenav** | Structural | Menú lateral con soporte para badges y estados (Auditado). |
+| **Breadcrumbs** | Navigation | Ruta de navegación jerárquica (Auditado). |
+| **Toolbar** | Structural | Barra de herramientas contextual y flotante (Auditado). |
+| **Menu** | Molecular | Menú desplegable para acciones (Auditado). |
+
+### ✅ Criterio de Salida
+
+- [ ] Arquitectura OnPush aplicada a todos.
+- [ ] 100% de cumplimiento con tokens de espaciado y navegación.
+- [ ] Soporte completo de i18n y ARIA.
+
+---
+
+## 🔲 PASO 13 - Utilidades de Layout (Layout Primitives)
+
+### 🎯 Objetivo
+
+Proveer **herramientas de composición** para evitar CSS custom en features.
+
+### 📋 Utilidades a Implementar
+
+| Utilidad | Tipo | Descripción |
+|----------|------|-------------|
+| **Flex / Grid** | Layout | Primitivas de alineación y distribución. |
+| **Divider** | Atomic | Separador visual con soporte vertical/horizontal (Auditado). |
+| **Expansion Panel** | Molecular | Acordeones y paneles desplegables (Auditado). |
+| **Card (Advanced)** | Structural | Soporte para `uiCardAvatar`, `uiCardActions`, etc. (Auditado). |
+
+### ✅ Criterio de Salida
+
+- [ ] Documentación de mejores prácticas de layout.
+- [ ] 0 uso de `px` hardcodeado en layouts de features pilotos.
+
+---
 
 ### Mediano Plazo (3-6 meses)
 

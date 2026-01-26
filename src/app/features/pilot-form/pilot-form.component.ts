@@ -38,8 +38,12 @@ import {
   UiToolbarComponent,
   UiBreadcrumbsComponent,
   UiBreadcrumbItem,
+  UiAutocompleteComponent,
   UiSidenavComponent,
   UiSidenavItem,
+  UiFileUploaderComponent,
+  UiSliderComponent,
+  UiSkeletonComponent,
   UiStepperComponent,
   UiCardComponent,
   UiCardHeaderComponent,
@@ -49,11 +53,14 @@ import {
   UiCardSubtitleDirective,
   UiCheckboxComponent,
   UiRadioGroupComponent,
+  UiRatingComponent,
   UiRadioButtonComponent,
   UiToggleComponent,
   UiTooltipDirective,
   UiDialogService,
-  UiToastService
+  UiToastService,
+  UiEmptyStateComponent,
+  UiEmptyStateConfig
 } from '@ui';
 import { ZoneRendererComponent } from '../../layout/zones/zone-renderer.component';
 import { WidgetRegistryService } from '../../core/services/widget-registry.service';
@@ -85,6 +92,7 @@ interface PilotUser {
     UiDividerComponent,
     UiSelectComponent,
     UiDataTableComponent,
+    UiEmptyStateComponent,
     UiListComponent,
     UiListItemComponent,
     UiListItemIconDirective,
@@ -102,9 +110,13 @@ interface PilotUser {
     UiBadgeComponent,
     UiDatepickerComponent,
     UiTimepickerComponent,
+    UiAutocompleteComponent,
     UiToolbarComponent,
     UiBreadcrumbsComponent,
     UiSidenavComponent,
+    UiFileUploaderComponent,
+    UiSliderComponent,
+    UiSkeletonComponent,
     UiStepperComponent,
     UiCardComponent,
     UiCardHeaderComponent,
@@ -115,6 +127,7 @@ interface PilotUser {
     UiCheckboxComponent,
     UiRadioGroupComponent,
     UiRadioButtonComponent,
+    UiRatingComponent,
     UiToggleComponent,
     UiTooltipDirective,
     ZoneRendererComponent,
@@ -319,6 +332,46 @@ export class PilotFormComponent implements OnInit {
     { value: 'patient', label: 'Bob Patient', image: 'https://i.pravatar.cc/150?u=patient' },
   ];
 
+
+  // UiEmptyState Configurations (Phase 2)
+  emptyStateSearch: UiEmptyStateConfig = {
+    title: 'No se encontraron resultados',
+    description: 'Intenta ajustar tus filtros de búsqueda o verifica los términos ingresados.',
+    imagePath: 'assets/ui/illustrations/no-results.png',
+    actionLabel: 'Limpiar filtros',
+    actionIcon: 'filter_alt_off',
+    i18n: { imageAlt: 'Ilustración de lupa sobre burbujas vacías indicando sin resultados' }
+  };
+
+  emptyStateNoData: UiEmptyStateConfig = {
+    title: 'No hay documentos',
+    description: 'Esta carpeta está vacía. Sube tu primer documento para comenzar.',
+    imagePath: 'assets/ui/illustrations/no-data.png',
+    actionLabel: 'Subir Documento',
+    actionIcon: 'upload_file',
+    secondaryActionLabel: 'Aprender más',
+    i18n: { imageAlt: 'Carpeta vacía flotando en el espacio' }
+  };
+
+  emptyStateError: UiEmptyStateConfig = {
+    title: 'Error de Conexión',
+    description: 'No pudimos conectar con el servidor. Por favor revisa tu conexión a internet.',
+    imagePath: 'assets/ui/illustrations/error.png',
+    actionLabel: 'Reintentar',
+    actionIcon: 'refresh',
+    i18n: { imageAlt: 'Señal de alerta roja y eslabón roto' }
+  };
+
+  // Autocomplete Options
+  especialidades = [
+    { label: 'Cardiología', value: 'cardio' },
+    { label: 'Neurología', value: 'neuro' },
+    { label: 'Pediatría', value: 'pedia' },
+    { label: 'Oncología', value: 'onco' },
+    { label: 'Dermatología', value: 'derma' },
+    { label: 'Gastroenterología', value: 'gastro' },
+    { label: 'Oftalmología', value: 'oftalmo' }
+  ];
 
   constructor() {
     this.form = this.fb.group({

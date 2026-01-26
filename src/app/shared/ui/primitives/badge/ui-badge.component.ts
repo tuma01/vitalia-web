@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { UiBadgePosition, UiBadgeSize, UiBadgeVariant, UiBadgeAnimation } from './ui-badge.types';
 
 @Component({
-    selector: 'ui-badge',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'ui-badge',
+  standalone: true,
+  imports: [CommonModule],
+  template: `
     <ng-content></ng-content>
     <span *ngIf="!hidden && (dot || (content !== null && content !== ''))" 
         [class]="classes"
@@ -14,7 +14,7 @@ import { UiBadgePosition, UiBadgeSize, UiBadgeVariant, UiBadgeAnimation } from '
         {{ badgeContent }}
     </span>
   `,
-    styles: [`
+  styles: [`
     :host {
       position: relative;
       display: inline-flex;
@@ -60,47 +60,47 @@ import { UiBadgePosition, UiBadgeSize, UiBadgeVariant, UiBadgeAnimation } from '
     .ui-badge--center { top: 50%; left: 50%; transform: translate(-50%, -50%); }
 
     // VARIANTS
-    .ui-badge--primary { --ui-badge-bg: var(--ui-color-primary, #3b82f6); }
-    .ui-badge--success { --ui-badge-bg: #10b981; }
-    .ui-badge--warning { --ui-badge-bg: #f59e0b; }
-    .ui-badge--danger  { --ui-badge-bg: var(--ui-color-danger, #b91c1c); }
-    .ui-badge--info    { --ui-badge-bg: #0ea5e9; }
-    .ui-badge--neutral { --ui-badge-bg: #6b7280; }
+    .ui-badge--primary { --ui-badge-bg: var(--ui-color-primary); }
+    .ui-badge--success { --ui-badge-bg: var(--ui-badge-success-bg, #10b981); }
+    .ui-badge--warning { --ui-badge-bg: var(--ui-badge-warning-bg, #f59e0b); }
+    .ui-badge--danger  { --ui-badge-bg: var(--ui-color-danger); }
+    .ui-badge--info    { --ui-badge-bg: var(--ui-color-secondary); }
+    .ui-badge--neutral { --ui-badge-bg: var(--ui-color-text-muted); }
 
     // DARK MODE
     :host-context(.theme-dark) .ui-badge-indicator {
-      border-color: #1e1e1e;
+      border-color: var(--ui-background-default);
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiBadgeComponent {
-    @Input() content: string | number | null = null;
-    @Input() variant: UiBadgeVariant = 'danger';
-    @Input() position: UiBadgePosition = 'top-right';
-    @Input() size: UiBadgeSize = 'sm';
-    @Input() dot = false;
-    @Input() animation: UiBadgeAnimation = 'none';
-    @Input() i18n?: import('../../config/ui-i18n.types').UiBadgeI18n;
-    @Input() hidden = false;
-    @Input() max = 99;
+  @Input() content: string | number | null = null;
+  @Input() variant: UiBadgeVariant = 'danger';
+  @Input() position: UiBadgePosition = 'top-right';
+  @Input() size: UiBadgeSize = 'sm';
+  @Input() dot = false;
+  @Input() animation: UiBadgeAnimation = 'none';
+  @Input() i18n?: import('../../config/ui-i18n.types').UiBadgeI18n;
+  @Input() hidden = false;
+  @Input() max = 99;
 
-    get badgeContent(): string {
-        if (this.dot) return '';
-        if (typeof this.content === 'number' && this.content > this.max) {
-            return `${this.max}+`;
-        }
-        return this.content?.toString() || '';
+  get badgeContent(): string {
+    if (this.dot) return '';
+    if (typeof this.content === 'number' && this.content > this.max) {
+      return `${this.max}+`;
     }
+    return this.content?.toString() || '';
+  }
 
-    get classes(): string {
-        return [
-            'ui-badge-indicator',
-            `ui-badge--${this.variant}`,
-            `ui-badge--${this.position}`,
-            `ui-badge--${this.size}`,
-            this.animation !== 'none' ? `ui-badge--${this.animation}` : '',
-            this.dot ? 'ui-badge--dot' : ''
-        ].filter(Boolean).join(' ');
-    }
+  get classes(): string {
+    return [
+      'ui-badge-indicator',
+      `ui-badge--${this.variant}`,
+      `ui-badge--${this.position}`,
+      `ui-badge--${this.size}`,
+      this.animation !== 'none' ? `ui-badge--${this.animation}` : '',
+      this.dot ? 'ui-badge--dot' : ''
+    ].filter(Boolean).join(' ');
+  }
 }
