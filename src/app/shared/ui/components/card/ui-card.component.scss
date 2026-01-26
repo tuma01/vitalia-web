@@ -63,6 +63,7 @@
         margin-top: var(--ui-space-2xs);
         font-size: var(--ui-font-size-sm);
         color: var(--ui-color-text-secondary, #6b7280);
+        opacity: 0.8;
     }
 
     .ui-card-content {
@@ -100,7 +101,7 @@
         border-radius: 50%;
         overflow: hidden;
         flex-shrink: 0;
-        background: var(--ui-color-surface-dim, #f3f4f6);
+        background: var(--ui-color-bg-hover, #f3f4f6);
 
         img {
             width: 100%;
@@ -110,6 +111,7 @@
 
         mat-icon {
             font-size: 24px;
+            color: var(--ui-color-primary);
         }
     }
 }

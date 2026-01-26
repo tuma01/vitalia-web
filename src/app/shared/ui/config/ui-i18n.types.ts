@@ -77,6 +77,30 @@ export interface UiTagI18n {
     ariaLabel?: string;
 }
 
+export interface UiSliderI18n {
+    ariaLabel?: string;
+}
+
+export interface UiRatingI18n {
+    ariaLabel?: string;
+    itemLabel?: string; // e.g. "Rate %d stars"
+}
+
+export interface UiAutocompleteI18n {
+    ariaLabel?: string;
+    noResultsMessage?: string;
+}
+
+export interface UiFileUploaderI18n {
+    dragDropLabel?: string;
+    browseLabel?: string;
+    maxSizeHint?: string;
+    removeLabel?: string;
+    uploadingLabel?: string;
+    errorMaxSize?: string;
+    imageAlt?: string;
+}
+
 /**
  * Default standard keys that follow the Vitalia i18n convention.
  */
@@ -126,5 +150,25 @@ export const DEFAULT_PAL_I18N = {
         clearAriaLabel: 'Limpiar campo',
         showPasswordAriaLabel: 'Mostrar contraseña',
         hidePasswordAriaLabel: 'Ocultar contraseña'
-    } as UiInputI18n
+    } as UiInputI18n,
+    slider: {
+        ariaLabel: 'Selector de rango'
+    } as UiSliderI18n,
+    rating: {
+        ariaLabel: 'Calificación',
+        itemLabel: 'Calificar con %d estrellas'
+    } as UiRatingI18n,
+    autocomplete: {
+        ariaLabel: 'Búsqueda con autocompletado',
+        noResultsMessage: 'No se encontraron resultados'
+    } as UiAutocompleteI18n,
+    fileUploader: {
+        dragDropLabel: 'Arrastra y suelta tus archivos aquí o',
+        browseLabel: 'explorar',
+        maxSizeHint: 'Tamaño máximo: %dMB (%s)',
+        removeLabel: 'Eliminar archivo',
+        uploadingLabel: 'Subiendo...',
+        errorMaxSize: 'El archivo excede el límite de %dMB.',
+        imageAlt: 'Ilustración de subida de archivos'
+    } as UiFileUploaderI18n
 };

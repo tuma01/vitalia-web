@@ -13,6 +13,10 @@ This document catalogs the supplemental components added to the Vitalia Design S
 | [List](#ui-list) | `ui-list`, `ui-list-item` | Molecular | Structured data display. |
 | [Tooltip](#ui-tooltip) | `[uiTooltip]` | Utility | Contextual information on hover. |
 | [Menu](#ui-menu) | `ui-menu`, `[uiMenuItem]` | Molecular | Dropdown actions and navigation. |
+| [Slider](#ui-slider) | `ui-slider` | Primitive | Value selection with range support. |
+| [Rating](#ui-rating) | `ui-rating` | Primitive | Star-based or icon-based feedback. |
+| [Autocomplete](#ui-autocomplete) | `ui-autocomplete` | Molecular | Searchable selection with complex object support. |
+| [File Uploader](#ui-file-uploader) | `ui-file-uploader` | Molecular | Drag & drop zone with progress tracking. |
 
 ---
 
@@ -71,3 +75,46 @@ A molecular component for dropdown actions.
   <button uiMenuItem>Option 2</button>
 </ui-menu>
 ```
+
+---
+
+### ui-slider
+A professional slider component supporting continuous and discrete modes.
+
+**API**:
+- `min`: `number` - Minimum value (default: 0).
+- `max`: `number` - Maximum value (default: 100).
+- `step`: `number` - Selection interval.
+- `discrete`: `boolean` - Shows value labels on thumb.
+- `showTicks`: `boolean` - Visual tick marks.
+
+---
+
+### ui-rating
+Interactive icon-based rating system.
+
+**API**:
+- `max`: `number` - Number of icons (default: 5).
+- `readonly`: `boolean` - Read-only mode.
+- `icon`: `string` - Active icon name (Material).
+- `iconOutline`: `string` - Inactive icon name.
+
+---
+
+### ui-autocomplete
+Advanced search-as-you-type component with state synchronization.
+
+**Features**:
+- **DI State Sync**: Automatically communicates focus/empty state to parent `ui-form-field`.
+- **Complex Objects**: Supports `{label, value}` structures.
+- **Reactive Filtering**: Local filtering with optimized change detection.
+
+---
+
+### ui-file-uploader
+Modern file selection zone with animation.
+
+**Features**:
+- **Drag & Drop**: Native zone monitoring.
+- **Progress Tracking**: Integrated `ui-progress-bar`.
+- **i18n Support**: Dynamic size and type hints.

@@ -35,22 +35,21 @@ export type UiToolbarMode = 'fixed' | 'floating' | 'docked';
       align-items: center;
       justify-content: space-between;
       height: 64px;
-      padding: 0 16px;
-      background: rgba(255, 255, 255, 0.8);
+      padding: 0 var(--ui-space-md);
+      background: var(--ui-toolbar-bg, rgba(255, 255, 255, 0.8));
       backdrop-filter: blur(12px) saturate(180%);
       -webkit-backdrop-filter: blur(12px) saturate(180%);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      color: #1f2937;
+      border-bottom: 1px solid var(--ui-color-border, rgba(0, 0, 0, 0.08));
+      color: var(--ui-color-text, #1f2937);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-sizing: border-box;
 
       &--floating {
-        margin: 12px;
-        width: calc(100% - 24px);
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 
-                    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        margin: var(--ui-space-md);
+        width: calc(100% - (var(--ui-space-md) * 2));
+        border-radius: var(--ui-radius-lg, 16px);
+        border: 1px solid var(--ui-color-border, rgba(255, 255, 255, 0.3));
+        box-shadow: var(--ui-elevation-lg);
       }
 
       &--docked {

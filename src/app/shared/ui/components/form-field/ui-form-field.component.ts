@@ -52,6 +52,9 @@ export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
     @ContentChild(UiSelectComponent) selectComponent?: UiSelectComponent;
     @ContentChild(NgControl) ngControl?: NgControl;
 
+    // Support for molecular components that wrap ui-form-field
+    private injectedInput = inject(UiInputComponent, { optional: true, skipSelf: true });
+
     @ContentChild(UiPrefixDirective) prefix?: UiPrefixDirective;
     @ContentChild(UiSuffixDirective) suffix?: UiSuffixDirective;
 
@@ -84,7 +87,7 @@ export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
         this.hasSuffix.set(!!this.suffix);
 
         // 1. Wire up Atom State (Visuals: Focus, Empty)
-        const atom = this.inputComponent || this.selectComponent;
+        const atom = this.inputComponent || this.selectComponent || this.injectedInput;
 
         if (atom) {
             // Wait for next tick to ensure atom has its ID generated if it's new

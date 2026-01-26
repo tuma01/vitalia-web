@@ -2,17 +2,17 @@ import { Component, Input, ChangeDetectionStrategy, HostBinding } from '@angular
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'ui-divider',
-    standalone: true,
-    imports: [CommonModule],
-    template: '',
-    styles: [`
+  selector: 'ui-divider',
+  standalone: true,
+  imports: [CommonModule],
+  template: '',
+  styles: [`
     :host {
       display: block;
-      border-color: var(--ui-color-border, #e5e7eb);
+      border-color: var(--ui-color-border);
       border-style: solid;
       margin: 0;
-      opacity: 0.6;
+      opacity: var(--ui-opacity-muted, 0.6);
     }
 
     :host.ui-divider--horizontal {
@@ -38,21 +38,21 @@ import { CommonModule } from '@angular/common';
       border-color: var(--ui-color-border, #374151);
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiDividerComponent {
-    @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
-    @Input() inset = false;
+  @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() inset = false;
 
-    @HostBinding('class.ui-divider--horizontal') get isHorizontal() {
-        return this.orientation === 'horizontal';
-    }
+  @HostBinding('class.ui-divider--horizontal') get isHorizontal() {
+    return this.orientation === 'horizontal';
+  }
 
-    @HostBinding('class.ui-divider--vertical') get isVertical() {
-        return this.orientation === 'vertical';
-    }
+  @HostBinding('class.ui-divider--vertical') get isVertical() {
+    return this.orientation === 'vertical';
+  }
 
-    @HostBinding('class.ui-divider--inset') get isInset() {
-        return this.inset;
-    }
+  @HostBinding('class.ui-divider--inset') get isInset() {
+    return this.inset;
+  }
 }

@@ -12,8 +12,8 @@
 }
 
 .ui-sidenav {
-    border-right: 1px solid var(--ui-color-border-subtle, #f3f4f6) !important;
-    background: var(--ui-sidenav-bg, #ffffff) !important;
+    border-right: 1px solid var(--ui-color-border, #f3f4f6) !important;
+    background: var(--ui-background-default, #ffffff) !important;
     transition: width var(--ui-motion-fast, 0.2s cubic-bezier(0.4, 0, 0.2, 1)) !important;
     overflow-x: hidden;
     z-index: 5;
@@ -36,7 +36,7 @@
     display: flex;
     align-items: center;
     padding: 0 var(--ui-space-md);
-    border-bottom: 1px solid var(--ui-color-border-subtle);
+    border-bottom: 1px solid var(--ui-color-border);
     overflow: hidden;
     white-space: nowrap;
 }
@@ -60,7 +60,7 @@
     overflow: hidden;
 
     &:hover:not(.ui-sidenav-item--disabled) {
-        background: var(--ui-color-surface-hover, #f8fafc);
+        background: var(--ui-color-bg-hover, #f8fafc);
         color: var(--ui-color-primary, #2563eb);
     }
 

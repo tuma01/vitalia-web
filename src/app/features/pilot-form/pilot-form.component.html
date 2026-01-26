@@ -239,6 +239,124 @@
         </div>
     </ui-card>
 
+    <!-- NEW: Empty State Showcase (Phase 2) -->
+    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+        <h3 class="section-title">Empty States (Phase 2)</h3>
+        <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
+            Ejemplos de estados vacíos con ilustraciones premium y soporte full i18n (alt texts y area labels).
+        </p>
+
+        <ui-tab-group variant="pills" style="margin-bottom: 0;">
+            <ui-tab label="No Data" icon="folder_off">
+                <div
+                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                    <ui-empty-state [config]="emptyStateNoData" (primaryAction)="openConfirmDialog()"></ui-empty-state>
+                </div>
+            </ui-tab>
+            <ui-tab label="Search" icon="search_off">
+                <div
+                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                    <ui-empty-state [config]="emptyStateSearch"></ui-empty-state>
+                </div>
+            </ui-tab>
+            <ui-tab label="Error" icon="wifi_off">
+                <div
+                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                    <ui-empty-state [config]="emptyStateError" (primaryAction)="showInfoToast()"></ui-empty-state>
+                </div>
+            </ui-tab>
+        </ui-tab-group>
+    </div>
+
+    <!-- Phase 3: Advanced Inputs (NEW) -->
+    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+        <h3 class="section-title">Advanced Inputs (Phase 2 Extension)</h3>
+        <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
+            Componentes complejos para selección de valores y feedback interactivo.
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Sliders (ui-slider)</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="padding: 1rem 0;">
+                        <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Continuous Slider
+                            (Default)</label>
+                        <ui-slider [min]="0" [max]="100"></ui-slider>
+
+                        <div style="margin-top: 2rem;">
+                            <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Discrete Slider with
+                                Ticks</label>
+                            <ui-slider [min]="0" [max]="10" [step]="1" [discrete]="true" [showTicks]="true"></ui-slider>
+                        </div>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+
+            <!-- Active ui-rating showcase -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Rating (ui-rating)</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="padding: 1rem 0;">
+                        <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Star Rating
+                            (Default)</label>
+                        <ui-rating [max]="5" (valueChange)="showInfoToast()"></ui-rating>
+
+                        <div style="margin-top: 2rem;">
+                            <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Heart Selection (Custom
+                                Icon)</label>
+                            <ui-rating [max]="5" icon="favorite" iconOutline="favorite_border"></ui-rating>
+                        </div>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+            <!-- Active ui-autocomplete showcase -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Autocomplete (ui-autocomplete)</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="padding: 1rem 0;">
+                        <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Especialidad Médica
+                            (Search)</label>
+                        <ui-autocomplete label="Buscar Especialidad" placeholder="Ej: Cardio..."
+                            [options]="especialidades" (optionSelected)="showInfoToast()">
+                        </ui-autocomplete>
+
+                        <div style="margin-top: 2rem;">
+                            <p class="text-xs text-gray-500 italic">Búsqueda reactiva local con soporte para objetos
+                                complejos (label/value).</p>
+                        </div>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+
+            <!-- Active ui-file-uploader showcase -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>File Upload (ui-file-uploader)</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="padding: 1rem 0;">
+                        <label class="text-xs font-bold mb-2 block text-gray-500 uppercase">Subida de Documentos
+                            Médicos</label>
+                        <ui-file-uploader accept=".pdf,.doc,.docx,.jpg" [maxSize]="5" (fileSelected)="showInfoToast()">
+                        </ui-file-uploader>
+
+                        <div style="margin-top: 2rem;">
+                            <p class="text-xs text-gray-500 italic">Soporte para Drag & Drop, validación de tamaño/tipo
+                                y barra de progreso animada.</p>
+                        </div>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+        </div>
+    </div>
+
 
     <!-- Column 3: Premium Tabs Showcase (NEW) -->
     <ui-card variant="elevated">
@@ -333,38 +451,86 @@
         </ui-card-content>
     </ui-card>
 
-    <!-- Full Width: Progress Indicators (NEW) -->
+    <!-- Phase 4: Data Display & Feedback (NEW REFINEMENTS) -->
     <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
-        <h3 class="section-title">Progress Indicators (Feedback Atoms)</h3>
+        <h3 class="section-title">Data Display & Feedback (Phase 4)</h3>
+        <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
+            Componentes refinados con cumplimiento total de GDS y soporte para estados asíncronos.
+        </p>
+
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
 
-            <!-- Spinners -->
-            <ui-card variant="outlined" style="background: var(--ui-color-surface-variant, #f8fafc);">
-                <ui-card-content class="flex flex-col gap-4">
-                    <h4 style="font-weight: 500;">Spinners (sm, md, lg)</h4>
-                    <div class="flex items-center gap-8">
-                        <ui-progress-spinner size="sm"></ui-progress-spinner>
-                        <ui-progress-spinner size="md"></ui-progress-spinner>
-                        <ui-progress-spinner size="lg"></ui-progress-spinner>
+            <!-- Skeletons & Loading States -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Skeleton (ui-skeleton)</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <ui-skeleton variant="circle" width="48px" height="48px"></ui-skeleton>
+                            <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+                                <ui-skeleton variant="text" width="60%"></ui-skeleton>
+                                <ui-skeleton variant="text" width="40%"></ui-skeleton>
+                            </div>
+                        </div>
+                        <ui-skeleton variant="rect" width="100%" height="100px"></ui-skeleton>
+                        <p class="text-xs text-muted italic">Shimmer animation fluida y reactiva al tema oscuro.</p>
                     </div>
-                    <p class="text-xs text-muted">Alineamiento premium y suavidad de animación garantizada.</p>
                 </ui-card-content>
             </ui-card>
 
-            <!-- Bars -->
-            <ui-card variant="outlined" style="background: var(--ui-color-surface-variant, #f8fafc);">
-                <ui-card-content class="flex flex-col gap-4">
-                    <h4 style="font-weight: 500;">Progress Bars</h4>
-                    <div>
-                        <span class="text-xs text-muted">Indeterminate</span>
-                        <ui-progress-bar mode="indeterminate"></ui-progress-bar>
-                    </div>
-                    <div>
-                        <span class="text-xs text-muted">Determinate (75%)</span>
-                        <ui-progress-bar mode="determinate" [value]="75"></ui-progress-bar>
+            <!-- Badges & Tags Standardized -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Refined Badges & Tags</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="display: flex; flex-direction: column; gap: 2rem; padding: 1rem 0;">
+                        <!-- Badges -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
+                            <ui-badge [content]="99" variant="danger" position="top-right">
+                                <mat-icon>mail</mat-icon>
+                            </ui-badge>
+                            <ui-badge [dot]="true" variant="success" size="md">
+                                <mat-icon>fiber_manual_record</mat-icon>
+                            </ui-badge>
+                            <ui-badge [content]="'New'" variant="primary" position="top-right">
+                                <ui-button size="sm" variant="outline">Badge Text</ui-button>
+                            </ui-badge>
+                        </div>
+                        <!-- Tags -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <ui-tag variant="success" appearance="soft" icon="check_circle">Soft Success</ui-tag>
+                            <ui-tag variant="danger" appearance="outline" icon="error">Outline Danger</ui-tag>
+                            <ui-tag variant="warning" appearance="filled" [pill]="true">Pill Warning</ui-tag>
+                        </div>
                     </div>
                 </ui-card-content>
             </ui-card>
+
+            <!-- Progress Indicators -->
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Progress & Feedback</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem; padding: 1rem 0;">
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <ui-progress-spinner size="sm"></ui-progress-spinner>
+                            <ui-progress-spinner size="md"></ui-progress-spinner>
+                        </div>
+                        <ui-progress-bar mode="indeterminate" variant="primary"></ui-progress-bar>
+                        <div style="display: flex; gap: 8px;">
+                            <ui-button size="sm" variant="secondary" (click)="showSuccessToast()">Test Toast
+                                Success</ui-button>
+                            <ui-button size="sm" variant="secondary" (click)="showErrorToast()">Test Toast
+                                Error</ui-button>
+                        </div>
+                    </div>
+                </ui-card-content>
+            </ui-card>
+
         </div>
     </div>
 
@@ -423,118 +589,171 @@
                 </ui-card-content>
             </ui-card>
         </div>
-    </div>
+        <!-- Full Width: Navigation & Layout Utilities (Phase 5 & 6) -->
+        <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+            <h3 class="section-title">Navigation & Layout Primitives (Phase 5 & 6)</h3>
+            <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
+                Estructura y navegación centralizada con tokens de espaciado y alineación.
+            </p>
 
-    <!-- Full Width: Data Table -->
-    <div class="pilot-card" style="grid-column: 1 / -1;">
-        <h3 class="section-title">Data Table (PAL)</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
 
-        <ui-data-table [data]="tableData" [columns]="tableColumns" [actions]="tableActions" [pageSize]="5"
-            [selectable]="true" [searchable]="true" [exportable]="true" (selectionChange)="onSelectionChange($event)"
-            (bulkDelete)="onBulkDelete($event)">
-        </ui-data-table>
+                <!-- Breadcrumbs -->
+                <ui-card variant="outlined" style="background: #fff;">
+                    <ui-card-header>
+                        <h4 uiCardTitle>Breadcrumbs</h4>
+                    </ui-card-header>
+                    <ui-card-content>
+                        <div style="padding: 1rem 0;">
+                            <ui-breadcrumbs [items]="[
+                                {label: 'Home', icon: 'home', link: '/'},
+                                {label: 'Users', icon: 'people', link: '/users'},
+                                {label: 'Edit User', icon: 'edit'}
+                            ]" (itemClick)="showInfoToast()">
+                            </ui-breadcrumbs>
+                            <div style="margin-top: 1.5rem;">
+                                <ui-divider></ui-divider>
+                                <p class="text-xs text-muted">Separadores y estados hover estandarizados.</p>
+                            </div>
+                        </div>
+                    </ui-card-content>
+                </ui-card>
 
-    </div>
-
-    <!-- Full Options Card Example -->
-    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 4rem;">
-        <h3 class="section-title">Full Feature Card (All Options)</h3>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
-            <ui-card variant="elevated" [hoverable]="true" [i18n]="{ariaLabel: 'Tarjeta de usuario premium demo'}">
-                <img uiCardImage src="https://picsum.photos/800/400" alt="Random demo image"
-                    style="height: 200px; object-fit: cover;">
-
-                <!-- Automatic Horizontal Layout via uiCardAvatar -->
-                <div uiCardAvatar>
-                    <ui-badge [dot]="true" variant="success">
-                        <ui-icon-button icon="face" variant="soft" size="sm"
-                            ariaLabel="Perfil de usuario"></ui-icon-button>
-                    </ui-badge>
-                </div>
-
-                <ui-card-header>
-                    <h3 uiCardTitle>Directiva Semántica</h3>
-                    <span uiCardSubtitle>Header auto-alineado con uiCardAvatar</span>
-                </ui-card-header>
-
-                <ui-card-content>
-                    <p style="color: var(--ui-color-text-secondary); line-height: 1.6;">
-                        Este ejemplo usa las nuevas directivas:
-                        <br>• <code>uiCardAvatar</code>: Alinea el header automáticamente.
-                        <br>• <code>uiCardActions</code>: Alias semántico para el footer.
-                        <br>• <code>i18n</code>: Soporte nativo para etiquetas ARIA.
-                    </p>
-                </ui-card-content>
-
-                <ui-card-footer uiCardActions style="justify-content: flex-end;">
-                    <ui-button variant="ghost">Cancel</ui-button>
-                    <ui-button variant="primary">Confirm Action</ui-button>
-                </ui-card-footer>
-            </ui-card>
+                <!-- Layout Utilities -->
+                <ui-card variant="outlined" style="background: #fff;">
+                    <ui-card-header>
+                        <h4 uiCardTitle>Layout Primitives</h4>
+                    </ui-card-header>
+                    <ui-card-content>
+                        <div style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0;">
+                            <div style="display: flex; align-items: center; justify-content: space-between;">
+                                <span>Label Izquierdo</span>
+                                <ui-divider orientation="vertical"></ui-divider>
+                                <span>Valor Derecho</span>
+                            </div>
+                            <ui-divider [inset]="true"></ui-divider>
+                            <div style="display: flex; gap: 8px;">
+                                <ui-tag variant="neutral" appearance="soft">Flex Gap Base</ui-tag>
+                                <ui-tag variant="neutral" appearance="soft">Standard Layout</ui-tag>
+                            </div>
+                        </div>
+                    </ui-card-content>
+                </ui-card>
+            </div>
         </div>
-    </div>
 
-    <!-- Phase 1: Stepper Example -->
-    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
-        <h3 class="section-title">Stepper / Multi-Step Process (Fase 1)</h3>
-        <ui-stepper orientation="horizontal">
-            <mat-horizontal-stepper [linear]="stepperLinear">
-                <mat-step label="Account Info">
-                    <div
-                        style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                        <p>Paso 1: Información de la cuenta de usuario.</p>
-                        <ui-button variant="primary" matStepperNext>Siguiente</ui-button>
+        <!-- Full Width: Data Table -->
+        <div class="pilot-card" style="grid-column: 1 / -1;">
+            <h3 class="section-title">Data Table (PAL)</h3>
+
+            <ui-data-table [data]="tableData" [columns]="tableColumns" [actions]="tableActions" [pageSize]="5"
+                [selectable]="true" [searchable]="true" [exportable]="true"
+                (selectionChange)="onSelectionChange($event)" (bulkDelete)="onBulkDelete($event)">
+            </ui-data-table>
+
+        </div>
+
+        <!-- Full Options Card Example -->
+        <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 4rem;">
+            <h3 class="section-title">Full Feature Card (All Options)</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+                <ui-card variant="elevated" [hoverable]="true" [i18n]="{ariaLabel: 'Tarjeta de usuario premium demo'}">
+                    <img uiCardImage src="https://picsum.photos/800/400" alt="Random demo image"
+                        style="height: 200px; object-fit: cover;">
+
+                    <!-- Automatic Horizontal Layout via uiCardAvatar -->
+                    <div uiCardAvatar>
+                        <ui-badge [dot]="true" variant="success">
+                            <ui-icon-button icon="face" variant="soft" size="sm"
+                                ariaLabel="Perfil de usuario"></ui-icon-button>
+                        </ui-badge>
                     </div>
-                </mat-step>
-                <mat-step label="Personal Details">
-                    <div
-                        style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                        <p>Paso 2: Datos personales del paciente o empleado.</p>
-                        <div class="flex gap-2">
-                            <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
+
+                    <ui-card-header>
+                        <h3 uiCardTitle>Directiva Semántica</h3>
+                        <span uiCardSubtitle>Header auto-alineado con uiCardAvatar</span>
+                    </ui-card-header>
+
+                    <ui-card-content>
+                        <p style="color: var(--ui-color-text-secondary); line-height: 1.6;">
+                            Este ejemplo usa las nuevas directivas:
+                            <br>• <code>uiCardAvatar</code>: Alinea el header automáticamente.
+                            <br>• <code>uiCardActions</code>: Alias semántico para el footer.
+                            <br>• <code>i18n</code>: Soporte nativo para etiquetas ARIA.
+                        </p>
+                    </ui-card-content>
+
+                    <ui-card-footer uiCardActions style="justify-content: flex-end;">
+                        <ui-button variant="ghost">Cancel</ui-button>
+                        <ui-button variant="primary">Confirm Action</ui-button>
+                    </ui-card-footer>
+                </ui-card>
+            </div>
+        </div>
+
+        <!-- Phase 1: Stepper Example -->
+        <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+            <h3 class="section-title">Stepper / Multi-Step Process (Fase 1)</h3>
+            <ui-stepper orientation="horizontal">
+                <mat-horizontal-stepper [linear]="stepperLinear">
+                    <mat-step label="Account Info">
+                        <div
+                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                            <p>Paso 1: Información de la cuenta de usuario.</p>
                             <ui-button variant="primary" matStepperNext>Siguiente</ui-button>
                         </div>
-                    </div>
-                </mat-step>
-                <mat-step label="Review & Save">
-                    <div
-                        style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                        <p>Paso 3: Revisión final de la información.</p>
-                        <div class="flex gap-2">
-                            <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
-                            <ui-button variant="primary" (clicked)="submit()">Finalizar</ui-button>
+                    </mat-step>
+                    <mat-step label="Personal Details">
+                        <div
+                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                            <p>Paso 2: Datos personales del paciente o empleado.</p>
+                            <div class="flex gap-2">
+                                <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
+                                <ui-button variant="primary" matStepperNext>Siguiente</ui-button>
+                            </div>
                         </div>
-                    </div>
-                </mat-step>
-            </mat-horizontal-stepper>
-        </ui-stepper>
-    </div>
+                    </mat-step>
+                    <mat-step label="Review & Save">
+                        <div
+                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                            <p>Paso 3: Revisión final de la información.</p>
+                            <div class="flex gap-2">
+                                <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
+                                <ui-button variant="primary" (clicked)="submit()">Finalizar</ui-button>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </ui-stepper>
+        </div>
 
-    <!-- Phase 1: Sidenav Context Example -->
-    <div class="pilot-card"
-        style="grid-column: 1 / -1; margin-bottom: 2rem; height: 400px; padding: 0; overflow: hidden;">
-        <h3 class="section-title" style="padding: 1.5rem 1.5rem 0;">SideNav / App Drawer (Fase 1)</h3>
-        <div
-            style="height: 320px; border: 1px solid var(--ui-color-border-subtle); margin: 1.5rem; border-radius: 12px; overflow: hidden;">
-            <ui-sidenav [items]="sidenavItems" mode="side" [activeItemId]="activeSidenavId"
-                (itemClick)="activeSidenavId = $event.id">
-                <div header
-                    style="font-weight: bold; color: var(--ui-color-primary); width: 100%; display: flex; align-items: center; gap: 8px;">
-                    <mat-icon>verified_user</mat-icon>
-                    <span>VITALIA PRO</span>
-                </div>
-                <div style="padding: 2rem;">
-                    <h4>Main Content Area</h4>
-                    <p style="color: var(--ui-color-text-secondary);">Este es un demo del `UiSidenav` operando en modo
-                        `side` dentro de un contenedor. Soporta badges, estados deshabilitados y transiciones fluidas.
-                    </p>
-                </div>
-                <div footer
-                    style="padding: 1rem; font-size: 0.8rem; opacity: 0.7; border-top: 1px solid var(--ui-color-border-subtle);">
-                    v1.0.0-pilot
-                </div>
-            </ui-sidenav>
+        <!-- Phase 1: Sidenav Context Example -->
+        <div class="pilot-card"
+            style="grid-column: 1 / -1; margin-bottom: 2rem; height: 400px; padding: 0; overflow: hidden;">
+            <h3 class="section-title" style="padding: 1.5rem 1.5rem 0;">SideNav / App Drawer (Fase 1)</h3>
+            <div
+                style="height: 320px; border: 1px solid var(--ui-color-border-subtle); margin: 1.5rem; border-radius: 12px; overflow: hidden;">
+                <ui-sidenav [items]="sidenavItems" mode="side" [activeItemId]="activeSidenavId"
+                    (itemClick)="activeSidenavId = $event.id">
+                    <div header
+                        style="font-weight: bold; color: var(--ui-color-primary); width: 100%; display: flex; align-items: center; gap: 8px;">
+                        <mat-icon>verified_user</mat-icon>
+                        <span>VITALIA PRO</span>
+                    </div>
+                    <div style="padding: 2rem;">
+                        <h4>Main Content Area</h4>
+                        <p style="color: var(--ui-color-text-secondary);">Este es un demo del `UiSidenav` operando en
+                            modo
+                            `side` dentro de un contenedor. Soporta badges, estados deshabilitados y transiciones
+                            fluidas.
+                        </p>
+                    </div>
+                    <div footer
+                        style="padding: 1rem; font-size: 0.8rem; opacity: 0.7; border-top: 1px solid var(--ui-color-border-subtle);">
+                        v1.0.0-pilot
+                    </div>
+                </ui-sidenav>
+            </div>
         </div>
     </div>
-</div>
