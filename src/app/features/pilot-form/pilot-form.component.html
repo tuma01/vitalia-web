@@ -23,8 +23,28 @@
             </div>
 
             <div end>
-                <ui-icon-button icon="share" variant="soft"></ui-icon-button>
-                <ui-icon-button icon="file_download" variant="soft"></ui-icon-button>
+                <ui-icon-button icon="share" variant="soft" uiTooltip="Share this pilot"
+                    uiTooltipPosition="below"></ui-icon-button>
+                <ui-icon-button icon="file_download" variant="soft" uiTooltip="Export information"
+                    uiTooltipPosition="below"></ui-icon-button>
+
+                <ui-icon-button icon="more_vert" variant="soft" [matMenuTriggerFor]="pilotMenu.matMenu"
+                    uiTooltip="More Actions"></ui-icon-button>
+                <ui-menu #pilotMenu="uiMenu">
+                    <button mat-menu-item uiMenuItem (click)="showInfoToast()">
+                        <mat-icon>edit</mat-icon>
+                        <span>Editar Documento</span>
+                    </button>
+                    <button mat-menu-item uiMenuItem (click)="showInfoToast()">
+                        <mat-icon>content_copy</mat-icon>
+                        <span>Duplicar Configuración</span>
+                    </button>
+                    <ui-divider></ui-divider>
+                    <button mat-menu-item uiMenuItem (click)="showErrorToast()">
+                        <mat-icon style="color: var(--ui-color-danger);">delete</mat-icon>
+                        <span style="color: var(--ui-color-danger);">Eliminar Permanente</span>
+                    </button>
+                </ui-menu>
             </div>
         </ui-toolbar>
     </div>
@@ -33,6 +53,8 @@
         <ui-button size="sm" variant="secondary" (clicked)="toggleTheme()">
             Theme: {{ uiConfig.theme() | titlecase }}
         </ui-button>
+
+        <ui-divider orientation="vertical"></ui-divider>
 
         <ui-button size="sm" variant="primary" (clicked)="toggleBrand()">
             Brand: {{ uiConfig.brand() | titlecase }}
@@ -145,6 +167,8 @@
                     </div>
                 </div>
 
+                <ui-divider></ui-divider>
+
                 <!-- Feedback -->
                 <div>
                     <h4 class="text-sm font-bold mb-2">Feedback & Dialogs</h4>
@@ -166,7 +190,7 @@
                     </div>
                 </div>
 
-                <hr style="border-top: 1px solid var(--ui-color-border); margin: 0;">
+                <ui-divider></ui-divider>
 
                 <h3 class="section-title">Zone Renderer (Dynamic Widgets)</h3>
                 <p style="color: var(--ui-color-text-secondary); margin-bottom: 1rem;">
@@ -213,7 +237,6 @@
                 </div>
             </ui-card-content>
         </div>
-
     </ui-card>
 
 
@@ -340,6 +363,63 @@
                         <span class="text-xs text-muted">Determinate (75%)</span>
                         <ui-progress-bar mode="determinate" [value]="75"></ui-progress-bar>
                     </div>
+                </ui-card-content>
+            </ui-card>
+        </div>
+    </div>
+
+    <!-- Molecular List Showcase -->
+    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
+        <h3 class="section-title">Molecular Lists (Phase 2)</h3>
+        <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
+            Listas estructuradas con soporte para iconos, títulos y descripciones (Bridged with Angular Material).
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Standard List</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <ui-list>
+                        <ui-list-item>
+                            <mat-icon uiListItemIcon>person</mat-icon>
+                            <span uiListItemTitle>Perfil de Usuario</span>
+                            <span uiListItemLine>Gestiona tus datos personales y preferencias.</span>
+                        </ui-list-item>
+                        <ui-list-item>
+                            <mat-icon uiListItemIcon>security</mat-icon>
+                            <span uiListItemTitle>Seguridad</span>
+                            <span uiListItemLine>Configura tu contraseña y autenticación 2FA.</span>
+                        </ui-list-item>
+                        <ui-list-item [disabled]="true">
+                            <mat-icon uiListItemIcon>settings</mat-icon>
+                            <span uiListItemTitle>Configuración Avanzada</span>
+                            <span uiListItemLine>Solo disponible para administradores de sistema.</span>
+                        </ui-list-item>
+                    </ui-list>
+                </ui-card-content>
+            </ui-card>
+
+            <ui-card variant="outlined" style="background: #fff;">
+                <ui-card-header>
+                    <h4 uiCardTitle>Navigation List</h4>
+                </ui-card-header>
+                <ui-card-content>
+                    <ui-list [nav]="true">
+                        <ui-list-item (clicked)="showInfoToast()">
+                            <mat-icon uiListItemIcon>dashboard</mat-icon>
+                            <span uiListItemTitle>Panel Principal</span>
+                        </ui-list-item>
+                        <ui-list-item [active]="true">
+                            <mat-icon uiListItemIcon>medical_services</mat-icon>
+                            <span uiListItemTitle>Servicios Médicos</span>
+                        </ui-list-item>
+                        <ui-list-item>
+                            <mat-icon uiListItemIcon>history</mat-icon>
+                            <span uiListItemTitle>Historial de Actividad</span>
+                        </ui-list-item>
+                    </ui-list>
                 </ui-card-content>
             </ui-card>
         </div>

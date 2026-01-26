@@ -2,6 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import {
   UiConfigService,
@@ -12,10 +13,18 @@ import {
   UiErrorDirective,
   UiPrefixDirective,
   UiSuffixDirective,
+  UiDividerComponent,
   UiSelectComponent,
   UiDataTableComponent,
   UiTableColumn,
   UiTableAction,
+  UiListComponent,
+  UiListItemComponent,
+  UiListItemIconDirective,
+  UiListItemTitleDirective,
+  UiListItemLineDirective,
+  UiMenuComponent,
+  UiMenuItemDirective,
   UiProgressSpinnerComponent,
   UiProgressBarComponent,
   UiTabGroupComponent,
@@ -42,6 +51,7 @@ import {
   UiRadioGroupComponent,
   UiRadioButtonComponent,
   UiToggleComponent,
+  UiTooltipDirective,
   UiDialogService,
   UiToastService
 } from '@ui';
@@ -64,6 +74,7 @@ interface PilotUser {
     CommonModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatMenuModule,
     MatStepperModule,
     UiButtonComponent,
     UiIconButtonComponent,
@@ -71,8 +82,16 @@ interface PilotUser {
     UiFormFieldComponent,
     UiPrefixDirective,
     UiSuffixDirective,
+    UiDividerComponent,
     UiSelectComponent,
     UiDataTableComponent,
+    UiListComponent,
+    UiListItemComponent,
+    UiListItemIconDirective,
+    UiListItemTitleDirective,
+    UiListItemLineDirective,
+    UiMenuComponent,
+    UiMenuItemDirective,
     UiProgressSpinnerComponent,
     UiProgressBarComponent,
     UiTabGroupComponent,
@@ -97,6 +116,7 @@ interface PilotUser {
     UiRadioGroupComponent,
     UiRadioButtonComponent,
     UiToggleComponent,
+    UiTooltipDirective,
     ZoneRendererComponent,
     TitleCasePipe
   ],
