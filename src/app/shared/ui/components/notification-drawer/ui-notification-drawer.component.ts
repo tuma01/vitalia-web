@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { UiButtonComponent } from '../../primitives/button/ui-button.component';
 import { UiIconButtonComponent } from '../../primitives/button/ui-icon-button.component';
 import { UiNotificationService } from './ui-notification.service';
 import { UiNotification } from './ui-notification-drawer.types';
@@ -17,7 +16,7 @@ export interface UiNotificationDrawerI18n {
 @Component({
     selector: 'ui-notification-drawer',
     standalone: true,
-    imports: [CommonModule, MatIconModule, UiButtonComponent, UiIconButtonComponent],
+    imports: [CommonModule, MatIconModule, UiIconButtonComponent],
     templateUrl: './ui-notification-drawer.component.html',
     styleUrls: ['./ui-notification-drawer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,

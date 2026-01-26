@@ -23,7 +23,7 @@ import {
   UiAccordionComponent,
   UiExpansionPanelComponent,
   UiTagComponent,
-  VitaliaBadgeComponent,
+  UiBadgeComponent,
   UiDatepickerComponent,
   UiTimepickerComponent,
   UiToolbarComponent,
@@ -43,9 +43,7 @@ import {
   UiRadioButtonComponent,
   UiToggleComponent,
   UiDialogService,
-  UiToastService,
-  UiEmptyStateComponent,
-  UiEmptyStateConfig
+  UiToastService
 } from '@ui';
 import { ZoneRendererComponent } from '../../layout/zones/zone-renderer.component';
 import { WidgetRegistryService } from '../../core/services/widget-registry.service';
@@ -82,7 +80,7 @@ interface PilotUser {
     UiAccordionComponent,
     UiExpansionPanelComponent,
     UiTagComponent,
-    VitaliaBadgeComponent,
+    UiBadgeComponent,
     UiDatepickerComponent,
     UiTimepickerComponent,
     UiToolbarComponent,
@@ -99,7 +97,6 @@ interface PilotUser {
     UiRadioGroupComponent,
     UiRadioButtonComponent,
     UiToggleComponent,
-    UiEmptyStateComponent,
     ZoneRendererComponent,
     TitleCasePipe
   ],
@@ -302,34 +299,6 @@ export class PilotFormComponent implements OnInit {
     { value: 'patient', label: 'Bob Patient', image: 'https://i.pravatar.cc/150?u=patient' },
   ];
 
-  // UiEmptyState Configurations (Phase 2)
-  emptyStateSearch: UiEmptyStateConfig = {
-    title: 'No se encontraron resultados',
-    description: 'Intenta ajustar tus filtros de búsqueda o verifica los términos ingresados.',
-    imagePath: 'assets/ui/illustrations/no-results.png',
-    actionLabel: 'Limpiar filtros',
-    actionIcon: 'filter_alt_off',
-    i18n: { imageAlt: 'Ilustración de lupa sobre burbujas vacías indicando sin resultados' }
-  };
-
-  emptyStateNoData: UiEmptyStateConfig = {
-    title: 'No hay documentos',
-    description: 'Esta carpeta está vacía. Sube tu primer documento para comenzar.',
-    imagePath: 'assets/ui/illustrations/no-data.png',
-    actionLabel: 'Subir Documento',
-    actionIcon: 'upload_file',
-    secondaryActionLabel: 'Aprender más',
-    i18n: { imageAlt: 'Carpeta vacía flotando en el espacio' }
-  };
-
-  emptyStateError: UiEmptyStateConfig = {
-    title: 'Error de Conexión',
-    description: 'No pudimos conectar con el servidor. Por favor revisa tu conexión a internet.',
-    imagePath: 'assets/ui/illustrations/error.png',
-    actionLabel: 'Reintentar',
-    actionIcon: 'refresh',
-    i18n: { imageAlt: 'Señal de alerta roja y eslabón roto' }
-  };
 
   constructor() {
     this.form = this.fb.group({

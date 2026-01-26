@@ -66,6 +66,13 @@ export interface UiBadgeI18n {
     ariaLabel?: string;
 }
 
+export interface UiInputI18n {
+    ariaLabel?: string;
+    clearAriaLabel?: string;
+    showPasswordAriaLabel?: string;
+    hidePasswordAriaLabel?: string;
+}
+
 export interface UiTagI18n {
     ariaLabel?: string;
 }
@@ -110,5 +117,14 @@ export const DEFAULT_PAL_I18N = {
         placeholder: 'HH:MM',
         amLabel: 'AM',
         pmLabel: 'PM'
-    } as UiTimepickerI18n
+    } as UiTimepickerI18n,
+    badge: {
+        ariaLabel: 'Contenedor de notificación'
+    } as UiBadgeI18n,
+    input: {
+        ariaLabel: 'Campo de entrada',
+        clearAriaLabel: 'Limpiar campo',
+        showPasswordAriaLabel: 'Mostrar contraseña',
+        hidePasswordAriaLabel: 'Ocultar contraseña'
+    } as UiInputI18n
 };
