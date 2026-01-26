@@ -8,9 +8,10 @@
 // Config & Types
 export * from './config/ui-config.service';
 export * from './config/ui-i18n.types';
+export * from './config/ui-i18n.service';
 
 // Primitives
-export * from './primitives/badge/vitalia-badge.component';
+export * from './primitives/badge/ui-badge.component';
 export * from './primitives/badge/ui-badge.types';
 export * from './primitives/button/ui-button.component';
 export * from './primitives/button/ui-button.types';
@@ -20,6 +21,7 @@ export * from './primitives/input/ui-input.component';
 export * from './primitives/input/ui-input.types';
 export * from './primitives/radio/ui-radio.component';
 export * from './primitives/radio/ui-radio-group.component';
+export * from './primitives/icon/ui-icon.component';
 export * from './primitives/select/ui-select.component';
 export * from './primitives/tag/ui-tag.component';
 export * from './primitives/tag/ui-tag.types';

@@ -1,4 +1,4 @@
-<mat-sidenav-container class="ui-sidenav-container" (backdropClick)="onBackdropClick()"
+<mat-sidenav-container autosize class="ui-sidenav-container" (backdropClick)="onBackdropClick()"
     [attr.aria-label]="i18n?.ariaLabel">
     <mat-sidenav #sidenav [mode]="mode" [opened]="opened" class="ui-sidenav"
         [class.ui-sidenav--expanded]="state === 'expanded'"
@@ -59,7 +59,7 @@
         </div>
     </mat-sidenav>
 
-    <mat-sidenav-content>
+    <mat-sidenav-content class="ui-sidenav-main-content">
         <ng-content></ng-content>
     </mat-sidenav-content>
 </mat-sidenav-container>

@@ -2,6 +2,13 @@
     height: 100%;
     width: 100%;
     background: var(--ui-background-default);
+    display: block; // Critical for sidenav calculation
+}
+
+:host {
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
 .ui-sidenav {
@@ -9,6 +16,7 @@
     background: var(--ui-sidenav-bg, #ffffff) !important;
     transition: width var(--ui-motion-fast, 0.2s cubic-bezier(0.4, 0, 0.2, 1)) !important;
     overflow-x: hidden;
+    z-index: 5;
 
     &--expanded {
         width: 280px;
@@ -109,7 +117,7 @@
     }
 
     &--child {
-        padding-left: calc(var(--ui-space-md) + 24px + var(--ui-space-md)) !important;
+        padding-left: calc(var(--ui-space-md) + 24px + var(--ui-space-md) - 13px) !important;
         font-size: 0.9em;
         height: 40px;
         margin-left: var(--ui-space-sm) !important;
@@ -164,4 +172,16 @@
     margin-top: auto;
     padding: var(--ui-space-md);
     border-top: 1px solid var(--ui-color-border-subtle);
+}
+
+mat-sidenav-content {
+    display: block;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    z-index: 1;
+
+    &.ui-sidenav-main-content {
+        box-sizing: border-box;
+    }
 }

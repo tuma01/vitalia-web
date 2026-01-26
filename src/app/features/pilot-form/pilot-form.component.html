@@ -184,21 +184,21 @@
                     <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                         <!-- Badges Overlay -->
                         <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center;">
-                            <v-badge [content]="5" variant="danger" animation="pulse" position="top-right">
+                            <ui-badge [content]="5" variant="danger" animation="pulse" position="top-right">
                                 <mat-icon>mail</mat-icon>
-                            </v-badge>
+                            </ui-badge>
 
-                            <v-badge [content]="18" variant="primary" position="top-right">
+                            <ui-badge [content]="18" variant="primary" position="top-right">
                                 <mat-icon>notifications</mat-icon>
-                            </v-badge>
+                            </ui-badge>
 
-                            <v-badge [dot]="true" variant="success" size="md">
+                            <ui-badge [dot]="true" variant="success" size="md">
                                 <mat-icon>person</mat-icon>
-                            </v-badge>
+                            </ui-badge>
 
-                            <v-badge [content]="3" variant="warning" position="top-right">
+                            <ui-badge [content]="3" variant="warning" position="top-right">
                                 <ui-button size="sm" variant="outline">Messages</ui-button>
-                            </v-badge>
+                            </ui-badge>
                         </div>
 
                         <!-- Tags (Status Labels) -->
@@ -216,34 +216,6 @@
 
     </ui-card>
 
-    <!-- NEW: Empty State Showcase (Phase 2) -->
-    <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
-        <h3 class="section-title">Empty States (Phase 2)</h3>
-        <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
-            Ejemplos de estados vacíos con ilustraciones premium y soporte full i18n (alt texts y area labels).
-        </p>
-
-        <ui-tab-group variant="pills" style="margin-bottom: 0;">
-            <ui-tab label="No Data" icon="folder_off">
-                <div
-                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                    <ui-empty-state [config]="emptyStateNoData" (primaryAction)="openConfirmDialog()"></ui-empty-state>
-                </div>
-            </ui-tab>
-            <ui-tab label="Search" icon="search_off">
-                <div
-                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                    <ui-empty-state [config]="emptyStateSearch"></ui-empty-state>
-                </div>
-            </ui-tab>
-            <ui-tab label="Error" icon="wifi_off">
-                <div
-                    style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                    <ui-empty-state [config]="emptyStateError" (primaryAction)="showInfoToast()"></ui-empty-state>
-                </div>
-            </ui-tab>
-        </ui-tab-group>
-    </div>
 
     <!-- Column 3: Premium Tabs Showcase (NEW) -->
     <ui-card variant="elevated">
@@ -395,10 +367,10 @@
 
                 <!-- Automatic Horizontal Layout via uiCardAvatar -->
                 <div uiCardAvatar>
-                    <v-badge [dot]="true" variant="success">
+                    <ui-badge [dot]="true" variant="success">
                         <ui-icon-button icon="face" variant="soft" size="sm"
                             ariaLabel="Perfil de usuario"></ui-icon-button>
-                    </v-badge>
+                    </ui-badge>
                 </div>
 
                 <ui-card-header>

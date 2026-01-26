@@ -3,7 +3,6 @@ import {
     Component,
     ElementRef,
     HostBinding,
-    HostListener,
     Input,
     Renderer2,
     ViewChild,
@@ -18,7 +17,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'ui-input',
     standalone: true,
-    imports: [],
+    imports: [CommonModule],
     template: `
     <input
       #input
@@ -29,6 +28,7 @@ import { CommonModule } from '@angular/common';
       [attr.placeholder]="placeholder"
       [disabled]="disabled"
       [readonly]="readonly"
+      [attr.aria-label]="ariaLabel"
       (input)="handleInput($event)"
       (focus)="handleFocus()"
       (blur)="handleBlur()">
@@ -52,6 +52,7 @@ export class UiInputComponent implements ControlValueAccessor, OnInit {
     @Input() placeholder = '';
     @Input() disabled = false;
     @Input() readonly = false;
+    @Input() ariaLabel = '';
     @Input() set value(val: string) {
         this.writeValue(val);
     }
@@ -68,7 +69,6 @@ export class UiInputComponent implements ControlValueAccessor, OnInit {
     private renderer = inject(Renderer2);
 
     ngOnInit(): void {
-        // Ensure id is set if it was reset by some logic (though default value should handle it)
         if (!this.id) {
             this.id = `ui-input-${UiInputComponent.nextId++}`;
         }
@@ -76,8 +76,10 @@ export class UiInputComponent implements ControlValueAccessor, OnInit {
 
     writeValue(value: any): void {
         const normalizeValue = value == null ? '' : value;
-        this.renderer.setProperty(this.inputElement.nativeElement, 'value', normalizeValue);
-        this.empty.set(normalizeValue === '');
+        if (this.inputElement) {
+            this.renderer.setProperty(this.inputElement.nativeElement, 'value', normalizeValue);
+            this.empty.set(normalizeValue === '');
+        }
     }
 
     registerOnChange(fn: any): void {
