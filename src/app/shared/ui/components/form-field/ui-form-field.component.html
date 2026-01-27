@@ -1,5 +1,5 @@
-<div class="ui-form-field" [class.ui-form-field--outline]="appearance === 'outline'"
-    [class.ui-form-field--filled]="appearance === 'filled'" [class.ui-form-field--disabled]="disabled"
+<div class="ui-form-field" [class.ui-form-field--outline]="effectiveAppearance === 'outline'"
+    [class.ui-form-field--filled]="effectiveAppearance === 'filled'" [class.ui-form-field--disabled]="disabled"
     [class.ui-form-field--error]="hasError" [class.ui-form-field--focused]="isFocused"
     [class.ui-form-field--has-value]="hasValue" [class.ui-form-field--has-prefix]="hasPrefix()"
     [class.ui-form-field--has-suffix]="hasSuffix()">
@@ -38,7 +38,7 @@
         }
 
         <!-- OUTLINE: Fieldset Approach (Robust Notch) -->
-        @if (appearance === 'outline') {
+        @if (effectiveAppearance === 'outline') {
         <fieldset class="ui-form-field__outline">
             <legend class="ui-form-field__legend">
                 <span>{{ label }}</span>
