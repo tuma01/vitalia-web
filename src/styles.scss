@@ -25,8 +25,14 @@
 
 // Dark theme override
 .theme-dark {
-  --body-background-color: #121212; // Standard dark background
-  color: #ffffff;
+  --body-background-color: #0f172a; // Deep slate for better premium look
+  color: var(--ui-color-text-primary);
+
+  // Ensure all inherited text uses the token
+  &,
+  * {
+    color: inherit;
+  }
 }
 
 html,
@@ -34,6 +40,7 @@ body {
   height: 100%;
   margin: 0;
   background-color: var(--body-background-color);
+  color: var(--ui-color-text-primary, #1a1a1a);
   /* Ensure background color covers whole page */
   font-family: Roboto, "Helvetica Neue", sans-serif;
   transition: background-color 0.3s ease; // Smooth theme transition
