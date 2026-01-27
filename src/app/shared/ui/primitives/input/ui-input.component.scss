@@ -16,10 +16,10 @@
 
   font-family: var(--ui-font-family-sans, inherit);
   font-size: var(--ui-font-size-md, 1rem);
-  color: var(--ui-color-text, #111827);
+  color: var(--ui-color-text-primary);
 
   &::placeholder {
-    color: var(--ui-color-text-muted, #9ca3af);
+    color: var(--ui-color-text-muted);
     opacity: 0; // Hiden by default if floating label is used, managed by form-field usually
     transition: opacity 0.2s;
   }

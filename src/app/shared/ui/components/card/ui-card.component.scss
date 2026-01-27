@@ -55,21 +55,21 @@
         margin: 0;
         font-size: var(--ui-font-size-lg);
         font-weight: var(--ui-font-weight-bold);
-        color: var(--ui-color-text-primary, #111827);
+        color: var(--ui-color-text-primary);
         line-height: 1.2;
     }
 
     .ui-card-subtitle {
         margin-top: var(--ui-space-2xs);
         font-size: var(--ui-font-size-sm);
-        color: var(--ui-color-text-secondary, #6b7280);
+        color: var(--ui-color-text-secondary);
         opacity: 0.8;
     }
 
     .ui-card-content {
         display: block;
         padding: var(--ui-card-padding);
-        color: var(--ui-color-text-primary, #374151);
+        color: var(--ui-color-text-primary);
         font-size: var(--ui-font-size-md);
     }
 

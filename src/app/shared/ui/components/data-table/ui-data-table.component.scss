@@ -2,11 +2,11 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background: var(--ui-background-default);
+    background: var(--ui-background-surface) !important;
     border-radius: var(--ui-radius-lg, 12px);
     box-shadow: var(--ui-elevation-sm);
     overflow: hidden;
-    border: 1px solid var(--ui-color-border, #e5e7eb);
+    border: 1px solid var(--ui-color-border);
 }
 
 .ui-table-toolbar {
@@ -14,9 +14,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 var(--ui-space-md);
-    background: rgba(var(--ui-color-bg-rgb, 255, 255, 255), 0.8);
+    background: var(--ui-toolbar-bg) !important;
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--ui-color-border, #e5e7eb);
+    border-bottom: 1px solid var(--ui-color-border);
     gap: var(--ui-space-md);
     height: 86px;
 
@@ -117,38 +117,51 @@
     overflow: auto;
     position: relative;
     max-height: 600px;
+    background-color: var(--ui-background-surface) !important;
 
     /* Premium Scroll Shadows (Horizontal) */
     background:
         /* Shadow covers */
-        linear-gradient(to right, var(--ui-card-bg, white) 30%, rgba(255, 255, 255, 0)),
-        linear-gradient(to right, rgba(255, 255, 255, 0), var(--ui-card-bg, white) 70%) 100% 0,
+        linear-gradient(to right, var(--ui-background-default, white) 30%, rgba(255, 255, 255, 0)),
+        linear-gradient(to right, rgba(255, 255, 255, 0), var(--ui-background-default, white) 70%) 100% 0,
         /* Shadows */
         radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .15), rgba(0, 0, 0, 0)),
         radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .15), rgba(0, 0, 0, 0)) 100% 0;
     background-repeat: no-repeat;
     background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
     background-attachment: local, local, scroll, scroll;
+
+    .theme-dark & {
+        background:
+            linear-gradient(to right, var(--ui-background-default) 30%, rgba(15, 23, 42, 0)),
+            linear-gradient(to right, rgba(15, 23, 42, 0), var(--ui-background-default) 70%) 100% 0,
+            radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)),
+            radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 100% 0;
+        background-repeat: no-repeat;
+        background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
+        background-attachment: local, local, scroll, scroll;
+    }
 }
 
 .ui-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    background-color: transparent !important;
 
     .mat-mdc-header-row {
-        background-color: var(--ui-color-surface-variant, #f9fafb);
+        background-color: var(--ui-background-variant, #f9fafb);
         height: 52px;
     }
 
     .mat-mdc-header-cell {
-        color: var(--ui-color-text-secondary, #6b7280);
+        color: var(--ui-color-text-secondary);
         font-weight: 700;
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        background-color: var(--ui-color-surface-variant, #f9fafb);
-        border-bottom: 2px solid var(--ui-color-border, #e5e7eb) !important;
+        background-color: var(--ui-background-variant, #f9fafb);
+        border-bottom: 2px solid var(--ui-color-border) !important;
         white-space: nowrap;
 
         &.align-right {
@@ -170,12 +183,13 @@
         height: var(--ui-table-row-height, 48px);
 
         &:hover {
-            background-color: var(--ui-color-surface-hover, #f3f4f6);
+            background-color: var(--ui-color-bg-hover, #f3f4f6);
         }
 
         .mat-mdc-cell {
-            border-bottom: 1px solid var(--ui-color-border-subtle, #f3f4f6);
-            color: var(--ui-color-text, #374151);
+            background-color: transparent !important;
+            border-bottom: 1px solid var(--ui-color-border);
+            color: var(--ui-color-text-primary);
             font-size: var(--ui-table-font-size, 0.875rem);
             padding: 0 var(--ui-table-cell-padding, 16px);
 
@@ -264,7 +278,7 @@
 
     .ui-table-avatar-text {
         font-weight: 500;
-        color: var(--ui-color-text);
+        color: var(--ui-color-text-primary);
     }
 }
 
@@ -305,8 +319,38 @@
 }
 
 .ui-paginator {
-    background: transparent;
-    border-top: 1px solid var(--ui-color-border, #e5e7eb);
+    background: var(--ui-background-variant) !important;
+    border-top: 1px solid var(--ui-color-border);
+    color: var(--ui-color-text-secondary);
+
+    ::ng-deep {
+        .mat-mdc-paginator-container {
+            color: inherit;
+        }
+
+        .mat-mdc-paginator-page-size-label,
+        .mat-mdc-paginator-range-label {
+            color: var(--ui-color-text-secondary);
+        }
+
+        .mat-mdc-icon-button {
+            color: var(--ui-color-text-primary);
+
+            &:disabled {
+                color: var(--ui-color-text-muted);
+                opacity: 0.5;
+            }
+        }
+
+        /* Select in paginator */
+        .mat-mdc-select-value {
+            color: var(--ui-color-text-primary);
+        }
+
+        .mat-mdc-select-arrow {
+            color: var(--ui-color-text-secondary);
+        }
+    }
 }
 
 .actions-header {
@@ -324,7 +368,7 @@
 .ui-table-loading {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--ui-toolbar-bg, rgba(255, 255, 255, 0.7));
     z-index: 100;
     display: flex;
     align-items: center;

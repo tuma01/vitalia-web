@@ -19,11 +19,11 @@ $label-scale: 0.75;
     --ui-field-height: var(--ui-input-height-md, 45px);
     --ui-field-radius: var(--ui-radius-base, 8px);
     --ui-field-border-width: var(--ui-border-width-base, 1px);
-    --ui-field-border-color: var(--ui-color-border, #9ca3af);
-    --ui-field-bg: var(--ui-background-default, #ffffff);
-    --ui-field-label-color: var(--ui-color-text-secondary, #6b7280);
-    --ui-field-primary-color: var(--ui-color-primary, #2563eb);
-    --ui-field-danger-color: var(--ui-color-danger, #ef4444);
+    --ui-field-border-color: var(--ui-color-border);
+    --ui-field-bg: var(--ui-background-default);
+    --ui-field-label-color: var(--ui-color-text-secondary);
+    --ui-field-primary-color: var(--ui-color-primary);
+    --ui-field-danger-color: var(--ui-color-danger);
     --ui-field-label-scale: 0.75;
 }
 
