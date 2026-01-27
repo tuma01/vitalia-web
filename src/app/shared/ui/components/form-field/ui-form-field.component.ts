@@ -41,8 +41,14 @@ export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
 
     private uiConfig = inject(UiConfigService);
 
-    // Default appearance comes from Global Config, can be overridden by input
-    @Input() appearance: UiFormFieldAppearance = this.uiConfig.inputAppearance();
+    // Appearance: use global config by default, can be overridden
+    @Input() appearance?: UiFormFieldAppearance;
+
+    // Computed appearance: use input if provided, otherwise global config
+    get effectiveAppearance(): UiFormFieldAppearance {
+        return this.appearance ?? this.uiConfig.inputAppearance();
+    }
+
     @Input() size: UiFormFieldSize = 'md';
     @Input() required = false;
     @Input() disabled = false;
