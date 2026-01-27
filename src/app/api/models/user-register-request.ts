@@ -8,7 +8,7 @@ export interface UserRegisterRequest {
   email: string;
   nombre: string;
   password: string;
-  personType: 'DOCTOR' | 'NURSE' | 'PATIENT' | 'EMPLOYEE' | 'SUPER_ADMIN' | 'TENANT_ADMIN';
+  personType: 'DOCTOR' | 'NURSE' | 'PATIENT' | 'EMPLOYEE' | 'SUPER_ADMIN' | 'ADMIN' | 'RECEPTIONIST' | 'LAB_TECHNICIAN' | 'PHARMACIST';
   segundoNombre?: string;
   tenantCode: string;
 }

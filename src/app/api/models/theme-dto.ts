@@ -4,8 +4,12 @@
 
 export interface ThemeDto {
   accentColor?: string;
+  active?: boolean;
+  allowCustomCss?: boolean;
   backgroundColor?: string;
   buttonTextColor?: string;
+  code?: string;
+  customCss?: string;
   faviconUrl?: string;
   fontFamily?: string;
   id?: number;
@@ -15,6 +19,7 @@ export interface ThemeDto {
   primaryColor?: string;
   propertiesJson?: string;
   secondaryColor?: string;
+  tenantId?: number;
   textColor?: string;
   themeMode?: 'LIGHT' | 'DARK' | 'AUTO';
   warnColor?: string;
