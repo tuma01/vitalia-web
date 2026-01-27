@@ -151,7 +151,7 @@
 
     .mat-mdc-header-row {
         background-color: var(--ui-background-variant, #f9fafb);
-        height: 52px;
+        height: var(--ui-table-header-height, 52px);
     }
 
     .mat-mdc-header-cell {
@@ -211,20 +211,13 @@
         }
     }
 
-    /* Density Variants */
+    /* Density Variants - Now just consumers of global tokens */
     &--compact {
-        --ui-table-row-height: 36px;
-        --ui-table-font-size: 0.8125rem;
-        --ui-table-cell-padding: 8px;
-
-        .mat-mdc-header-row {
-            height: 40px;
-        }
+        /* Consumes global tokens from body.density-compact if present */
     }
 
     &--comfortable {
-        --ui-table-row-height: 64px;
-        --ui-table-cell-padding: 24px;
+        /* Consumes global tokens from body.density-comfortable if present */
     }
 
     /* Truncation styles */

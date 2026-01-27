@@ -37,13 +37,13 @@
     --ui-color-text-secondary: #cbd5e1;
     --ui-color-text-muted: #94a3b8;
 
-    --ui-color-border: #3f3f46; // Zinc-700 divider for better contrast in softer ranges
+    --ui-color-border: #27272a; // Zinc-800
 
-    --ui-color-bg-hover: #3f3f46; // Zinc-700 hover
-    --ui-color-bg-active: #52525b; // Zinc-600 active
+    --ui-color-bg-hover: rgba(255, 255, 255, 0.03);
+    --ui-color-bg-active: rgba(255, 255, 255, 0.05);
 
-    --ui-background-default: #18181b; // Zinc-900 (Balanced Body)
-    --ui-background-surface: #27272a; // Zinc-800 (Professional Gray)
-    --ui-background-variant: #3f3f46; // Zinc-700 (Header/Footer Softer Contrast)
-    --ui-toolbar-bg: rgba(39, 39, 42, 0.85); // Zinc-800 glassmorphism
+    --ui-background-default: #09090b; // Zinc-950
+    --ui-background-surface: #18181b; // Zinc-900
+    --ui-background-variant: #111113; // Between 950 and 900 for subtle header depth
+    --ui-toolbar-bg: rgba(24, 24, 27, 0.80);
 }

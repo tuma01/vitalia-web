@@ -32,6 +32,7 @@ import { UiTagVariant } from '../../primitives/tag/ui-tag.types';
 import { UiDialogService } from '../dialog/ui-dialog.service';
 import { DEFAULT_PAL_I18N, UiTableI18n } from '../../config/ui-i18n.types';
 import { UiTableAction, UiTableColumn, UiTableDensity } from './ui-data-table.types';
+import { UiConfigService } from '../../config/ui-config.service';
 
 @Component({
     selector: 'ui-data-table',
@@ -172,6 +173,9 @@ export class UiDataTableComponent<T> implements OnChanges {
 
     setDensity(density: UiTableDensity) {
         this.density = density;
+        // Sync with global density service
+        const uiConfig = inject(UiConfigService);
+        uiConfig.setDensity(density as 'default' | 'compact' | 'comfortable');
         this.cdr.markForCheck();
     }
 
