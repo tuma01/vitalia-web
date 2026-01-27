@@ -6,16 +6,33 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { UserTenantRoleService } from './services/user-tenant-role.service';
 import { ThemeControllerService } from './services/theme-controller.service';
-import { TenantManagementControllerService } from './services/tenant-management-controller.service';
+import { TenantConfigService } from './services/tenant-config.service';
+import { TenantAdminManagementService } from './services/tenant-admin-management.service';
+import { SuperAdminService } from './services/super-admin.service';
+import { TenantService } from './services/tenant.service';
+import { TenantAdminService } from './services/tenant-admin.service';
 import { ProvinciaService } from './services/provincia.service';
 import { MunicipioService } from './services/municipio.service';
+import { MedicalProcedureService } from './services/medical-procedure.service';
+import { MedicationService } from './services/medication.service';
+import { MedicalSpecialtyService } from './services/medical-specialty.service';
+import { KinshipService } from './services/kinship.service';
+import { HealthcareProviderService } from './services/healthcare-provider.service';
+import { Icd10DiagnosisService } from './services/icd-10-diagnosis.service';
+import { GenderService } from './services/gender.service';
+import { CivilStatusService } from './services/civil-status.service';
+import { BloodTypeService } from './services/blood-type.service';
 import { DepartamentoService } from './services/departamento.service';
 import { CountryService } from './services/country.service';
-import { AvatarControllerService } from './services/avatar-controller.service';
+import { AvatarService } from './services/avatar.service';
+import { AddressService } from './services/address.service';
+import { VaccineService } from './services/vaccine.service';
+import { IdentificationTypeService } from './services/identification-type.service';
+import { AllergyService } from './services/allergy.service';
 import { AuthenticationService } from './services/authentication.service';
 import { AccountService } from './services/account.service';
-import { TenantControllerService } from './services/tenant-controller.service';
 
 /**
  * Module that provides all services and configuration.
@@ -25,16 +42,33 @@ import { TenantControllerService } from './services/tenant-controller.service';
   exports: [],
   declarations: [],
   providers: [
+    UserTenantRoleService,
     ThemeControllerService,
-    TenantManagementControllerService,
+    TenantConfigService,
+    TenantAdminManagementService,
+    SuperAdminService,
+    TenantService,
+    TenantAdminService,
     ProvinciaService,
     MunicipioService,
+    MedicalProcedureService,
+    MedicationService,
+    MedicalSpecialtyService,
+    KinshipService,
+    HealthcareProviderService,
+    Icd10DiagnosisService,
+    GenderService,
+    CivilStatusService,
+    BloodTypeService,
     DepartamentoService,
     CountryService,
-    AvatarControllerService,
+    AvatarService,
+    AddressService,
+    VaccineService,
+    IdentificationTypeService,
+    AllergyService,
     AuthenticationService,
     AccountService,
-    TenantControllerService,
     ApiConfiguration
   ],
 })

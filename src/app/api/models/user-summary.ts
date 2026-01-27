@@ -27,7 +27,7 @@ export interface UserSummary {
   /**
    * Tipo de persona (DOCTOR, NURSE, PATIENT, etc.)
    */
-  personType?: 'DOCTOR' | 'NURSE' | 'PATIENT' | 'EMPLOYEE' | 'SUPER_ADMIN' | 'TENANT_ADMIN';
+  personType?: 'DOCTOR' | 'NURSE' | 'PATIENT' | 'EMPLOYEE' | 'SUPER_ADMIN' | 'ADMIN' | 'RECEPTIONIST' | 'LAB_TECHNICIAN' | 'PHARMACIST';
 
   /**
    * Roles del usuario dentro del tenant actual
@@ -38,4 +38,9 @@ export interface UserSummary {
    * Código del tenant (hospital) actual
    */
   tenantCode?: string;
+
+  /**
+   * Nombre del tenant (hospital) actual
+   */
+  tenantName?: string;
 }

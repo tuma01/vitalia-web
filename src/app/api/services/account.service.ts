@@ -15,6 +15,8 @@ import { activate } from '../fn/account/activate';
 import { Activate$Params } from '../fn/account/activate';
 import { changePassword } from '../fn/account/change-password';
 import { ChangePassword$Params } from '../fn/account/change-password';
+import { deleteAccount } from '../fn/account/delete-account';
+import { DeleteAccount$Params } from '../fn/account/delete-account';
 import { getProfile } from '../fn/account/get-profile';
 import { GetProfile$Params } from '../fn/account/get-profile';
 import { requestPasswordReset } from '../fn/account/request-password-reset';
@@ -195,6 +197,39 @@ export class AccountService extends BaseService {
   getProfile(params?: GetProfile$Params, context?: HttpContext): Observable<UserSummary> {
     return this.getProfile$Response(params, context).pipe(
       map((r: StrictHttpResponse<UserSummary>): UserSummary => r.body)
+    );
+  }
+
+  /** Path part for operation `deleteAccount()` */
+  static readonly DeleteAccountPath = '/account';
+
+  /**
+   * Dar de baja cuenta.
+   *
+   * Desactiva la cuenta del usuario autenticado y cierra la sesión
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `deleteAccount()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteAccount$Response(params: DeleteAccount$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
+    return deleteAccount(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Dar de baja cuenta.
+   *
+   * Desactiva la cuenta del usuario autenticado y cierra la sesión
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `deleteAccount$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  deleteAccount(params: DeleteAccount$Params, context?: HttpContext): Observable<void> {
+    return this.deleteAccount$Response(params, context).pipe(
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

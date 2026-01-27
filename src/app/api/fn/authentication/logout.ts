@@ -11,12 +11,14 @@ import { RequestBuilder } from '../../request-builder';
 
 export interface Logout$Params {
   refreshToken: string;
+  Authorization?: string;
 }
 
 export function logout(http: HttpClient, rootUrl: string, params: Logout$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, logout.PATH, 'post');
   if (params) {
     rb.query('refreshToken', params.refreshToken, {});
+    rb.header('Authorization', params.Authorization, {});
   }
 
   return http.request(

@@ -105,7 +105,7 @@ export class AuthenticationService extends BaseService {
   /**
    * Cerrar sesión.
    *
-   * Invalida el refresh token actual
+   * Invalida el refresh token actual y el access token
    *
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `logout()` instead.
@@ -119,7 +119,7 @@ export class AuthenticationService extends BaseService {
   /**
    * Cerrar sesión.
    *
-   * Invalida el refresh token actual
+   * Invalida el refresh token actual y el access token
    *
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `logout$Response()` instead.

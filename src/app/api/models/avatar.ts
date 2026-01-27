@@ -4,27 +4,22 @@
 
 
 /**
- * Schema to hold Avatar information
+ * Detalles del Avatar a crear.
  */
 export interface Avatar {
 
   /**
-   * Contenido del avatar en bytes. Representa la imagen codificada
-   */
-  content?: string;
-
-  /**
-   * Nombre original del archivo subido
+   * Nombre del archivo
    */
   filename?: string;
 
   /**
-   * Identificador único del avatar
+   * Identificador único
    */
   id?: number;
 
   /**
-   * Tipo MIME de la imagen, por ejemplo 'image/jpeg' o 'image/png'
+   * Tipo MIME del archivo
    */
   mimeType?: string;
 
@@ -34,12 +29,12 @@ export interface Avatar {
   size?: number;
 
   /**
-   * Code del tenant al que pertenece el usuario
+   * Código del tenant
    */
-  tenantCode?: string;
+  tenantCode: string;
 
   /**
-   * Identificador del usuario al que pertenece el avatar
+   * ID del usuario
    */
-  userId?: number;
+  userId: number;
 }
