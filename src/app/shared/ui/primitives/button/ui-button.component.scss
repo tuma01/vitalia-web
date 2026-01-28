@@ -1,40 +1,35 @@
-/* UI Button Premium Reconstruction */
+/* UI Button - Using Global Form Component Configuration */
+
+@use '../../../../../styles/ds/form-components-global' as form;
 
 :host {
-    display: block;
+    display: inline-flex; // Match input wrapper layout (flex) exactly
     width: fit-content;
     box-sizing: border-box;
-    // Height explicitly handled by size classes below
+    // line-height: 1; // Removed to let flexbox center naturally
+    vertical-align: middle; // Align with inputs
 }
 
 button {
-    /* Reset & Base */
+    /* Global Form Component Base */
+    @include form.form-component-inner('inline-flex');
+
+    // Height Parity (Driven by Host Variable)
+    min-height: var(--ui-size-md) !important;
+    height: var(--ui-size-md) !important;
+
+    /* Button-Specific Overrides */
+    cursor: pointer;
+    font-weight: var(--ui-font-weight-medium);
+    border-radius: var(--ui-radius-md);
+    transition: all var(--ui-motion-fast);
+
+    // RESET NATIVE STYLES
     appearance: none;
     -webkit-appearance: none;
-    background: transparent;
-    border: none;
-    box-sizing: border-box;
-    padding: 0; // Absolute reset
-    margin: 0;
-    cursor: pointer;
-    font-family: var(--ui-font-family-sans);
-    font-weight: var(--ui-font-weight-medium);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: all var(--ui-motion-fast);
-    outline: none;
-    width: 100%;
-    border-radius: var(--ui-radius-md);
-    height: 100%; // Fill the host container height-wise
 
-    /* Typography defaults */
-    font-size: var(--ui-font-size-sm);
-    line-height: 1;
-    white-space: nowrap; // Prevent height growing from wrap
-    overflow: hidden;
-    text-overflow: ellipsis;
+    position: relative;
+    justify-content: center;
 
     &:disabled {
         opacity: var(--ui-opacity-disabled);
@@ -88,7 +83,6 @@ button {
         box-shadow: none;
         transform: translateY(0);
         background-color: var(--ui-color-bg-active);
-        /* Fallback if exact active color isn't defined, usually darken */
         filter: brightness(0.9);
     }
 }
@@ -143,44 +137,35 @@ button {
 }
 
 /* ========================================================================
-   SIZES
+   SIZES - Using Global Form Component Mixins
    ======================================================================== */
 
 /* Small */
 :host(.ui-button--sm) {
-    min-height: var(--ui-size-sm);
-    height: var(--ui-size-sm);
-    max-height: var(--ui-size-sm);
-    overflow: hidden;
+    @include form.form-component-host('sm');
 
     button {
-        padding: var(--ui-size-padding-sm);
+        @include form.form-component-padding('sm');
         font-size: var(--ui-font-size-xs);
     }
 }
 
 /* Medium (Default) */
 :host(.ui-button--md) {
-    min-height: var(--ui-size-md);
-    height: var(--ui-size-md);
-    max-height: var(--ui-size-md);
-    overflow: hidden;
+    @include form.form-component-host('md');
 
     button {
-        padding: var(--ui-size-padding-md);
+        @include form.form-component-padding('md');
         font-size: var(--ui-font-size-sm);
     }
 }
 
 /* Large */
 :host(.ui-button--lg) {
-    min-height: var(--ui-size-lg);
-    height: var(--ui-size-lg);
-    max-height: var(--ui-size-lg);
-    overflow: hidden;
+    @include form.form-component-host('lg');
 
     button {
-        padding: var(--ui-size-padding-lg);
+        @include form.form-component-padding('lg');
         font-size: var(--ui-font-size-md);
     }
 }
