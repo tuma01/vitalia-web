@@ -65,7 +65,7 @@
     }
 
     &--active {
-        background: rgba(var(--ui-color-primary-rgb, 37, 99, 235), 0.08) !important;
+        background: rgba(var(--ui-color-primary-rgb), 0.1) !important;
         color: var(--ui-color-primary, #2563eb) !important;
         font-weight: 600;
 
@@ -73,8 +73,8 @@
             content: '';
             position: absolute;
             left: 0;
-            top: 15%;
-            height: 70%;
+            top: 20%;
+            height: 60%;
             width: 4px;
             background: var(--ui-color-primary);
             border-radius: 0 4px 4px 0;
@@ -82,13 +82,13 @@
     }
 
     &--disabled {
-        opacity: 0.5;
+        opacity: 0.4;
         cursor: not-allowed;
     }
 
     &__icon {
-        margin-right: var(--ui-space-md);
-        font-size: 24px;
+        margin-right: calc(var(--ui-space-md) - 4px);
+        font-size: 22px;
         width: 24px;
         height: 24px;
         display: flex;
@@ -101,15 +101,17 @@
         white-space: nowrap;
         opacity: 1;
         transition: opacity 0.2s;
+        font-size: 0.9375rem;
     }
 
     &__chevron {
         margin-left: var(--ui-space-xs);
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
         transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         color: var(--ui-color-text-secondary);
+        opacity: 0.7;
     }
 
     &__badge {
@@ -117,19 +119,21 @@
     }
 
     &--child {
-        padding-left: calc(var(--ui-space-md) + 24px + var(--ui-space-md) - 13px) !important;
-        font-size: 0.9em;
+        padding-left: 48px !important;
+        font-size: 0.875rem;
         height: 40px;
-        margin-left: var(--ui-space-sm) !important;
-        margin-right: var(--ui-space-sm) !important;
+        margin-top: 2px !important;
+        margin-bottom: 2px !important;
     }
 }
 
 .ui-sidenav-submenu {
     overflow: hidden;
-    background: rgba(var(--ui-color-surface-hover-rgb, 248, 250, 252), 0.3);
+    background: rgba(var(--ui-background-surface-rgb), 0.3);
     border-radius: var(--ui-radius-md);
-    margin: 0 var(--ui-space-xs) var(--ui-space-xs);
+    margin: 2px var(--ui-space-sm) 4px;
+    padding: 2px 0;
+    // No border for a more seamless look
     animation: ui-slide-down 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

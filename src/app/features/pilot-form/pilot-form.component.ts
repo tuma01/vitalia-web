@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   UiConfigService,
   UiButtonComponent,
@@ -15,6 +16,7 @@ import {
   UiSuffixDirective,
   UiDividerComponent,
   UiSelectComponent,
+  UiSelectNativeComponent,
   UiDataTableComponent,
   UiTableColumn,
   UiTableAction,
@@ -91,6 +93,7 @@ interface PilotUser {
     UiSuffixDirective,
     UiDividerComponent,
     UiSelectComponent,
+    UiSelectNativeComponent,
     UiDataTableComponent,
     UiEmptyStateComponent,
     UiListComponent,
@@ -131,6 +134,7 @@ interface PilotUser {
     UiToggleComponent,
     UiTooltipDirective,
     ZoneRendererComponent,
+    TranslateModule,
     TitleCasePipe
   ],
   templateUrl: './pilot-form.component.html',
@@ -158,7 +162,7 @@ interface PilotUser {
     .pilot-card {
       padding: var(--ui-space-xl);
       border-radius: var(--ui-radius-lg);
-      background: #fff;
+      background: var(--ui-background-surface, #ffffff);
       box-shadow: var(--ui-elevation-lg);
       border: 1px solid var(--ui-color-border, #eee);
     }
@@ -199,35 +203,36 @@ interface PilotUser {
 })
 export class PilotFormComponent implements OnInit {
   form: FormGroup;
-  // Phase 1 Examples
+  private translate = inject(TranslateService);
+
   breadcrumbItems: UiBreadcrumbItem[] = [
-    { label: 'Dashboard', icon: 'dashboard', link: '/' },
-    { label: 'Users', icon: 'people', link: '/users' },
-    { label: 'Pilot Test', link: '/pilot' }
+    { label: this.translate.instant('pilot.breadcrumbs.home'), icon: 'home', link: '/' },
+    { label: this.translate.instant('pilot.breadcrumbs.dashboard'), icon: 'dashboard', link: '/dashboard' },
+    { label: this.translate.instant('pilot.breadcrumbs.edit'), icon: 'edit' }
   ];
 
   sidenavItems: UiSidenavItem[] = [
-    { id: '1', label: 'Inicio', icon: 'home', route: '/' },
+    { id: '1', label: this.translate.instant('menu.dashboard'), icon: 'home', route: '/' },
     {
       id: '2',
-      label: 'Pacientes',
+      label: this.translate.instant('menu.patients'),
       icon: 'medication',
       badge: 12,
       children: [
-        { id: '2-1', label: 'Listado Total', icon: 'list', route: '/patients/list' },
-        { id: '2-2', label: 'Ingresos Hoy', icon: 'add_circle', badge: 3, badgeColor: 'warn' },
-        { id: '2-3', label: 'Reportes Médicos', icon: 'description' }
+        { id: '2-1', label: this.translate.instant('menu.all_patients'), icon: 'list', route: '/patients/list' },
+        { id: '2-2', label: this.translate.instant('menu.add_patient'), icon: 'add_circle', badge: 3, badgeColor: 'warn' },
+        { id: '2-3', label: this.translate.instant('menu.medicalRecords'), icon: 'description' }
       ]
     },
-    { id: '3', label: 'Citas', icon: 'calendar_month' },
+    { id: '3', label: this.translate.instant('menu.appointments'), icon: 'calendar_month' },
     {
       id: '4',
-      label: 'Configuración',
+      label: this.translate.instant('menu.settings'),
       icon: 'settings',
       children: [
-        { id: '4-1', label: 'Perfil', icon: 'person' },
-        { id: '4-2', label: 'Seguridad', icon: 'security' },
-        { id: '4-3', label: 'Notificaciones', icon: 'notifications' }
+        { id: '4-1', label: this.translate.instant('header.profile'), icon: 'person' },
+        { id: '4-2', label: this.translate.instant('header.settings'), icon: 'security' },
+        { id: '4-3', label: this.translate.instant('header.notifications'), icon: 'notifications' }
       ]
     }
   ];
@@ -235,6 +240,7 @@ export class PilotFormComponent implements OnInit {
   stepperLinear = false;
   isSaving = false;
   activeSidenavId = '2';
+  selectedNavItem = 'medical_services';
 
   registry = inject(WidgetRegistryService);
   private toastService = inject(UiToastService);
@@ -247,7 +253,18 @@ export class PilotFormComponent implements OnInit {
   }
 
   showErrorToast() {
-    this.toastService.error('Hubo un problema al conectar con el servidor de Vitalia.', 'Error de Sistema');
+    this.toastService.error('Se ha producido un error al procesar el formulario.', 'Error de Sistema');
+  }
+
+  selectNavItem(id: string) {
+    this.selectedNavItem = id;
+    if (id === 'dashboard') {
+      this.showInfoToast();
+    } else if (id === 'history') {
+      this.toastService.info('Mostrando el historial de actividad reciente.', 'Historial');
+    } else if (id === 'medical_services') {
+      this.toastService.success('Accediendo al catálogo de servicios médicos.', 'Servicios');
+    }
   }
 
   showInfoToast() {
@@ -440,6 +457,64 @@ export class PilotFormComponent implements OnInit {
       icon: 'help_outline',
       confirmText: 'Entendido'
     }).subscribe(res => console.log('Dialog result:', res));
+  }
+
+  applyQuickTheme(primary: string, accent: string) {
+    this.uiConfig.tenantTheme.set({
+      primaryColor: primary,
+      accentColor: accent,
+      buttonTextColor: '#ffffff',
+      themeMode: 'AUTO'
+    });
+  }
+
+  updatePrimary(color: string) {
+    this.uiConfig.tenantTheme.set({
+      ...this.uiConfig.tenantTheme(),
+      primaryColor: color
+    });
+  }
+
+  applyFont(font: string) {
+    this.uiConfig.tenantTheme.set({
+      ...this.uiConfig.tenantTheme(),
+      fontFamily: font
+    });
+  }
+
+  applyExtremeTheme() {
+    this.uiConfig.tenantTheme.set({
+      primaryColor: '#673ab7',
+      accentColor: '#ffd600',
+      allowCustomCss: true,
+      customCss: `
+        .pilot-card { 
+          border-radius: 30px !important; 
+          border: 4px double var(--ui-color-primary) !important;
+          transform: rotate(-0.5deg);
+        }
+        .section-title { 
+          text-transform: uppercase; 
+          letter-spacing: 4px;
+          color: #ff5722 !important;
+        }
+      `
+    });
+  }
+
+  resetTheme() {
+    this.uiConfig.tenantTheme.set(null);
+    // Force reset CSS vars on body and root
+    const targets = [document.body, document.documentElement];
+    targets.forEach(target => {
+      target.style.removeProperty('--ui-color-primary');
+      target.style.removeProperty('--ui-color-secondary');
+      target.style.removeProperty('--ui-background-default');
+      target.style.removeProperty('--ui-background-surface');
+      target.style.removeProperty('--ui-color-text');
+      target.style.removeProperty('--ui-color-on-primary');
+      target.style.removeProperty('--ui-font-family-sans');
+    });
   }
 
   submit() {

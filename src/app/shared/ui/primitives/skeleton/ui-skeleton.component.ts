@@ -6,11 +6,11 @@ import { CommonModule } from '@angular/common';
  * Primitive component to show a shimmer loading state.
  */
 @Component({
-    selector: 'ui-skeleton',
-    standalone: true,
-    imports: [CommonModule],
-    template: ``,
-    styles: [`
+  selector: 'ui-skeleton',
+  standalone: true,
+  imports: [CommonModule],
+  template: ``,
+  styles: [`
     :host {
       display: block;
       background-color: var(--ui-skeleton-bg, #e5e7eb);
@@ -57,7 +57,7 @@ import { CommonModule } from '@angular/common';
     }
 
     :host-context(.theme-dark) {
-      background-color: var(--ui-color-border, #374151);
+      background-color: var(--ui-background-variant, #27272a);
       &::after {
         background-image: linear-gradient(
           90deg,
@@ -69,16 +69,16 @@ import { CommonModule } from '@angular/common';
       }
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiSkeletonComponent {
-    @Input() width?: string;
-    @Input() height?: string;
-    @Input() variant: 'text' | 'rect' | 'circle' = 'text';
+  @Input() width?: string;
+  @Input() height?: string;
+  @Input() variant: 'text' | 'rect' | 'circle' = 'text';
 
-    @HostBinding('style.width') get w() { return this.width; }
-    @HostBinding('style.height') get h() { return this.height; }
-    @HostBinding('class.ui-skeleton--text') get isText() { return this.variant === 'text'; }
-    @HostBinding('class.ui-skeleton--rect') get isRect() { return this.variant === 'rect'; }
-    @HostBinding('class.ui-skeleton--circle') get isCircle() { return this.variant === 'circle'; }
+  @HostBinding('style.width') get w() { return this.width; }
+  @HostBinding('style.height') get h() { return this.height; }
+  @HostBinding('class.ui-skeleton--text') get isText() { return this.variant === 'text'; }
+  @HostBinding('class.ui-skeleton--rect') get isRect() { return this.variant === 'rect'; }
+  @HostBinding('class.ui-skeleton--circle') get isCircle() { return this.variant === 'circle'; }
 }

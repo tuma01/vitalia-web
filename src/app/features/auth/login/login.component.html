@@ -1,46 +1,125 @@
-<div class="login-container">
-    <div class="login-card">
-        <div class="login-header">
-            <img src="assets/images/logo.png" alt="Vitalia Logo" class="login-logo" onerror="this.style.display='none'">
-            <h2>{{ 'login.title' | translate }}</h2>
-            <p>{{ 'login.subtitle' | translate }}</p>
-        </div>
+<div class="login-wrapper">
+    <ui-card class="login-card">
+        <div class="login-content">
+            <!-- LEFT: Form -->
+            <div class="login-form-zone">
+                <div class="login-header">
+                    <h1>Iniciar Sesión</h1>
+                    <p>Selecciona tu rol e ingresa tus credenciales</p>
+                </div>
 
-        <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+                <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
-            <!-- Username -->
-            <ui-form-field [label]="'login.username' | translate"
-                [error]="username?.invalid && username?.touched ? ('login.username_required' | translate) : null">
-                <ui-input formControlName="username" type="text"
-                    [placeholder]="'login.username_placeholder' | translate">
-                </ui-input>
-            </ui-form-field>
+                    <!-- Role Selector (Badges) -->
+                    <div class="role-selector">
+                        <label>Selecciona tu rol</label>
+                        <div class="role-badges">
+                            @for (role of roles; track role.value) {
+                            <button type="button" class="role-badge" [class.active]="selectedRole() === role.value"
+                                [class.disabled]="!role.enabled" [style.--role-color]="role.color"
+                                (click)="selectRole(role.value)">
+                                <ui-icon [fontIcon]="role.icon"></ui-icon>
+                                <span class="role-label">{{ role.label }}</span>
+                                @if (!role.enabled) {
+                                <span class="soon-badge">Pronto</span>
+                                }
+                            </button>
+                            }
+                        </div>
+                        @if (errorMessage() && !loginForm.get('role')?.value) {
+                        <p class="error-text">{{ errorMessage() }}</p>
+                        }
+                    </div>
 
-            <!-- Password -->
-            <ui-form-field [label]="'login.password' | translate"
-                [error]="password?.invalid && password?.touched ? ('login.password_required' | translate) : null">
-                <ui-input formControlName="password" type="password"
-                    [placeholder]="'login.password_placeholder' | translate">
-                </ui-input>
-            </ui-form-field>
+                    <!-- Tenant Selector -->
+                    <ui-form-field label="Hospital/Clínica" [error]="getError('tenantCode')">
+                        <ui-select formControlName="tenantCode" [options]="tenantOptions"
+                            placeholder="Selecciona tu hospital">
+                        </ui-select>
+                    </ui-form-field>
 
-            <!-- Actions -->
-            <div class="login-actions">
-                <a routerLink="/forgot-password" class="forgot-password">
-                    {{ 'login.forgot_password' | translate }}
-                </a>
+                    <!-- Email -->
+                    <ui-form-field label="Correo Electrónico" [error]="getError('email')">
+                        <ui-input formControlName="email" type="email" placeholder="tu@email.com">
+                        </ui-input>
+                    </ui-form-field>
+
+                    <!-- Password -->
+                    <ui-form-field label="Contraseña" [error]="getError('password')">
+                        <ui-input formControlName="password" type="password" placeholder="••••••••">
+                        </ui-input>
+                    </ui-form-field>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="login-options">
+                        <ui-checkbox formControlName="rememberMe">
+                            Recordarme
+                        </ui-checkbox>
+                        <a routerLink="/forgot-password" class="forgot-link">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <!-- Error Message -->
+                    @if (errorMessage() && loginForm.get('role')?.value) {
+                    <div class="error-banner">
+                        <ui-icon>error</ui-icon>
+                        <span>{{ errorMessage() }}</span>
+                    </div>
+                    }
+
+                    <!-- Login Button -->
+                    <ui-button type="submit" variant="primary" [fullWidth]="true"
+                        [disabled]="loginForm.invalid || isLoading()">
+                        {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+                    </ui-button>
+
+                    <!-- Social Login Buttons -->
+                    <div class="social-login">
+                        <div class="divider">
+                            <span>O continúa con</span>
+                        </div>
+                        <div class="social-buttons">
+                            <button type="button" class="social-btn google">
+                                <ui-icon>google</ui-icon>
+                            </button>
+                            <button type="button" class="social-btn facebook">
+                                <ui-icon>facebook</ui-icon>
+                            </button>
+                            <button type="button" class="social-btn apple">
+                                <ui-icon>apple</ui-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
-            <!-- Submit Button -->
-            <ui-button type="submit" variant="primary" [fullWidth]="true"
-                [disabled]="loginForm.invalid || loginForm.pending">
-                {{ 'login.submit' | translate }}
-            </ui-button>
-
-        </form>
-
-        <div class="login-footer">
-            <p>{{ 'login.no_account' | translate }} <a routerLink="/register">{{ 'login.register' | translate }}</a></p>
+            <!-- RIGHT: Hero -->
+            <div class="login-hero-zone">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-logo">
+                        <ui-icon>local_hospital</ui-icon>
+                    </div>
+                    <h2>Bienvenido a Vitalia</h2>
+                    <p>Sistema integral de gestión hospitalaria para mejorar la atención médica y optimizar procesos
+                        administrativos.</p>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <ui-icon>verified</ui-icon>
+                            <span>Seguro</span>
+                        </div>
+                        <div class="feature">
+                            <ui-icon>speed</ui-icon>
+                            <span>Rápido</span>
+                        </div>
+                        <div class="feature">
+                            <ui-icon>support_agent</ui-icon>
+                            <span>Soporte 24/7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </ui-card>
 </div>

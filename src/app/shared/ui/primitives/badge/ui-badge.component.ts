@@ -69,7 +69,7 @@ import { UiBadgePosition, UiBadgeSize, UiBadgeVariant, UiBadgeAnimation } from '
 
     // DARK MODE
     :host-context(.theme-dark) .ui-badge-indicator {
-      border-color: var(--ui-background-default);
+      border-color: var(--ui-background-surface, #18181b);
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

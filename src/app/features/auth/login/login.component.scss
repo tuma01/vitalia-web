@@ -1,77 +1,404 @@
-.login-container {
+.login-wrapper {
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: var(--ui-background-default);
-    padding: var(--ui-space-md);
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+    @media (max-width: 968px) {
+        padding: 1rem;
+    }
 }
 
 .login-card {
     width: 100%;
-    max-width: 400px;
-    padding: var(--ui-space-xl);
-    background: white; // Or token for card bg
-    border-radius: var(--ui-radius-lg);
-    box-shadow: var(--ui-elevation-lg);
+    max-width: 1100px;
+    max-height: 92vh;
+    padding: 0 !important;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 20px !important;
+    background: var(--ui-card-bg) !important;
+
+    @media (max-width: 968px) {
+        max-height: 96vh;
+    }
+}
+
+.login-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    max-height: 92vh;
+
+    @media (max-width: 968px) {
+        grid-template-columns: 1fr;
+        max-height: 96vh;
+    }
+}
+
+.login-form-zone {
+    padding: 2rem 2.5rem;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: var(--ui-space-lg);
+
+    /* Custom scrollbar */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+
+    @media (max-width: 640px) {
+        padding: 1.5rem;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 1rem;
+        padding-top: 0.5rem;
+
+        h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: var(--ui-color-text-secondary);
+            font-size: 0.85rem;
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
 }
 
-.login-header {
-    text-align: center;
+// Role Selector
+.role-selector {
+    margin-bottom: 0;
 
-    .login-logo {
-        height: 48px;
-        margin-bottom: var(--ui-space-md);
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.6rem;
+        font-size: 0.85rem;
+        color: var(--ui-color-text-primary);
     }
 
-    h2 {
-        margin: 0;
-        font-size: 1.5rem;
-        color: var(--ui-color-text);
+    .role-badges {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.4rem;
+
+        @media (max-width: 640px) {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
 
-    p {
-        margin: var(--ui-space-xs) 0 0;
-        color: var(--ui-color-text-secondary);
+    .role-badge {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        padding: 0.6rem 0.3rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        background: var(--ui-background-surface);
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+        min-height: 62px;
+
+        ui-icon {
+            font-size: 1.3rem;
+            color: var(--role-color);
+            transition: transform 0.2s ease;
+        }
+
+        .role-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: var(--ui-color-text-secondary);
+        }
+
+        .soon-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.5rem;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        &:hover:not(.disabled) {
+            border-color: var(--role-color);
+            background: var(--ui-color-bg-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px color-mix(in srgb, var(--role-color) 20%, transparent);
+
+            ui-icon {
+                transform: scale(1.1);
+            }
+        }
+
+        &.active {
+            border-color: var(--role-color);
+            background: linear-gradient(135deg,
+                    color-mix(in srgb, var(--role-color) 10%, white) 0%,
+                    color-mix(in srgb, var(--role-color) 5%, white) 100%);
+            box-shadow: 0 3px 12px color-mix(in srgb, var(--role-color) 25%, transparent);
+
+            .role-label {
+                color: var(--role-color);
+                font-weight: 600;
+            }
+        }
+
+        &.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: var(--ui-background-variant);
+        }
+    }
+
+    .error-text {
+        color: var(--ui-color-danger);
+        font-size: 0.75rem;
+        margin-top: 0.4rem;
     }
 }
 
-.login-form {
+.login-options {
     display: flex;
-    flex-direction: column;
-    gap: var(--ui-space-md);
-}
+    justify-content: space-between;
+    align-items: center;
 
-.login-actions {
-    display: flex;
-    justify-content: flex-end;
-    font-size: var(--ui-font-size-sm);
-
-    .forgot-password {
-        color: var(--ui-color-primary);
+    .forgot-link {
+        color: #667eea;
         text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: color 0.2s;
 
         &:hover {
+            color: #764ba2;
             text-decoration: underline;
         }
     }
 }
 
-.login-footer {
-    text-align: center;
-    font-size: var(--ui-font-size-sm);
-    color: var(--ui-color-text-secondary);
+.error-banner {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.65rem;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    color: #dc2626;
+    font-size: 0.8rem;
 
-    a {
-        color: var(--ui-color-primary);
-        text-decoration: none;
-        font-weight: var(--ui-font-weight-medium);
+    ui-icon {
+        font-size: 1rem;
+    }
+}
 
-        &:hover {
-            text-decoration: underline;
+// Social Login
+.social-login {
+    margin-top: 0;
+
+    .divider {
+        position: relative;
+        text-align: center;
+        margin: 0.8rem 0;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
         }
+
+        span {
+            position: relative;
+            background: var(--ui-background-surface);
+            padding: 0 0.8rem;
+            color: var(--ui-color-text-secondary);
+            font-size: 0.75rem;
+        }
+    }
+
+    .social-buttons {
+        display: flex;
+        gap: 0.6rem;
+        justify-content: center;
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: var(--ui-background-surface);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            ui-icon {
+                font-size: 1.2rem;
+                color: #64748b;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            &.google:hover {
+                border-color: #DB4437;
+                background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+
+                ui-icon {
+                    color: #DB4437;
+                }
+            }
+
+            &.facebook:hover {
+                border-color: #4267B2;
+                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+
+                ui-icon {
+                    color: #4267B2;
+                }
+            }
+
+            &.apple:hover {
+                border-color: #000000;
+                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+
+                ui-icon {
+                    color: #000000;
+                }
+            }
+        }
+    }
+}
+
+// Hero Zone
+.login-hero-zone {
+    position: relative;
+    background-image: url('/images/login.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    overflow: hidden;
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg,
+                rgba(102, 126, 234, 0.92) 0%,
+                rgba(118, 75, 162, 0.92) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: white;
+        max-width: 380px;
+
+        .hero-logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 1.2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+
+            ui-icon {
+                font-size: 2.2rem;
+                color: white;
+            }
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            opacity: 0.95;
+            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-features {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+
+            .feature {
+                display: flex;
+                align-items: center;
+                gap: 0.35rem;
+                padding: 0.5rem 0.8rem;
+                background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(10px);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+
+                ui-icon {
+                    font-size: 1rem;
+                }
+
+                span {
+                    font-size: 0.8rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 968px) {
+        display: none;
     }
 }

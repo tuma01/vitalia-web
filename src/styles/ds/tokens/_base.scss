@@ -1,22 +1,27 @@
-/* Tamaños de botones */
 :root {
-    --ui-button-height-sm: 32px;
-    --ui-button-height-md: 45px; // Increased by 5px as requested
-    --ui-button-height-lg: 48px;
-    --ui-button-height-xl: 56px;
+    /* --- Master Component Heights (One source of truth for all) --- */
+    --ui-size-sm: 38px;
+    --ui-size-md: 46px;
+    --ui-size-lg: 54px;
+    --ui-size-xl: 62px;
 
-    --ui-button-padding-sm: 0 12px;
-    --ui-button-padding-md: 0 16px;
-    --ui-button-padding-lg: 0 20px;
-    --ui-button-padding-xl: 0 24px;
+    /* --- Spacing & Padding --- */
+    --ui-size-padding-sm: 0 12px;
+    --ui-size-padding-md: 0 16px;
+    --ui-size-padding-lg: 0 20px;
+    --ui-size-padding-xl: 0 24px;
 
-    --ui-input-height-sm: 32px;
-    --ui-input-height-md: 40px; // Default baseline
-    --ui-input-height-lg: 48px;
+    /* Legacy Alias Mapping (For backward compatibility only) */
+    --ui-button-height-sm: var(--ui-size-sm);
+    --ui-button-height-md: var(--ui-size-md);
+    --ui-button-height-lg: var(--ui-size-lg);
+    --ui-button-height-xl: var(--ui-size-xl);
+    --ui-input-height-sm: var(--ui-size-sm);
+    --ui-input-height-md: var(--ui-size-md);
+    --ui-input-height-lg: var(--ui-size-lg);
 
-    --ui-input-padding-sm: 0 12px;
-    --ui-input-padding-md: 0 16px;
-    --ui-input-padding-lg: 0 20px;
+    --ui-button-padding-md: var(--ui-size-padding-md);
+    --ui-input-padding-md: var(--ui-size-padding-md);
 
     /* Breakpoints */
     --ui-breakpoint-xs: 480px;
@@ -30,14 +35,12 @@
     --ui-border-radius-md: 8px;
     --ui-border-radius-lg: 12px;
     --ui-radius-base: var(--ui-border-radius-md);
-    /* Global semantic alias */
     --ui-radius-md: var(--ui-border-radius-md);
 
     /* Bordes Globales */
     --ui-border-width-base: 1px;
     --ui-border-width-focus: 2px;
     --ui-border-style-base: solid;
-    /* Alias for compatibility */
 
     --ui-elevation-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --ui-elevation-md: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -76,7 +79,7 @@
 
     /* Checkbox Global Tokens */
     --ui-checkbox-size: 20px;
-    --ui-checkbox-radius: 5px; // Specific override to 5px as requested
+    --ui-checkbox-radius: 5px;
     --ui-checkbox-color-border: var(--ui-color-border, #d1d5db);
     --ui-checkbox-color-checked: var(--ui-color-primary, #2563eb);
     --ui-checkbox-color-tick: #ffffff;
@@ -103,23 +106,24 @@
     --ui-toggle-thumb-color: #ffffff;
     --ui-toggle-bg: var(--ui-color-border, #d1d5db);
     --ui-toggle-bg-checked: var(--ui-color-primary, #2563eb);
-    --ui-toggle-bg: var(--ui-color-border, #d1d5db);
-    --ui-toggle-bg-checked: var(--ui-color-primary, #2563eb);
     --ui-toggle-anim-duration: 0.2s;
+
+    /* Global Field Icon Tokens */
+    --ui-field-icon-size: 21px;
+    --ui-field-icon-offset: 2.5px;
+
+    /* Icon Button Sizes */
+    --ui-icon-button-size-sm: 32px;
+    --ui-icon-button-size-md: 40px;
+    --ui-icon-button-size-lg: 48px;
 }
 
 /* Dark Theme Overrides for Components */
 .theme-dark {
-    --ui-card-bg: #1e1e1e; // Surface color
+    --ui-card-bg: #1e1e1e;
     --ui-card-border-color: #333;
-
     --ui-dialog-bg: #1e1e1e;
-
     --ui-checkbox-color-border: #555;
-    --ui-checkbox-color-tick: #000; // Inverse tick for contrast if needed, or white
-
     --ui-radio-color-border: #555;
-
     --ui-toggle-bg: #555;
-    --ui-toggle-thumb-color: #e0e0e0;
 }

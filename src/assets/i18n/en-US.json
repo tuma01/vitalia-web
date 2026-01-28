@@ -327,5 +327,22 @@
         "stats": {
             "overview": "Overview"
         }
+    },
+    "pilot": {
+        "breadcrumbs": {
+            "home": "Home",
+            "dashboard": "Dashboard",
+            "edit": "Edit User"
+        },
+        "layout": {
+            "left_label": "Left Label",
+            "right_value": "Right Value",
+            "patient_id": "Patient ID",
+            "patient_name": "Patient: John Doe",
+            "tag_priority": "High Priority",
+            "tag_stable": "Stabilized"
+        },
+        "description": "Centralized structure and navigation with spacing and alignment tokens.",
+        "utilities_title": "Navigation & Layout Primitives"
     }
 }

@@ -18,6 +18,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { UiConfigService } from '../../config/ui-config.service';
 import { UiInputComponent } from '../../primitives/input/ui-input.component';
 import { UiSelectComponent } from '../../primitives/select/ui-select.component';
+import { UiSelectNativeComponent } from '../../primitives/select-native/ui-select-native.component';
 import { UiFormFieldAppearance, UiFormFieldSize } from './ui-form-field.types';
 import { UiErrorDirective, UiPrefixDirective, UiSuffixDirective } from './ui-form-field.directives';
 
@@ -56,6 +57,7 @@ export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
     // Queries
     @ContentChild(UiInputComponent) inputComponent?: UiInputComponent;
     @ContentChild(UiSelectComponent) selectComponent?: UiSelectComponent;
+    @ContentChild(UiSelectNativeComponent) selectNativeComponent?: UiSelectNativeComponent;
     @ContentChild(NgControl) ngControl?: NgControl;
 
     // Support for molecular components that wrap ui-form-field
@@ -93,7 +95,7 @@ export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
         this.hasSuffix.set(!!this.suffix);
 
         // 1. Wire up Atom State (Visuals: Focus, Empty)
-        const atom = this.inputComponent || this.selectComponent || this.injectedInput;
+        const atom = this.inputComponent || this.selectComponent || this.selectNativeComponent || this.injectedInput;
 
         if (atom) {
             // Wait for next tick to ensure atom has its ID generated if it's new

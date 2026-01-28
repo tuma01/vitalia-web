@@ -159,11 +159,11 @@ export type UiCalendarView = 'days' | 'months' | 'years';
     }
 
     :host-context(.theme-dark) {
-      background: rgba(30, 30, 30, 0.9);
-      border-color: rgba(255, 255, 255, 0.1);
-      color: #d1d5db;
-      .ui-calendar__month-display, .ui-calendar__nav-btn { color: #f3f4f6; }
-      .ui-calendar__day:hover:not(.ui-calendar__day--selected) { background: rgba(255, 255, 255, 0.1); }
+      background: var(--ui-background-surface, #1e1e1e);
+      border-color: var(--ui-color-border, #333);
+      color: var(--ui-color-text-secondary, #d1d5db);
+      .ui-calendar__month-display, .ui-calendar__nav-btn { color: var(--ui-color-text-primary, #f3f4f6); }
+      .ui-calendar__day:hover:not(.ui-calendar__day--selected) { background: var(--ui-color-bg-hover, rgba(255, 255, 255, 0.1)); }
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

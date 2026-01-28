@@ -15,17 +15,26 @@
     }
 
     .mat-step-header {
-        padding: var(--ui-space-md) !important;
+        padding: var(--ui-space-xs) var(--ui-space-md) !important;
+        margin: 0 4px !important;
         border-radius: var(--ui-radius-md, 8px) !important;
-        transition: background-color 0.2s ease !important;
+        height: var(--ui-input-height-md) !important; // Controlled by global density
+        transition: background-color 0.2s ease, transform 0.1s ease !important;
+        display: flex !important;
+        align-items: center !important;
 
         &:hover {
-            background-color: var(--ui-color-surface-hover, #f8fafc) !important;
+            background-color: var(--ui-color-bg-hover, #f1f5f9) !important;
+            transform: translateY(-1px);
+        }
+
+        &:active {
+            transform: translateY(0);
         }
     }
 
     .mat-step-icon {
-        background-color: var(--ui-color-surface-variant, #f1f5f9) !important;
+        background-color: var(--ui-background-variant, #f1f5f9) !important;
         color: var(--ui-color-text-secondary, #64748b) !important;
         border: 2px solid transparent !important;
         width: 32px !important;

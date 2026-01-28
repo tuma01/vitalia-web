@@ -1,8 +1,10 @@
 /* UI Button Premium Reconstruction */
 
 :host {
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
+    width: fit-content;
+    box-sizing: border-box;
+    // Height explicitly handled by size classes below
 }
 
 button {
@@ -11,6 +13,9 @@ button {
     -webkit-appearance: none;
     background: transparent;
     border: none;
+    box-sizing: border-box;
+    padding: 0; // Absolute reset
+    margin: 0;
     cursor: pointer;
     font-family: var(--ui-font-family-sans);
     font-weight: var(--ui-font-weight-medium);
@@ -22,10 +27,14 @@ button {
     outline: none;
     width: 100%;
     border-radius: var(--ui-radius-md);
+    height: 100%; // Fill the host container height-wise
 
     /* Typography defaults */
     font-size: var(--ui-font-size-sm);
-    line-height: 1.5;
+    line-height: 1;
+    white-space: nowrap; // Prevent height growing from wrap
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:disabled {
         opacity: var(--ui-opacity-disabled);
@@ -138,24 +147,42 @@ button {
    ======================================================================== */
 
 /* Small */
-:host(.ui-button--sm) button {
-    height: var(--ui-button-height-sm);
-    padding: var(--ui-button-padding-sm);
-    font-size: var(--ui-font-size-xs);
+:host(.ui-button--sm) {
+    min-height: var(--ui-size-sm);
+    height: var(--ui-size-sm);
+    max-height: var(--ui-size-sm);
+    overflow: hidden;
+
+    button {
+        padding: var(--ui-size-padding-sm);
+        font-size: var(--ui-font-size-xs);
+    }
 }
 
 /* Medium (Default) */
-:host(.ui-button--md) button {
-    height: var(--ui-button-height-md);
-    padding: var(--ui-button-padding-md);
-    font-size: var(--ui-font-size-sm);
+:host(.ui-button--md) {
+    min-height: var(--ui-size-md);
+    height: var(--ui-size-md);
+    max-height: var(--ui-size-md);
+    overflow: hidden;
+
+    button {
+        padding: var(--ui-size-padding-md);
+        font-size: var(--ui-font-size-sm);
+    }
 }
 
 /* Large */
-:host(.ui-button--lg) button {
-    height: var(--ui-button-height-lg);
-    padding: var(--ui-button-padding-lg);
-    font-size: var(--ui-font-size-md);
+:host(.ui-button--lg) {
+    min-height: var(--ui-size-lg);
+    height: var(--ui-size-lg);
+    max-height: var(--ui-size-lg);
+    overflow: hidden;
+
+    button {
+        padding: var(--ui-size-padding-lg);
+        font-size: var(--ui-font-size-md);
+    }
 }
 
 /* ========================================================================

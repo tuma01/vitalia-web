@@ -19,8 +19,11 @@
 
     --ui-background-default: #ffffff;
     --ui-background-surface: #ffffff;
+    --ui-background-surface-rgb: 255, 255, 255;
     --ui-background-variant: #f9fafb;
     --ui-toolbar-bg: rgba(255, 255, 255, 0.85);
+
+    --ui-color-primary-rgb: 0, 85, 164;
 }
 
 /* Dark Theme Overrides */
@@ -37,13 +40,16 @@
     --ui-color-text-secondary: #cbd5e1;
     --ui-color-text-muted: #94a3b8;
 
-    --ui-color-border: #27272a; // Zinc-800
+    --ui-color-border: #3f3f46; // Zinc-700 (More visible border)
 
     --ui-color-bg-hover: rgba(255, 255, 255, 0.03);
     --ui-color-bg-active: rgba(255, 255, 255, 0.05);
 
     --ui-background-default: #09090b; // Zinc-950
-    --ui-background-surface: #18181b; // Zinc-900
-    --ui-background-variant: #111113; // Between 950 and 900 for subtle header depth
-    --ui-toolbar-bg: rgba(24, 24, 27, 0.80);
+    --ui-background-surface: #18181b; // Zinc-900 (Stable Surface)
+    --ui-background-surface-rgb: 24, 24, 27;
+    --ui-background-variant: #27272a; // Zinc-800 (Stable Header/Footer)
+    --ui-toolbar-bg: rgba(24, 24, 27, 0.85);
+
+    --ui-color-primary-rgb: 144, 202, 249;
 }

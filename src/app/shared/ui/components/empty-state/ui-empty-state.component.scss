@@ -10,7 +10,7 @@
     margin: 0 auto;
 
     &--card {
-        background: #fff;
+        background: var(--ui-background-surface, #fff);
         border-radius: var(--ui-radius-lg, 12px);
         box-shadow: var(--ui-elevation-sm, 0 1px 3px rgba(0, 0, 0, 0.1));
         border: 1px solid var(--ui-color-border-subtle, #f3f4f6);

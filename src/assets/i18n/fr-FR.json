@@ -320,5 +320,22 @@
         "stats": {
             "overview": "Vue d'Ensemble"
         }
+    },
+    "pilot": {
+        "breadcrumbs": {
+            "home": "Accueil",
+            "dashboard": "Tableau de Bord",
+            "edit": "Modifier l'utilisateur"
+        },
+        "layout": {
+            "left_label": "Étiquette gauche",
+            "right_value": "Valeur droite",
+            "patient_id": "ID Patient",
+            "patient_name": "Patient: Jean Dupont",
+            "tag_priority": "Haute Priorité",
+            "tag_stable": "Stabilisé"
+        },
+        "description": "Structure et navigation centralisées avec des jetons d'espacement et d'alignement.",
+        "utilities_title": "Primitives de navigation et mise en page"
     }
 }

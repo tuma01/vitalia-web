@@ -19,9 +19,10 @@
         }
 
         <!-- Priority Select -->
-        <ui-select label="Priority" placeholder="Select priority" formControlName="priority"
-            [options]="priorityOptions">
-        </ui-select>
+        <ui-form-field label="Priority">
+            <ui-select-native placeholder="Select priority" formControlName="priority" [options]="priorityOptions">
+            </ui-select-native>
+        </ui-form-field>
 
         <ui-datepicker label="Target Date" placeholder="Select date" formControlName="birthDate">
         </ui-datepicker>

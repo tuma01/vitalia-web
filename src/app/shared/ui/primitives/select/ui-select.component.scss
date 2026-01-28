@@ -8,7 +8,9 @@
         padding: 0 !important; // Custom control
         background-color: transparent !important;
         align-items: center;
-        height: var(--ui-input-height-md, 40px);
+        height: var(--ui-size-md) !important;
+        min-height: var(--ui-size-md) !important;
+        max-height: var(--ui-size-md) !important;
     }
 
     ::ng-deep .mat-mdc-form-field-infix {
@@ -19,7 +21,33 @@
     }
 
     ::ng-deep .mat-mdc-text-field-wrapper {
-        padding: 0;
+        padding: 0 !important;
+        height: var(--ui-size-md) !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+        display: none !important; // Hide Material subscript to match PAL
+    }
+
+    // Force exact height match - eliminate ALL Material padding/margin
+    ::ng-deep .mat-mdc-form-field {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field-wrapper {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    ::ng-deep .mdc-text-field {
+        padding: 0 !important;
+        height: var(--ui-size-md) !important;
+    }
+
+    ::ng-deep .mdc-text-field--outlined {
+        height: var(--ui-size-md) !important;
+        padding: 0 !important;
     }
 
     // Icons & Images
@@ -47,15 +75,58 @@
         border: 1px solid var(--ui-color-border-subtle, #f3f4f6);
     }
 
-    // Trigger alignment (when closed)
+    // ============================================
+    // OPTION A: AGGRESSIVE OVERRIDES FOR EXACT HEIGHT
+    // ============================================
+
+    // Force line-height to eliminate extra vertical space
+    ::ng-deep .mat-mdc-form-field-flex {
+        line-height: 1 !important;
+    }
+
+    ::ng-deep .mat-mdc-select-value {
+        line-height: 1 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    ::ng-deep .mat-mdc-select-trigger {
+        line-height: 1 !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    // Force display and alignment
+    ::ng-deep .mat-mdc-form-field-flex {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field-infix {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    // Consistent box-sizing
+    ::ng-deep .mat-mdc-form-field,
+    ::ng-deep .mat-mdc-form-field-flex,
+    ::ng-deep .mat-mdc-text-field-wrapper,
+    ::ng-deep .mdc-text-field {
+        box-sizing: border-box !important;
+    }
+
+    // Trigger alignment (NO transform to avoid misalignment)
     .ui-select__trigger-wrapper {
         display: flex;
         align-items: center;
         gap: var(--ui-space-sm, 8px);
         width: 100%;
         height: 100%;
-        // Premium vertical alignment for balanced center
-        transform: translateY(4px);
+        transform: none !important; // Removed translateY(4px)
     }
 }
 
