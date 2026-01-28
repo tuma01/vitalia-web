@@ -111,7 +111,7 @@ import { UiFileUploaderI18n, DEFAULT_PAL_I18N } from '../../config/ui-i18n.types
       gap: 1rem;
       text-align: left;
       padding: 1rem;
-      background: var(--ui-color-surface-variant, #f3f4f6);
+      background: var(--ui-background-variant, #f3f4f6);
       border-radius: 8px;
     }
 
@@ -160,8 +160,8 @@ import { UiFileUploaderI18n, DEFAULT_PAL_I18N } from '../../config/ui-i18n.types
     }
 
     :host-context(.theme-dark) .ui-file-uploader {
-      background: #1f2937;
-      border-color: #374151;
+      background: var(--ui-background-surface, #1f2937);
+      border-color: var(--ui-color-border, #374151);
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

@@ -101,12 +101,12 @@ import { UiTimepickerI18n, DEFAULT_PAL_I18N } from '../../config/ui-i18n.types';
     }
 
     :host-context(.theme-dark) {
-      background: rgba(30, 30, 30, 0.9);
-      border-color: rgba(255, 255, 255, 0.1);
-      color: #d1d5db;
-      .ui-time-selector__header { color: #f3f4f6; }
-      .ui-time-selector__item:hover:not(.ui-time-selector__item--selected) { background: rgba(255, 255, 255, 0.1); }
-      .ui-time-selector__column { scrollbar-color: rgba(255, 255, 255, 0.1) transparent; }
+      background: var(--ui-background-surface, #1e1e1e);
+      border-color: var(--ui-color-border, #333);
+      color: var(--ui-color-text-secondary, #d1d5db);
+      .ui-time-selector__header { color: var(--ui-color-text-primary, #f3f4f6); }
+      .ui-time-selector__item:hover:not(.ui-time-selector__item--selected) { background: var(--ui-color-bg-hover, rgba(255, 255, 255, 0.1)); }
+      .ui-time-selector__column { scrollbar-color: var(--ui-color-border, rgba(255, 255, 255, 0.1)) transparent; }
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

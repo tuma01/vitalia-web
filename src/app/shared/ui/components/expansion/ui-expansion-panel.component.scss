@@ -23,7 +23,7 @@
     cursor: pointer;
     user-select: none;
     transition: background-color var(--ui-motion-fast);
-    min-height: 40px;
+    min-height: var(--ui-input-height-md);
 
     &:hover {
         background-color: var(--ui-color-bg-hover, #f8fafc);

@@ -87,9 +87,9 @@ export type UiToolbarMode = 'fixed' | 'floating' | 'docked';
 
     :host-context(.theme-dark) {
       .ui-toolbar {
-        background: rgba(15, 23, 42, 0.8);
-        border-bottom-color: rgba(255, 255, 255, 0.08);
-        color: #f3f4f6;
+        background: var(--ui-background-default-transparent, rgba(15, 23, 42, 0.8));
+        border-bottom-color: var(--ui-color-border, rgba(255, 255, 255, 0.08));
+        color: var(--ui-color-text-primary, #f3f4f6);
 
         &--floating {
             border-color: rgba(255, 255, 255, 0.1);

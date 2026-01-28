@@ -25,14 +25,8 @@
 
 // Dark theme override
 .theme-dark {
-  --body-background-color: #0f172a; // Deep slate for better premium look
+  --body-background-color: #0f172a; // Deep slate
   color: var(--ui-color-text-primary);
-
-  // Ensure all inherited text uses the token
-  &,
-  * {
-    color: inherit;
-  }
 }
 
 html,

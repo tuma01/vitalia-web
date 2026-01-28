@@ -315,5 +315,22 @@
         "stats": {
             "overview": "Resumen General"
         }
+    },
+    "pilot": {
+        "breadcrumbs": {
+            "home": "Inicio",
+            "dashboard": "Panel de Control",
+            "edit": "Editar Usuario"
+        },
+        "layout": {
+            "left_label": "Etiqueta Izquierda",
+            "right_value": "Valor Derecho",
+            "patient_id": "ID Paciente",
+            "patient_name": "Paciente: Juan Pérez",
+            "tag_priority": "Alta Prioridad",
+            "tag_stable": "Estabilizado"
+        },
+        "description": "Estructura y navegación centralizada con tokens de espaciado y alineación.",
+        "utilities_title": "Navegación y Primitivas de Diseño"
     }
 }

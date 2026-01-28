@@ -38,7 +38,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--ui-space-xs, 4px);
-    padding: 12px 16px;
+    padding: var(--ui-space-sm) var(--ui-space-md);
     background: none;
     border: none;
     cursor: pointer;
@@ -80,7 +80,7 @@
 .ui-tab-group--pills {
     .ui-tab-group__tab-btn {
         border-radius: var(--ui-radius-md, 8px);
-        padding: 8px 16px;
+        padding: var(--ui-space-xs) var(--ui-space-md);
         color: var(--ui-color-text-secondary);
 
         &--active {

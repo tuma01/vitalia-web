@@ -87,11 +87,11 @@ import { Observable, startWith, map } from 'rxjs';
       transition: background 0.2s ease;
       
       &:hover:not(.mdc-list-item--disabled) {
-        background: var(--ui-color-surface-variant, #f3f4f6) !important;
+        background: var(--ui-color-bg-hover, #f3f4f6) !important;
       }
 
       &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
-        background: var(--ui-color-primary-transparent, rgba(0, 85, 164, 0.1)) !important;
+        background: var(--ui-color-bg-active, #e5e7eb) !important;
         .mdc-list-item__primary-text {
           color: var(--ui-color-primary, #0055A4);
           font-weight: 600;
@@ -100,8 +100,8 @@ import { Observable, startWith, map } from 'rxjs';
     }
 
     :host-context(.theme-dark) ::ng-deep .mat-mdc-autocomplete-panel {
-      background: #1f2937 !important;
-      border-color: #374151 !important;
+      background: var(--ui-background-surface, #1e1e1e) !important;
+      border-color: var(--ui-color-border, #333) !important;
     }
   `],
   providers: [

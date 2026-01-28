@@ -1,0 +1,54 @@
+<!-- ui-select-native.component.html -->
+<div class="ui-select-native" [class.ui-select-native--open]="isOpen()" [class.ui-select-native--disabled]="disabled">
+
+    <!-- Trigger Button -->
+    <button type="button" class="ui-select-native__trigger" (click)="toggle()" [disabled]="disabled">
+        <span class="ui-select-native__value">{{ selectedLabel() }}</span>
+        @if (!hideArrow) {
+        <ui-icon class="ui-select-native__arrow" [class.ui-select-native__arrow--open]="isOpen()">
+            expand_more
+        </ui-icon>
+        }
+    </button>
+
+    <!-- Dropdown Panel -->
+    @if (isOpen()) {
+    <div class="ui-select-native__panel" #panel>
+
+        <!-- Search Input (if searchable) -->
+        @if (searchable) {
+        <div class="ui-select-native__search-wrapper">
+            <input type="text" class="ui-select-native__search" [(ngModel)]="searchTerm" placeholder="Search..."
+                (click)="$event.stopPropagation()" />
+        </div>
+        }
+
+        <!-- Options List -->
+        <div class="ui-select-native__options">
+            @for (option of filteredOptions(); track option.value; let i = $index) {
+            <div class="ui-select-native__option"
+                [class.ui-select-native__option--selected]="selectedOption()?.value === option.value"
+                [class.ui-select-native__option--focused]="focusedIndex() === i"
+                [class.ui-select-native__option--disabled]="option.disabled" (click)="selectOption(option)">
+
+                @if (option.icon) {
+                <ui-icon class="ui-select-native__option-icon">{{ option.icon }}</ui-icon>
+                }
+
+                @if (option.image) {
+                <img [src]="option.image" class="ui-select-native__option-image" [alt]="option.label" />
+                }
+
+                <span class="ui-select-native__option-label">{{ option.label }}</span>
+
+                @if (selectedOption()?.value === option.value) {
+                <ui-icon class="ui-select-native__option-check">check</ui-icon>
+                }
+            </div>
+            } @empty {
+            <div class="ui-select-native__empty">No options found</div>
+            }
+        </div>
+    </div>
+    }
+</div>

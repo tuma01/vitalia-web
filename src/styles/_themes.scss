@@ -3,24 +3,26 @@
 html {
   color-scheme: light;
 
-  @include mat.theme((
-    color: (
-      primary: mat.$azure-palette,
-      tertiary: mat.$blue-palette,
-    ),
-    typography: Roboto,
-    density: 0
-  ));
+  @include mat.theme((color: (primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0));
 }
 
 .theme-dark {
   color-scheme: dark;
+
+  @include mat.theme((color: (primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        theme-type: dark),
+      typography: Roboto,
+      density: 0));
 }
 
 
 :root {
-  @include mat.fab-overrides((
-    container-color: orange,
-    container-elevation-shadow: red,
-  ));
+  @include mat.fab-overrides((container-color: orange,
+      container-elevation-shadow: red,
+    ));
 }

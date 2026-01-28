@@ -55,7 +55,9 @@ import { UiSliderI18n, DEFAULT_PAL_I18N } from '../../config/ui-i18n.types';
     :host-context(.theme-dark) ::ng-deep .mat-mdc-slider {
       --mdc-slider-active-track-color: var(--ui-color-primary-light, #4dabf7);
       --mdc-slider-handle-color: var(--ui-color-primary-light, #4dabf7);
-      --mdc-slider-inactive-track-color: rgba(255, 255, 255, 0.2);
+      --mdc-slider-inactive-track-color: rgba(255, 255, 255, 0.15);
+      --mdc-slider-with-tick-marks-active-container-color: var(--ui-background-default, #000);
+      --mdc-slider-with-tick-marks-inactive-container-color: var(--ui-color-primary, #0055A4);
     }
 
     .ui-slider--disabled {

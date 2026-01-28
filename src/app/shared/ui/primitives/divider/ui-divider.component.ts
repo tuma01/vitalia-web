@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
   styles: [`
     :host {
       display: block;
-      border-color: var(--ui-color-border);
+      border-color: var(--ui-color-border, #e5e7eb);
       border-style: solid;
       margin: 0;
-      opacity: var(--ui-opacity-muted, 0.6);
+      opacity: 1; /* full opacity to ensure visibility */
     }
 
     :host.ui-divider--horizontal {
@@ -33,9 +33,11 @@ import { CommonModule } from '@angular/common';
       margin-left: var(--ui-space-xl, 2rem);
     }
 
-    // DARK MODE STYLES
-    :host-context(.theme-dark) {
-      border-color: var(--ui-color-border, #374151);
+    /* Target both body.theme-dark and host-context */
+    :host-context(.theme-dark), 
+    :host-context([data-theme="dark"]) {
+       border-color: rgba(255, 255, 255, 0.15) !important;
+       opacity: 1 !important;
     }
   `],
   changeDetection: ChangeDetectionStrategy.OnPush

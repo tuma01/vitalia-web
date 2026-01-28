@@ -3,6 +3,22 @@
     <div class="pilot-header">
         <h2>Vitalia PAL - Pilot Showcase</h2>
         <p>Exploring premium components and high-end design patterns.</p>
+
+        <!-- VISUAL PARITY PROOF (For current session validation) -->
+        <div
+            style="margin-top: 20px; padding: 12px; background: rgba(0,0,0,0.03); border-radius: 12px; border: 1px dashed #ccc;">
+            <p style="font-size: 11px; color: #666; margin-bottom: 8px; text-transform: uppercase; font-weight: bold;">
+                Pixel Height Parity Validation (Aim: 100% same height)</p>
+            <div
+                style="display: flex; gap: 0; align-items: stretch; justify-content: center; background: white; border: 1px solid #eee; border-radius: 8px; overflow: hidden; width: fit-content; margin: 0 auto;">
+                <ui-button variant="primary" style="flex: 0 0 auto;">Button Parity</ui-button>
+                <div style="width: 1px; background: #eee;"></div>
+                <ui-input placeholder="Input Parity" style="flex: 0 0 200px;"></ui-input>
+                <div style="width: 1px; background: #eee;"></div>
+                <ui-select-native placeholder="Select Parity" [options]="[{label:'Option 1', value:'1'}]"
+                    style="flex: 0 0 150px;"></ui-select-native>
+            </div>
+        </div>
     </div>
 
     <!-- Phase 1: Breadcrumbs Example -->
@@ -50,21 +66,21 @@
     </div>
 
     <div class="pilot-actions">
-        <ui-button size="sm" variant="secondary" (clicked)="toggleTheme()">
+        <ui-button variant="secondary" (clicked)="toggleTheme()">
             Theme: {{ uiConfig.theme() | titlecase }}
         </ui-button>
 
         <ui-divider orientation="vertical"></ui-divider>
 
-        <ui-button size="sm" variant="primary" (clicked)="toggleBrand()">
+        <ui-button variant="primary" (clicked)="toggleBrand()">
             Brand: {{ uiConfig.brand() | titlecase }}
         </ui-button>
 
-        <ui-button size="sm" variant="outline" (clicked)="toggleDensity()">
+        <ui-button variant="outline" (clicked)="toggleDensity()">
             Density: {{ uiConfig.density() | titlecase }}
         </ui-button>
 
-        <ui-button size="sm" variant="ghost" (clicked)="toggleInputAppearance()">
+        <ui-button variant="ghost" (clicked)="toggleInputAppearance()">
             Inputs: {{ uiConfig.inputAppearance() | titlecase }}
         </ui-button>
     </div>
@@ -103,9 +119,24 @@
                 <span uiSuffix>✅</span>
             </ui-form-field>
 
-            <!-- Select with Icons -->
-            <ui-select label="Role" placeholder="Select role" formControlName="role" [options]="roleOptions">
+            <!-- Select with Icons (Material) -->
+            <ui-select label="Role (Material)" placeholder="Select role" formControlName="role" [options]="roleOptions">
             </ui-select>
+
+            <!-- Select Native (PAL) - FOR COMPARISON -->
+            <ui-form-field label="Role (Native PAL)" hint="Native select - same height as input">
+                <ui-select-native [options]="roleOptions" formControlName="role" placeholder="Select role">
+                </ui-select-native>
+            </ui-form-field>
+
+            <!-- COMPLEX SELECT: Prefix + Suffix + Hide Inner Arrow -->
+            <ui-form-field label="Select con Prefix/Suffix" hint="Paridad total con input">
+                <span uiPrefix>🌎</span>
+                <ui-select-native [options]="roleOptions" formControlName="role" placeholder="Choose a domain..."
+                    [hideArrow]="true">
+                </ui-select-native>
+                <span uiSuffix>🔍</span>
+            </ui-form-field>
 
             <ui-datepicker label="Birth Date" placeholder="DD/MM/YYYY" formControlName="birthDate">
             </ui-datepicker>
@@ -140,11 +171,11 @@
                 <div>
                     <h4 class="text-sm font-bold mb-2">Buttons</h4>
                     <div class="flex flex-wrap gap-2">
-                        <ui-button variant="primary" size="sm">Primary</ui-button>
-                        <ui-button variant="secondary" size="sm">Secondary</ui-button>
-                        <ui-button variant="outline" size="sm">Outline</ui-button>
-                        <ui-button variant="danger" size="sm">Danger</ui-button>
-                        <ui-button variant="ghost" size="sm">Ghost</ui-button>
+                        <ui-button variant="primary">Primary</ui-button>
+                        <ui-button variant="secondary">Secondary</ui-button>
+                        <ui-button variant="outline">Outline</ui-button>
+                        <ui-button variant="danger">Danger</ui-button>
+                        <ui-button variant="ghost">Ghost</ui-button>
                     </div>
                 </div>
 
@@ -173,7 +204,7 @@
                 <div>
                     <h4 class="text-sm font-bold mb-2">Feedback & Dialogs</h4>
                     <div class="flex flex-wrap gap-2">
-                        <ui-button variant="outline" size="sm" (click)="openConfirmDialog()">
+                        <ui-button variant="outline" (click)="openConfirmDialog()">
                             Dialog
                         </ui-button>
                     </div>
@@ -183,10 +214,10 @@
                 <div>
                     <h4 class="text-sm font-bold mb-2">Toasts (Phase 2)</h4>
                     <div class="flex flex-wrap gap-2">
-                        <ui-button variant="primary" size="sm" (click)="showSuccessToast()">Success</ui-button>
-                        <ui-button variant="danger" size="sm" (click)="showErrorToast()">Error</ui-button>
-                        <ui-button variant="secondary" size="sm" (click)="showInfoToast()">Info</ui-button>
-                        <ui-button variant="outline" size="sm" (click)="showWarningToast()">Warning</ui-button>
+                        <ui-button variant="primary" (click)="showSuccessToast()">Success</ui-button>
+                        <ui-button variant="danger" (click)="showErrorToast()">Error</ui-button>
+                        <ui-button variant="secondary" (click)="showInfoToast()">Info</ui-button>
+                        <ui-button variant="outline" (click)="showWarningToast()">Warning</ui-button>
                     </div>
                 </div>
 
@@ -276,7 +307,7 @@
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Sliders (ui-slider)</h4>
                 </ui-card-header>
@@ -296,7 +327,7 @@
             </ui-card>
 
             <!-- Active ui-rating showcase -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Rating (ui-rating)</h4>
                 </ui-card-header>
@@ -315,7 +346,7 @@
                 </ui-card-content>
             </ui-card>
             <!-- Active ui-autocomplete showcase -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Autocomplete (ui-autocomplete)</h4>
                 </ui-card-header>
@@ -336,7 +367,7 @@
             </ui-card>
 
             <!-- Active ui-file-uploader showcase -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>File Upload (ui-file-uploader)</h4>
                 </ui-card-header>
@@ -461,7 +492,7 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
 
             <!-- Skeletons & Loading States -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Skeleton (ui-skeleton)</h4>
                 </ui-card-header>
@@ -481,7 +512,7 @@
             </ui-card>
 
             <!-- Badges & Tags Standardized -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Refined Badges & Tags</h4>
                 </ui-card-header>
@@ -510,7 +541,7 @@
             </ui-card>
 
             <!-- Progress Indicators -->
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Progress & Feedback</h4>
                 </ui-card-header>
@@ -542,7 +573,7 @@
         </p>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Standard List</h4>
                 </ui-card-header>
@@ -567,21 +598,22 @@
                 </ui-card-content>
             </ui-card>
 
-            <ui-card variant="outlined" style="background: #fff;">
+            <ui-card variant="outlined">
                 <ui-card-header>
                     <h4 uiCardTitle>Navigation List</h4>
                 </ui-card-header>
                 <ui-card-content>
                     <ui-list [nav]="true">
-                        <ui-list-item (clicked)="showInfoToast()">
+                        <ui-list-item [active]="selectedNavItem === 'dashboard'" (clicked)="selectNavItem('dashboard')">
                             <mat-icon uiListItemIcon>dashboard</mat-icon>
                             <span uiListItemTitle>Panel Principal</span>
                         </ui-list-item>
-                        <ui-list-item [active]="true">
+                        <ui-list-item [active]="selectedNavItem === 'medical_services'"
+                            (clicked)="selectNavItem('medical_services')">
                             <mat-icon uiListItemIcon>medical_services</mat-icon>
                             <span uiListItemTitle>Servicios Médicos</span>
                         </ui-list-item>
-                        <ui-list-item>
+                        <ui-list-item [active]="selectedNavItem === 'history'" (clicked)="selectNavItem('history')">
                             <mat-icon uiListItemIcon>history</mat-icon>
                             <span uiListItemTitle>Historial de Actividad</span>
                         </ui-list-item>
@@ -589,26 +621,91 @@
                 </ui-card-content>
             </ui-card>
         </div>
+
+        <!-- Full Width: Dynamic Tenant Theme (Simulation) -->
+        <div class="pilot-card"
+            style="grid-column: 1 / -1; margin-bottom: 2rem; border: 2px dashed var(--ui-color-primary); padding: 1.5rem; border-radius: 12px; background: var(--ui-background-surface);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h3 class="section-title" style="margin-bottom: 0.5rem;">Visual Brand Engine (Dynamic Theme)</h3>
+                    <p style="color: var(--ui-color-text-secondary); margin-bottom: 1.5rem;">
+                        Simula cómo el Backend inyecta el tema personalizado del Tenant en tiempo real.
+                    </p>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <ui-button variant="outline" size="sm" (click)="resetTheme()">Reset Default</ui-button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                <div class="demo-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Corporate Colors</label>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <div (click)="applyQuickTheme('#3f51b5', '#ff4081')"
+                            style="width: 40px; height: 40px; background: #3f51b5; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"
+                            title="Indigo & Pink"></div>
+                        <div (click)="applyQuickTheme('#2e7d32', '#ffa000')"
+                            style="width: 40px; height: 40px; background: #2e7d32; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"
+                            title="Forest & Amber"></div>
+                        <div (click)="applyQuickTheme('#c62828', '#283593')"
+                            style="width: 40px; height: 40px; background: #c62828; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"
+                            title="Ruby & Deep Sea"></div>
+                        <div (click)="applyQuickTheme('#ef6c00', '#263238')"
+                            style="width: 40px; height: 40px; background: #ef6c00; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);"
+                            title="Sunset & Charcoal"></div>
+                    </div>
+                </div>
+
+                <div class="demo-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Typography Style</label>
+                    <div style="display: flex; gap: 8px;">
+                        <ui-button variant="ghost" size="sm" (click)="applyFont('Inter, sans-serif')">Modern</ui-button>
+                        <ui-button variant="ghost" size="sm" (click)="applyFont('serif')">Classic</ui-button>
+                        <ui-button variant="ghost" size="sm" (click)="applyFont('monospace')">Tech</ui-button>
+                    </div>
+                </div>
+
+                <div class="demo-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Advanced Branding</label>
+                    <div style="display: flex; gap: 8px;">
+                        <ui-button variant="primary" appearance="soft" size="sm" (click)="applyExtremeTheme()">
+                            <mat-icon style="margin-right: 4px;">Magic</mat-icon>
+                            Extreme CSS
+                        </ui-button>
+                    </div>
+                </div>
+
+                <div class="demo-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold;">Custom Selection</label>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <input type="color" #primaryColor (change)="updatePrimary(primaryColor.value)"
+                            title="Choose Primary Color">
+                        <span style="font-size: 12px; color: var(--ui-color-text-secondary);">Manual Pick</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Full Width: Navigation & Layout Utilities (Phase 5 & 6) -->
         <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
-            <h3 class="section-title">Navigation & Layout Primitives (Phase 5 & 6)</h3>
+            <h3 class="section-title">{{ 'pilot.utilities_title' | translate }} (Phase 5 & 6)</h3>
             <p style="color: var(--ui-color-text-secondary); margin-bottom: 2rem;">
-                Estructura y navegación centralizada con tokens de espaciado y alineación.
+                {{ 'pilot.description' | translate }}
             </p>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
 
                 <!-- Breadcrumbs -->
-                <ui-card variant="outlined" style="background: #fff;">
+                <ui-card variant="outlined">
                     <ui-card-header>
                         <h4 uiCardTitle>Breadcrumbs</h4>
                     </ui-card-header>
                     <ui-card-content>
                         <div style="padding: 1rem 0;">
                             <ui-breadcrumbs [items]="[
-                                {label: 'Home', icon: 'home', link: '/'},
-                                {label: 'Users', icon: 'people', link: '/users'},
-                                {label: 'Edit User', icon: 'edit'}
+                                {label: 'pilot.breadcrumbs.home' | translate, icon: 'home', link: '/'},
+                                {label: 'pilot.breadcrumbs.dashboard' | translate, icon: 'dashboard', link: '/dashboard'},
+                                {label: 'pilot.breadcrumbs.edit' | translate, icon: 'edit'}
                             ]" (itemClick)="showInfoToast()">
                             </ui-breadcrumbs>
                             <div style="margin-top: 1.5rem;">
@@ -620,21 +717,31 @@
                 </ui-card>
 
                 <!-- Layout Utilities -->
-                <ui-card variant="outlined" style="background: #fff;">
+                <ui-card variant="outlined">
                     <ui-card-header>
                         <h4 uiCardTitle>Layout Primitives</h4>
                     </ui-card-header>
                     <ui-card-content>
                         <div style="display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0;">
                             <div style="display: flex; align-items: center; justify-content: space-between;">
-                                <span>Label Izquierdo</span>
+                                <span class="text-muted">{{ 'pilot.layout.patient_id' | translate }}: #00452</span>
                                 <ui-divider orientation="vertical"></ui-divider>
-                                <span>Valor Derecho</span>
+                                <span class="font-bold">{{ 'pilot.layout.patient_name' | translate }}</span>
+                            </div>
+                            <div
+                                style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--ui-color-text-secondary);">
+                                <span>{{ 'pilot.breadcrumbs.home' | translate }}</span>
+                                <span style="margin: 0 8px;">></span>
+                                <span>{{ 'pilot.breadcrumbs.dashboard' | translate }}</span>
+                                <span style="margin: 0 8px;">></span>
+                                <span>{{ 'pilot.breadcrumbs.edit' | translate }}</span>
                             </div>
                             <ui-divider [inset]="true"></ui-divider>
                             <div style="display: flex; gap: 8px;">
-                                <ui-tag variant="neutral" appearance="soft">Flex Gap Base</ui-tag>
-                                <ui-tag variant="neutral" appearance="soft">Standard Layout</ui-tag>
+                                <ui-tag variant="danger" appearance="soft">{{ 'pilot.layout.tag_priority' | translate
+                                    }}</ui-tag>
+                                <ui-tag variant="success" appearance="outline">{{ 'pilot.layout.tag_stable' | translate
+                                    }}</ui-tag>
                             </div>
                         </div>
                     </ui-card-content>
@@ -696,31 +803,32 @@
         <div class="pilot-card" style="grid-column: 1 / -1; margin-bottom: 2rem;">
             <h3 class="section-title">Stepper / Multi-Step Process (Fase 1)</h3>
             <ui-stepper orientation="horizontal">
-                <mat-horizontal-stepper [linear]="stepperLinear">
+                <mat-horizontal-stepper [linear]="stepperLinear" #stepper>
                     <mat-step label="Account Info">
                         <div
-                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
+                            style="padding: 2rem; background: var(--ui-background-variant); border-radius: 12px; margin-top: 1rem;">
                             <p>Paso 1: Información de la cuenta de usuario.</p>
-                            <ui-button variant="primary" matStepperNext>Siguiente</ui-button>
+                            <ui-button variant="primary" (clicked)="stepper.next()">Siguiente</ui-button>
                         </div>
                     </mat-step>
                     <mat-step label="Personal Details">
                         <div
-                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                            <p>Paso 2: Datos personales del paciente o empleado.</p>
-                            <div class="flex gap-2">
-                                <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
-                                <ui-button variant="primary" matStepperNext>Siguiente</ui-button>
+                            style="padding: 2rem; background: var(--ui-background-variant); border-radius: 12px; margin-top: 1rem;">
+                            <p>Paso 2: Detalles personales y de contacto.</p>
+                            <div style="display: flex; gap: 8px;">
+                                <ui-button variant="outline" (clicked)="stepper.previous()">Anterior</ui-button>
+                                <ui-button variant="primary" (clicked)="stepper.next()">Siguiente</ui-button>
                             </div>
                         </div>
                     </mat-step>
                     <mat-step label="Review & Save">
                         <div
-                            style="padding: 2rem; background: var(--ui-color-surface-variant); border-radius: 12px; margin-top: 1rem;">
-                            <p>Paso 3: Revisión final de la información.</p>
-                            <div class="flex gap-2">
-                                <ui-button variant="secondary" matStepperPrevious>Atrás</ui-button>
-                                <ui-button variant="primary" (clicked)="submit()">Finalizar</ui-button>
+                            style="padding: 2rem; background: var(--ui-background-variant); border-radius: 12px; margin-top: 1rem;">
+                            <p>Paso 3: Revisa los datos antes de guardar.</p>
+                            <div style="display: flex; gap: 8px;">
+                                <ui-button variant="outline" (clicked)="stepper.previous()">Anterior</ui-button>
+                                <ui-button variant="primary" (clicked)="showSuccessToast()">Finalizar
+                                    Proceso</ui-button>
                             </div>
                         </div>
                     </mat-step>

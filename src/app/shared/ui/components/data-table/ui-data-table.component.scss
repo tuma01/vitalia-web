@@ -18,7 +18,7 @@
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--ui-color-border);
     gap: var(--ui-space-md);
-    height: 86px;
+    min-height: calc(var(--ui-input-height-md) * 1.5);
 
     @media (max-width: 640px) {
         flex-direction: column;
@@ -54,7 +54,7 @@
                 }
 
                 .ui-form-field__control {
-                    height: 40px !important;
+                    height: var(--ui-input-height-sm) !important;
                 }
             }
         }
@@ -133,13 +133,14 @@
 
     .theme-dark & {
         background:
-            linear-gradient(to right, var(--ui-background-default) 30%, rgba(15, 23, 42, 0)),
-            linear-gradient(to right, rgba(15, 23, 42, 0), var(--ui-background-default) 70%) 100% 0,
-            radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)),
-            radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .3), rgba(0, 0, 0, 0)) 100% 0;
+            linear-gradient(to right, var(--ui-background-default) 30%, rgba(9, 9, 11, 0)),
+            linear-gradient(to right, rgba(9, 9, 11, 0), var(--ui-background-default) 70%) 100% 0,
+            radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)),
+            radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)) 100% 0;
         background-repeat: no-repeat;
         background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
         background-attachment: local, local, scroll, scroll;
+        background-color: var(--ui-background-surface) !important;
     }
 }
 
@@ -181,6 +182,7 @@
         transition: background-color 0.2s ease;
         cursor: pointer;
         height: var(--ui-table-row-height, 48px);
+        background-color: transparent !important;
 
         &:hover {
             background-color: var(--ui-color-bg-hover, #f3f4f6);
@@ -209,15 +211,21 @@
         &.ui-table-row--selected {
             background-color: rgba(var(--ui-color-primary-rgb, 37, 99, 235), 0.05);
         }
+
+        .theme-dark & {
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.04) !important;
+            }
+        }
     }
 
     /* Density Variants - Now just consumers of global tokens */
     &--compact {
-        /* Consumes global tokens from body.density-compact if present */
+        background-color: transparent;
     }
 
     &--comfortable {
-        /* Consumes global tokens from body.density-comfortable if present */
+        background-color: transparent;
     }
 
     /* Truncation styles */

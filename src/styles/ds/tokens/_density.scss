@@ -1,41 +1,47 @@
-/* Density Tokens Override */
+/* Density Tokens Override (Global Size Unification) */
 
 body.density-compact {
-    --ui-button-height-sm: 28px;
-    --ui-button-height-md: 36px;
-    --ui-button-height-lg: 44px;
-    --ui-button-height-xl: 52px;
-
-    --ui-input-height-sm: 28px;
-    --ui-input-height-md: 36px;
-    --ui-input-height-lg: 44px;
+    --ui-size-sm: 30px;
+    --ui-size-md: 38px;
+    --ui-size-lg: 46px;
+    --ui-size-xl: 54px;
 
     --ui-table-row-height: 40px;
     --ui-table-header-height: 44px;
     --ui-table-font-size: 0.8125rem;
     --ui-table-cell-padding: 8px;
 
+    --ui-space-xs: 2px;
+    --ui-space-sm: 6px;
     --ui-space-md: 12px;
     --ui-space-lg: 16px;
     --ui-space-xl: 24px;
+
+    --ui-icon-button-size-sm: 28px;
+    --ui-icon-button-size-md: 36px;
+    --ui-icon-button-size-lg: 44px;
 }
 
 body.density-comfortable {
-    --ui-button-height-sm: 37px;
-    --ui-button-height-md: 45px;
-    --ui-button-height-lg: 53px;
-    --ui-button-height-xl: 61px;
+    --ui-size-sm: 46px;
+    --ui-size-md: 54px;
+    --ui-size-lg: 62px;
+    --ui-size-xl: 70px;
 
-    --ui-input-height-sm: 40px;
-    --ui-input-height-md: 50px;
-    --ui-input-height-lg: 58px;
+    --ui-size-padding-md: 0 20px;
 
     --ui-table-row-height: 58px;
     --ui-table-header-height: 62px;
     --ui-table-font-size: 0.9375rem;
     --ui-table-cell-padding: 20px;
 
+    --ui-space-xs: 8px;
+    --ui-space-sm: 12px;
     --ui-space-md: 20px;
     --ui-space-lg: 32px;
     --ui-space-xl: 40px;
+
+    --ui-icon-button-size-sm: 40px;
+    --ui-icon-button-size-md: 48px;
+    --ui-icon-button-size-lg: 56px;
 }

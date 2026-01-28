@@ -1,7 +1,8 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-    UiSelectComponent,
+    UiSelectNativeComponent,
+    UiFormFieldComponent,
     UiButtonComponent,
     UiConfigService,
     UiDatepickerComponent,
@@ -16,7 +17,8 @@ import { WidgetRegistryService } from '../../core/services/widget-registry.servi
     imports: [
         CommonModule,
         ReactiveFormsModule,
-        UiSelectComponent,
+        UiSelectNativeComponent,
+        UiFormFieldComponent,
         UiButtonComponent,
         UiDatepickerComponent,
         UiTimepickerComponent

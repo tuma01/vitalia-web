@@ -43,8 +43,7 @@ export const routes: Routes = [
                 children: []
             },
 
-            // Role-based dashboards - TEMPORARILY DISABLED FOR PILOT
-            /*
+            // Role-based dashboards - Admin enabled, others coming soon
             {
                 path: 'admin',
                 canActivate: [roleGuard],
@@ -59,7 +58,10 @@ export const routes: Routes = [
                         loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
                     }
                 ]
-            },
+            }
+
+            // Other roles - Coming soon
+            /*
             {
                 path: 'doctor',
                 canActivate: [roleGuard],
