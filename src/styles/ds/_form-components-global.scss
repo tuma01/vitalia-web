@@ -1,0 +1,136 @@
+/**
+ * Global Form Component Configuration
+ * 
+ * This file contains shared mixins and configurations for all form components
+ * (buttons, inputs, selects) to ensure consistent heights and styling.
+ * 
+ * Usage: @use 'path/to/form-components-global' as form;
+ */
+
+/**
+ * Mixin: Form Component Container
+ * Applies consistent height constraints to the host element of form components
+ */
+@mixin form-component-host($size: 'md') {
+    display: block;
+    box-sizing: border-box;
+    line-height: 1;
+    vertical-align: middle;
+
+    // Strict height enforcement using !important to override any legacy/external styles
+    @if $size =='sm' {
+        min-height: var(--ui-size-sm) !important;
+        height: var(--ui-size-sm) !important;
+        max-height: var(--ui-size-sm) !important;
+    }
+
+    @else if $size =='md' {
+        min-height: var(--ui-size-md) !important;
+        height: var(--ui-size-md) !important;
+        max-height: var(--ui-size-md) !important;
+    }
+
+    @else if $size =='lg' {
+        min-height: var(--ui-size-lg) !important;
+        height: var(--ui-size-lg) !important;
+        max-height: var(--ui-size-lg) !important;
+    }
+
+    // overflow: hidden; // REMOVED: Breaks floating labels which translate outside the box
+}
+
+/**
+ * Mixin: Form Component Inner Element
+ * Applies consistent styling to the inner element (button, input, select)
+ * @param {String} $display - The display mode ('flex' or 'block'). Default 'inline-flex'.
+ */
+@mixin form-component-inner($display: inline-flex) {
+    // Reset Appearance (Strict)
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    // Box Model (Strict)
+    box-sizing: border-box !important;
+    display: $display;
+    width: 100%;
+
+    // Strict Dimensions
+    height: 100% !important;
+    max-height: 100% !important;
+    min-height: 0 !important;
+
+    margin: 0;
+    padding: 0;
+
+    // Borders & Outline
+    // CRITICAL FIX: Always enforce a 1px border (transparent by default) 
+    // to match the box-model of inputs/outlines exactly.
+    border: 1px solid transparent;
+    border-radius: var(--ui-radius-md, 8px);
+    outline: none;
+    background: transparent;
+
+    // Typography
+    font-family: var(--ui-font-family-sans);
+    font-size: var(--ui-font-size-sm);
+    line-height: 1.2 !important; // Kill body 1.5 inheritance (Global Fix)
+    vertical-align: middle;
+    color: inherit;
+
+    margin: 0 !important; // Prevent phantom margins
+
+    // Flex Alignment
+    @if $display =='flex' or $display =='inline-flex' {
+        align-items: center;
+        justify-content: center;
+    }
+
+    // Overflow
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/**
+ * Mixin: Form Component Padding
+ * Applies size-specific padding
+ */
+@mixin form-component-padding($size: 'md') {
+    @if $size =='sm' {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    @else if $size =='md' {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    @else if $size =='lg' {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/**
+ * Mixin: Form Component Size Variant
+ * Combines host and padding for a complete size configuration
+ */
+@mixin form-component-size($size: 'md') {
+    @include form-component-host($size);
+
+    // Apply padding to inner element
+    >*:first-child,
+    button,
+    input,
+    select {
+        @include form-component-padding($size);
+    }
+}

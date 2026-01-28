@@ -1,3 +1,7 @@
+/* Form Field - Using Global Form Component Configuration */
+
+@use '../../../../../styles/ds/form-components-global' as form;
+
 /* Tokens */
 $field-height: var(--ui-input-height-md, 40px);
 $field-radius: var(--ui-radius-base, 8px);
@@ -27,17 +31,16 @@ $label-scale: 0.75;
     --ui-field-label-scale: 0.75;
 }
 
-/* --- Control Container --- */
+/* --- Control Container - Using Global Form Component Configuration --- */
 .ui-form-field__control {
+    @include form.form-component-host('md');
+
     display: flex;
     align-items: center;
     position: relative;
     width: 100%;
-    height: var(--ui-field-height);
-    box-sizing: border-box;
     gap: 0;
     background-color: transparent;
-    /* Ensure no background by default */
 }
 
 /* --- Input Slot --- */
@@ -95,8 +98,8 @@ $label-scale: 0.75;
     .ui-form-field__label {
         /* Auto-calculate position based on field height */
         /* Formula: Center of height + subtle fixed offset for consistency across densities */
-        /* Using 4.5px instead of 10% to prevent it from floating too high in Compact */
-        transform: translateY(calc((var(--ui-field-height) * -0.5) - 4.5px)) scale(var(--ui-field-label-scale)) !important;
+        /* Adjusted from 4.5px to 2.5px to lower it slightly per user request */
+        transform: translateY(calc((var(--ui-field-height) * -0.5) - 2.5px)) scale(var(--ui-field-label-scale)) !important;
         max-width: 133% !important;
         padding: 0 4px !important;
         margin-left: 11px !important;
@@ -107,7 +110,7 @@ $label-scale: 0.75;
         margin-left: 11px !important;
         padding: 0 4px !important;
         /* Unified proportional formula */
-        transform: translateY(calc((var(--ui-field-height) * -0.5) - 4.5px)) scale(var(--ui-field-label-scale)) !important;
+        transform: translateY(calc((var(--ui-field-height) * -0.5) - 2.5px)) scale(var(--ui-field-label-scale)) !important;
     }
 }
 

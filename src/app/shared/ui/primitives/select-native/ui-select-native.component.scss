@@ -1,10 +1,13 @@
 // ui-select-native.component.scss
 // Native PAL select - uses EXACT same structure as ui-input
+// Using Global Form Component Configuration
+
+@use '../../../../../styles/ds/form-components-global' as form;
 
 :host {
-    display: block;
+    @include form.form-component-host('md');
     width: 100%;
-    height: auto; // Let trigger drive height
+    // Let trigger drive height? No, enforce host height now.
 }
 
 .ui-select-native {
@@ -19,28 +22,18 @@
 
 // Trigger button - behaves like input
 .ui-select-native__trigger {
-    width: 100%;
-    height: 100%;
+    /* Global Form Component Base */
+    @include form.form-component-inner();
+
+    /* Select-Specific Overrides */
     padding: 0; // Padding handled by form-field wrapper
-    margin: 0;
-
-    background: transparent;
-    border: none;
-    box-sizing: border-box;
-    outline: none;
-
-    display: flex;
-    align-items: center;
     justify-content: space-between;
     gap: var(--ui-space-sm, 8px);
-
-    font-family: var(--ui-font-family-sans, inherit);
-    font-size: var(--ui-font-size-md, 1rem);
-    color: var(--ui-color-text-primary);
     text-align: left;
-
     cursor: pointer;
-    min-height: 24px; // Ensure some height even if label is empty
+
+    // Height Parity (Driven by Host Variable)
+    height: 100% !important;
 
     &:disabled {
         cursor: not-allowed;

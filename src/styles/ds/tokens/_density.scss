@@ -6,6 +6,14 @@ body.density-compact {
     --ui-size-lg: 46px;
     --ui-size-xl: 54px;
 
+    /* Explicit Alias Overrides for Safety */
+    --ui-input-height-sm: var(--ui-size-sm);
+    --ui-input-height-md: var(--ui-size-md);
+    --ui-input-height-lg: var(--ui-size-lg);
+    --ui-button-height-sm: var(--ui-size-sm);
+    --ui-button-height-md: var(--ui-size-md);
+    --ui-button-height-lg: var(--ui-size-lg);
+
     --ui-table-row-height: 40px;
     --ui-table-header-height: 44px;
     --ui-table-font-size: 0.8125rem;
@@ -17,9 +25,9 @@ body.density-compact {
     --ui-space-lg: 16px;
     --ui-space-xl: 24px;
 
-    --ui-icon-button-size-sm: 28px;
-    --ui-icon-button-size-md: 36px;
-    --ui-icon-button-size-lg: 44px;
+    --ui-icon-button-size-sm: 24px; // 30 - 6
+    --ui-icon-button-size-md: 32px; // 38 - 6
+    --ui-icon-button-size-lg: 40px; // 46 - 6
 }
 
 body.density-comfortable {
@@ -27,6 +35,14 @@ body.density-comfortable {
     --ui-size-md: 54px;
     --ui-size-lg: 62px;
     --ui-size-xl: 70px;
+
+    /* Explicit Alias Overrides for Safety */
+    --ui-input-height-sm: var(--ui-size-sm);
+    --ui-input-height-md: var(--ui-size-md);
+    --ui-input-height-lg: var(--ui-size-lg);
+    --ui-button-height-sm: var(--ui-size-sm);
+    --ui-button-height-md: var(--ui-size-md);
+    --ui-button-height-lg: var(--ui-size-lg);
 
     --ui-size-padding-md: 0 20px;
 
@@ -41,7 +57,7 @@ body.density-comfortable {
     --ui-space-lg: 32px;
     --ui-space-xl: 40px;
 
-    --ui-icon-button-size-sm: 40px;
-    --ui-icon-button-size-md: 48px;
-    --ui-icon-button-size-lg: 56px;
+    --ui-icon-button-size-sm: 40px; // 46 - 6
+    --ui-icon-button-size-md: 48px; // 54 - 6
+    --ui-icon-button-size-lg: 56px; // 62 - 6
 }
