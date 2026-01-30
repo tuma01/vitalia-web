@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -9,11 +9,12 @@ import {
   UiButtonComponent,
   UiInputComponent,
   UiFormFieldComponent,
-  UiSelectComponent,
-  UiSelectOption,
+  UiSelectNativeComponent,
+  UiSelectNativeOption,
   UiCheckboxComponent,
   UiIconComponent,
-  UiCardComponent
+  UiCardComponent,
+  UiToastService // Import Toast Service
 } from '@ui';
 
 // API Services
@@ -45,7 +46,7 @@ interface RoleOption {
     UiButtonComponent,
     UiInputComponent,
     UiFormFieldComponent,
-    UiSelectComponent,
+    UiSelectNativeComponent,
     UiCheckboxComponent,
     UiIconComponent,
     UiCardComponent
@@ -55,20 +56,21 @@ export class LoginComponent {
   private router = inject(Router);
   private tenantApiService = inject(TenantService);
   private authService = inject(AuthService);
+  private toastService = inject(UiToastService); // Inject Service
 
   // Signals
   selectedRole = signal<string>('');
   tenants = signal<Tenant[]>([]);
   isLoading = signal<boolean>(false);
-  errorMessage = signal<string>('');
+  // errorMessage signal removed
 
   // Roles configuration - Solo Admin habilitado
   roles: RoleOption[] = [
-    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: '#9C27B0', enabled: true },
-    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: '#2196F3', enabled: false },
-    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: '#E91E63', enabled: false },
-    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: '#FF9800', enabled: false },
-    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: '#4CAF50', enabled: false }
+    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: '#16a34a', enabled: true }, // Green (Reference)
+    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: '#f97316', enabled: false },  // Orange (Reference)
+    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: '#2563eb', enabled: false },      // Blue
+    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: '#9333ea', enabled: false },         // Purple
+    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: '#06b6d4', enabled: false }           // Cyan
   ];
 
   // Form
@@ -81,7 +83,7 @@ export class LoginComponent {
   });
 
   // Tenant options for select
-  get tenantOptions(): UiSelectOption[] {
+  get tenantOptions(): UiSelectNativeOption[] {
     return this.tenants().map(t => ({
       value: t.code || '',
       label: t.name || ''
@@ -99,7 +101,7 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error('Error loading tenants:', error);
-        this.errorMessage.set('Error al cargar la lista de hospitales');
+        this.toastService.error('Error al cargar la lista de hospitales', 'Error', { position: 'bottom-center' });
       }
     });
   }
@@ -108,13 +110,12 @@ export class LoginComponent {
     const role = this.roles.find(r => r.value === roleValue);
 
     if (!role?.enabled) {
-      this.errorMessage.set('Este rol estará disponible próximamente');
+      this.toastService.info('Este rol estará disponible próximamente', 'Información', { position: 'bottom-center' });
       return;
     }
 
     this.selectedRole.set(roleValue);
     this.loginForm.patchValue({ role: roleValue });
-    this.errorMessage.set('');
   }
 
   onLogin(): void {
@@ -128,7 +129,6 @@ export class LoginComponent {
     if (!email || !password || !tenantCode) return;
 
     this.isLoading.set(true);
-    this.errorMessage.set('');
 
     this.authService.login(email, password, tenantCode).subscribe({
       next: (response) => {
@@ -138,7 +138,7 @@ export class LoginComponent {
       },
       error: (error) => {
         this.isLoading.set(false);
-        this.errorMessage.set('Credenciales inválidas. Por favor intenta de nuevo.');
+        this.toastService.error('Credenciales inválidas. Por favor intenta de nuevo.', 'Error de Acceso', { position: 'bottom-center' });
         console.error('Login error:', error);
       }
     });

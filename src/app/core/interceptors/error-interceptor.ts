@@ -34,7 +34,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
       } else if (error.status === 404) {
         // Ignorar 404 (recurso no encontrado), no mostrar Toast.
-        // Los servicios deben manejar sus propios 404 si es necesario.
+      } else if (error.status === 400) {
+        // Ignorar 400 (Bad Request) - Dejar que el componente maneje la validación.
       } else {
         toast.error(error.message || 'Unexpected Error');
       }

@@ -41,6 +41,8 @@ export class UiSelectComponent implements ControlValueAccessor, OnInit {
     @Input() options: UiSelectOption[] = [];
     @Input() disabled = false;
     @Input() required = false;
+    @Input() error: string | null = null;
+    @Input() hint: string | null = null;
 
     // Default variant comes from Global Config Signal
     private _variant?: UiSelectVariant;

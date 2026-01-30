@@ -13,29 +13,38 @@
                     <!-- Role Selector (Badges) -->
                     <div class="role-selector">
                         <label>Selecciona tu rol</label>
-                        <div class="role-badges">
+                        <div class="role-grid">
                             @for (role of roles; track role.value) {
-                            <button type="button" class="role-badge" [class.active]="selectedRole() === role.value"
+                            <div class="role-card" [class.active]="selectedRole() === role.value"
                                 [class.disabled]="!role.enabled" [style.--role-color]="role.color"
-                                (click)="selectRole(role.value)">
-                                <ui-icon [fontIcon]="role.icon"></ui-icon>
+                                (click)="selectRole(role.value)" tabindex="0" (keydown.enter)="selectRole(role.value)"
+                                role="button">
+
+                                <div class="role-icon-wrapper">
+                                    <ui-icon [fontIcon]="role.icon"></ui-icon>
+                                </div>
                                 <span class="role-label">{{ role.label }}</span>
+
+                                @if (selectedRole() === role.value) {
+                                <div class="active-indicator">
+                                    <ui-icon>check_circle</ui-icon>
+                                </div>
+                                }
+
                                 @if (!role.enabled) {
                                 <span class="soon-badge">Pronto</span>
                                 }
-                            </button>
+                            </div>
                             }
                         </div>
-                        @if (errorMessage() && !loginForm.get('role')?.value) {
-                        <p class="error-text">{{ errorMessage() }}</p>
-                        }
+
                     </div>
 
                     <!-- Tenant Selector -->
                     <ui-form-field label="Hospital/Clínica" [error]="getError('tenantCode')">
-                        <ui-select formControlName="tenantCode" [options]="tenantOptions"
+                        <ui-select-native formControlName="tenantCode" [options]="tenantOptions"
                             placeholder="Selecciona tu hospital">
-                        </ui-select>
+                        </ui-select-native>
                     </ui-form-field>
 
                     <!-- Email -->
@@ -60,34 +69,52 @@
                         </a>
                     </div>
 
-                    <!-- Error Message -->
-                    @if (errorMessage() && loginForm.get('role')?.value) {
-                    <div class="error-banner">
-                        <ui-icon>error</ui-icon>
-                        <span>{{ errorMessage() }}</span>
-                    </div>
-                    }
+
 
                     <!-- Login Button -->
                     <ui-button type="submit" variant="primary" [fullWidth]="true"
-                        [disabled]="loginForm.invalid || isLoading()">
-                        {{ isLoading() ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+                        [disabled]="loginForm.invalid || isLoading()" [loading]="isLoading()">
+                        Iniciar Sesión
                     </ui-button>
 
-                    <!-- Social Login Buttons -->
+                    <!-- Sign Up Link -->
+                    <div class="signup-prompt">
+                        <span>¿No tienes una cuenta?</span>
+                        <a routerLink="/signup" class="signup-link">Regístrate</a>
+                    </div>
+
+                    <!-- Social Login Buttons (Restored & Fixed) -->
                     <div class="social-login">
-                        <div class="divider">
-                            <span>O continúa con</span>
-                        </div>
                         <div class="social-buttons">
+                            <!-- Google (Multi-colored SVG) -->
                             <button type="button" class="social-btn google">
-                                <ui-icon>google</ui-icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                                    <path fill="#FFC107"
+                                        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" />
+                                    <path fill="#FF3D00"
+                                        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" />
+                                    <path fill="#4CAF50"
+                                        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" />
+                                    <path fill="#1976D2"
+                                        d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
+                                </svg>
                             </button>
+                            <!-- Facebook (Brand Color SVG) -->
                             <button type="button" class="social-btn facebook">
-                                <ui-icon>facebook</ui-icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24px" height="24px">
+                                    <path fill="#1976D2"
+                                        d="M24,4C12.954,4,4,12.954,4,24s8.954,20,20,20s20-8.954,20-20S35.046,4,24,4z" />
+                                    <path fill="#fff"
+                                        d="M26.707,29.301h5.166l0.744-5.263h-5.91V20.72c0-1.432,0.706-2.583,2.7-2.583h2.384V13.88c-1.121-0.121-2.91-0.283-5.068-0.283c-5.242,0-8.627,2.946-8.627,8.887v4.549h-5.71v5.263h5.71v13.593C19.26,45.965,20.622,46,22,46c1.652,0,3.256-0.083,4.707-0.428V29.301z" />
+                                </svg>
                             </button>
+                            <!-- Apple (Standard Black SVG) -->
                             <button type="button" class="social-btn apple">
-                                <ui-icon>apple</ui-icon>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"
+                                    fill="currentColor">
+                                    <path
+                                        d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74 1.18 0 2.45-1.62 4.37-1.62 1.5.15 2.7.77 3.4 1.83-3.23 1.96-2.6 6.74 1.12 8.16-.62 1.57-1.42 2.92-2.62 4.14-.52.53-1.04 1.09-1.35 1.72zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+                                </svg>
                             </button>
                         </div>
                     </div>
