@@ -1,25 +1,92 @@
 .login-wrapper {
-    min-height: 100vh;
+    min-height: 100vh; // Ensure it covers 100% of viewport
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    // Use theme background instead of gradient as requested
+    background-color: var(--ui-background-body, #f8fafc);
+    background-image: none; // Remove previous gradient
 
     @media (max-width: 968px) {
         padding: 1rem;
     }
 }
 
+// ... (skipping unchanged .login-card styles) ...
+
+// Social Login (Cliniva Style Replicated)
+.social-login {
+    margin-top: 0.4rem; // Moved up ~5px (from 0.7rem) as requested
+    display: flex;
+    justify-content: center;
+
+    .social-buttons {
+        display: flex;
+        gap: 15px; // Matches reference spacing
+        justify-content: center;
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px; // Reference size
+            height: 42px;
+            background-color: #ffffff; // White background
+            border-radius: 50%; // Circular
+            border: 1px solid #ebebeb; // Subtle border
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05); // Soft shadow
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            outline: none;
+
+            ui-icon,
+            svg {
+                width: 24px; // Increased size as requested
+                height: 24px;
+                transition: transform 0.3s ease;
+            }
+
+            // Google: Multi-color handled by SVG itself
+            // Facebook: Brand color handled by SVG
+            // Apple: Black handled by SVG
+
+            &:hover {
+                transform: translateY(-3px); // Lift effect
+                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); // Deepen shadow
+                background-color: #f8f9fa;
+            }
+        }
+    }
+}
+
 .login-card {
     width: 100%;
     max-width: 1100px;
-    max-height: 92vh;
+    // max-height: 92vh;
     padding: 0 !important;
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
     border-radius: 20px !important;
     background: var(--ui-card-bg) !important;
+
+    // Fix: Hide empty header slot which causes the top gap
+    ::ng-deep .ui-card__header-slot,
+    ::ng-deep .ui-card__footer-slot {
+        display: none !important;
+    }
+
+    // Ensure content has no padding constraint
+    ::ng-deep .ui-card__content-slot {
+        display: none !important; // Hide explicit content slot if unused
+    }
+
+    // For the login content itself which falls into fallback
+    ::ng-deep>.ui-card-content {
+        // Just in case it gets wrapped
+        padding: 0 !important;
+    }
 
     @media (max-width: 968px) {
         max-height: 96vh;
@@ -39,10 +106,13 @@
 }
 
 .login-form-zone {
-    padding: 2rem 2.5rem;
-    overflow-y: auto;
+    padding: 1rem 3rem !important; // Reduced top padding to move header up, wide sides for centering look
+    height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center; // Keep vertical centering but with less top padding it will feel "higher"
+    overflow-y: auto;
+    position: relative;
 
     /* Custom scrollbar */
     &::-webkit-scrollbar {
@@ -70,7 +140,8 @@
         h1 {
             font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0 !important; // Removed gap as requested
+            line-height: 1.2;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -80,112 +151,213 @@
         p {
             color: var(--ui-color-text-secondary);
             font-size: 0.85rem;
+            margin-top: 0.2rem !important; // Very close to title
         }
     }
 
     form {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.6rem !important; // Tighter gap for modern feel
+
+        // Override internal Form Field spacing for tight layout
+        ::ng-deep .ui-form-field {
+            margin-bottom: 0 !important;
+        }
     }
 }
 
-// Role Selector
+// Role Selector - Vibrant Icon Box Style
 .role-selector {
-    margin-bottom: 0;
+    margin-bottom: 0.8rem;
 
     label {
-        display: block;
+        display: none; // Hide label as requested "no es necesario"
         font-weight: 600;
-        margin-bottom: 0.6rem;
-        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
         color: var(--ui-color-text-primary);
+        letter-spacing: 0.3px;
     }
 
-    .role-badges {
+    .role-grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 0.4rem;
+        grid-template-columns: repeat(5, 1fr); // Restore 5-column grid
+        gap: 0.8rem;
 
         @media (max-width: 640px) {
             grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
         }
     }
 
-    .role-badge {
+    .role-card {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        gap: 0.3rem;
-        padding: 0.6rem 0.3rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 8px;
-        background: var(--ui-background-surface);
+        justify-content: flex-start;
+        gap: 0.5rem;
+        padding: 0;
+        background: transparent;
+        border: none;
         cursor: pointer;
-        transition: all 0.2s ease;
-        position: relative;
-        min-height: 62px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        min-height: auto;
+        outline: none;
 
-        ui-icon {
-            font-size: 1.3rem;
-            color: var(--role-color);
-            transition: transform 0.2s ease;
+        .role-icon-wrapper {
+            display: flex; // Restore icon wrapper
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            // Always show color tint
+            background: color-mix(in srgb, var(--role-color) 12%, white) !important;
+            border: 2px solid color-mix(in srgb, var(--role-color) 30%, #e2e8f0) !important;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+
+            ui-icon {
+                font-size: 1.5rem;
+                color: var(--role-color) !important;
+                transition: transform 0.3s ease, color 0.3s ease;
+            }
         }
 
         .role-label {
-            font-size: 0.65rem;
-            font-weight: 500;
+            font-size: 0.7rem;
+            font-weight: 600;
             color: var(--ui-color-text-secondary);
+            transition: color 0.3s ease;
+            text-align: center;
+            margin-top: -0.1rem;
+            line-height: 1.2;
+        }
+
+        .active-indicator {
+            display: flex; // Restore active indicator
+            position: absolute;
+            top: -5px; // Original Stable Position
+            right: 1px; // Moved left by 2px more (total 6px from original)
+            background: white;
+            border-radius: 50%;
+            width: 22px; // Original Stable Size
+            height: 22px; // Original Stable Size
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+
+            // KEY FIX: Use transform to shrink perfectly towards the corner
+            transform: scale(0.75);
+            transform-origin: top right;
+
+            ui-icon {
+                font-size: 1.1rem; // Original Stable Icon Size
+                color: var(--role-color);
+            }
         }
 
         .soon-badge {
+            display: block; // Restore badge
             position: absolute;
-            top: 2px;
-            right: 2px;
-            font-size: 0.5rem;
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-            padding: 1px 4px;
+            top: -5px;
+            right: -10px;
+            font-size: 0.6rem;
+            background: #f3f4f6;
+            color: #9ca3af;
+            padding: 2px 6px;
             border-radius: 4px;
             font-weight: 600;
+            z-index: 5;
+            white-space: nowrap;
         }
 
+        // Hover State
         &:hover:not(.disabled) {
-            border-color: var(--role-color);
-            background: var(--ui-color-bg-hover);
-            transform: translateY(-1px);
-            box-shadow: 0 3px 10px color-mix(in srgb, var(--role-color) 20%, transparent);
+            .role-icon-wrapper {
+                border-color: var(--role-color);
+                box-shadow: 0 8px 20px -5px color-mix(in srgb, var(--role-color) 20%, transparent);
+                transform: translateY(-3px);
 
-            ui-icon {
-                transform: scale(1.1);
+                ui-icon {
+                    color: var(--role-color);
+                }
             }
-        }
-
-        &.active {
-            border-color: var(--role-color);
-            background: linear-gradient(135deg,
-                    color-mix(in srgb, var(--role-color) 10%, white) 0%,
-                    color-mix(in srgb, var(--role-color) 5%, white) 100%);
-            box-shadow: 0 3px 12px color-mix(in srgb, var(--role-color) 25%, transparent);
 
             .role-label {
                 color: var(--role-color);
-                font-weight: 600;
             }
         }
 
+        // Active State
+        &.active {
+            // override pill styles back to icon box active state
+            background-color: transparent !important;
+            box-shadow: none !important;
+            transform: none !important;
+
+            .role-icon-wrapper {
+                background: linear-gradient(135deg, var(--role-color) 0%, color-mix(in srgb, var(--role-color) 20%, black) 100%) !important;
+                border-color: transparent !important;
+                box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--role-color) 40%, transparent);
+                transform: translateY(-3px);
+
+                ui-icon {
+                    color: white !important;
+                }
+            }
+
+            .role-label {
+                color: var(--role-color) !important;
+                font-weight: 700;
+            }
+        }
+
+        // Disabled State
         &.disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            background: var(--ui-background-variant);
+
+            .role-icon-wrapper {
+                background: #f8fafc !important;
+                border-color: #e2e8f0 !important;
+                box-shadow: none;
+
+                ui-icon {
+                    color: #cbd5e1 !important;
+                }
+            }
+        }
+
+        // Focus State
+        &:focus-visible {
+            .role-icon-wrapper {
+                box-shadow: 0 0 0 3px color-mix(in srgb, var(--role-color) 30%, transparent);
+            }
         }
     }
 
     .error-text {
         color: var(--ui-color-danger);
-        font-size: 0.75rem;
-        margin-top: 0.4rem;
+        font-size: 0.8rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }
 
@@ -224,90 +396,31 @@
     }
 }
 
-// Social Login
-.social-login {
-    margin-top: 0;
+// Sign Up Prompt
+.signup-prompt {
+    margin-top: 0.8rem; // Moved up ~3px (from 1rem)
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--ui-color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
 
-    .divider {
-        position: relative;
-        text-align: center;
-        margin: 0.8rem 0;
+    .signup-link {
+        color: var(--ui-color-primary, #2563eb);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s;
 
-        &::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
-        }
-
-        span {
-            position: relative;
-            background: var(--ui-background-surface);
-            padding: 0 0.8rem;
-            color: var(--ui-color-text-secondary);
-            font-size: 0.75rem;
-        }
-    }
-
-    .social-buttons {
-        display: flex;
-        gap: 0.6rem;
-        justify-content: center;
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            background: var(--ui-background-surface);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            ui-icon {
-                font-size: 1.2rem;
-                color: #64748b;
-            }
-
-            &:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            }
-
-            &.google:hover {
-                border-color: #DB4437;
-                background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
-
-                ui-icon {
-                    color: #DB4437;
-                }
-            }
-
-            &.facebook:hover {
-                border-color: #4267B2;
-                background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-
-                ui-icon {
-                    color: #4267B2;
-                }
-            }
-
-            &.apple:hover {
-                border-color: #000000;
-                background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-
-                ui-icon {
-                    color: #000000;
-                }
-            }
+        &:hover {
+            color: var(--ui-color-primary-dark, #1d4ed8);
+            text-decoration: underline;
         }
     }
 }
+
+
 
 // Hero Zone
 .login-hero-zone {
@@ -320,6 +433,9 @@
     justify-content: center;
     padding: 2rem;
     overflow: hidden;
+    height: 100%; // Force full height
+    min-height: 100%; // Ensure it fills the grid cell
+
 
     .hero-overlay {
         position: absolute;

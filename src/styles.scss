@@ -29,6 +29,10 @@
   color: var(--ui-color-text-primary);
 }
 
+html {
+  overflow-y: scroll; // Force scrollbar only on viewport
+}
+
 html,
 body {
   height: 100%;
