@@ -31,6 +31,7 @@
         "forgot_password": "Mot de passe oublié ?",
         "enter_your_credentials": "Entrez vos identifiants pour accéder à votre compte",
         "select_health_center": "Sélectionnez le centre de santé",
+        "select_role_and_credentials": "Sélectionnez votre rôle et entrez vos identifiants",
         "confirm_delete_generic": "Êtes-vous sûr de vouloir supprimer ce registre?",
         "confirmation_delete": "Confirmation de suppression"
     },

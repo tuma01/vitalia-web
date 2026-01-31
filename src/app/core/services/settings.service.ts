@@ -66,11 +66,11 @@ export class SettingsService {
         // This handles the global light/dark mode for BODY only
         const body = document.body;
         if (this.layoutMode() === 'dark') {
-            body.classList.add('dark-mode');
-            body.classList.remove('light-mode');
+            body.classList.add('theme-dark');
+            body.classList.remove('theme-light');
         } else {
-            body.classList.add('light-mode');
-            body.classList.remove('dark-mode');
+            body.classList.add('theme-light');
+            body.classList.remove('theme-dark');
         }
     }
 }

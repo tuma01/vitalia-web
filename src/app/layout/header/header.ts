@@ -1,12 +1,7 @@
 import { Component, EventEmitter, Output, inject, signal, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu'; // Keeping for Dropdown Logic
 import { MatDividerModule } from '@angular/material/divider';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '../../core/services/language.service';
@@ -14,21 +9,20 @@ import { ThemeService, Theme } from '../../core/services/theme.service';
 import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
 import { UiBadgeComponent, UiToolbarComponent, UiIconButtonComponent } from '@ui';
+import { UiIconComponent } from '../../shared/ui/primitives/icon/ui-icon.component'; // PAL Icon
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     FormsModule,
-    MatButtonModule,
-    MatIconModule,
     MatMenuModule,
-    MatBadgeModule,
     MatDividerModule,
     TranslateModule,
     UiBadgeComponent,
     UiToolbarComponent,
-    UiIconButtonComponent
+    UiIconButtonComponent,
+    UiIconComponent
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',

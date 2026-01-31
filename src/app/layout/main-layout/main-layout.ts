@@ -7,11 +7,12 @@ import { filter } from 'rxjs/operators';
 import { Header } from '../header/header';
 import { Sidebar } from '../sidebar/sidebar';
 import { SettingsPanel } from '../settings-panel/settings-panel';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, RouterOutlet, Header, Sidebar, SettingsPanel],
+  imports: [CommonModule, MatSidenavModule, RouterOutlet, Header, Sidebar, SettingsPanel, FooterComponent],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
 })

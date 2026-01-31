@@ -1,6 +1,6 @@
 @use '../../../shared/ui/styles/dashboard-layout';
 
-// Admin specific styles can go here if distinct from shared
+// Doctor specific styles for actions grid
 .actions-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -20,13 +20,11 @@
 
         ui-icon {
             font-size: 2rem;
-            color: var(--ui-color-primary);
         }
 
         span {
             font-size: 0.9rem;
             font-weight: 500;
-            text-align: center;
         }
 
         &:hover {

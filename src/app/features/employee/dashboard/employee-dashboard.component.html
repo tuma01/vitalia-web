@@ -1,0 +1,34 @@
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>Portal del Empleado</h1>
+            <p>Bienvenido, <strong>{{ userName() }}</strong> - {{ tenantName() }}</p>
+        </div>
+    </header>
+
+    <section class="stats-grid">
+        @for (stat of stats; track stat.title) {
+        <ui-card class="stat-card">
+            <div class="stat-icon" [attr.data-variant]="stat.variant">
+                <ui-icon [fontIcon]="stat.icon"></ui-icon>
+            </div>
+            <div class="stat-content">
+                <p class="stat-title">{{ stat.title }}</p>
+                <div class="stat-value-row">
+                    <span class="stat-value">{{ stat.value }}</span>
+                </div>
+            </div>
+        </ui-card>
+        }
+    </section>
+
+    <!-- Simple Content for Employee -->
+    <div class="content-grid">
+        <ui-card>
+            <div class="card-header">
+                <h3><ui-icon>announcement</ui-icon> Comunicados</h3>
+            </div>
+            <p style="color: var(--ui-color-text-secondary); padding: 1rem;">No hay comunicados nuevos.</p>
+        </ui-card>
+    </div>
+</div>

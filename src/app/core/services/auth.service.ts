@@ -40,33 +40,43 @@ export class AuthService {
 
     console.log('[AuthService] Logging in with:', body);
 
-    // --- SIMULACIÓN DE ROLES (SOLO PARA DESARROLLO) ---
-    const normalizedEmail = email.trim().toLowerCase();
+    /* --- SIMULACIÓN DE ROLES (DESHABILITADA PARA USAR API REAL) ---
+    // const normalizedEmail = email.trim().toLowerCase();
 
-    // console.log(`[AuthService Debug] Input email: '${email}'`);
-    // console.log(`[AuthService Debug] Normalized: '${normalizedEmail}'`);
-    // console.log(`[AuthService Debug] Is Nurse? ${normalizedEmail === 'nurse@test.com'}`);
-
-    if (normalizedEmail === 'doctor@test.com') {
-      return this.mockLoginResponse('ROLE_DOCTOR', 'Dr. Gregory House', tenantCode);
-    }
-    if (normalizedEmail === 'admin@test.com') {
-      return this.mockLoginResponse('ROLE_SUPER_ADMIN', 'Super Admin User', tenantCode);
-    }
-    if (normalizedEmail === 'nurse@test.com') {
-      console.log('[AuthService Debug] Intercepting Nurse Login');
-      return this.mockLoginResponse('ROLE_NURSE', 'Enf. Florence Nightingale', tenantCode);
-    }
-    if (normalizedEmail === 'patient@test.com') {
-      return this.mockLoginResponse('ROLE_PATIENT', 'Patient John Doe', tenantCode);
-    }
-    if (normalizedEmail === 'employee@test.com') {
-      return this.mockLoginResponse('ROLE_EMPLOYEE', 'Employee Jane Smith', tenantCode);
-    }
+    // if (normalizedEmail === 'doctor@test.com') {
+    //   return this.mockLoginResponse('ROLE_DOCTOR', 'Dr. Gregory House', tenantCode);
+    // }
+    // if (normalizedEmail === 'admin@test.com') {
+    //   return this.mockLoginResponse('ROLE_SUPER_ADMIN', 'Super Admin User', tenantCode);
+    // }
+    // if (normalizedEmail === 'nurse@test.com') {
+    //   console.log('[AuthService Debug] Intercepting Nurse Login');
+    //   return this.mockLoginResponse('ROLE_NURSE', 'Enf. Florence Nightingale', tenantCode);
+    // }
+    // if (normalizedEmail === 'patient@test.com') {
+    //   return this.mockLoginResponse('ROLE_PATIENT', 'Patient John Doe', tenantCode);
+    // }
+    // if (normalizedEmail === 'employee@test.com') {
+    //   return this.mockLoginResponse('ROLE_EMPLOYEE', 'Employee Jane Smith', tenantCode);
+    // }
+    */
 
     return this.authApiService.login({
       body
-    });
+    }).pipe(
+      tap(response => {
+        if (response.tokens && response.user) {
+          this.sessionService.login({
+            accessToken: response.tokens.accessToken!,
+            refreshToken: response.tokens.refreshToken,
+            user: response.user
+          });
+          console.log('[AuthService] Real login successful. Session stored.');
+        } else {
+          console.error('[AuthService] Login response missing tokens or user data', response);
+        }
+      })
+    );
   }
 
   /**

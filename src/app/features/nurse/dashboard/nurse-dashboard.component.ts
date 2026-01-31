@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 // PAL Components
@@ -25,10 +25,10 @@ interface StatCard {
 }
 
 @Component({
-    selector: 'app-admin-dashboard',
+    selector: 'app-nurse-dashboard',
     standalone: true,
-    templateUrl: './admin-dashboard.component.html',
-    styleUrls: ['./admin-dashboard.component.scss'],
+    templateUrl: './nurse-dashboard.component.html',
+    styleUrls: ['./nurse-dashboard.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [
         CommonModule,
@@ -39,43 +39,42 @@ interface StatCard {
         UiButtonComponent
     ],
 })
-export class AdminDashboardComponent implements OnInit {
+export class NurseDashboardComponent implements OnInit {
     private sessionService = inject(SessionService);
-    public router = inject(Router); // Public for template access
 
     // Signals
     tenantName = signal<string>('');
     userName = signal<string>('');
 
-    // Stats cards configuration
+    // Nurse Stats Cards
     stats: StatCard[] = [
         {
-            title: 'Total Personal',
-            value: 156,
-            icon: 'people',
-            variant: 'primary',
-            trend: { value: 12, isPositive: true }
-        },
-        {
-            title: 'Pacientes Activos',
-            value: 1243,
+            title: 'Pacientes Asignados',
+            value: 12,
             icon: 'personal_injury',
-            variant: 'success',
-            trend: { value: 8, isPositive: true }
+            variant: 'info',
+            trend: { value: 2, isPositive: true }
         },
         {
-            title: 'Citas Hoy',
-            value: 47,
-            icon: 'event',
+            title: 'Medicaciones Pendientes',
+            value: 5,
+            icon: 'medication',
             variant: 'warning',
-            trend: { value: 3, isPositive: false }
+            trend: { value: 1, isPositive: false }
         },
         {
-            title: 'Ocupación Camas',
-            value: '78%',
+            title: 'Camas Ocupadas',
+            value: '85%',
             icon: 'bed',
-            variant: 'danger', // Semantically better than purple for "Occupancy/Alert"
+            variant: 'danger',
             trend: { value: 5, isPositive: true }
+        },
+        {
+            title: 'Altas Previstas',
+            value: 4,
+            icon: 'output',
+            variant: 'success',
+            trend: { value: 1, isPositive: true }
         }
     ];
 
@@ -83,7 +82,7 @@ export class AdminDashboardComponent implements OnInit {
         const user = this.sessionService.getCurrentUser();
         if (user) {
             this.tenantName.set(user.tenantName || 'Hospital');
-            this.userName.set(user.personName || 'Administrador');
+            this.userName.set(user.personName || 'Enfermero/a');
         }
     }
 }

@@ -4,6 +4,7 @@ import { Observable, tap, catchError, of } from 'rxjs';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { ThemeDto } from '../../api/models/theme-dto';
 import { ApiConfiguration } from '../../api/api-configuration';
+import { UiConfigService, TenantTheme, Theme } from '../../shared/ui/config/ui-config.service';
 
 /**
  * Default theme configuration when tenant hasn't configured their theme
@@ -34,6 +35,7 @@ export class TenantThemeService {
     constructor(
         private http: HttpClient,
         private config: ApiConfiguration,
+        private uiConfig: UiConfigService,
         @Inject(DOCUMENT) private document: Document,
         @Inject(PLATFORM_ID) private platformId: Object
     ) { }
@@ -58,8 +60,7 @@ export class TenantThemeService {
     }
 
     /**
-     * Apply theme to the application
-     * Sets CSS custom properties and updates logo/favicon
+     * Apply theme to the application using UiConfigService
      * @param theme The theme configuration to apply
      */
     applyTheme(theme: ThemeDto): void {
@@ -68,37 +69,43 @@ export class TenantThemeService {
         // Save theme to localStorage for persistence
         localStorage.setItem('tenantTheme', JSON.stringify(theme));
 
-        // Apply CSS custom properties
-        const root = this.document.documentElement;
-        if (theme.primaryColor) {
-            root.style.setProperty('--primary-color', theme.primaryColor);
-        }
-        if (theme.accentColor) {
-            root.style.setProperty('--accent-color', theme.accentColor);
-        }
-        if (theme.warnColor) {
-            root.style.setProperty('--warn-color', theme.warnColor);
-        }
-        if (theme.secondaryColor) {
-            root.style.setProperty('--secondary-color', theme.secondaryColor);
-        }
-        if (theme.backgroundColor) {
-            root.style.setProperty('--background-color', theme.backgroundColor);
-        }
-        if (theme.textColor) {
-            root.style.setProperty('--text-color', theme.textColor);
-        }
-        if (theme.linkColor) {
-            root.style.setProperty('--link-color', theme.linkColor);
-        }
-        if (theme.buttonTextColor) {
-            root.style.setProperty('--button-text-color', theme.buttonTextColor);
-        }
-        if (theme.fontFamily) {
-            root.style.setProperty('--font-family', theme.fontFamily);
+        // Map ThemeDto (API) to TenantTheme (UI Config)
+        const tenantTheme: TenantTheme = {
+            primaryColor: theme.primaryColor,
+            accentColor: theme.accentColor,
+            warnColor: theme.warnColor,
+            secondaryColor: theme.secondaryColor,
+            backgroundColor: theme.backgroundColor,
+            textColor: theme.textColor,
+            linkColor: theme.linkColor,
+            buttonTextColor: theme.buttonTextColor,
+            fontFamily: theme.fontFamily,
+            themeMode: theme.themeMode as any,
+            logoUrl: theme.logoUrl,
+            faviconUrl: theme.faviconUrl,
+            customCss: theme.customCss,
+            allowCustomCss: theme.allowCustomCss
+        };
+
+        // Update UI Config Service (Signal Logic handles CSS vars)
+        this.uiConfig.tenantTheme.set(tenantTheme);
+
+        // Update Theme Mode (Light/Dark)
+        if (theme.themeMode) {
+            const rawMode = theme.themeMode.toLowerCase();
+            if (rawMode === 'light' || rawMode === 'dark') {
+                this.uiConfig.theme.set(rawMode as Theme);
+            } else if (rawMode === 'auto') {
+                this.uiConfig.theme.set('system');
+            }
         }
 
-        // Update tenant logo elements
+        // Handle Favicon & Logo (that are not CSS vars)
+        this.updateAssets(theme);
+    }
+
+    private updateAssets(theme: ThemeDto): void {
+        // Update tenant logo elements (if any exist outside of header components that bind to this)
         if (theme.logoUrl) {
             const logoElements = this.document.querySelectorAll('.tenant-logo');
             logoElements.forEach(el => {
@@ -112,12 +119,6 @@ export class TenantThemeService {
             if (favicon) {
                 favicon.href = theme.faviconUrl;
             }
-        }
-
-        // Apply theme mode class (light/dark)
-        this.document.body.classList.remove('theme-light', 'theme-dark', 'theme-auto');
-        if (theme.themeMode) {
-            this.document.body.classList.add(`theme-${theme.themeMode.toLowerCase()}`);
         }
     }
 
@@ -137,6 +138,7 @@ export class TenantThemeService {
     clearTheme(): void {
         if (isPlatformBrowser(this.platformId)) {
             localStorage.removeItem('tenantTheme');
+            this.uiConfig.tenantTheme.set(null);
         }
     }
 }

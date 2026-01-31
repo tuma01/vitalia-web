@@ -43,7 +43,7 @@ export const routes: Routes = [
                 children: []
             },
 
-            // Role-based dashboards - Admin enabled, others coming soon
+            // Role-based dashboards - Admin enabled, others now implemented
             {
                 path: 'admin',
                 canActivate: [roleGuard],
@@ -54,14 +54,12 @@ export const routes: Routes = [
                         loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
                     },
                     {
+                        // Legacy alias support
                         path: 'hospital-dashboard',
                         loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
                     }
                 ]
-            }
-
-            // Other roles - Coming soon
-            /*
+            },
             {
                 path: 'doctor',
                 canActivate: [roleGuard],
@@ -106,7 +104,8 @@ export const routes: Routes = [
                     }
                 ]
             },
-            // Super Admin routes
+            /*
+            // Super Admin routes (Coming soon)
             {
                 path: 'super-admin',
                 canActivate: [roleGuard],
@@ -123,6 +122,7 @@ export const routes: Routes = [
                 ]
             }
             */
+
         ]
     },
 

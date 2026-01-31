@@ -1,23 +1,21 @@
-<ui-toolbar mode="floating">
+<ui-toolbar mode="fixed">
     <!-- START: Navigation & Branding -->
     <div start class="toolbar-start">
         <ui-icon-button icon="menu" (clicked)="toggleSidebar()" aria-label="Toggle sidebar"></ui-icon-button>
         <span class="app-title">{{ 'app.title' | translate }}</span>
     </div>
 
-    <!-- CENTER: Search & Context -->
-    <div center class="toolbar-center">
+    <!-- END: Global Actions -->
+    <div end class="toolbar-end">
+        <!-- Search (Moved to Right) -->
         @if (!isMobile()) {
         <div class="header-search">
-            <mat-icon class="search-icon">search</mat-icon>
+            <ui-icon class="search-icon">search</ui-icon>
             <input type="text" class="search-input" [placeholder]="'header.search' | translate"
                 [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
         </div>
         }
-    </div>
 
-    <!-- END: Global Actions -->
-    <div end class="toolbar-end">
         <!-- Language Selector -->
         <ui-icon-button icon="language" [matMenuTriggerFor]="languageMenu"
             aria-label="Change language"></ui-icon-button>
@@ -43,16 +41,16 @@
             </div>
             <mat-divider></mat-divider>
             <button mat-menu-item>
-                <mat-icon>person</mat-icon>
+                <ui-icon>person</ui-icon>
                 <span>{{ 'header.profile' | translate }}</span>
             </button>
             <button mat-menu-item>
-                <mat-icon>settings</mat-icon>
+                <ui-icon>settings</ui-icon>
                 <span>{{ 'header.settings' | translate }}</span>
             </button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
-                <mat-icon>exit_to_app</mat-icon>
+                <ui-icon>exit_to_app</ui-icon>
                 <span>{{ 'header.logout' | translate }}</span>
             </button>
         </mat-menu>
