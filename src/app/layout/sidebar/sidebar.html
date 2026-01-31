@@ -10,7 +10,7 @@
         }
         @if (isCollapsed && !isHovering) {
         <div class="logo-icon">
-            <mat-icon>local_hospital</mat-icon>
+            <ui-icon>local_hospital</ui-icon>
         </div>
         }
     </div>
@@ -22,8 +22,8 @@
         @if (item.type === 'link' && (!isCollapsed || isHovering)) {
         <a class="menu-item" [routerLink]="item.route" routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}"
-            [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
-            <mat-icon class="menu-icon">{{ item.icon || 'circle' }}</mat-icon>
+            [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
+            <ui-icon class="menu-icon">{{ item.icon || 'circle' }}</ui-icon>
             <span class="menu-text">{{ 'menu.' + item.name | translate }}</span>
             @if (item.badge) {
             <span class="badge" [style.background-color]="item.badge.color">
@@ -37,20 +37,15 @@
         @if (item.type === 'link' && isCollapsed && !isHovering) {
         <a class="menu-item collapsed-item" [routerLink]="item.route" routerLinkActive="active"
             [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}"
-            [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
-            <mat-icon class="menu-icon">{{ item.icon || 'circle' }}</mat-icon>
+            [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
+            <ui-icon class="menu-icon">{{ item.icon || 'circle' }}</ui-icon>
         </a>
         }
 
         <!-- Submenu/Group Level 1 (has children) - EXPANDED -->
         @if ((item.type === 'sub' || item.type === 'group') && (!isCollapsed || isHovering)) {
-        <mat-expansion-panel class="submenu-panel">
-            <mat-expansion-panel-header [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
-                <mat-panel-title>
-                    <mat-icon class="menu-icon">{{ item.icon || 'folder' }}</mat-icon>
-                    <span class="menu-text">{{ 'menu.' + item.name | translate }}</span>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
+        <ui-expansion-panel class="submenu-panel" [title]="'menu.' + item.name | translate"
+            [icon]="item.icon || 'folder'" [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
 
             <!-- Submenu Items Level 2 -->
             <div class="submenu-list">
@@ -58,44 +53,36 @@
                 <!-- Level 2: Simple Link -->
                 @if (subItem.type === 'link') {
                 <a class="submenu-item" [routerLink]="subItem.route" routerLinkActive="active"
-                    [matTooltip]="'menu.' + subItem.name | translate" matTooltipPosition="right">
+                    [uiTooltip]="'menu.' + subItem.name | translate" uiTooltipPosition="right">
                     <span class="submenu-text">{{ 'menu.' + subItem.name | translate }}</span>
                 </a>
                 }
 
                 <!-- Level 2: Nested Submenu -->
                 @if (subItem.type === 'sub' || subItem.type === 'group') {
-                <mat-expansion-panel class="nested-panel">
-                    <mat-expansion-panel-header [matTooltip]="'menu.' + subItem.name | translate"
-                        matTooltipPosition="right">
-                        <mat-panel-title>
-                            @if (subItem.icon) {
-                            <mat-icon class="nested-icon">{{ subItem.icon }}</mat-icon>
-                            }
-                            <span class="nested-text">{{ 'menu.' + subItem.name | translate }}</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
+                <ui-expansion-panel class="nested-panel" [title]="'menu.' + subItem.name | translate"
+                    [icon]="subItem.icon" [uiTooltip]="'menu.' + subItem.name | translate" uiTooltipPosition="right">
 
                     <!-- Level 3: Nested Items -->
                     <div class="nested-list">
                         @for (nestedItem of subItem.children; track nestedItem.name) {
                         <a class="nested-item" [routerLink]="nestedItem.route" routerLinkActive="active"
-                            [matTooltip]="'menu.' + nestedItem.name | translate" matTooltipPosition="right">
+                            [uiTooltip]="'menu.' + nestedItem.name | translate" uiTooltipPosition="right">
                             <span class="nested-item-text">{{ 'menu.' + nestedItem.name | translate }}</span>
                         </a>
                         }
                     </div>
-                </mat-expansion-panel>
+                </ui-expansion-panel>
                 }
                 }
             </div>
-        </mat-expansion-panel>
+        </ui-expansion-panel>
         }
 
         <!-- Submenu/Group (has children) - COLLAPSED -->
         @if ((item.type === 'sub' || item.type === 'group') && isCollapsed && !isHovering) {
-        <a class="menu-item collapsed-item" [matTooltip]="'menu.' + item.name | translate" matTooltipPosition="right">
-            <mat-icon class="menu-icon">{{ item.icon || 'folder' }}</mat-icon>
+        <a class="menu-item collapsed-item" [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
+            <ui-icon class="menu-icon">{{ item.icon || 'folder' }}</ui-icon>
         </a>
         }
         }

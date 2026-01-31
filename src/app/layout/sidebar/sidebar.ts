@@ -1,28 +1,25 @@
 import { Component, OnInit, inject, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { MenuService } from '../../core/services/menu.service';
 import { MenuItem } from '../../core/models/menu.model';
 import { SettingsService } from '../../core/services/settings.service';
 import { SessionService } from '../../core/services/session.service';
+import {
+  UiIconComponent,
+  UiExpansionPanelComponent,
+  UiTooltipDirective
+} from '@ui';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
   imports: [
     RouterModule,
-    MatListModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatBadgeModule,
-    MatTooltipModule,
-    TranslateModule
+    TranslateModule,
+    UiIconComponent,
+    UiExpansionPanelComponent,
+    UiTooltipDirective
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',

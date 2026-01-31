@@ -31,6 +31,7 @@
         "forgot_password": "¿Olvidaste tu contraseña?",
         "enter_your_credentials": "Ingresa tus credenciales para acceder a tu cuenta",
         "select_health_center": "Selecciona el centro de salud",
+        "select_role_and_credentials": "Selecciona tu rol e ingresa tus credenciales",
         "confirm_delete_generic": "¿Estás seguro de eliminar este registro?",
         "confirmation_delete": "Confirmación de eliminación"
     },

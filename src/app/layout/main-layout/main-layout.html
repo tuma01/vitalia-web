@@ -10,7 +10,10 @@
 
     <mat-sidenav-content class="content" [class.collapsed]="sidebarCollapsed && !sidebarHovered && !isMobile">
         <div class="main-content-wrapper">
-            <router-outlet></router-outlet>
+            <div class="page-content">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>

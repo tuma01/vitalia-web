@@ -27,7 +27,7 @@ export interface TenantTheme {
 })
 export class UiConfigService {
   theme = signal<Theme>('light');
-  density = signal<Density>('comfortable');
+  density = signal<Density>('default');
   brand = signal<Brand>('vitalia');
   inputAppearance = signal<'outline' | 'filled'>('outline');
   tenantTheme = signal<TenantTheme | null>(null);
@@ -42,9 +42,15 @@ export class UiConfigService {
       if (theme === 'dark') {
         document.body.classList.add('theme-dark');
         document.body.classList.remove('theme-light');
+        // Force critical tokens for dark mode if not handled by CSS
+        document.body.style.setProperty('--ui-color-text-primary', '#f8fafc');
+        document.body.style.setProperty('--ui-color-text', '#f8fafc');
       } else {
         document.body.classList.add('theme-light');
         document.body.classList.remove('theme-dark');
+        // Remove forced tokens to revert to CSS or Tenant defaults
+        document.body.style.removeProperty('--ui-color-text-primary');
+        document.body.style.removeProperty('--ui-color-text');
       }
     });
 

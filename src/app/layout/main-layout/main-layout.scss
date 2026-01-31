@@ -1,9 +1,12 @@
 .sidenav-container {
+    // Occupy full viewport minus header
     height: calc(100vh - 64px);
+    // Fallback and dynamic viewport support
     height: calc(100dvh - 64px);
-    /* Ensure container doesn't force scrollbars */
+    width: 100%;
+    margin: 0;
     overflow: hidden;
-    background-color: transparent !important; // Fix for white flash in dark mode
+    background-color: transparent !important;
 }
 
 .sidenav {
@@ -43,15 +46,33 @@
     }
 }
 
+
 .main-content-wrapper {
     min-height: 100%;
     box-sizing: border-box;
-    padding: 24px 24px 40px 24px; // Bottom padding ensures space at the end
+    display: flex;
+    flex-direction: column;
+    padding: 0; // Remove padding so Footer can be full width
 
-    @media (max-width: 600px) {
-        padding: 16px 16px 40px 16px;
+    // Container for the actual page content
+    .page-content {
+        flex: 1;
+        padding: 24px; // Restore padding here
+
+        @media (max-width: 600px) {
+            padding: 16px;
+        }
+    }
+
+    // Footer is now full width
+    >app-footer {
+        margin-top: auto;
+        width: 100%;
+        z-index: 10;
+        position: relative;
     }
 }
+
 
 /* Material overrides to prevent shadow artifacts and white flash */
 .mat-drawer-inner-container {

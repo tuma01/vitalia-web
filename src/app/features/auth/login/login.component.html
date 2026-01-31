@@ -4,8 +4,8 @@
             <!-- LEFT: Form -->
             <div class="login-form-zone">
                 <div class="login-header">
-                    <h1>Iniciar Sesión</h1>
-                    <p>Selecciona tu rol e ingresa tus credenciales</p>
+                    <h1>{{ 'common.login' | translate }}</h1>
+                    <p>{{ 'common.select_role_and_credentials' | translate }}</p>
                 </div>
 
                 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
@@ -37,7 +37,6 @@
                             </div>
                             }
                         </div>
-
                     </div>
 
                     <!-- Tenant Selector -->
@@ -49,14 +48,20 @@
 
                     <!-- Email -->
                     <ui-form-field label="Correo Electrónico" [error]="getError('email')">
+                        <ui-icon uiPrefix>email</ui-icon>
                         <ui-input formControlName="email" type="email" placeholder="tu@email.com">
                         </ui-input>
                     </ui-form-field>
 
                     <!-- Password -->
                     <ui-form-field label="Contraseña" [error]="getError('password')">
-                        <ui-input formControlName="password" type="password" placeholder="••••••••">
+                        <ui-icon uiPrefix>lock</ui-icon>
+                        <ui-input formControlName="password" [type]="showPassword() ? 'text' : 'password'"
+                            placeholder="••••••••">
                         </ui-input>
+                        <ui-icon uiSuffix (click)="togglePassword()" class="cursor-pointer">
+                            {{ showPassword() ? 'visibility' : 'visibility_off' }}
+                        </ui-icon>
                     </ui-form-field>
 
                     <!-- Remember Me & Forgot Password -->

@@ -9,6 +9,8 @@ import {
   UiButtonComponent,
   UiInputComponent,
   UiFormFieldComponent,
+  UiPrefixDirective,
+  UiSuffixDirective,
   UiSelectNativeComponent,
   UiSelectNativeOption,
   UiCheckboxComponent,
@@ -23,6 +25,8 @@ import { Tenant } from '../../../api/models/tenant';
 
 // Core Services
 import { AuthService } from '../../../core/services/auth.service';
+import { TenantThemeService } from '../../../core/services/tenant-theme.service';
+import { switchMap } from 'rxjs';
 
 interface RoleOption {
   value: string;
@@ -46,6 +50,8 @@ interface RoleOption {
     UiButtonComponent,
     UiInputComponent,
     UiFormFieldComponent,
+    UiPrefixDirective,
+    UiSuffixDirective,
     UiSelectNativeComponent,
     UiCheckboxComponent,
     UiIconComponent,
@@ -56,13 +62,14 @@ export class LoginComponent {
   private router = inject(Router);
   private tenantApiService = inject(TenantService);
   private authService = inject(AuthService);
+  private tenantThemeService = inject(TenantThemeService);
   private toastService = inject(UiToastService); // Inject Service
 
   // Signals
   selectedRole = signal<string>('');
   tenants = signal<Tenant[]>([]);
   isLoading = signal<boolean>(false);
-  // errorMessage signal removed
+  showPassword = signal<boolean>(false);
 
   // Roles configuration - Solo Admin habilitado
   roles: RoleOption[] = [
@@ -77,8 +84,8 @@ export class LoginComponent {
   loginForm = new FormGroup({
     role: new FormControl<string>('', [Validators.required]),
     tenantCode: new FormControl<string>('', [Validators.required]),
-    email: new FormControl<string>('', [Validators.required, Validators.email]),
-    password: new FormControl<string>('', [Validators.required, Validators.minLength(8)]),
+    email: new FormControl<string>('admin-dev@test.com', [Validators.required, Validators.email]),
+    password: new FormControl<string>('dev-password', [Validators.required, Validators.minLength(8)]),
     rememberMe: new FormControl<boolean>(false)
   });
 
@@ -121,6 +128,7 @@ export class LoginComponent {
   onLogin(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      this.toastService.warning('Por favor verifica los datos del formulario.', 'Formulario Inválido', { position: 'bottom-center' });
       return;
     }
 
@@ -130,16 +138,25 @@ export class LoginComponent {
 
     this.isLoading.set(true);
 
-    this.authService.login(email, password, tenantCode).subscribe({
-      next: (response) => {
+    this.authService.login(email, password, tenantCode).pipe(
+      // SwitchMap to load theme immediately after successful login
+      switchMap(() => this.tenantThemeService.loadThemeForTenant(tenantCode))
+    ).subscribe({
+      next: (theme) => {
         this.isLoading.set(false);
+        console.log('[Login] Theme loaded successfully', theme);
         // AuthService ya maneja la redirección
         this.authService.navigateBasedOnRole();
       },
       error: (error) => {
         this.isLoading.set(false);
-        this.toastService.error('Credenciales inválidas. Por favor intenta de nuevo.', 'Error de Acceso', { position: 'bottom-center' });
-        console.error('Login error:', error);
+        console.error('Login error full object:', error);
+
+        if (error.status === 404) {
+          this.toastService.error('Servidor o recurso no encontrado (404). Verifica el Tenant.', 'Error de Conexión', { position: 'bottom-center' });
+        } else {
+          this.toastService.error('Credenciales inválidas o error de servidor.', 'Error de Acceso', { position: 'bottom-center' });
+        }
       }
     });
   }
@@ -153,5 +170,9 @@ export class LoginComponent {
     if (control.errors['minlength']) return 'Mínimo 8 caracteres';
 
     return null;
+  }
+
+  togglePassword() {
+    this.showPassword.update(value => !value);
   }
 }

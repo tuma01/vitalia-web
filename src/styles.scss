@@ -25,8 +25,83 @@
 
 // Dark theme override
 .theme-dark {
-  --body-background-color: #0f172a; // Deep slate
-  color: var(--ui-color-text-primary);
+  color-scheme: dark; // Ensure browser knows preference
+
+  --body-background-color: #121212; // Material Design Standard Dark Background
+  --ui-card-bg: #1e1e1e; // Neutral Surface Color (No blue tint)
+  --ui-card-border-color: #333333;
+  --ui-card-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+
+  // Header Background Fix - Neutral
+  --ui-toolbar-bg: #1e1e1e !important;
+
+  // Force white text variables
+  --ui-color-text-primary: #ffffff !important;
+  --ui-color-text: #ffffff !important;
+  --ui-color-text-secondary: #a0a0a0 !important;
+
+  // Apply globally
+  color: #ffffff;
+
+  // Specific fix for Cards
+  .stat-card,
+  .ui-card,
+  ui-card,
+  .pilot-widget-card,
+  .pilot-card {
+    background-color: var(--ui-card-bg) !important;
+    color: #ffffff !important;
+    border-color: var(--ui-card-border-color) !important;
+
+    p,
+    span,
+    h1,
+    h2,
+    h3,
+    h4,
+    .stat-value,
+    .stat-title,
+    .activity-title {
+      color: #ffffff !important;
+    }
+
+    .text-secondary,
+    .activity-subtitle {
+      color: #a0a0a0 !important;
+    }
+  }
+
+  // Specific fix for Material Overlays (Select, Menu, etc.)
+  .mat-mdc-select-panel,
+  .mat-mdc-menu-panel,
+  .mat-mdc-autocomplete-panel {
+    background-color: var(--ui-card-bg) !important; // #1e1e1e
+    color: #ffffff !important;
+    border: 1px solid var(--ui-card-border-color);
+  }
+
+  .mat-mdc-option {
+    color: #ffffff !important;
+
+    &:hover,
+    &.mat-mdc-option-active,
+    &.mdc-list-item--selected {
+      background-color: rgba(255, 255, 255, 0.08) !important;
+    }
+
+    .mdc-list-item__primary-text {
+      color: #ffffff !important;
+    }
+
+    .mat-pseudo-checkbox {
+      --mat-minimal-pseudo-checkbox-selected-checkmark-color: #22c55e; // Success Green
+    }
+  }
+
+  // Fix input backgrounds if they are Material
+  .mat-mdc-text-field-wrapper {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+  }
 }
 
 html {
@@ -37,12 +112,109 @@ html,
 body {
   height: 100%;
   margin: 0;
+  // Use surface color for body to ensure seamless look if needed, or stick to background
   background-color: var(--body-background-color);
   color: var(--ui-color-text-primary, #1a1a1a);
-  /* Ensure background color covers whole page */
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  transition: background-color 0.3s ease; // Smooth theme transition
+  transition: background-color 0.3s ease;
+  overflow-y: auto; // Explicitly enable vertical scrolling for the whole page
 }
+
+// Global Token Mappings (Polyfill for missing DS tokens)
+:root {
+  --ui-card-bg: #ffffff;
+  --ui-card-border-color: #e2e8f0;
+  --ui-card-radius: 16px;
+  --ui-card-padding: 24px;
+  --ui-card-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  // Font sizes if missing
+  --ui-font-size-sm: 0.875rem;
+  --ui-font-size-md: 1rem;
+  --ui-font-size-lg: 1.25rem;
+  --ui-font-weight-bold: 600;
+  --ui-space-sm: 0.5rem;
+  --ui-space-md: 1rem;
+  --ui-space-2xs: 0.25rem;
+}
+
+.theme-dark {
+  --body-background-color: #121212; // Material Design Standard Dark Background
+  --ui-card-bg: #1e1e1e; // Neutral Surface Color (No blue tint)
+  --ui-card-border-color: #333333;
+  --ui-card-elevation: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+
+  // Header Background Fix - Neutral
+  --ui-toolbar-bg: #1e1e1e !important;
+
+  // Force white text variables with !important to override any JS inline styles
+  --ui-color-text-primary: #ffffff !important;
+  --ui-color-text: #ffffff !important;
+  --ui-color-text-secondary: #a0a0a0 !important; // Neutral Gray text
+
+  // Apply globally to common containers
+  color: #ffffff;
+
+  // Specific fix for Cards
+  .stat-card,
+  .ui-card,
+  ui-card,
+  .pilot-widget-card,
+  // Explicitly target pilot cards if needed
+  .pilot-card {
+    background-color: var(--ui-card-bg) !important;
+    color: #ffffff !important;
+    border-color: var(--ui-card-border-color) !important;
+
+    p,
+    span,
+    h1,
+    h2,
+    h3,
+    h4,
+    .stat-value,
+    .stat-title,
+    .activity-title {
+      color: #ffffff !important;
+    }
+
+    // Specific fix for Material Overlays (Select, Menu, etc.)
+    .mat-mdc-select-panel,
+    .mat-mdc-menu-panel,
+    .mat-mdc-autocomplete-panel {
+      background-color: var(--ui-card-bg) !important; // #1e1e1e
+      color: #ffffff !important;
+      border: 1px solid var(--ui-card-border-color);
+    }
+
+    .mat-mdc-option {
+      color: #ffffff !important;
+
+      &:hover,
+      &.mat-mdc-option-active,
+      &.mdc-list-item--selected {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+      }
+
+      .mdc-list-item__primary-text {
+        color: #ffffff !important;
+      }
+
+      .mat-pseudo-checkbox {
+        --mat-minimal-pseudo-checkbox-selected-checkmark-color: #22c55e; // Success Green
+      }
+    }
+
+    // Fix input backgrounds if they are Material
+    .mat-mdc-text-field-wrapper {
+      background-color: rgba(255, 255, 255, 0.05) !important;
+    }
+  }
+}
+
+// Force Close .theme-dark
+
+// Force Close .theme-dark
 
 /* Global SnackBar Styles */
 .error-snackbar {
@@ -80,8 +252,6 @@ body,
 }
 
 // Custom Delete Confirmation Dialog Styles
-// Custom Delete Confirmation Dialog Styles
-// Custom Delete Confirmation Dialog Styles
 .delete-confirmation-dialog {
   .mat-mdc-dialog-container {
     padding: 0;
@@ -100,11 +270,10 @@ body,
 
   .mat-mdc-dialog-title {
     display: flex;
-    flex-direction: row; // CHANGED TO ROW
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    // PADDING + BORDER
     padding: 16px 24px;
     margin: 0;
     border-bottom: 1px solid #e2e8f0;
@@ -116,7 +285,6 @@ body,
     font-weight: 600;
     font-size: 1.25rem;
 
-    // Icon styling
     .mat-icon {
       width: 32px;
       height: 32px;
@@ -130,7 +298,7 @@ body,
     text-align: center;
     color: #4a5568;
     font-size: 1rem;
-    padding: 24px; // Consistent padding
+    padding: 24px;
 
     p {
       margin: 0 0 8px 0;
@@ -170,7 +338,6 @@ body,
   .mat-mdc-dialog-actions {
     justify-content: center;
     gap: 16px;
-    // PADDING + BORDER margin
     padding: 16px 24px;
     margin: 0;
     border-top: 1px solid #e2e8f0;
@@ -189,7 +356,6 @@ body,
       border: none;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-      // Cancel Button
       &:first-child {
         background: transparent;
         color: #718096;
@@ -213,7 +379,6 @@ body,
         }
       }
 
-      // OK/Delete Button - Blue Gradient
       &:last-child {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;

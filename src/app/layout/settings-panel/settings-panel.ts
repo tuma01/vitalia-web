@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatRadioModule } from '@angular/material/radio';
+import { UiButtonComponent } from '../../shared/ui/primitives/button/ui-button.component'; // PAL Button
+import { UiIconComponent } from '../../shared/ui/primitives/icon/ui-icon.component'; // PAL Icon
+import { MatRadioModule } from '@angular/material/radio'; // Keep for now if PAL Radio missing
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SettingsService, LayoutMode, SidebarColor } from '../../core/services/settings.service';
+import { UiConfigService } from '../../shared/ui/config/ui-config.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -13,18 +14,18 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatIconModule,
+    UiButtonComponent,
+    UiIconComponent,
     MatRadioModule,
     MatDividerModule,
     MatTooltipModule,
     FormsModule
   ],
   template: `
-    <!-- Floating Handle -->
-    <button mat-fab color="primary" class="settings-handle" [class.handle-open]="isOpen()" (click)="toggle()">
-      <mat-icon [class.spin]="isOpen()">settings</mat-icon>
-    </button>
+    <!-- Floating Handle (PAL Button styled as FAB) -->
+    <ui-button variant="primary" class="settings-handle" [class.handle-open]="isOpen()" (click)="toggle()">
+      <ui-icon [class.spin]="isOpen()">settings</ui-icon>
+    </ui-button>
 
     <!-- Panel Content -->
     <div class="settings-panel" [class.open]="isOpen()" [class.dark-panel]="layoutMode() === 'dark'">
@@ -78,22 +79,47 @@ import { FormsModule } from '@angular/forms';
             </div>
         </div>
 
+
+        <!-- Density Section -->
+        <div class="settings-section">
+            <h3 class="section-title">Compactness</h3>
+            
+            <div class="density-toggles">
+                <button class="density-btn" 
+                        [class.selected]="currentDensity === 'default'"
+                        (click)="setDensity('default')">
+                    <span>Default</span>
+                </button>
+                <button class="density-btn" 
+                        [class.selected]="currentDensity === 'comfortable'"
+                        (click)="setDensity('comfortable')">
+                    <span>Cómodo</span>
+                </button>
+                <button class="density-btn" 
+                        [class.selected]="currentDensity === 'compact'"
+                        (click)="setDensity('compact')">
+                    <span>Compacto</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Sidebar Section -->
         <div class="settings-section">
             <h3 class="section-title">Sidebar Menu Color</h3>
+
             
             <div class="sidebar-toggles">
                 <button class="toggle-btn light-btn" 
                         [class.selected]="sidebarColor() === 'light'"
                         (click)="setSidebar('light')">
                     Light
-                    <mat-icon *ngIf="sidebarColor() === 'light'" class="check-icon">check</mat-icon>
+                    <ui-icon *ngIf="sidebarColor() === 'light'" class="check-icon">check</ui-icon>
                 </button>
                 <button class="toggle-btn dark-btn" 
                         [class.selected]="sidebarColor() === 'dark'"
                         (click)="setSidebar('dark')">
                     Dark
-                    <mat-icon *ngIf="sidebarColor() === 'dark'" class="check-icon">check</mat-icon>
+                    <ui-icon *ngIf="sidebarColor() === 'dark'" class="check-icon">check</ui-icon>
                 </button>
             </div>
         </div>
@@ -110,7 +136,7 @@ import { FormsModule } from '@angular/forms';
                         (click)="setTheme(theme.className)">
                   <span class="color-preview" [ngClass]="theme.className"></span>
                   <div class="active-overlay" *ngIf="currentTheme === theme.className">
-                    <mat-icon>check</mat-icon>
+                    <ui-icon>check</ui-icon>
                   </div>
                 </button>
             </div>
@@ -127,16 +153,64 @@ import { FormsModule } from '@angular/forms';
     }
     :host > * { pointer-events: auto; }
 
-    /* Handle */
+    /* Handle (PAL Override) */
+    /* Handle (PAL Override) */
     .settings-handle {
-      position: fixed; top: 250px; right: 0; z-index: 1001;
-      border-top-right-radius: 0; border-bottom-right-radius: 0;
-      box-shadow: -2px 0 8px rgba(0,0,0,0.3);
-      transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: fixed !important; 
+      top: 250px !important; 
+      right: 0 !important; 
+      z-index: 1001 !important;
+      
+      /* Shape: Soft Rounded Left Corners */
+      border-radius: 20px 0 0 20px !important; 
+      
+      /* Color: Explicitly bind to Theme Variables (Global Fix) */
+      background-color: var(--ui-color-primary, #3f51b5) !important;
+      color: var(--ui-color-on-primary, #fff) !important;
+
+      /* Remove potential artifacts */
+      border: none !important;
+      outline: none !important;
+      min-width: 0 !important;
+      
+      /* Shadow to the left only */
+      box-shadow: -4px 0 12px rgba(0,0,0,0.3) !important;
+      transition: right 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+      
+      /* Ensure dimensions */
+      width: 48px !important;
+      height: 48px !important;
+      padding: 0 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+
+      /* Prevent text truncation */
+      white-space: nowrap !important;
+      overflow: visible !important;
     }
-    .settings-handle.handle-open { right: 280px; border-radius: 50%; border-top-right-radius: 0; border-bottom-right-radius: 0; }
-    .settings-handle mat-icon { transition: transform 0.5s ease; }
-    .settings-handle mat-icon.spin { transform: rotate(180deg); }
+
+    /* Deep fix for inner artifacts */
+    .settings-handle ::ng-deep button {
+          border: none !important;
+          outline: none !important;
+          background: transparent !important;
+          padding: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          overflow: visible !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          cursor: pointer !important;
+    }
+    
+    .settings-handle.handle-open { 
+        right: 280px !important; /* Flush with 280px panel width */
+    }
+    
+    .settings-handle ui-icon { transition: transform 0.5s ease; }
+    .settings-handle ui-icon.spin { transform: rotate(180deg); }
 
     /* Panel Container */
     .settings-panel {
@@ -220,7 +294,8 @@ import { FormsModule } from '@angular/forms';
 
     /* Layout Cards */
     .layout-toggles {
-        display: flex; flex-direction: column; gap: 16px; margin-top: 12px;
+        display: flex; flex-direction: row; gap: 12px; margin-top: 12px;
+        justify-content: space-between;
     }
 
     .layout-card {
@@ -229,6 +304,7 @@ import { FormsModule } from '@angular/forms';
         text-align: center;
         transition: all 0.2s;
         background: transparent;
+        flex: 1;
 
         &.selected .image-preview {
             border-color: #5c77ff; 
@@ -240,8 +316,9 @@ import { FormsModule } from '@angular/forms';
     }
 
     .image-preview {
-        height: 90px;
-        width: 160px;
+        height: 68px;
+        width: 100%;
+        max-width: 110px;
         margin: 0 auto;
         border-radius: 8px;
         position: relative;
@@ -278,6 +355,51 @@ import { FormsModule } from '@angular/forms';
          .mock-body { background: #1e1e2d; }
     }
 
+
+
+    /* Density Toggles */
+    .density-toggles {
+        display: flex;
+        background: #f0f0f0;
+        border-radius: 8px;
+        padding: 4px;
+        gap: 4px;
+        border: 1px solid #e0e0e0;
+
+        .theme-dark & {
+           background: #111116;
+           border-color: #333;
+        }
+    }
+
+    .density-btn {
+        flex: 1;
+        border: none;
+        background: transparent;
+        color: rgba(0,0,0,0.6);
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: 500;
+        border-radius: 6px;
+        font-size: 12px;
+        transition: all 0.2s;
+
+        &.selected {
+            background: #fff;
+            color: #5c77ff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            font-weight: 600;
+
+            .theme-dark & {
+                background: #333;
+                color: #fff;
+            }
+        }
+
+        .theme-dark & {
+            color: rgba(255,255,255,0.5);
+        }
+    }
 
     /* Sidebar Toggles (Pill) */
     .sidebar-toggles {
@@ -346,17 +468,23 @@ import { FormsModule } from '@angular/forms';
         position: absolute; top: -3px; left: -3px; right: -3px; bottom: -3px;
         border-radius: 50%;
         border: 2px solid #5c77ff;
-        display: flex; align-items: center; justify-content: center;
         
-        mat-icon { 
-            font-size: 12px; width: 12px; height: 12px; 
-            color: #000; 
-            background: #fff; 
-            border-radius: 50%; 
-            padding: 2px; 
-            position: absolute; 
-            bottom: 0; right: 0;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        /* Center the checkmark */
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(0,0,0,0.15); /* Slight contrast boost */
+        
+        ui-icon { 
+            font-size: 20px; width: 20px; height: 20px; 
+            color: #fff; 
+            /* Remove badge styling */
+            background: transparent;
+            padding: 0;
+            position: static;
+            border-radius: 0;
+            box-shadow: none;
+            
+            /* Add visibility shadow */
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
         }
     }
 
@@ -373,6 +501,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class SettingsPanel {
   private settingsService = inject(SettingsService);
+  private uiConfig = inject(UiConfigService);
 
   isOpen = signal(false);
   layoutMode = this.settingsService.layoutMode;
@@ -381,6 +510,10 @@ export class SettingsPanel {
 
   get currentTheme() {
     return this.settingsService.getCurrentTheme();
+  }
+
+  get currentDensity() {
+    return this.uiConfig.density();
   }
 
   toggle() {
@@ -400,6 +533,22 @@ export class SettingsPanel {
   }
 
   setTheme(themeName: string) {
+    // UX Improvement: If user clicks "Dark Mode" or "Light Mode" from the COLOR list,
+    // they expect the Layout to change as well.
+    if (themeName === 'dark-theme') {
+      this.setLayout('dark');
+      return;
+    }
+    if (themeName === 'light-theme') {
+      this.setLayout('light');
+      return;
+    }
+
     this.settingsService.setTheme(themeName);
   }
+
+  setDensity(density: 'default' | 'comfortable' | 'compact') {
+    this.uiConfig.setDensity(density);
+  }
 }
+
