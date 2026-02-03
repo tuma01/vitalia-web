@@ -23,14 +23,14 @@
 
     --ui-background-default: #F7F9FC;
 
-    // Dark Mode Overrides
-    &[data-theme='dark'] {
-        --ui-background-default: #121212;
+    // Unified Dark Mode Stabilization
+    &.theme-dark {
+        --ui-background-default: #09090b; // Match DS Zinc-950 logic
+        --ui-background-surface: #121212; // Branded Surface
         --ui-color-text: #E0E0E0;
         --ui-color-text-secondary: #B0B0B0;
         --ui-color-border: #333333;
 
-        // Adjust primary/secondary for dark mode contrast if needed
         --ui-color-primary: #4791db;
         --ui-color-secondary: #00d4e6;
 

@@ -13,10 +13,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--ui-space-md);
+    padding-block: 0;
+    padding-inline: var(--ui-space-md);
     background: var(--ui-toolbar-bg) !important;
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--ui-color-border);
+    border-block-end: 1px solid var(--ui-color-border);
     gap: var(--ui-space-md);
     min-height: calc(var(--ui-input-height-md) * 1.5);
 
@@ -42,7 +43,7 @@
 
             ::ng-deep {
                 .ui-form-field {
-                    margin-bottom: 0 !important;
+                    margin-block-end: 0 !important;
                     display: flex !important;
                     flex-direction: column !important;
                     justify-content: center !important;
@@ -74,7 +75,7 @@
         height: 100%;
 
         .export-icon {
-            margin-right: 8px;
+            margin-inline-end: 8px;
             font-size: 18px;
             width: 18px;
             height: 18px;
@@ -89,7 +90,8 @@
     box-shadow: var(--ui-elevation-md) !important;
 
     .ui-table-column-menu__header {
-        padding: var(--ui-space-sm) var(--ui-space-md);
+        padding-block: var(--ui-space-sm);
+        padding-inline: var(--ui-space-md);
         font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -119,28 +121,21 @@
     max-height: 600px;
     background-color: var(--ui-background-surface) !important;
 
-    /* Premium Scroll Shadows (Horizontal) */
+    /* Premium Scroll Shadows (Horizontal) - Fully Reactive to BrandKit */
     background:
         /* Shadow covers */
-        linear-gradient(to right, var(--ui-background-default, white) 30%, rgba(255, 255, 255, 0)),
-        linear-gradient(to right, rgba(255, 255, 255, 0), var(--ui-background-default, white) 70%) 100% 0,
-        /* Shadows */
-        radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .15), rgba(0, 0, 0, 0)),
-        radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .15), rgba(0, 0, 0, 0)) 100% 0;
+        linear-gradient(to var(--ui-inline-end, right), var(--ui-background-default) 30%, rgba(var(--ui-background-default-rgb), 0)),
+        linear-gradient(to var(--ui-inline-end, right), rgba(var(--ui-background-default-rgb), 0), var(--ui-background-default) 70%) 100% 0,
+        /* Shadows (radial for depth) */
+        radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .12), rgba(0, 0, 0, 0)),
+        radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .12), rgba(0, 0, 0, 0)) 100% 0;
+
     background-repeat: no-repeat;
     background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
     background-attachment: local, local, scroll, scroll;
 
-    .theme-dark & {
-        background:
-            linear-gradient(to right, var(--ui-background-default) 30%, rgba(9, 9, 11, 0)),
-            linear-gradient(to right, rgba(9, 9, 11, 0), var(--ui-background-default) 70%) 100% 0,
-            radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)),
-            radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)) 100% 0;
-        background-repeat: no-repeat;
-        background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
-        background-attachment: local, local, scroll, scroll;
-        background-color: var(--ui-background-surface) !important;
+    [dir='rtl'] & {
+        --ui-inline-end: left;
     }
 }
 
@@ -162,11 +157,11 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         background-color: var(--ui-background-variant, #f9fafb);
-        border-bottom: 2px solid var(--ui-color-border) !important;
+        border-block-end: 2px solid var(--ui-color-border) !important;
         white-space: nowrap;
 
         &.align-right {
-            text-align: right;
+            text-align: end;
         }
 
         &.align-center {
@@ -174,7 +169,7 @@
         }
 
         &.align-left {
-            text-align: left;
+            text-align: start;
         }
     }
 
@@ -190,13 +185,14 @@
 
         .mat-mdc-cell {
             background-color: transparent !important;
-            border-bottom: 1px solid var(--ui-color-border);
+            border-block-end: 1px solid var(--ui-color-border);
             color: var(--ui-color-text-primary);
             font-size: var(--ui-table-font-size, 0.875rem);
-            padding: 0 var(--ui-table-cell-padding, 16px);
+            padding-block: 0;
+            padding-inline: var(--ui-table-cell-padding, 16px);
 
             &.align-right {
-                text-align: right;
+                text-align: end;
             }
 
             &.align-center {
@@ -204,18 +200,12 @@
             }
 
             &.align-left {
-                text-align: left;
+                text-align: start;
             }
         }
 
         &.ui-table-row--selected {
-            background-color: rgba(var(--ui-color-primary-rgb, 37, 99, 235), 0.05);
-        }
-
-        .theme-dark & {
-            &:hover {
-                background-color: rgba(255, 255, 255, 0.04) !important;
-            }
+            background-color: var(--ui-color-primary-soft) !important;
         }
     }
 
@@ -244,14 +234,14 @@
 
     .select-col {
         width: 48px;
-        padding-left: 16px !important;
-        padding-right: 0 !important;
+        padding-inline-start: 16px !important;
+        padding-inline-end: 0 !important;
     }
 }
 
 
 .align-right {
-    text-align: right !important;
+    text-align: end !important;
 }
 
 .align-center {
@@ -259,7 +249,7 @@
 }
 
 .align-left {
-    text-align: left !important;
+    text-align: start !important;
 }
 
 .ui-table-avatar-cell {
@@ -308,7 +298,7 @@
         font-size: 48px;
         width: 48px;
         height: 48px;
-        margin-bottom: 16px;
+        margin-block-end: 16px;
         opacity: 0.3;
     }
 
@@ -321,7 +311,7 @@
 
 .ui-paginator {
     background: var(--ui-background-variant) !important;
-    border-top: 1px solid var(--ui-color-border);
+    border-block-start: 1px solid var(--ui-color-border);
     color: var(--ui-color-text-secondary);
 
     ::ng-deep {
@@ -355,21 +345,22 @@
 }
 
 .actions-header {
-    text-align: right !important;
-    padding-right: 16px !important;
+    text-align: end !important;
+    padding-inline-end: 16px !important;
 }
 
 .actions-cell {
     white-space: nowrap;
     width: 1px;
-    padding-right: 16px;
-    text-align: right;
+    padding-inline-end: 16px;
+    text-align: end;
 }
 
 .ui-table-loading {
     position: absolute;
     inset: 0;
-    background: var(--ui-toolbar-bg, rgba(255, 255, 255, 0.7));
+    background: var(--ui-background-surface);
+    opacity: 0.7;
     z-index: 100;
     display: flex;
     align-items: center;

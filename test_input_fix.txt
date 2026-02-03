@@ -1,0 +1,94 @@
+npm warn invalid config include="src/app/shared/ui/primitives/input/ui-input.component.spec.ts" set in command line options
+npm warn invalid config Must be one or more of: prod, dev, optional, peer
+npm warn Unknown cli config "--watch". This will stop working in the next major version of npm.
+
+> vitalia-web@0.0.0 test
+> ng test
+
+[33mΓ¥»[39m Building...
+[32mΓ£ö[39m Building...
+[1mInitial chunk files[22m                                                      [2m | [22m[1mNames[22m                                                                 [2m | [22m [1mRaw size[22m
+[32mstyles.css[39m                                                               [2m | [22m[2mstyles[22m                                                                [2m | [22m  [36m1.28 MB[39m[2m | [22m
+[32mchunk-NZ6PFLBE.js[39m                                                        [2m | [22m[2m-[22m                                                                     [2m | [22m[36m106.52 kB[39m[2m | [22m
+[32mspec-app-app.component.js[39m                                                [2m | [22m[2mspec-app-app.component[22m                                                [2m | [22m [36m55.37 kB[39m[2m | [22m
+[32mchunk-V2JB2NEV.js[39m                                                        [2m | [22m[2m-[22m                                                                     [2m | [22m [36m13.72 kB[39m[2m | [22m
+[32mspec-app-shared-ui-components-form-field-ui-form-field.component.js[39m      [2m | [22m[2mspec-app-shared-ui-components-form-field-ui-form-field.component[22m      [2m | [22m  [36m7.40 kB[39m[2m | [22m
+[32mspec-app-shared-ui-primitives-select-native-ui-select-native.component.js[39m[2m | [22m[2mspec-app-shared-ui-primitives-select-native-ui-select-native.component[22m[2m | [22m  [36m5.54 kB[39m[2m | [22m
+[32mchunk-RSTWSNOR.js[39m                                                        [2m | [22m[2m-[22m                                                                     [2m | [22m  [36m4.75 kB[39m[2m | [22m
+[32mspec-app-shared-ui-primitives-input-ui-input.component.js[39m                [2m | [22m[2mspec-app-shared-ui-primitives-input-ui-input.component[22m                [2m | [22m  [36m3.94 kB[39m[2m | [22m
+[32minit-testbed.js[39m                                                          [2m | [22m[2minit-testbed[22m                                                          [2m | [22m  [36m1.21 kB[39m[2m | [22m
+
+[1m [22m                                                                        [2m | [22m[1mInitial total[22m                                                         [2m | [22m  [1m1.48 MB[22m
+
+Application bundle generation complete. [54.836 seconds] - 2026-02-02T04:20:52.472Z
+
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mF:/JAVA-PROJET/vitalia/workspace/vitalia-web[39m
+
+ [31mΓ¥»[39m [30m[43m vitalia-web [49m[39m src/app/app.component.spec.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 371[2mms[22m[39m
+[31m     [31m├ù[31m should create the app[39m[33m 320[2mms[22m[39m
+[31m     [31m├ù[31m should render title[39m[32m 44[2mms[22m[39m
+ [32mΓ£ô[39m [30m[43m vitalia-web [49m[39m src/app/shared/ui/primitives/input/ui-input.component.spec.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1476[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should create [33m 617[2mms[22m[39m
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > should create
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should sync fieldId with child input id
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should propagate aria-required to the child primitive
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should propagate aria-invalid when an error is present
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should propagate label as aria-label if child has none
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should set aria-describedby to hint when no error is present
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Fused Accessibility (ARIA) > should set aria-describedby to error when error is present (priority over hint)
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ State Synchronization (Signals) > should reflect focus state from child
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ State Synchronization (Signals) > should reflect value state from child (hasValue)
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Focus Delegation > should delegate focus() call to child primitive
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+ [32mΓ£ô[39m [30m[43m vitalia-web [49m[39m src/app/shared/ui/primitives/select-native/ui-select-native.component.spec.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2216[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should create [33m 710[2mms[22m[39m
+stderr | src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts > UiFormFieldComponent > ≡ƒº¬ Focus Delegation > should focus child when host is clicked
+The 'allowSignalWrites' flag is deprecated and no longer impacts effect() (writes are always allowed)
+
+ [32mΓ£ô[39m [30m[43m vitalia-web [49m[39m src/app/shared/ui/components/form-field/ui-form-field.component.spec.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 2491[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m should create [33m 886[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 2 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL   vitalia-web  src/app/app.component.spec.ts > App > should create the app
+ FAIL   vitalia-web  src/app/app.component.spec.ts > App > should render title
+╔╡NotFound: NG0201: No provider found for `TranslateService`. Source: DynamicTestModule. Path: _LanguageService -> TranslateService. Find more at https://v21.angular.dev/errors/NG0201
+ Γ¥» createRuntimeError node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:555:17
+ Γ¥» NullInjector.get node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:836:21
+ Γ¥» R3Injector.get node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1192:27
+ Γ¥» R3Injector.get node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1192:27
+ Γ¥» R3Injector.retrieve node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1102:19
+ Γ¥» injectInjectorOnly node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:625:35
+ Γ¥» ╔╡╔╡inject node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:637:59
+ Γ¥» inject node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:646:10
+ Γ¥» _LanguageService.<instance_members_initializer> src/app/core/services/language.service.ts:21:25
+ Γ¥» new _LanguageService src/app/core/services/language.service.ts:36:5
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/2]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m35 passed[39m[22m[90m (37)[39m
+[2m   Start at [22m 23:20:55
+[2m   Duration [22m 18.97s[2m (transform 3.00s, setup 14.82s, import 9.20s, tests 6.55s, environment 31.72s)[22m
+

@@ -33,10 +33,10 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
 
     .app-footer {
       padding: var(--ui-space-md) var(--ui-space-xl);
-      // Light Mode: Neutral gray (darker than body #f4f6f8)
-      background: #e5e5e5; 
+      background: var(--ui-background-surface);
       border-top: 1px solid var(--ui-color-border-subtle);
-      transition: background-color 0.3s ease;
+      color: var(--ui-color-text-secondary);
+      transition: background-color var(--ui-motion-fast);
       
       .footer-content {
         max-width: 1600px;
@@ -56,19 +56,13 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
       }
     }
 
-    // Explicit Dark Mode Override using :host-context for encapsulation safety
-    :host-context(.theme-dark) .app-footer {
-        background-color: #1e1e1e !important; // VS Code Editor Background (Standard Dark)
-        border-top-color: #2b2b2b !important; // Subtle Border
-        color: #cccccc !important; // Lighter text
-    }
-
     .copyright {
-      font-size: 0.875rem;
+      font-size: var(--ui-font-size-sm);
       color: var(--ui-color-text-secondary);
       
       strong {
         color: var(--ui-color-primary);
+        font-weight: var(--ui-font-weight-bold);
       }
     }
 
@@ -78,10 +72,10 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
       gap: var(--ui-space-lg);
       
       .footer-link {
-        font-size: 0.875rem;
+        font-size: var(--ui-font-size-sm);
         color: var(--ui-color-text-secondary);
         text-decoration: none;
-        transition: color 0.2s;
+        transition: color var(--ui-motion-fast);
         
         &:hover {
           color: var(--ui-color-primary);
@@ -89,12 +83,13 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
       }
 
       .version {
-        font-size: 0.75rem;
-        color: var(--ui-color-text-tertiary);
+        font-size: var(--ui-font-size-xs);
+        color: var(--ui-color-text-muted);
         margin-left: var(--ui-space-sm);
-        padding: 2px 6px;
-        background: var(--ui-background-default);
-        border-radius: 4px;
+        padding: 2px 8px;
+        background: var(--ui-background-variant);
+        border-radius: var(--ui-border-radius-sm);
+        border: 1px solid var(--ui-color-border-subtle);
       }
     }
   `]

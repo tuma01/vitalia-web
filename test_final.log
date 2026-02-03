@@ -1,0 +1,51 @@
+
+ RUN  v4.0.15 F:/JAVA-PROJET/vitalia/workspace/vitalia-web
+
+ Γ¥» src/app/core/services/theme.service.spec.ts (5 tests | 5 failed) 32ms
+     ├ù should initialize with PAL_DEFAULT in light mode by default 24ms
+     ├ù should toggle mode and update theme name 2ms
+     ├ù should apply tenant theme with brand-mode naming convention 1ms
+     ├ù should fallback to PAL_DEFAULT if tenant theme is invalid 1ms
+     ├ù should generate RGB tokens for action colors 1ms
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 5 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  src/app/core/services/theme.service.spec.ts:33:5 > UiThemeService Modes (v2.6.1) > should initialize with PAL_DEFAULT in light mode by default
+ReferenceError: document is not defined
+ Γ¥» Object._document [as useFactory] node_modules/@angular/platform-browser/fesm2022/_browser-chunk.mjs:329:16
+ Γ¥» Object.factory node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1376:32
+ Γ¥» node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1297:35
+ Γ¥» runInInjectorProfilerContext node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:437:5
+ Γ¥» R3Injector.hydrate node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1295:11
+ Γ¥» R3Injector.get node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1187:23
+ Γ¥» R3Injector.get node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1192:27
+ Γ¥» R3Injector.retrieve node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:1102:19
+ Γ¥» injectInjectorOnly node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:625:35
+ Γ¥» ╔╡╔╡inject node_modules/@angular/core/fesm2022/_untracked-chunk.mjs:637:59
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/5]ΓÄ»
+
+ FAIL  src/app/core/services/theme.service.spec.ts:41:5 > UiThemeService Modes (v2.6.1) > should toggle mode and update theme name
+ FAIL  src/app/core/services/theme.service.spec.ts:51:5 > UiThemeService Modes (v2.6.1) > should apply tenant theme with brand-mode naming convention
+ FAIL  src/app/core/services/theme.service.spec.ts:63:5 > UiThemeService Modes (v2.6.1) > should fallback to PAL_DEFAULT if tenant theme is invalid
+ FAIL  src/app/core/services/theme.service.spec.ts:75:5 > UiThemeService Modes (v2.6.1) > should generate RGB tokens for action colors
+Error: Cannot configure the test module when the test module has already been instantiated. Make sure you are not using `inject` before `TestBed.configureTestingModule`.
+ Γ¥» TestBedImpl.assertNotInstantiated node_modules/@angular/core/fesm2022/testing.mjs:1498:13
+ Γ¥» TestBedImpl.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1390:10
+ Γ¥» Function.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1273:33
+ Γ¥» src/app/core/services/theme.service.spec.ts:20:17
+     18| 
+     19|     beforeEach(() => {
+     20|         TestBed.configureTestingModule({
+       |                 ^
+     21|             providers: [ThemeService]
+     22|         });
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/5]ΓÄ»
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  01:15:10
+   Duration  2.05s (transform 283ms, setup 0ms, import 1.48s, tests 32ms, environment 1ms)
+

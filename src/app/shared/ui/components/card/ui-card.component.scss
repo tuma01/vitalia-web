@@ -28,8 +28,7 @@
     &.ui-card--filled {
         box-shadow: none;
         border: none;
-        background-color: var(--ui-color-surface-dim, #f3f4f6);
-        /* Fallback */
+        background-color: var(--ui-background-variant);
     }
 
     /* Interaction: Hoverable */
@@ -60,7 +59,7 @@
     }
 
     .ui-card-subtitle {
-        margin-top: var(--ui-space-2xs);
+        margin-block-start: var(--ui-space-2xs);
         font-size: var(--ui-font-size-sm);
         color: var(--ui-color-text-secondary);
         opacity: 0.8;
@@ -68,7 +67,8 @@
 
     .ui-card-content {
         display: block;
-        padding: var(--ui-card-padding);
+        padding-block: 0;
+        padding-inline: var(--ui-card-padding);
         color: var(--ui-color-text-primary);
         font-size: var(--ui-font-size-md);
     }
@@ -76,9 +76,10 @@
     .ui-card-footer {
         display: flex;
         align-items: center;
-        padding: var(--ui-space-md) var(--ui-card-padding);
-        border-top: 1px solid transparent; // Optional divider slot
-        margin-top: auto; // Push to bottom
+        padding-block: var(--ui-space-md);
+        padding-inline: var(--ui-card-padding);
+        border-block-start: 1px solid transparent; // Optional divider slot
+        margin-block-start: auto; // Push to bottom
         gap: var(--ui-space-sm);
 
         // If defined, maybe smaller text or buttons
@@ -101,7 +102,7 @@
         border-radius: 50%;
         overflow: hidden;
         flex-shrink: 0;
-        background: var(--ui-color-bg-hover, #f3f4f6);
+        background: var(--ui-color-bg-hover);
 
         img {
             width: 100%;
@@ -122,11 +123,13 @@
 }
 
 .ui-card__header-slot {
-    padding: var(--ui-card-padding) var(--ui-card-padding) 0;
-    margin-bottom: var(--ui-space-sm);
+    padding-block-start: var(--ui-card-padding);
+    padding-inline: var(--ui-card-padding);
+    margin-block-end: var(--ui-space-sm);
 
     @media (max-width: 640px) {
-        padding: var(--ui-space-md) var(--ui-space-md) 0;
+        padding-block-start: var(--ui-space-md);
+        padding-inline: var(--ui-space-md);
     }
 }
 
@@ -151,11 +154,12 @@
 .ui-card__content-slot {
     @media (max-width: 640px) {
         ::ng-deep .ui-card-content {
-            padding: var(--ui-space-md);
+            padding-block: var(--ui-space-md);
+            padding-inline: var(--ui-space-md);
         }
     }
 }
 
 .ui-card__footer-slot {
-    margin-top: auto;
+    margin-block-start: auto;
 }

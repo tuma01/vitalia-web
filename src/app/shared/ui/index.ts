@@ -55,6 +55,7 @@ export * from './components/sidenav/ui-sidenav.component';
 export * from './components/sidenav/ui-sidenav.types';
 export * from './components/list/ui-list.component';
 export * from './components/menu/ui-menu.component';
+export * from './components/menu/ui-menu-trigger.directive';
 export * from './components/notification-drawer/ui-notification-drawer.component';
 export * from './components/notification-drawer/ui-notification.service';
 export * from './components/notification-drawer/ui-notification-drawer.types';

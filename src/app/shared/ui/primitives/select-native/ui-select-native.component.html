@@ -2,7 +2,10 @@
 <div class="ui-select-native" [class.ui-select-native--open]="isOpen()" [class.ui-select-native--disabled]="disabled">
 
     <!-- Trigger Button -->
-    <button type="button" class="ui-select-native__trigger" (click)="toggle()" [disabled]="disabled">
+    <button type="button" class="ui-select-native__trigger" (click)="toggle()" (focus)="onFocus()"
+        (blur)="onBlur($event)" [attr.aria-label]="_ariaLabel()" [attr.aria-describedby]="_ariaDescribedBy()"
+        [attr.aria-invalid]="_ariaInvalid()" [attr.aria-required]="_ariaRequired()" [attr.aria-expanded]="isOpen()"
+        [attr.aria-activedescendant]="activeDescendant()" aria-haspopup="listbox" [disabled]="disabled">
         <span class="ui-select-native__value">{{ selectedLabel() }}</span>
         @if (!hideArrow) {
         <ui-icon class="ui-select-native__arrow" [class.ui-select-native__arrow--open]="isOpen()">
@@ -26,7 +29,7 @@
         <!-- Options List -->
         <div class="ui-select-native__options">
             @for (option of filteredOptions(); track option.value; let i = $index) {
-            <div class="ui-select-native__option"
+            <div class="ui-select-native__option" [id]="id + '-opt-' + i"
                 [class.ui-select-native__option--selected]="selectedOption()?.value === option.value"
                 [class.ui-select-native__option--focused]="focusedIndex() === i"
                 [class.ui-select-native__option--disabled]="option.disabled" (click)="selectOption(option)">

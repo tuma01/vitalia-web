@@ -1,291 +1,47 @@
-/* Form Field - Using Global Form Component Configuration */
-
-@use '../../../../../styles/ds/form-components-global' as form;
-
-/* Tokens */
-$field-height: var(--ui-input-height-md, 40px);
-$field-radius: var(--ui-radius-base, 8px);
-$label-scale: 0.75;
-
-// Host is just a wrapper now, styles applied to inner .ui-form-field
 :host {
     display: block;
-}
-
-.ui-form-field {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    font-family: var(--ui-font-family-sans, sans-serif);
-    margin-bottom: var(--ui-space-md, 16px);
-
-    /* --- Component Tokens (Level 3) --- */
-    --ui-field-height: var(--ui-size-md);
-    --ui-field-radius: var(--ui-radius-base, 8px);
-    --ui-field-border-width: var(--ui-border-width-base, 1px);
-    --ui-field-border-color: var(--ui-color-border);
-    --ui-field-bg: var(--ui-background-default);
-    --ui-field-label-color: var(--ui-color-text-secondary);
-    --ui-field-primary-color: var(--ui-color-primary);
-    --ui-field-danger-color: var(--ui-color-danger);
-    --ui-field-label-scale: 0.75;
-}
-
-/* --- Control Container - Using Global Form Component Configuration --- */
-.ui-form-field__control {
-    @include form.form-component-host('md');
-
-    display: flex;
-    align-items: center;
-    position: relative;
     width: 100%;
-    gap: 0;
-    background-color: transparent;
-}
+    margin-bottom: var(--ui-space-md, 16px);
+    font-family: var(--ui-font-family-sans, sans-serif);
 
-/* --- Input Slot --- */
-.ui-form-field__input {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    min-width: 0;
-    height: 100%;
-    position: relative;
-    padding: 0 12px !important;
-    // transform removed to ensure absolute vertical parity with buttons
-}
-
-.ui-form-field--has-prefix .ui-form-field__input {
-    padding-left: 0 !important;
-}
-
-.ui-form-field--has-suffix .ui-form-field__input {
-    padding-right: 0;
-}
-
-/* --- Label --- */
-.ui-form-field__label {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transform-origin: 0 0;
-
-    color: var(--ui-field-label-color);
-    font-size: 1rem;
-    font-weight: 400;
-    pointer-events: none;
-    white-space: nowrap;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s, padding 0.2s, background-color 0.2s;
-
-    padding-left: 12px;
-    z-index: 1;
-    background-color: transparent;
-    /* Transparent by default, will be set when floating */
-}
-
-.ui-form-field--has-prefix .ui-form-field__label {
-    padding-left: 35px !important;
-}
-
-// Floating Label Logic
-.ui-form-field--focused,
-.ui-form-field--has-value {
-    .ui-form-field__label {
-        /* Auto-calculate position based on field height */
-        /* Formula: Center of height + subtle fixed offset for consistency across densities */
-        /* Adjusted from 4.5px to 2.5px to lower it slightly per user request */
-        transform: translateY(calc((var(--ui-field-height) * -0.5) - 2.5px)) scale(var(--ui-field-label-scale)) !important;
-        max-width: 133% !important;
-        padding: 0 4px !important;
-        margin-left: 11px !important;
-        background-color: transparent !important;
-    }
-
-    &.ui-form-field--has-prefix .ui-form-field__label {
-        margin-left: 11px !important;
-        padding: 0 4px !important;
-        /* Unified proportional formula */
-        transform: translateY(calc((var(--ui-field-height) * -0.5) - 2.5px)) scale(var(--ui-field-label-scale)) !important;
+    &.ui-form-field--no-margin {
+        margin-bottom: 0 !important;
     }
 }
 
-.ui-form-field__required {
-    color: var(--ui-field-danger-color);
-}
-
-/* --- Fieldset Outline --- */
-.ui-form-field__outline {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-
-    margin: 0 !important;
-    padding: 0 !important;
-    padding-left: 11px !important; // Moved 3px right to match label notch (8px to 11px)
-
-    border-width: var(--ui-field-border-width) !important;
-    border-style: var(--ui-border-style-base, solid);
-    border-color: var(--ui-field-border-color);
-    border-radius: var(--ui-field-radius);
-
-    transition: border-color 0.2s, border-width 0.2s;
-    min-width: 0;
-}
-
-.ui-form-field__legend {
-    width: auto;
-    max-width: 0.01px;
-    height: 11px;
-    padding: 0;
-
+.ui-form-field-wrapper {
     display: block;
-    color: transparent;
-    font-size: 0.75em;
-    white-space: nowrap;
-    transition: max-width 50ms cubic-bezier(0.0, 0, 0.2, 1);
+    width: 100%;
 }
 
-/* Expand legend when label floats to cut the border */
-.ui-form-field--focused,
-.ui-form-field--has-value {
-    .ui-form-field__legend {
-        max-width: 100%;
-        padding: 0 2px;
-    }
-}
-
-/* --- State Colors --- */
-.ui-form-field--focused {
-    z-index: 10; // Ensure focused field is above its neighbors
-
-    .ui-form-field__label {
-        color: var(--ui-field-primary-color);
-    }
-
-    .ui-form-field__outline {
-        border-color: var(--ui-field-primary-color);
-        border-width: var(--ui-border-width-focus, 2px) !important;
-    }
-}
-
-.ui-form-field--error {
-    .ui-form-field__label {
-        color: var(--ui-field-danger-color);
-    }
-
-    .ui-form-field__outline {
-        border-color: var(--ui-field-danger-color);
-    }
-}
-
-/* --- Prefix / Suffix --- */
-.ui-form-field__prefix,
-.ui-form-field__suffix {
+.ui-form-field__prefix-wrapper,
+.ui-form-field__suffix-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: var(--ui-color-text-secondary);
-    padding: 0 8px;
-    transition: color 0.2s ease;
-    transform: translateY(var(--ui-field-icon-offset, 3.5px));
 
-    // Force strict centering for icons
-    mat-icon,
-    .mat-icon {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        height: var(--ui-field-icon-size, 21px) !important;
-        width: var(--ui-field-icon-size, 21px) !important;
-        font-size: var(--ui-field-icon-size, 21px) !important;
-    }
-}
+    ::ng-deep {
 
-.ui-form-field--focused {
-
-    .ui-form-field__prefix,
-    .ui-form-field__suffix {
-        color: var(--ui-color-primary, #2563eb);
-    }
-}
-
-.ui-form-field--error {
-
-    .ui-form-field__prefix,
-    .ui-form-field__suffix {
-        color: var(--ui-color-danger, #ef4444);
-    }
-}
-
-/* --- Subscript (Hint / Error Messages) --- */
-.ui-form-field__subscript {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    min-height: 20px;
-    padding: 4px 12px 0;
-    font-size: 0.75rem;
-    color: var(--ui-color-text-secondary);
-    transition: color 0.2s;
-
-    mat-icon {
-        font-size: 16px;
-        width: 16px;
-        height: 16px;
-    }
-}
-
-.ui-form-field--error .ui-form-field__subscript {
-    color: var(--ui-field-danger-color);
-}
-
-/* --- Filled Appearance Styles --- */
-.ui-form-field--filled {
-    .ui-form-field__control {
-        background-color: var(--ui-color-bg-hover, #f5f5f5);
-        border-radius: var(--ui-field-radius) var(--ui-field-radius) 0 0;
-        border-bottom: 2px solid var(--ui-field-border-color);
-        transition: background-color 0.2s, border-bottom-color 0.2s;
-    }
-
-    .ui-form-field__outline {
-        display: none;
-        /* Hide outline in filled mode */
-    }
-
-    &.ui-form-field--focused .ui-form-field__control {
-        background-color: var(--ui-color-bg-active, #e5e5e5);
-        border-bottom-color: var(--ui-field-primary-color);
-    }
-
-    &.ui-form-field--error .ui-form-field__control {
-        border-bottom-color: var(--ui-field-danger-color);
-    }
-
-    .theme-dark & {
-        .ui-form-field__control {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        &.ui-form-field--focused .ui-form-field__control {
-            background-color: rgba(255, 255, 255, 0.08);
+        mat-icon,
+        ui-icon {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 }
 
-.ui-form-field__error {
-    color: var(--ui-field-danger-color);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.ui-form-field__prefix-wrapper {
+    margin-right: 8px;
 }
 
-.ui-form-field__hint {
-    color: var(--ui-color-text-muted);
+.ui-form-field__suffix-wrapper {
+    margin-left: 8px;
 }
+
+// Material 3 Customizations via Parity Layer
+// Most styling is handled in _material-parity.scss and _material-m3.scss

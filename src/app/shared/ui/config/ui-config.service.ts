@@ -1,4 +1,5 @@
-import { Injectable, signal, effect } from '@angular/core';
+import { Injectable, signal, effect, inject } from '@angular/core';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 export type Theme = 'light' | 'dark' | 'system';
 export type Density = 'default' | 'comfortable' | 'compact';
@@ -31,6 +32,7 @@ export class UiConfigService {
   brand = signal<Brand>('vitalia');
   inputAppearance = signal<'outline' | 'filled'>('outline');
   tenantTheme = signal<TenantTheme | null>(null);
+  private overlayContainer = inject(OverlayContainer);
 
   constructor() {
     // Apply theme effect (Light/Dark mode)
@@ -42,15 +44,9 @@ export class UiConfigService {
       if (theme === 'dark') {
         document.body.classList.add('theme-dark');
         document.body.classList.remove('theme-light');
-        // Force critical tokens for dark mode if not handled by CSS
-        document.body.style.setProperty('--ui-color-text-primary', '#f8fafc');
-        document.body.style.setProperty('--ui-color-text', '#f8fafc');
       } else {
         document.body.classList.add('theme-light');
         document.body.classList.remove('theme-dark');
-        // Remove forced tokens to revert to CSS or Tenant defaults
-        document.body.style.removeProperty('--ui-color-text-primary');
-        document.body.style.removeProperty('--ui-color-text');
       }
     });
 
@@ -73,10 +69,32 @@ export class UiConfigService {
       document.body.classList.add(`theme-${this.brand()}`);
     });
 
+    // Sync OverlayContainer Theme (Official Angular Material Pattern)
+    // Sync OverlayContainer Theme (Official Angular Material Pattern)
+    effect(() => {
+      const theme = this.theme();
+      const container = this.overlayContainer.getContainerElement();
+      const classes = container.classList;
+
+      // Remove old theme classes safely without complex array spread
+      const toRemove: string[] = [];
+      classes.forEach((c) => {
+        if (c.startsWith('theme-')) {
+          toRemove.push(c);
+        }
+      });
+
+      toRemove.forEach(c => classes.remove(c));
+
+      // Add new theme class
+      classes.add(`theme-${theme}`);
+    });
+
     // Apply Dynamic Tenant Theme (CSS Variables)
     effect(() => {
       const theme = this.tenantTheme();
       const target = document.body; // Using body to ensure inline styles override class-based tokens
+      // ...
 
       if (!theme) {
         return;
@@ -133,5 +151,13 @@ export class UiConfigService {
 
   setDensity(density: Density) {
     this.density.set(density);
+  }
+
+  setBrand(brand: Brand) {
+    this.brand.set(brand);
+  }
+
+  setTheme(theme: Theme) {
+    this.theme.set(theme);
   }
 }

@@ -1,6 +1,7 @@
 <mat-sidenav-container autosize class="ui-sidenav-container" (backdropClick)="onBackdropClick()"
     [attr.aria-label]="i18n?.ariaLabel">
     <mat-sidenav #sidenav [mode]="mode" [opened]="opened" class="ui-sidenav"
+        [class.sidenav-dark]="sidenavColor() === 'dark'" [class.sidenav-light]="sidenavColor() === 'light'"
         [class.ui-sidenav--expanded]="state === 'expanded'"
         [class.ui-sidenav--collapsed]="state === 'collapsed' && mode === 'side'" (closed)="onClosed()">
 
@@ -15,7 +16,8 @@
                 <a class="ui-sidenav-item" [class.ui-sidenav-item--active]="activeItemId === item.id"
                     [class.ui-sidenav-item--disabled]="item.disabled"
                     [class.ui-sidenav-item--expanded]="isExpanded(item.id)" (click)="onItemClick(item)"
-                    [attr.aria-label]="item.label" [attr.title]="state === 'collapsed' ? item.label : null">
+                    [routerLink]="item.route" routerLinkActive="ui-sidenav-item--active" [attr.aria-label]="item.label"
+                    [attr.title]="state === 'collapsed' ? item.label : null">
                     <mat-icon class="ui-sidenav-item__icon">{{ item.icon }}</mat-icon>
                     <span class="ui-sidenav-item__label">{{ item.label }}</span>
 
@@ -37,7 +39,8 @@
                     @for (child of item.children; track child.id) {
                     <a class="ui-sidenav-item ui-sidenav-item--child"
                         [class.ui-sidenav-item--active]="activeItemId === child.id"
-                        [class.ui-sidenav-item--disabled]="child.disabled" (click)="onItemClick(child)">
+                        [class.ui-sidenav-item--disabled]="child.disabled" [routerLink]="child.route"
+                        routerLinkActive="ui-sidenav-item--active" (click)="onItemClick(child)">
                         <mat-icon class="ui-sidenav-item__icon">{{ child.icon }}</mat-icon>
                         <span class="ui-sidenav-item__label">{{ child.label }}</span>
                         @if (child.badge) {

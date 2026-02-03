@@ -1,0 +1,58 @@
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+@Component({
+    selector: 'pal-old-select',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    template: `
+    <div class="pal-old-field">
+      <label>{{ label }}</label>
+      <select [(ngModel)]="value">
+        <option value="" disabled selected>{{ placeholder }}</option>
+        <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+      </select>
+      <span class="hint" *ngIf="hint">{{ hint }}</span>
+    </div>
+  `,
+    styles: [`
+    .pal-old-field {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+      font-family: sans-serif;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: #333;
+    }
+    select {
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      height: 40px;
+      background: white;
+      box-sizing: border-box;
+    }
+    select:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    .hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+  `]
+})
+export class PalOldSelectComponent {
+    @Input() label = '';
+    @Input() placeholder = '';
+    @Input() options: string[] = [];
+    @Input() hint = '';
+    value = '';
+}

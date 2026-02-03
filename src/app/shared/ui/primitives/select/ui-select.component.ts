@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, forwardRef, signal, computed, OnInit, inject } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, forwardRef, signal, computed, OnInit, inject, ViewEncapsulation } from '@angular/core';
 import { UiConfigService } from '../../config/ui-config.service';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ import { DEFAULT_PAL_I18N, UiSelectI18n } from '../../config/ui-i18n.types';
     templateUrl: './ui-select.component.html',
     styleUrls: ['./ui-select.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None, // Essential for global form parity
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

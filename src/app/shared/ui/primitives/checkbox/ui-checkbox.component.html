@@ -1,17 +1,5 @@
-<label class="ui-checkbox__label" [attr.for]="id">
-    <input type="checkbox" class="ui-checkbox__input" [id]="id" [attr.name]="name || id" [checked]="checked"
-        [disabled]="disabled" [required]="required" (change)="onInputChange($event)" (blur)="onInputBlur()"
-        (focus)="onInputFocus()">
-
-    <div class="ui-checkbox__box">
-        <svg class="ui-checkbox__mark" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor"
-            stroke-width="4">
-            <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-    </div>
-
-    <span class="ui-checkbox__text">
-        <ng-content></ng-content>
-        {{ label }}
-    </span>
-</label>
+<mat-checkbox [id]="id" [name]="name || id" [checked]="checked" [disabled]="disabled" [required]="required"
+    [indeterminate]="indeterminate" (change)="onCheckboxChange($event)" (blur)="onBlur()">
+    <ng-content></ng-content>
+    {{ label }}
+</mat-checkbox>

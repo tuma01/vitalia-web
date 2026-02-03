@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+
+// -----------------------------
+// MATERIAL 3 CORE THEME
+// -----------------------------
+$m3-theme: mat.define-theme((color: (theme-type: light,
+                primary: mat.$azure-palette,
+                tertiary: mat.$magenta-palette,
+                use-system-variables: true, // genera --mat-sys-* variables
+            ),
+            typography: (brand-family: 'Roboto, sans-serif',
+                plain-family: 'Roboto, sans-serif',
+            ),
+            density: (scale: 0)));
+
+// -----------------------------
+// MIXINS PARA APLICAR EL THEME
+// -----------------------------
+@mixin apply-m3-theme() {
+    @include mat.core();
+    @include mat.all-component-themes($m3-theme);
+    @include mat.system-level-colors($m3-theme);
+    @include mat.system-level-typography($m3-theme);
+}
+
+// -----------------------------
+// DARK OVERRIDES OPCIONAL
+// -----------------------------
+@mixin apply-m3-dark-overrides() {
+    color-scheme: dark;
+}

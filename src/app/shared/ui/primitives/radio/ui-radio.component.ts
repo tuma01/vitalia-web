@@ -1,60 +1,46 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewChild, forwardRef, inject, ChangeDetectorRef, Inject, Optional } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, ViewChild, inject, ChangeDetectorRef, Inject, Optional } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
-import { UiRadioGroupComponent } from './ui-radio-group.component';
+import { UI_RADIO_GROUP, UiRadioGroupContract } from './ui-radio-group.token';
+import { MatRadioModule, MatRadioChange } from '@angular/material/radio';
 
 @Component({
-    selector: 'ui-radio',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
-    <label class="ui-radio-label" [class.ui-radio-label--disabled]="disabled">
-      <div class="ui-radio-input-wrapper">
-        <input type="radio" 
-               [value]="value" 
-               [name]="name" 
-               [checked]="checked" 
-               [disabled]="disabled" 
-               (change)="onInputChange($event)"
-               class="ui-radio-input-native">
-        <div class="ui-radio-visual">
-          <div class="ui-radio-dot"></div>
-        </div>
-      </div>
-      <span class="ui-radio-text">
-        <ng-content></ng-content>
-      </span>
-    </label>
-  `,
-    styleUrls: ['./ui-radio.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'ui-radio',
+  standalone: true,
+  imports: [CommonModule, MatRadioModule],
+  templateUrl: './ui-radio.component.html',
+  styleUrls: ['./ui-radio.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiRadioButtonComponent {
-    @Input() value: any;
-    @Input() name: string = '';
-    @Input() disabled: boolean = false;
-    @Input() checked: boolean = false; // Controlled by Group usually
+  @Input() value: any;
+  @Input() name: string = '';
+  @Input() disabled: boolean = false;
+  @Input() checked: boolean = false; // Controlled by Group usually
 
-    @Output() changed = new EventEmitter<any>();
+  @Output() changed = new EventEmitter<any>();
 
-    constructor(
-        private cdr: ChangeDetectorRef,
-        @Optional() @Inject(forwardRef(() => UiRadioGroupComponent)) private group: UiRadioGroupComponent
-    ) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    @Optional() @Inject(UI_RADIO_GROUP) private group: UiRadioGroupContract | null
+  ) { }
 
-    onInputChange(event: Event) {
-        event.stopPropagation();
-        if (this.group) {
-            this.group.select(this.value);
-        } else {
-            this.checked = true;
-            this.changed.emit(this.value);
-        }
+  onRadioChange(event: MatRadioChange) {
+    // event.stopPropagation(); // MatRadio doesn't emit native event here, it emits MatRadioChange
+    // But we need to stop bubbling if we don't want parent to see it? 
+    // Actually MatRadioChange is not a DOM event.
+
+    if (this.group) {
+      this.group.select(this.value);
+    } else {
+      this.checked = true;
+      this.changed.emit(this.value);
     }
+  }
 
-    // Helper to force update if needed by parent
-    markForCheck() {
-        this.cdr.markForCheck();
-    }
+  // Helper to force update if needed by parent
+  markForCheck() {
+    this.cdr.markForCheck();
+  }
 }

@@ -7,13 +7,13 @@
 
 /* --- Navigation Header --- */
 .ui-tab-group__header {
-    border-bottom: 2px solid var(--ui-color-border, #f3f4f6);
+    border-block-end: 2px solid var(--ui-color-border, #f3f4f6);
     position: relative;
-    margin-bottom: var(--ui-space-md);
+    margin-block-end: var(--ui-space-md);
 }
 
 .ui-tab-group--pills .ui-tab-group__header {
-    border-bottom: none;
+    border-block-end: none;
     background-color: var(--ui-color-bg-hover, #f8fafc);
     padding: var(--ui-space-2xs);
     border-radius: var(--ui-radius-lg, 12px);
@@ -38,7 +38,8 @@
     align-items: center;
     justify-content: center;
     gap: var(--ui-space-xs, 4px);
-    padding: var(--ui-space-sm) var(--ui-space-md);
+    padding-block: var(--ui-space-sm);
+    padding-inline: var(--ui-space-md);
     background: none;
     border: none;
     cursor: pointer;
@@ -80,7 +81,8 @@
 .ui-tab-group--pills {
     .ui-tab-group__tab-btn {
         border-radius: var(--ui-radius-md, 8px);
-        padding: var(--ui-space-xs) var(--ui-space-md);
+        padding-block: var(--ui-space-xs);
+        padding-inline: var(--ui-space-md);
         color: var(--ui-color-text-secondary);
 
         &--active {

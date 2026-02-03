@@ -1,88 +1,63 @@
-import { Meta, StoryObj } from '@storybook/angular';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { moduleMetadata } from '@storybook/angular';
+import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { UiInputComponent } from './ui-input.component';
-import { UiFormFieldComponent } from '../../components/form-field/ui-form-field.component';
-import { UiErrorDirective, UiPrefixDirective, UiSuffixDirective } from '../../components/form-field/ui-form-field.directives';
 
-const meta: Meta<UiFormFieldComponent> = {
-    title: 'PAL/Form Field (Input)',
-    component: UiFormFieldComponent,
+const meta: Meta<UiInputComponent> = {
+    title: 'PAL/Primitives/Input',
+    component: UiInputComponent,
     decorators: [
         moduleMetadata({
-            imports: [
-                ReactiveFormsModule,
-                UiInputComponent,
-                UiPrefixDirective,
-                UiSuffixDirective,
-                UiErrorDirective
-            ],
+            imports: [CommonModule, FormsModule],
         }),
     ],
     tags: ['autodocs'],
     argTypes: {
-        label: { control: 'text' },
-        required: { control: 'boolean' },
+        size: { control: 'select', options: ['sm', 'md', 'lg'] },
+        type: { control: 'select', options: ['text', 'password', 'email', 'number'] },
         disabled: { control: 'boolean' },
-        error: { control: 'text' },
+        placeholder: { control: 'text' },
     },
 };
 
 export default meta;
-type Story = StoryObj<UiFormFieldComponent>;
+type Story = StoryObj<UiInputComponent>;
 
 export const Default: Story = {
-    render: (args) => ({
-        props: {
-            ...args,
-            control: new FormControl('')
-        },
-        template: `
-      <ui-form-field [label]="label" [required]="required" [disabled]="disabled" [error]="error">
-        <ui-input uiInput [formControl]="control" placeholder="Escribe algo..."></ui-input>
-        <ui-error uiError *ngIf="error || control.invalid">Mensaje de error</ui-error>
-      </ui-form-field>
-    `,
-    }),
     args: {
-        label: 'Nombre de Usuario',
-        required: false,
-        disabled: false,
-        error: null,
+        placeholder: 'Enter text...',
+        size: 'md',
     },
 };
 
-export const WithPrefixSuffix: Story = {
-    render: (args) => ({
-        props: {
-            ...args,
-            control: new FormControl('')
-        },
+export const Sizes: Story = {
+    render: () => ({
         template: `
-      <ui-form-field [label]="label" [required]="required">
-        <span uiPrefix>👤</span>
-        <ui-input uiInput [formControl]="control" placeholder="Usuario"></ui-input>
-        <span uiSuffix>✅</span>
-      </ui-form-field>
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <ui-input size="sm" placeholder="Small (sm)"></ui-input>
+        <ui-input size="md" placeholder="Medium (md)"></ui-input>
+        <ui-input size="lg" placeholder="Large (lg)"></ui-input>
+      </div>
     `,
     }),
-    args: {
-        label: 'Usuario',
-        required: true,
-    },
 };
 
-export const InvalidState: Story = {
-    render: (args) => ({
-        props: {
-            ...args,
-            control: new FormControl('', Validators.required)
-        },
+export const States: Story = {
+    render: () => ({
         template: `
-        <ui-form-field label="Email" required>
-          <ui-input uiInput [formControl]="control" value="" placeholder="Email"></ui-input>
-        </ui-form-field>
-        <p style="margin-top: 1rem; color: #666; font-size: 0.8em;">Note: Touch the field and leave to see validation error.</p>
-      `,
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <ui-input placeholder="Default state"></ui-input>
+        <ui-input [disabled]="true" placeholder="Disabled state"></ui-input>
+        <ui-input [readonly]="true" value="Readonly value" placeholder="Readonly state"></ui-input>
+      </div>
+    `,
     }),
+};
+
+export const Password: Story = {
+    args: {
+        type: 'password',
+        placeholder: 'Enter password...',
+        value: 'secret123',
+    },
 };

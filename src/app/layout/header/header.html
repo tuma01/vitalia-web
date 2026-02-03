@@ -10,22 +10,29 @@
         <!-- Search (Moved to Right) -->
         @if (!isMobile()) {
         <div class="header-search">
-            <ui-icon class="search-icon">search</ui-icon>
-            <input type="text" class="search-input" [placeholder]="'header.search' | translate"
-                [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+                <ui-form-field appearance="outline" size="sm" [noMargin]="true" [hideSubscript]="true">
+                    <ui-icon uiPrefix>search</ui-icon>
+                    <ui-input formControlName="query" uiInput [placeholder]="'header.search' | translate"
+                        (keyup.enter)="onSearch()" ariaLabel="Search">
+                    </ui-input>
+                </ui-form-field>
+            </form>
         </div>
         }
 
         <!-- Language Selector -->
-        <ui-icon-button icon="language" [matMenuTriggerFor]="languageMenu"
+        <ui-icon-button icon="language" [uiMenuTriggerFor]="languageMenu.matMenu"
             aria-label="Change language"></ui-icon-button>
-        <mat-menu #languageMenu="matMenu">
+
+        <ui-menu #languageMenu="uiMenu">
             @for (lang of availableLanguages; track lang.code) {
-            <button mat-menu-item (click)="switchLanguage(lang.code)">
-                <span>{{ lang.flag }} {{ lang.name }}</span>
+            <button uiMenuItem (click)="switchLanguage(lang.code)">
+                <span class="lang-flag">{{ lang.flag }}</span>
+                <span class="lang-name">{{ lang.name }}</span>
             </button>
             }
-        </mat-menu>
+        </ui-menu>
 
         <!-- Notifications -->
         <ui-badge [content]="notificationCount" variant="danger" animation="pulse" [hidden]="notificationCount === 0">
@@ -33,26 +40,27 @@
         </ui-badge>
 
         <!-- User Menu -->
-        <ui-icon-button icon="account_circle" [matMenuTriggerFor]="userMenu" aria-label="User menu"></ui-icon-button>
-        <mat-menu #userMenu="matMenu">
+        <ui-icon-button icon="account_circle" [uiMenuTriggerFor]="userMenu.matMenu"
+            aria-label="User menu"></ui-icon-button>
+
+        <ui-menu #userMenu="uiMenu">
             <div class="user-info">
                 <div class="user-name">{{ userName }}</div>
                 <div class="user-role">{{ userRole }}</div>
             </div>
-            <mat-divider></mat-divider>
-            <button mat-menu-item>
+            <button uiMenuItem>
                 <ui-icon>person</ui-icon>
                 <span>{{ 'header.profile' | translate }}</span>
             </button>
-            <button mat-menu-item>
+            <button uiMenuItem>
                 <ui-icon>settings</ui-icon>
                 <span>{{ 'header.settings' | translate }}</span>
             </button>
-            <mat-divider></mat-divider>
-            <button mat-menu-item (click)="logout()">
+            <ui-divider></ui-divider>
+            <button uiMenuItem (click)="logout()">
                 <ui-icon>exit_to_app</ui-icon>
                 <span>{{ 'header.logout' | translate }}</span>
             </button>
-        </mat-menu>
+        </ui-menu>
     </div>
 </ui-toolbar>

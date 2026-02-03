@@ -49,13 +49,14 @@ export interface UiConfirmDialogData {
   styles: [`
     .ui-confirm-dialog {
       padding: var(--ui-space-lg, 24px);
-      background: var(--ui-dialog-bg, #fff);
-      border-radius: var(--ui-dialog-radius, 12px);
-      box-shadow: var(--ui-dialog-shadow);
+      background: var(--mat-sys-surface-container-high, #fff);
+      border-radius: var(--mat-sys-corner-large, 12px);
+      box-shadow: var(--mat-sys-elevation-3);
       display: flex;
       flex-direction: column;
       gap: var(--ui-space-md, 16px);
       max-width: 100vw;
+      color: var(--mat-sys-on-surface);
 
       @media (max-width: 640px) {
         padding: var(--ui-space-md, 16px);
@@ -79,7 +80,7 @@ export interface UiConfirmDialogData {
     }
 
     .ui-confirm-dialog__content {
-      color: var(--ui-text-secondary, #6b7280);
+      color: var(--mat-sys-on-surface-variant);
       font-size: var(--ui-font-size-md, 16px);
       margin: 0;
       padding: 0;

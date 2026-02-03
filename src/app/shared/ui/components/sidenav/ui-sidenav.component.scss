@@ -12,9 +12,12 @@
 }
 
 .ui-sidenav {
-    border-right: 1px solid var(--ui-color-border, #f3f4f6) !important;
-    background: var(--ui-background-default, #ffffff) !important;
-    transition: width var(--ui-motion-fast, 0.2s cubic-bezier(0.4, 0, 0.2, 1)) !important;
+    border-block: none;
+    border-inline-start: none;
+    border-inline-end: 1px solid var(--ui-color-border) !important;
+    background: var(--ui-background-surface) !important;
+    color: var(--ui-color-text-primary);
+    transition: width var(--ui-motion-fast) !important;
     overflow-x: hidden;
     z-index: 5;
 
@@ -35,22 +38,26 @@
     height: 64px;
     display: flex;
     align-items: center;
-    padding: 0 var(--ui-space-md);
-    border-bottom: 1px solid var(--ui-color-border);
+    padding-block: 0;
+    padding-inline: var(--ui-space-md);
+    border-block-end: 1px solid var(--ui-color-border);
     overflow: hidden;
     white-space: nowrap;
 }
 
 .ui-sidenav-content {
-    padding: var(--ui-space-sm) 0;
+    padding-block: var(--ui-space-sm);
+    padding-inline: 0;
 }
 
 .ui-sidenav-item {
     display: flex;
     align-items: center;
     height: 48px;
-    padding: 0 var(--ui-space-md);
-    margin: 4px var(--ui-space-xs);
+    padding-block: 0;
+    padding-inline: var(--ui-space-md);
+    margin-block: 4px;
+    margin-inline: var(--ui-space-xs);
     border-radius: var(--ui-radius-md, 8px);
     color: var(--ui-color-text-secondary, #64748b);
     text-decoration: none;
@@ -60,8 +67,8 @@
     overflow: hidden;
 
     &:hover:not(.ui-sidenav-item--disabled) {
-        background: var(--ui-color-bg-hover, #f8fafc);
-        color: var(--ui-color-primary, #2563eb);
+        background: var(--ui-color-bg-hover);
+        color: var(--ui-color-primary);
     }
 
     &--active {
@@ -72,12 +79,16 @@
         &::before {
             content: '';
             position: absolute;
-            left: 0;
+            inset-inline-start: 0;
             top: 20%;
             height: 60%;
             width: 4px;
             background: var(--ui-color-primary);
             border-radius: 0 4px 4px 0;
+
+            [dir='rtl'] & {
+                border-radius: 4px 0 0 4px;
+            }
         }
     }
 
@@ -87,7 +98,7 @@
     }
 
     &__icon {
-        margin-right: calc(var(--ui-space-md) - 4px);
+        margin-inline-end: calc(var(--ui-space-md) - 4px);
         font-size: 22px;
         width: 24px;
         height: 24px;
@@ -105,7 +116,7 @@
     }
 
     &__chevron {
-        margin-left: var(--ui-space-xs);
+        margin-inline-start: var(--ui-space-xs);
         font-size: 18px;
         width: 18px;
         height: 18px;
@@ -115,15 +126,15 @@
     }
 
     &__badge {
-        margin-left: var(--ui-space-sm);
+        margin-inline-start: var(--ui-space-sm);
     }
 
     &--child {
-        padding-left: 48px !important;
+        padding-inline-start: 48px !important;
         font-size: 0.875rem;
         height: 40px;
-        margin-top: 2px !important;
-        margin-bottom: 2px !important;
+        margin-block-start: 2px !important;
+        margin-block-end: 2px !important;
     }
 }
 
@@ -131,8 +142,10 @@
     overflow: hidden;
     background: rgba(var(--ui-background-surface-rgb), 0.3);
     border-radius: var(--ui-radius-md);
-    margin: 2px var(--ui-space-sm) 4px;
-    padding: 2px 0;
+    margin-block: 2px 4px;
+    margin-inline: var(--ui-space-sm);
+    padding-block: 2px;
+    padding-inline: 0;
     // No border for a more seamless look
     animation: ui-slide-down 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -157,7 +170,7 @@
         padding: 0;
 
         &__icon {
-            margin-right: 0;
+            margin-inline-end: 0;
         }
 
         &__label,
@@ -173,9 +186,9 @@
 }
 
 .ui-sidenav-footer {
-    margin-top: auto;
+    margin-block-start: auto;
     padding: var(--ui-space-md);
-    border-top: 1px solid var(--ui-color-border-subtle);
+    border-block-start: 1px solid var(--ui-color-border-subtle);
 }
 
 mat-sidenav-content {

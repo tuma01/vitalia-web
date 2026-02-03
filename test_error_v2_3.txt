@@ -1,0 +1,35 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mF:/JAVA-PROJET/vitalia/workspace/vitalia-web[39m
+
+ [31mΓ¥»[39m src/app/core/services/theme.service.spec.ts [2m([22m[2m4 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[32m 12[2mms[22m[39m
+[31m     [31m├ù[31m should initialize with PAL_DEFAULT values and inject recursively[39m[32m 5[2mms[22m[39m
+[31m     [31m├ù[31m should generate RGB tokens for colors in deep paths[39m[32m 1[2mms[22m[39m
+[31m     [31m├ù[31m should perform 3-layer deep merge correctly[39m[32m 1[2mms[22m[39m
+[31m     [31m├ù[31m should switch dark mode and sync CSS classes[39m[32m 1[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 4 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  src/app/core/services/theme.service.spec.ts:19:5 > UiThemeService DNA Engine (v2.3) > should initialize with PAL_DEFAULT values and inject recursively
+ FAIL  src/app/core/services/theme.service.spec.ts:34:5 > UiThemeService DNA Engine (v2.3) > should generate RGB tokens for colors in deep paths
+ FAIL  src/app/core/services/theme.service.spec.ts:42:5 > UiThemeService DNA Engine (v2.3) > should perform 3-layer deep merge correctly
+ FAIL  src/app/core/services/theme.service.spec.ts:62:5 > UiThemeService DNA Engine (v2.3) > should switch dark mode and sync CSS classes
+Error: Need to call TestBed.initTestEnvironment() first
+ Γ¥» TestBedImpl.get compiler [as compiler] node_modules/@angular/core/fesm2022/testing.mjs:1486:13
+ Γ¥» TestBedImpl.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1402:10
+ Γ¥» Function.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1273:33
+ Γ¥» src/app/core/services/theme.service.spec.ts:12:17
+     10| 
+     11|     beforeEach(() => {
+     12|         TestBed.configureTestingModule({
+       |                 ^
+     13|             providers: [ThemeService]
+     14|         });
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/4]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[90m (4)[39m
+[2m   Start at [22m 00:55:48
+[2m   Duration [22m 1.84s[2m (transform 254ms, setup 0ms, import 1.29s, tests 12ms, environment 1ms)[22m
+

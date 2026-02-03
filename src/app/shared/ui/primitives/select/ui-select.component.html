@@ -1,7 +1,7 @@
 <mat-form-field [appearance]="variant" class="ui-select__field" floatLabel="always">
     <mat-label>{{ label }}</mat-label>
 
-    <mat-select [id]="id" [attr.name]="name || id" [disabled]="disabled" [(value)]="value"
+    <mat-select [id]="id" [attr.name]="name || id" [disabled]="disabled" [(value)]="value" panelClass="ui-select-panel"
         (selectionChange)="handleChange($event.value)" [placeholder]="placeholder" [required]="required">
 
         <mat-select-trigger>

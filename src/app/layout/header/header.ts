@@ -1,28 +1,45 @@
 import { Component, EventEmitter, Output, inject, signal, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { MatMenuModule } from '@angular/material/menu'; // Keeping for Dropdown Logic
-import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '../../core/services/language.service';
 import { ThemeService, Theme } from '../../core/services/theme.service';
 import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
-import { UiBadgeComponent, UiToolbarComponent, UiIconButtonComponent } from '@ui';
-import { UiIconComponent } from '../../shared/ui/primitives/icon/ui-icon.component'; // PAL Icon
+import {
+  UiBadgeComponent,
+  UiToolbarComponent,
+  UiIconButtonComponent,
+  UiIconComponent,
+  UiMenuComponent,
+  UiMenuItemDirective,
+  UiMenuTriggerDirective,
+  UiDividerComponent,
+  UiInputComponent,
+  UiFormFieldComponent,
+  UiPrefixDirective,
+  UiInputDirective
+} from '@ui';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     FormsModule,
-    MatMenuModule,
-    MatDividerModule,
+    ReactiveFormsModule,
     TranslateModule,
     UiBadgeComponent,
     UiToolbarComponent,
     UiIconButtonComponent,
-    UiIconComponent
+    UiIconComponent,
+    UiMenuComponent,
+    UiMenuItemDirective,
+    UiMenuTriggerDirective,
+    UiDividerComponent,
+    UiInputComponent,
+    UiFormFieldComponent,
+    UiPrefixDirective,
+    UiInputDirective
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -45,7 +62,11 @@ export class Header implements OnDestroy {
 
 
   // Search
-  searchQuery = '';
+  searchForm = new FormGroup({
+    query: new FormControl('')
+  });
+
+  searchQuery = ''; // Keep for compat if needed, but we'll use form
   isMobile = signal(window.innerWidth < 768);
 
   // Notifications (mock data)
@@ -89,8 +110,9 @@ export class Header implements OnDestroy {
   }
 
   onSearch(): void {
-    if (this.searchQuery.trim()) {
-      console.log('Searching for:', this.searchQuery);
+    const query = this.searchForm.value.query;
+    if (query && query.trim()) {
+      console.log('Searching for:', query);
       // TODO: Implement search functionality
     }
   }

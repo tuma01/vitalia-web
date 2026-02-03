@@ -1,5 +1,7 @@
 # PAL & GDS Guidelines
 
+> 🚀 **¿Eres nuevo?** Revisa el [**Quick Start de Componentes**](./QUICKSTART.md) para empezar a construir formularios en segundos.
+
 Bienvenido a la capa de **Interfaz de Usuario Compartida (PAL)** de Vitalia.
 Esta carpeta contiene los bloques constructivos visuales de la aplicación.
 

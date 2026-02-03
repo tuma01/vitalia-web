@@ -1,185 +1,35 @@
-/* UI Button - Using Global Form Component Configuration */
-
-@use '../../../../../styles/ds/form-components-global' as form;
-
 :host {
-    display: inline-flex; // Match input wrapper layout (flex) exactly
+    display: inline-block;
     width: fit-content;
-    box-sizing: border-box;
-    // line-height: 1; // Removed to let flexbox center naturally
-    vertical-align: middle; // Align with inputs
-}
 
-button {
-    /* Global Form Component Base */
-    @include form.form-component-inner('inline-flex');
+    &.ui-button--full-width {
+        display: block;
+        width: 100%;
 
-    // Height Parity (Driven by Host Variable)
-    min-height: var(--ui-size-md) !important;
-    height: var(--ui-size-md) !important;
-
-    /* Button-Specific Overrides */
-    cursor: pointer;
-    font-weight: var(--ui-font-weight-medium);
-    border-radius: var(--ui-radius-md);
-    transition: all var(--ui-motion-fast);
-
-    // RESET NATIVE STYLES
-    appearance: none;
-    -webkit-appearance: none;
-
-    position: relative;
-    justify-content: center;
-
-    &:disabled {
-        opacity: var(--ui-opacity-disabled);
-        cursor: not-allowed;
-        pointer-events: none;
+        button {
+            width: 100%;
+        }
     }
 }
 
-/* Spinner for loading state */
-.ui-button__spinner {
-    margin-right: var(--ui-space-sm);
+.ui-button__container {
     display: flex;
     align-items: center;
-    width: 1em;
-    height: 1em;
+    justify-content: center;
+    gap: 8px;
+    height: 100%;
 
-    svg {
-        animation: spin 1s linear infinite;
-        width: 100%;
-        height: 100%;
+    &--loading {
+        position: relative;
     }
 }
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+.ui-button__content {
+    display: inline-flex;
+    align-items: center;
 }
 
-/* ========================================================================
-   VARIANTS (Applied via Host Context or Host Classes)
-   ======================================================================== */
-
-/* Primary */
-:host(.ui-button--primary) button {
-    background-color: var(--ui-color-primary);
-    color: var(--ui-color-on-primary);
-    box-shadow: var(--ui-elevation-sm);
-
-    &:hover {
-        background-color: var(--ui-color-primary-hover);
-        box-shadow: var(--ui-elevation-md);
-        transform: translateY(-1px);
-    }
-
-    &:active {
-        box-shadow: none;
-        transform: translateY(0);
-        background-color: var(--ui-color-bg-active);
-        filter: brightness(0.9);
-    }
-}
-
-/* Secondary */
-:host(.ui-button--secondary) button {
-    background-color: var(--ui-color-secondary);
-    color: var(--ui-color-on-secondary);
-    box-shadow: var(--ui-elevation-sm);
-
-    &:hover {
-        background-color: var(--ui-color-secondary-hover);
-        box-shadow: var(--ui-elevation-md);
-    }
-}
-
-/* Outline */
-:host(.ui-button--outline) button {
-    background-color: transparent;
-    border: 1px solid var(--ui-color-border);
-    color: var(--ui-color-text);
-
-    &:hover {
-        background-color: var(--ui-color-bg-hover);
-        border-color: var(--ui-color-primary);
-        color: var(--ui-color-primary);
-    }
-}
-
-/* Ghost */
-:host(.ui-button--ghost) button {
-    background-color: transparent;
-    color: var(--ui-color-text-secondary);
-    padding-left: var(--ui-space-sm);
-    padding-right: var(--ui-space-sm);
-
-    &:hover {
-        background-color: var(--ui-color-bg-hover);
-        color: var(--ui-color-primary);
-    }
-}
-
-/* Danger */
-:host(.ui-button--danger) button {
-    background-color: var(--ui-color-danger);
-    color: var(--ui-color-on-danger);
-
-    &:hover {
-        background-color: var(--ui-color-danger-hover);
-        box-shadow: var(--ui-elevation-sm);
-    }
-}
-
-/* ========================================================================
-   SIZES - Using Global Form Component Mixins
-   ======================================================================== */
-
-/* Small */
-:host(.ui-button--sm) {
-    @include form.form-component-host('sm');
-
-    button {
-        @include form.form-component-padding('sm');
-        font-size: var(--ui-font-size-xs);
-    }
-}
-
-/* Medium (Default) */
-:host(.ui-button--md) {
-    @include form.form-component-host('md');
-
-    button {
-        @include form.form-component-padding('md');
-        font-size: var(--ui-font-size-sm);
-    }
-}
-
-/* Large */
-:host(.ui-button--lg) {
-    @include form.form-component-host('lg');
-
-    button {
-        @include form.form-component-padding('lg');
-        font-size: var(--ui-font-size-md);
-    }
-}
-
-/* ========================================================================
-   UTILITIES
-   ======================================================================== */
-
-:host(.ui-button--full-width) {
-    display: block;
-    width: 100%;
-}
-
-:host(.ui-button--loading) button {
-    cursor: wait;
-    opacity: 0.8;
+// Global button overrides if needed (currently delegated to mat-parity)
+button.mat-mdc-button-base {
+    font-family: inherit;
 }

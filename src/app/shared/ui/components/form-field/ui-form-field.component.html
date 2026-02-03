@@ -1,73 +1,38 @@
-<div class="ui-form-field" [class.ui-form-field--outline]="effectiveAppearance === 'outline'"
-    [class.ui-form-field--filled]="effectiveAppearance === 'filled'" [class.ui-form-field--disabled]="disabled"
-    [class.ui-form-field--error]="hasError" [class.ui-form-field--focused]="isFocused"
-    [class.ui-form-field--has-value]="hasValue" [class.ui-form-field--has-prefix]="hasPrefix()"
-    [class.ui-form-field--has-suffix]="hasSuffix()">
+<mat-form-field [appearance]="effectiveAppearance() === 'filled' ? 'fill' : 'outline'"
+    [subscriptSizing]="hideSubscript() ? 'fixed' : 'dynamic'" [class.ui-form-field-no-margin]="noMargin()"
+    class="ui-form-field-wrapper">
+    <!-- LABEL (Material handles floating logic automatically) -->
+    @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
+    }
 
-    <!-- CONTROL CONTAINER (Border, Background, Flex layout) -->
-    <div class="ui-form-field__control">
-
-        <!-- LABEL -->
-        @if (label) {
-        <label class="ui-form-field__label" [attr.for]="fieldId()">
-            {{ label }}
-            @if (required) {
-            <span class="ui-form-field__required">*</span>
-            }
-        </label>
-        }
-
-        <!-- PREFIX -->
-        @if (hasPrefix()) {
-        <div class="ui-form-field__prefix">
-            <ng-content select="[uiPrefix]"></ng-content>
-        </div>
-        }
-
-        <!-- INPUT / SELECT / TEXTAREA (Slot) -->
-        <div class="ui-form-field__input">
-            <ng-content select="[uiInput]"></ng-content>
-            <ng-content></ng-content> <!-- Fallback -->
-        </div>
-
-        <!-- SUFFIX -->
-        @if (hasSuffix()) {
-        <div class="ui-form-field__suffix">
-            <ng-content select="[uiSuffix]"></ng-content>
-        </div>
-        }
-
-        <!-- OUTLINE: Fieldset Approach (Robust Notch) -->
-        @if (effectiveAppearance === 'outline') {
-        <fieldset class="ui-form-field__outline">
-            <legend class="ui-form-field__legend">
-                <span>{{ label }}</span>
-                @if (required) {
-                <span class="ui-form-field__required">*</span>
-                }
-            </legend>
-        </fieldset>
-        }
-
+    <!-- PREFIX -->
+    <div matPrefix class="ui-form-field__prefix-wrapper">
+        <ng-content select="[uiPrefix]"></ng-content>
     </div>
 
-    <!-- SUBSCRIPT: ERROR / HINT -->
-    <div class="ui-form-field__subscript">
-        @if (hasError) {
-        <div class="ui-form-field__error">
-            <ng-content select="[uiError]"></ng-content>
-            @if (error) {
-            <ng-container>{{ error }}</ng-container>
-            }
-        </div>
-        } @else {
-        <div class="ui-form-field__hint">
-            <ng-content select="[uiHint]"></ng-content>
-            @if (hint) {
-            <ng-container>{{ hint }}</ng-container>
-            }
-        </div>
-        }
+    <!-- CONTENT (Input, Select, etc.) -->
+    <div class="ui-form-field__control-wrapper">
+        <ng-content></ng-content>
     </div>
 
-</div>
+    <!-- SUFFIX -->
+    <div matSuffix class="ui-form-field__suffix-wrapper">
+        <ng-content select="[uiSuffix]"></ng-content>
+    </div>
+
+    <!-- HINT -->
+    @if (hint() && !state().invalid) {
+    <mat-hint>{{ hint() }}</mat-hint>
+    }
+
+    <!-- ERROR -->
+    @if (state().invalid) {
+    <mat-error>
+        <ng-content select="[uiError]"></ng-content>
+        @if (error()) {
+        <span>{{ error() }}</span>
+        }
+    </mat-error>
+    }
+</mat-form-field>

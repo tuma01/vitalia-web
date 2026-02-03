@@ -11,11 +11,13 @@ import {
     UiButtonType,
     UiButtonVariant,
 } from './ui-button.types';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'ui-button',
     standalone: true,
-    imports: [],
+    imports: [CommonModule, MatButtonModule, MatProgressSpinnerModule],
     templateUrl: './ui-button.component.html',
     styleUrls: ['./ui-button.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -45,7 +47,14 @@ export class UiButtonComponent {
     @Input() fullWidth = false; // Layout utility
     @Input() ariaLabel: string = '';
 
-    @Output() clicked = new EventEmitter<MouseEvent>();
+    clicked = new EventEmitter<MouseEvent>();
+
+    getMatColor(): 'primary' | 'accent' | 'warn' | undefined {
+        if (this.variant === 'danger') return 'warn';
+        if (this.variant === 'primary') return 'primary';
+        if (this.variant === 'secondary') return 'accent';
+        return undefined;
+    }
 
     handleClick(event: MouseEvent): void {
         if (this.disabled || this.loading) {

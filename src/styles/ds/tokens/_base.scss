@@ -70,60 +70,37 @@
     /* Motion */
     --ui-motion-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Card Global Tokens */
-    --ui-card-bg: #ffffff;
-    --ui-card-border-color: #e5e7eb;
-    --ui-card-radius: var(--ui-radius-md);
-    --ui-card-elevation: var(--ui-elevation-sm);
-    --ui-card-padding: var(--ui-space-lg);
-
-    /* Checkbox Global Tokens */
+    /* Checkbox Core Geometry */
     --ui-checkbox-size: 20px;
     --ui-checkbox-radius: 5px;
-    --ui-checkbox-color-border: var(--ui-color-border, #d1d5db);
-    --ui-checkbox-color-checked: var(--ui-color-primary, #2563eb);
-    --ui-checkbox-color-tick: #ffffff;
     --ui-checkbox-animation-duration: 0.2s;
 
-    /* Dialog Global Tokens */
-    --ui-dialog-radius: var(--ui-radius-lg, 12px);
-    --ui-dialog-bg: #ffffff;
-    --ui-dialog-backdrop-opacity: 0.4;
-    --ui-dialog-shadow: var(--ui-elevation-lg, 0 10px 15px -3px rgba(0, 0, 0, 0.1));
-
-    /* Radio Global Tokens */
+    /* Radio Core Geometry */
     --ui-radio-size: 1.25rem;
     --ui-radio-border-width: 2px;
-    --ui-radio-color-border: var(--ui-color-border, #d1d5db);
-    --ui-radio-color-checked: var(--ui-color-primary, #2563eb);
     --ui-radio-dot-size: 50%;
     --ui-radio-anim-duration: 0.2s;
 
-    /* Toggle Global Tokens */
+    /* Toggle Core Geometry */
     --ui-toggle-width: 44px;
     --ui-toggle-height: 24px;
     --ui-toggle-thumb-size: 20px;
-    --ui-toggle-thumb-color: #ffffff;
-    --ui-toggle-bg: var(--ui-color-border, #d1d5db);
-    --ui-toggle-bg-checked: var(--ui-color-primary, #2563eb);
     --ui-toggle-anim-duration: 0.2s;
 
-    /* Global Field Icon Tokens */
+    /* Master Geometric Constants */
     --ui-field-icon-size: 21px;
     --ui-field-icon-offset: 2.5px;
-
-    /* Icon Button Sizes */
-    --ui-icon-button-size-sm: 32px;
-    --ui-icon-button-size-md: 40px;
-    --ui-icon-button-size-lg: 48px;
 }
 
-/* Dark Theme Overrides for Components */
-.theme-dark {
-    --ui-card-bg: #1e1e1e;
-    --ui-card-border-color: #333;
-    --ui-dialog-bg: #1e1e1e;
-    --ui-checkbox-color-border: #555;
-    --ui-radio-color-border: #555;
-    --ui-toggle-bg: #555;
+/* Structural Components Roles (Derived from Semantic Layer) */
+:root {
+    --ui-radius-base: var(--ui-border-radius-md);
+    --ui-radius-md: var(--ui-border-radius-md);
+
+    --ui-card-radius: var(--ui-radius-md);
+    --ui-card-padding: var(--ui-space-lg);
+    --ui-dialog-radius: var(--ui-radius-lg, 12px);
 }
+
+/* The .theme-dark/light classes now ONLY define the semantic values 
+   that the ThemeService uses as defaults before runtime injection. */

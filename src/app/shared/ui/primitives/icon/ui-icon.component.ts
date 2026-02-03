@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'ui-icon',
-    standalone: true,
-    imports: [CommonModule, MatIconModule],
-    template: `
+  selector: 'ui-icon',
+  standalone: true,
+  imports: [CommonModule, MatIconModule],
+  template: `
     <mat-icon 
       [inline]="inline" 
       [svgIcon]="svgIcon" 
@@ -18,26 +18,31 @@ import { MatIconModule } from '@angular/material/icon';
       <ng-content></ng-content>
     </mat-icon>
   `,
-    styles: [`
+  styles: [`
     :host {
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       vertical-align: middle;
-      line-height: 1;
+      line-height: normal !important;
     }
     
     mat-icon {
-      width: var(--ui-icon-size, 24px);
-      height: var(--ui-icon-size, 24px);
-      font-size: var(--ui-icon-size, 24px);
+      width: 1.15em;
+      height: 1.15em;
+      font-size: 1.15em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   `],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UiIconComponent {
-    @Input() inline: boolean = false;
-    @Input() svgIcon: string = '';
-    @Input() fontSet: string = '';
-    @Input() fontIcon: string = '';
-    @Input() ariaLabel: string = '';
-    @Input() color: string = '';
+  @Input() inline: boolean = false;
+  @Input() svgIcon: string = '';
+  @Input() fontSet: string = '';
+  @Input() fontIcon: string = '';
+  @Input() ariaLabel: string = '';
+  @Input() color: string = '';
 }

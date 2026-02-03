@@ -1,7 +1,7 @@
 .ui-drawer-backdrop {
     position: fixed;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.3);
@@ -12,19 +12,24 @@
 .ui-drawer {
     position: fixed;
     top: 0;
-    right: 0;
+    inset-inline-end: 0;
     width: 100%;
     max-width: 400px;
     height: 100vh;
     background: var(--ui-background-surface, #fff);
     z-index: 999;
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+
+    [dir='rtl'] & {
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    }
+
     display: flex;
     flex-direction: column;
 
     &__header {
         padding: var(--ui-space-lg);
-        border-bottom: 1px solid var(--ui-color-border, #e2e8f0);
+        border-block-end: 1px solid var(--ui-color-border, #e2e8f0);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -74,8 +79,9 @@
 }
 
 .ui-notification-item {
-    padding: var(--ui-space-md) var(--ui-space-lg);
-    border-bottom: 1px solid var(--ui-color-border-subtle, #f1f5f9);
+    padding-block: var(--ui-space-md);
+    padding-inline: var(--ui-space-lg);
+    border-block-end: 1px solid var(--ui-color-border-subtle, #f1f5f9);
     display: flex;
     gap: var(--ui-space-md);
     transition: background-color 0.2s;

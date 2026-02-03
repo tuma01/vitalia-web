@@ -3,17 +3,23 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ContentChild,
-    Input,
+    input,
+    computed,
     ViewEncapsulation,
     effect,
     inject,
     Injector,
     OnDestroy,
-    signal
+    signal,
+    HostBinding,
+    HostListener,
+    contentChild,
+    ElementRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgControl } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Subject, takeUntil } from 'rxjs';
 import { UiConfigService } from '../../config/ui-config.service';
 import { UiInputComponent } from '../../primitives/input/ui-input.component';
@@ -21,127 +27,178 @@ import { UiSelectComponent } from '../../primitives/select/ui-select.component';
 import { UiSelectNativeComponent } from '../../primitives/select-native/ui-select-native.component';
 import { UiFormFieldAppearance, UiFormFieldSize } from './ui-form-field.types';
 import { UiErrorDirective, UiPrefixDirective, UiSuffixDirective } from './ui-form-field.directives';
+import { UiFormManagerService } from '../../services/ui-form-manager.service';
+import { UiDirectionService } from '../../services/ui-direction.service';
+import { UiFormElement } from '../../services/ui-form-manager.types';
 
+/**
+ * UiFormFieldComponent
+ * 
+ * El orquestador central del sistema de formularios PAL.
+ * Implementa el "Reactive Accessibility Engine" mediante Angular Signals.
+ * 
+ * Su responsabilidad es doble:
+ * 1. **Visual**: Manejar el layout, label flotante, borde y subscripts (hint/error).
+ * 2. **Inteligencia (Fused Pattern)**: Sincronización semántica de IDs y estados ARIA 
+ *    (invalid, required, describedby) en tiempo real.
+ */
 @Component({
-    // eslint-disable-next-line @angular-eslint/component-selector
     selector: 'ui-form-field',
     standalone: true,
-    imports: [],
+    imports: [CommonModule, MatFormFieldModule, MatInputModule],
     templateUrl: './ui-form-field.component.html',
     styleUrls: ['./ui-form-field.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None,
-    host: {
-        'style': 'display: block;'
-    }
+    encapsulation: ViewEncapsulation.None
 })
-export class UiFormFieldComponent implements AfterContentInit, OnDestroy {
-    @Input() label?: string;
-    @Input() hint?: string;
-    @Input() error?: string | null;
+export class UiFormFieldComponent implements AfterContentInit, OnDestroy, UiFormElement {
+    @HostBinding('class.ui-form-field-host') hostClass = true;
+    @HostBinding('class.ui-form-field-host--sm') get smClass() { return this.size() === 'sm'; }
+    @HostBinding('class.ui-form-field--no-label') get noLabelClass() { return !this.label(); }
+    @HostBinding('class.ui-form-field-host--no-margin') get noMarginClass() { return this.noMargin(); }
+    @HostBinding('attr.dir') get dir() { return this.directionService?.dir(); }
+
+    // Modern Signal Inputs
+    label = input<string | undefined>();
+    hint = input<string | undefined>();
+    error = input<string | null>(null);
+    appearance = input<UiFormFieldAppearance | undefined>();
+    size = input<UiFormFieldSize>('md');
+    required = input(false);
+    disabled = input(false);
+    hideSubscript = input(false);
+    noMargin = input(false);
 
     private uiConfig = inject(UiConfigService);
-
-    // Appearance: use global config by default, can be overridden
-    @Input() appearance?: UiFormFieldAppearance;
-
-    // Computed appearance: use input if provided, otherwise global config
-    get effectiveAppearance(): UiFormFieldAppearance {
-        return this.appearance ?? this.uiConfig.inputAppearance();
-    }
-
-    @Input() size: UiFormFieldSize = 'md';
-    @Input() required = false;
-    @Input() disabled = false;
-
-    // Queries
-    @ContentChild(UiInputComponent) inputComponent?: UiInputComponent;
-    @ContentChild(UiSelectComponent) selectComponent?: UiSelectComponent;
-    @ContentChild(UiSelectNativeComponent) selectNativeComponent?: UiSelectNativeComponent;
-    @ContentChild(NgControl) ngControl?: NgControl;
-
-    // Support for molecular components that wrap ui-form-field
-    private injectedInput = inject(UiInputComponent, { optional: true, skipSelf: true });
-
-    @ContentChild(UiPrefixDirective) prefix?: UiPrefixDirective;
-    @ContentChild(UiSuffixDirective) suffix?: UiSuffixDirective;
-
-    // ... (rest of query section)
-
-    @ContentChild(UiErrorDirective) errorSlot?: UiErrorDirective;
-
-    // State
-    isFocused = false;
-    hasValue = false;
-    hasControlError = false;
-
-    // Reactive State for Layout
-    hasPrefix = signal(false);
-    hasSuffix = signal(false);
-    fieldId = signal<string | null>(null);
-
     private cd = inject(ChangeDetectorRef);
+    private injector = inject(Injector);
+    private elementRef = inject(ElementRef);
+    private formManager = inject(UiFormManagerService, { optional: true });
+    private directionService = inject(UiDirectionService, { optional: true }) as UiDirectionService | null;
     private destroy$ = new Subject<void>();
 
-    get hasError(): boolean {
-        return !!this.error || !!this.errorSlot || this.hasControlError;
-    }
+    /** Identificador único para el UX Behavior Engine */
+    public id = Math.random().toString(36).substring(2, 9);
 
-    private injector = inject(Injector); // Injector needed for effect() in lifecycle hook
+    // Computed Properties for Reactivity
+    effectiveAppearance = computed(() => this.appearance() ?? this.uiConfig.inputAppearance());
+
+    // State managed by forms integration
+    private hasControlError = signal(false);
+
+    /**
+     * Estado reactivo agregado del nodo.
+     * Requerido por la interfaz UiFormElement para el motor de comportamiento.
+     */
+    state = computed(() => ({
+        invalid: !!this.error() || !!this.errorSlot() || this.hasControlError(),
+        touched: this.hasControlError(), // Touched ya disparó el error del control si existe
+        severity: (this.error() || this.errorSlot()) ? 'error' : 'info' as any
+    }));
+
+    // Modern Signal Queries
+    inputComponent = contentChild<UiInputComponent>(UiInputComponent, { descendants: true });
+    selectComponent = contentChild<UiSelectComponent>(UiSelectComponent, { descendants: true });
+    selectNativeComponent = contentChild<UiSelectNativeComponent>(UiSelectNativeComponent, { descendants: true });
+    ngControl = contentChild<NgControl>(NgControl, { descendants: true });
+
+    prefix = contentChild<UiPrefixDirective>(UiPrefixDirective, { descendants: true });
+    suffix = contentChild<UiSuffixDirective>(UiSuffixDirective, { descendants: true });
+    errorSlot = contentChild<UiErrorDirective>(UiErrorDirective, { descendants: true });
+
+    private injectedInput = inject(UiInputComponent, { optional: true, skipSelf: true });
+
+    // Internal UI State
+    isFocused = signal(false);
+    hasValue = signal(false);
+    fieldId = signal<string | null>(null);
 
     ngAfterContentInit(): void {
-        // 0. Update Layout Signals
-        this.hasPrefix.set(!!this.prefix);
-        this.hasSuffix.set(!!this.suffix);
+        // 1. REACTIVE ACCESSIBILITY ENGINE: Automatic synchronization of semantic states
+        effect(() => {
+            const atom = this.inputComponent() || this.selectComponent() || this.selectNativeComponent() || this.injectedInput;
+            const size = this.size();
+            const error = this.error();
+            const hint = this.hint();
+            const required = this.required();
+            const hasError = this.state().invalid;
+            const fieldId = this.fieldId();
 
-        // 1. Wire up Atom State (Visuals: Focus, Empty)
-        const atom = this.inputComponent || this.selectComponent || this.selectNativeComponent || this.injectedInput;
-
-        if (atom) {
-            // Wait for next tick to ensure atom has its ID generated if it's new
-            setTimeout(() => {
+            if (atom) {
+                // Set the ID baseline
                 this.fieldId.set(atom.id);
-                this.cd.markForCheck();
-            });
 
-            effect(() => {
-                this.isFocused = atom.focused();
-                // For select, empty means unselected. For input, empty string.
-                this.hasValue = !atom.empty();
-                this.cd.markForCheck();
-            }, { injector: this.injector });
-        }
+                // Sync internal signals for backwards compatibility with any surviving custom CSS
+                this.isFocused.set(typeof (atom as any).focused === 'function' ? (atom as any).focused() : (atom as any).focused);
+                this.hasValue.set(typeof (atom as any).empty === 'function' ? !(atom as any).empty() : !(atom as any).empty);
 
-        // 2. Wire up Forms State (Validation, Disabled)
-        if (this.ngControl) {
-            const control = this.ngControl.control;
+                // Material handles most of the rest, but we keep the size sync
+                (atom as any).size = size;
+
+                this.cd.markForCheck();
+            }
+        }, { injector: this.injector, allowSignalWrites: true });
+
+
+        // 2. Forms Integration Logic
+        effect(() => {
+            const control = this.ngControl()?.control;
             if (control) {
                 this.updateControlState();
                 control.statusChanges?.pipe(takeUntil(this.destroy$)).subscribe(() => {
                     this.updateControlState();
                 });
             }
+        }, { injector: this.injector });
+
+        // 3. SMART AUTO-SCROLL REGISTRATION
+        if (this.formManager) {
+            this.formManager.register(this.id, this);
         }
     }
 
     ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+        if (this.formManager) {
+            this.formManager.unregister(this.id);
+        }
     }
 
     private updateControlState(): void {
-        const control = this.ngControl?.control;
+        const control = this.ngControl()?.control;
         if (!control) return;
 
-        if (control.disabled !== this.disabled) {
-            // Sync logic if needed
-        }
-
         const newErrorState = !!(control.invalid && (control.touched || control.dirty));
-
-        if (this.hasControlError !== newErrorState) {
-            this.hasControlError = newErrorState;
+        if (this.hasControlError() !== newErrorState) {
+            this.hasControlError.set(newErrorState);
             this.cd.markForCheck();
         }
+    }
+
+    /**
+     * Delegates focus to the underlying interactive atom.
+     */
+    focus(): void {
+        const atom = this.inputComponent() || this.selectComponent() || this.selectNativeComponent() || this.injectedInput;
+        if (atom && typeof (atom as any).focus === 'function') {
+            (atom as any).focus();
+        }
+    }
+
+    @HostListener('click', ['$event'])
+    handleHostClick(event: MouseEvent): void {
+        const target = event.target as HTMLElement;
+        if (target.closest('button') || target.closest('a')) {
+            return;
+        }
+        this.focus();
+    }
+
+    /**
+     * Exposes the ElementRef for the Form Manager.
+     */
+    getElementRef(): ElementRef {
+        return this.elementRef;
     }
 }

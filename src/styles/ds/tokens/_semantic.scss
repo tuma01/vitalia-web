@@ -1,55 +1,88 @@
-/* Colores abstractos */
 :root {
-    --ui-color-primary: #0055A4;
-    --ui-color-secondary: #00AABB;
-    --ui-color-danger: #E53935;
-    --ui-color-ghost: transparent;
+    /* --- 1. Brand Tokens (Identity) --- */
+    --ui-color-brand-primary: #0055A4;
+    --ui-color-brand-secondary: #00AABB;
+    --ui-color-brand-accent: var(--ui-color-brand-secondary);
 
-    --ui-color-on-primary: #fff;
-    --ui-color-on-secondary: #fff;
-    --ui-color-on-danger: #fff;
-    --ui-color-text: #1a1a1a;
-    --ui-color-text-primary: #1a1a1a;
-    --ui-color-text-secondary: #4b5563;
-    --ui-color-text-muted: #9ca3af;
-    --ui-color-border: #e5e7eb;
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-color-primary: var(--ui-color-brand-primary);
+    --ui-color-secondary: var(--ui-color-brand-secondary);
 
-    --ui-color-bg-hover: #f5f5f5;
-    --ui-color-bg-active: #e5e5e5;
+    /* --- 2. Surface Tokens (Hierarchy) --- */
+    --ui-color-surface-app: #f9fafb;
+    --ui-color-surface-surface: #ffffff;
+    --ui-color-surface-surface-alt: #f3f4f6;
+    --ui-color-surface-overlay: rgba(255, 255, 255, 0.85);
 
-    --ui-background-default: #ffffff;
-    --ui-background-surface: #ffffff;
-    --ui-background-surface-rgb: 255, 255, 255;
-    --ui-background-variant: #f9fafb;
-    --ui-toolbar-bg: rgba(255, 255, 255, 0.85);
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-background-default: var(--ui-color-surface-app);
+    --ui-background-surface: var(--ui-color-surface-surface);
+    --ui-background-variant: var(--ui-color-surface-surface-alt);
+    --ui-toolbar-bg: var(--ui-color-surface-overlay);
 
-    --ui-color-primary-rgb: 0, 85, 164;
-}
-
-/* Dark Theme Overrides */
-.theme-dark {
-    --ui-color-primary: #90caf9; // Lighter blue for dark mode visibility
-    --ui-color-secondary: #ce93d8;
-    --ui-color-danger: #ef9a9a;
-
-    --ui-color-on-primary: #000;
-    --ui-color-on-secondary: #000;
-
-    --ui-color-text: #ffffff;
-    --ui-color-text-primary: #ffffff;
-    --ui-color-text-secondary: #cbd5e1;
+    /* --- 3. Text Tokens (Readability) --- */
+    --ui-color-text-primary: #1e293b;
+    --ui-color-text-secondary: #64748b;
     --ui-color-text-muted: #94a3b8;
+    --ui-color-text-on-primary: #ffffff;
+    --ui-color-text-on-surface: #1e293b;
+    --ui-color-text-inverse: #ffffff;
 
-    --ui-color-border: #3f3f46; // Zinc-700 (More visible border)
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-color-on-primary: var(--ui-color-text-on-primary);
+    --ui-color-on-secondary: var(--ui-color-text-on-surface);
 
-    --ui-color-bg-hover: rgba(255, 255, 255, 0.03);
-    --ui-color-bg-active: rgba(255, 255, 255, 0.05);
+    /* --- 4. Border Tokens (Structure) --- */
+    --ui-color-border-default: #e2e8f0;
+    --ui-color-border-subtle: #f1f5f9;
+    --ui-color-border-strong: #cbd5e1;
+    --ui-color-border-focus-ring: var(--ui-color-brand-primary);
 
-    --ui-background-default: #09090b; // Zinc-950
-    --ui-background-surface: #18181b; // Zinc-900 (Stable Surface)
-    --ui-background-surface-rgb: 24, 24, 27;
-    --ui-background-variant: #27272a; // Zinc-800 (Stable Header/Footer)
-    --ui-toolbar-bg: rgba(24, 24, 27, 0.85);
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-color-border: var(--ui-color-border-default);
 
-    --ui-color-primary-rgb: 144, 202, 249;
+    /* --- 5. State Tokens (UX Signal) --- */
+    --ui-color-state-success: #10b981;
+    --ui-color-state-warning: #f59e0b;
+    --ui-color-state-danger: #ef4444;
+    --ui-color-state-info: var(--ui-color-brand-primary);
+
+    --ui-color-state-success-surface: #ecfdf5;
+    --ui-color-state-warning-surface: #fffbeb;
+    --ui-color-state-danger-surface: #fef2f2;
+    --ui-color-state-info-surface: #f0f9ff;
+
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-color-success: var(--ui-color-state-success);
+    --ui-color-warning: var(--ui-color-state-warning);
+    --ui-color-danger: var(--ui-color-state-danger);
+    --ui-color-info: var(--ui-color-state-info);
+
+    /* --- 6. Elevation Tokens (Depth) --- */
+    --ui-elevation-level1: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --ui-elevation-level2: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --ui-elevation-level3: 0 10px 15px rgba(0, 0, 0, 0.15);
+    --ui-elevation-focus: 0 0 0 3px rgba(0, 85, 164, 0.2);
+
+    /* Alias de compatibilidad (Legacy PAL) */
+    --ui-card-elevation: var(--ui-elevation-level1);
+
+    /* --- 7. Form Specific Overrides --- */
+    --ui-form-field-bg: var(--ui-color-surface-surface);
+    --ui-form-field-border: var(--ui-color-border-default);
+    --ui-form-field-label: var(--ui-color-text-secondary);
+    --ui-form-field-text: var(--ui-color-text-primary);
+    --ui-form-field-placeholder: var(--ui-color-text-muted);
+
+    /* Checkbox/Radio/Toggle */
+    --ui-checkbox-color-border: var(--ui-color-border-default);
+    --ui-checkbox-color-checked: var(--ui-color-brand-primary);
+    --ui-checkbox-color-tick: var(--ui-color-text-on-primary);
+
+    --ui-radio-color-border: var(--ui-color-border-default);
+    --ui-radio-color-checked: var(--ui-color-brand-primary);
+
+    --ui-toggle-bg: var(--ui-color-border-default);
+    --ui-toggle-bg-checked: var(--ui-color-brand-primary);
+    --ui-toggle-thumb-color: #ffffff;
 }

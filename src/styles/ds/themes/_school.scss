@@ -1,10 +1,8 @@
 .theme-school {
-    --ui-color-primary: #D32F2F;
-    /* rojo académico */
+    --ui-color-primary: #D32F2F !important;
     --ui-color-primary-hover: #B71C1C;
 
     --ui-color-secondary: #1976D2;
-    /* azul académico */
     --ui-color-secondary-hover: #1565C0;
 
     --ui-color-danger: #F44336;
@@ -25,16 +23,16 @@
 
     --ui-background-default: #F0F0F0;
 
-    // Dark Mode Overrides
-    &[data-theme='dark'] {
-        --ui-background-default: #1a1a1a;
+    // Unified Dark Mode Stabilization
+    &.theme-dark {
+        --ui-background-default: #09090b; // Match DS Zinc-950 logic
+        --ui-background-surface: #1a1a1a; // Branded Surface
         --ui-color-text: #E0E0E0;
         --ui-color-text-secondary: #B0B0B0;
         --ui-color-border: #444444;
 
-        // Adjust for dark mode
-        --ui-color-primary: #ef5350; // Lighter red
-        --ui-color-secondary: #42a5f5; // Lighter blue
+        --ui-color-primary: #ef5350;
+        --ui-color-secondary: #42a5f5;
 
         --ui-color-bg-hover: rgba(255, 255, 255, 0.05);
         --ui-color-bg-active: rgba(255, 255, 255, 0.1);

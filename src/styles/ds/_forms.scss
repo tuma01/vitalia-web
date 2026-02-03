@@ -1,0 +1,77 @@
+// -------------------------------------------------------------------------
+// DESIGN SYSTEM LAYER 2 & 3: PAL FORMS ARCHITECTURE (COMPACT)
+// -------------------------------------------------------------------------
+
+// Global Form Variables (Light Mode Defaults)
+:root {
+    --ui-field-height: var(--ui-size-md, 46px);
+    --ui-field-radius: var(--ui-radius-base, 8px);
+    --ui-field-border-width: var(--ui-border-width-base, 1px);
+    --ui-field-border-color: var(--ui-color-border-default, #e2e8f0);
+    --ui-field-bg: var(--ui-color-surface-surface, #ffffff);
+
+    --ui-field-label-color: #64748b;
+    --ui-field-text-color: #1e293b;
+    --ui-field-primary-color: #0055A4;
+    --ui-field-danger-color: #ef4444;
+    --ui-field-placeholder-color: #94a3b8;
+
+    --ui-field-label-scale: 0.75;
+    --ui-field-horizontal-axis: 16px;
+    --ui-field-prefix-width: 32px;
+}
+
+// -----------------------------------------------------------------------------
+// DARK THEME OVERRIDES
+// -----------------------------------------------------------------------------
+.theme-dark {
+    --ui-field-border-color: #3f3f46;
+    --ui-field-bg: #18181b;
+    --ui-field-label-color: #a1a1aa;
+    --ui-field-text-color: #ffffff;
+    --ui-field-primary-color: #90caf9;
+    --ui-field-placeholder-color: #71717a;
+}
+
+// -----------------------------------------------------------------------------
+// UNIVERSAL COMPONENT RESET (ATOMS)
+// -----------------------------------------------------------------------------
+.ui-input__native,
+select.ui-select-native__input,
+.ui-select-native__trigger {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--ui-field-text-color) !important;
+
+    // Geometry Reset
+    padding-block: 0 !important;
+    padding-inline: 0 !important;
+    margin: 0 !important;
+
+    // Ghost Text & Native UI Removal
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    outline: none !important;
+
+    &::placeholder {
+        color: var(--ui-field-placeholder-color) !important;
+        opacity: 0 !important; // Hidden until focus/float logic decides
+        transition: opacity 0.2s ease;
+    }
+
+    &:focus::placeholder {
+        opacity: 1 !important;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// GLOBAL ALIGNMENT STANDARDIZATION
+// -----------------------------------------------------------------------------
+.ui-form-field--focused,
+.ui-form-field--has-value {
+    .ui-form-field__label {
+        background-color: transparent !important; // Rely on Notch/Legend
+    }
+}

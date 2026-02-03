@@ -1,6 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { UiDirectionService } from '../../shared/ui/services/ui-direction.service';
 
 /**
  * Supported languages
@@ -19,16 +20,18 @@ export interface Language {
 })
 export class LanguageService {
     private translate = inject(TranslateService);
-    private currentLanguageSubject = new BehaviorSubject<string>('es-ES');
+    private directionService = inject(UiDirectionService);
+    private _currentLanguage = signal<string>('es-ES');
 
-    /** Observable of current language code */
-    public currentLanguage$ = this.currentLanguageSubject.asObservable();
+    /** Signal of current language code */
+    public readonly currentLanguage = this._currentLanguage.asReadonly();
 
     /** Available languages */
     public readonly availableLanguages: Language[] = [
         { code: 'es-ES', name: 'Español', flag: '🇪🇸' },
         { code: 'en-US', name: 'English', flag: '🇺🇸' },
-        { code: 'fr-FR', name: 'Français', flag: '🇫🇷' }
+        { code: 'fr-FR', name: 'Français', flag: '🇫🇷' },
+        { code: 'ar-SA', name: 'العربية (Arabic)', flag: '🇸🇦' }
     ];
 
     private readonly STORAGE_KEY = 'vitalia-language';
@@ -66,11 +69,12 @@ export class LanguageService {
         this.translate.use(langCode).subscribe({
             next: () => {
                 console.log('[LanguageService] Language switched successfully to:', langCode);
-                this.currentLanguageSubject.next(langCode);
+                this._currentLanguage.set(langCode);
                 localStorage.setItem(this.STORAGE_KEY, langCode);
 
-                // Update HTML lang attribute
-                document.documentElement.lang = langCode;
+                // Auto-sync direction based on language
+                const direction = langCode.startsWith('ar') || langCode.startsWith('he') ? 'rtl' : 'ltr';
+                this.directionService.setDirection(direction);
             },
             error: (err) => {
                 console.error('[LanguageService] Error switching language:', err);
@@ -83,7 +87,7 @@ export class LanguageService {
      * @returns Current language code
      */
     getCurrentLanguage(): string {
-        return this.currentLanguageSubject.value;
+        return this._currentLanguage();
     }
 
     /**

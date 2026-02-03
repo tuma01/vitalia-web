@@ -1,13 +1,16 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { UiSidenavItem, UiSidenavMode, UiSidenavState, UiSidenavI18n } from './ui-sidenav.types';
+import { SettingsService } from '../../../../core/services/settings.service';
+import { inject, computed } from '@angular/core';
 
 @Component({
     selector: 'ui-sidenav',
     standalone: true,
-    imports: [CommonModule, MatSidenavModule, MatIconModule],
+    imports: [CommonModule, RouterModule, MatSidenavModule, MatIconModule],
     templateUrl: './ui-sidenav.component.html',
     styleUrls: ['./ui-sidenav.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -21,6 +24,9 @@ export class UiSidenavComponent {
     @Input() opened = true;
     @Input() state: UiSidenavState = 'expanded';
     @Input() activeItemId?: string;
+
+    private settingsService = inject(SettingsService);
+    sidenavColor = this.settingsService.sidenavColor;
 
     @Output() itemClick = new EventEmitter<UiSidenavItem>();
     @Output() closed = new EventEmitter<void>();

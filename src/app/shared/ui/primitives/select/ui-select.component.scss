@@ -1,59 +1,12 @@
 .ui-select__field {
     width: 100%;
-    margin-bottom: var(--ui-space-md, 16px); // Standard spacing between form elements
+    margin-block-end: var(--ui-space-md, 16px); // Standard spacing between form elements
     font-family: var(--ui-font-family-sans, 'Inter', sans-serif);
-
-    // Override Material Padding/Height to match PAL
-    ::ng-deep .mat-mdc-form-field-flex {
-        padding: 0 !important; // Custom control
-        background-color: transparent !important;
-        align-items: center;
-        height: var(--ui-size-md) !important;
-        min-height: var(--ui-size-md) !important;
-        max-height: var(--ui-size-md) !important;
-    }
-
-    ::ng-deep .mat-mdc-form-field-infix {
-        padding: 0 12px !important; // Match ui-input padding
-        border-top: 0 !important;
-        min-height: unset !important;
-        width: auto !important;
-    }
-
-    ::ng-deep .mat-mdc-text-field-wrapper {
-        padding: 0 !important;
-        height: var(--ui-size-md) !important;
-    }
-
-    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-        display: none !important; // Hide Material subscript to match PAL
-    }
-
-    // Force exact height match - eliminate ALL Material padding/margin
-    ::ng-deep .mat-mdc-form-field {
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    ::ng-deep .mat-mdc-form-field-wrapper {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    ::ng-deep .mdc-text-field {
-        padding: 0 !important;
-        height: var(--ui-size-md) !important;
-    }
-
-    ::ng-deep .mdc-text-field--outlined {
-        height: var(--ui-size-md) !important;
-        padding: 0 !important;
-    }
 
     // Icons & Images
     .ui-select__icon,
     .ui-select__option-image {
-        margin-right: var(--ui-space-sm, 8px);
+        margin-inline-end: var(--ui-space-sm, 8px);
         vertical-align: middle;
         flex-shrink: 0;
     }
@@ -75,95 +28,31 @@
         border: 1px solid var(--ui-color-border-subtle, #f3f4f6);
     }
 
-    // ============================================
-    // OPTION A: AGGRESSIVE OVERRIDES FOR EXACT HEIGHT
-    // ============================================
-
-    // Force line-height to eliminate extra vertical space
-    ::ng-deep .mat-mdc-form-field-flex {
-        line-height: 1 !important;
-    }
-
-    ::ng-deep .mat-mdc-select-value {
-        line-height: 1 !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }
-
-    ::ng-deep .mat-mdc-select-trigger {
-        line-height: 1 !important;
-        height: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        padding-top: 0 !important;
-        padding-bottom: 0 !important;
-    }
-
-    // Force display and alignment
-    ::ng-deep .mat-mdc-form-field-flex {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-    }
-
-    ::ng-deep .mat-mdc-form-field-infix {
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    // Consistent box-sizing
-    ::ng-deep .mat-mdc-form-field,
-    ::ng-deep .mat-mdc-form-field-flex,
-    ::ng-deep .mat-mdc-text-field-wrapper,
-    ::ng-deep .mdc-text-field {
-        box-sizing: border-box !important;
-    }
-
-    // Trigger alignment (NO transform to avoid misalignment)
+    // Trigger alignment
     .ui-select__trigger-wrapper {
         display: flex;
         align-items: center;
         gap: var(--ui-space-sm, 8px);
         width: 100%;
         height: 100%;
-        transform: none !important; // Removed translateY(4px)
     }
 }
 
-// Option alignment
-::ng-deep .ui-select__option {
-    display: flex !important;
-    align-items: center !important;
-
-    .mdc-list-item__primary-text {
-        display: flex !important;
-        align-items: center;
-        width: 100%;
-    }
-}
+// Option alignment handled globally in _forms.scss
 
 // Token Mapping for Outline
 ::ng-deep {
     .mat-mdc-form-field-appearance-outline {
 
-        // Border Colors
+        // Border Colors (Synchronized with Global Forms)
         .mdc-notched-outline__leading,
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
-            border-color: var(--ui-color-border, #ccc) !important;
+            border-color: var(--ui-form-border) !important;
             border-width: var(--ui-border-width-base, 1px) !important;
         }
 
-        // Radius
-        .mdc-notched-outline__leading {
-            border-top-left-radius: var(--ui-radius-base, 8px) !important;
-            border-bottom-left-radius: var(--ui-radius-base, 8px) !important;
-        }
-
-        .mdc-notched-outline__trailing {
-            border-top-right-radius: var(--ui-radius-base, 8px) !important;
-            border-bottom-right-radius: var(--ui-radius-base, 8px) !important;
-        }
+        // Radius handled globally in _forms.scss
 
         // Focused State
         &.mat-focused {
@@ -171,12 +60,12 @@
             .mdc-notched-outline__leading,
             .mdc-notched-outline__notch,
             .mdc-notched-outline__trailing {
-                border-color: var(--ui-color-primary, #000) !important;
+                border-color: var(--ui-color-primary) !important;
                 border-width: var(--ui-border-width-focus, 2px) !important;
             }
 
             .mat-mdc-floating-label {
-                color: var(--ui-color-primary, #000) !important;
+                color: var(--ui-color-primary) !important;
             }
         }
     }
@@ -187,11 +76,11 @@
         .mdc-notched-outline__leading,
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
-            border-color: var(--ui-color-danger, #f44336) !important;
+            border-color: var(--ui-color-danger) !important;
         }
 
         .mat-mdc-floating-label {
-            color: var(--ui-color-danger, #f44336) !important;
+            color: var(--ui-color-danger) !important;
         }
     }
 }

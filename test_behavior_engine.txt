@@ -1,0 +1,37 @@
+npm warn invalid config include="src/app/shared/ui/**/*.spec.ts" set in command line options
+npm warn invalid config Must be one or more of: prod, dev, optional, peer
+npm warn Unknown cli config "--watch". This will stop working in the next major version of npm.
+
+> vitalia-web@0.0.0 test
+> ng test
+
+[33mΓ¥»[39m Building...
+[32mΓ£ö[39m Building...
+Application bundle generation failed. [18.694 seconds] - 2026-02-02T04:32:26.291Z
+
+X [ERROR] TS2339: Property 'hasError' does not exist on type 'UiFormFieldComponent'. [plugin angular-compiler]
+
+    src/app/shared/ui/components/form-field/ui-form-field.component.html:3:34:
+      3 Γöé ...lass.ui-form-field--error]="hasError()" [class.ui-form-field--fo...
+        Γò╡                                ~~~~~~~~
+
+  Error occurs in the template of component UiFormFieldComponent.
+
+    src/app/shared/ui/components/form-field/ui-form-field.component.ts:46:17:
+      46 Γöé     templateUrl: './ui-form-field.component.html',
+         Γò╡                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2339: Property 'hasError' does not exist on type 'UiFormFieldComponent'. [plugin angular-compiler]
+
+    src/app/shared/ui/components/form-field/ui-form-field.component.html:58:13:
+      58 Γöé         @if (hasError()) {
+         Γò╡              ~~~~~~~~
+
+  Error occurs in the template of component UiFormFieldComponent.
+
+    src/app/shared/ui/components/form-field/ui-form-field.component.ts:46:17:
+      46 Γöé     templateUrl: './ui-form-field.component.html',
+         Γò╡                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+

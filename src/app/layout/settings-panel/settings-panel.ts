@@ -5,7 +5,7 @@ import { UiIconComponent } from '../../shared/ui/primitives/icon/ui-icon.compone
 import { MatRadioModule } from '@angular/material/radio'; // Keep for now if PAL Radio missing
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SettingsService, LayoutMode, SidebarColor } from '../../core/services/settings.service';
+import { SettingsService, LayoutMode, SidenavColor } from '../../core/services/settings.service';
 import { UiConfigService } from '../../shared/ui/config/ui-config.service';
 import { FormsModule } from '@angular/forms';
 
@@ -103,23 +103,23 @@ import { FormsModule } from '@angular/forms';
             </div>
         </div>
 
-        <!-- Sidebar Section -->
+        <!-- Sidenav Section -->
         <div class="settings-section">
-            <h3 class="section-title">Sidebar Menu Color</h3>
+            <h3 class="section-title">Sidenav Menu Color</h3>
 
             
-            <div class="sidebar-toggles">
+            <div class="sidenav-toggles">
                 <button class="toggle-btn light-btn" 
-                        [class.selected]="sidebarColor() === 'light'"
-                        (click)="setSidebar('light')">
+                        [class.selected]="sidenavColor() === 'light'"
+                        (click)="setSidenav('light')">
                     Light
-                    <ui-icon *ngIf="sidebarColor() === 'light'" class="check-icon">check</ui-icon>
+                    <ui-icon *ngIf="sidenavColor() === 'light'" class="check-icon">check</ui-icon>
                 </button>
                 <button class="toggle-btn dark-btn" 
-                        [class.selected]="sidebarColor() === 'dark'"
-                        (click)="setSidebar('dark')">
+                        [class.selected]="sidenavColor() === 'dark'"
+                        (click)="setSidenav('dark')">
                     Dark
-                    <ui-icon *ngIf="sidebarColor() === 'dark'" class="check-icon">check</ui-icon>
+                    <ui-icon *ngIf="sidenavColor() === 'dark'" class="check-icon">check</ui-icon>
                 </button>
             </div>
         </div>
@@ -131,11 +131,11 @@ import { FormsModule } from '@angular/forms';
             <div class="theme-grid">
                 <button *ngFor="let theme of availableThemes" 
                         class="theme-circle" 
-                        [class.active]="currentTheme === theme.className"
+                        [class.active]="currentTheme === theme.name"
                         [matTooltip]="theme.displayName"
-                        (click)="setTheme(theme.className)">
-                  <span class="color-preview" [ngClass]="theme.className"></span>
-                  <div class="active-overlay" *ngIf="currentTheme === theme.className">
+                        (click)="setTheme(theme.name)">
+                  <span class="color-preview" [ngClass]="theme.name"></span>
+                  <div class="active-overlay" *ngIf="currentTheme === theme.name">
                     <ui-icon>check</ui-icon>
                   </div>
                 </button>
@@ -239,7 +239,7 @@ import { FormsModule } from '@angular/forms';
           .section-title { color: rgba(255,255,255,0.6); }
           .layout-card span { color: rgba(255,255,255,0.7); }
           
-          .sidebar-toggles { 
+          .sidenav-toggles { 
               background: #111116; 
               border-color: #333; 
           }
@@ -343,7 +343,7 @@ import { FormsModule } from '@angular/forms';
          background: #f5f7fa;
          .mock-header { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
          .mock-sidebar { background: #fff; border-right: 1px solid #eee; }
-         .mock-body { background: #f5f7fa; }
+         .mock-body { background: var(--ui-background-default, #f5f7fa); }
     }
 
     /* Dark Mockup Styling */
@@ -401,8 +401,8 @@ import { FormsModule } from '@angular/forms';
         }
     }
 
-    /* Sidebar Toggles (Pill) */
-    .sidebar-toggles {
+    /* Sidenav Toggles (Pill) */
+    .sidenav-toggles {
         display: flex;
         background: #f0f0f0; /* Light Mode Container */
         border-radius: 8px;
@@ -491,6 +491,8 @@ import { FormsModule } from '@angular/forms';
     /* Corrected Colors (Split/Gradient) */
     .color-preview.light-theme { background: #ffffff; border: 2px solid #e0e0e0; }
     .color-preview.dark-theme { background: #111116; }
+    .color-preview.theme-light { background: #ffffff; border: 2px solid #e0e0e0; }
+    .color-preview.theme-dark { background: #111116; }
     .color-preview.indigo-pink { background: linear-gradient(135deg, #3f51b5 50%, #ff4081 50%); }
     .color-preview.deeppurple-amber { background: linear-gradient(135deg, #673ab7 50%, #ffc107 50%); }
     .color-preview.pink-bluegrey { background: linear-gradient(135deg, #e91e63 50%, #607d8b 50%); }
@@ -505,7 +507,7 @@ export class SettingsPanel {
 
   isOpen = signal(false);
   layoutMode = this.settingsService.layoutMode;
-  sidebarColor = this.settingsService.sidebarColor;
+  sidenavColor = this.settingsService.sidenavColor;
   availableThemes = this.settingsService.availableThemes;
 
   get currentTheme() {
@@ -528,8 +530,8 @@ export class SettingsPanel {
     this.settingsService.setLayoutMode(mode as LayoutMode);
   }
 
-  setSidebar(color: string) {
-    this.settingsService.setSidebarColor(color as SidebarColor);
+  setSidenav(color: string) {
+    this.settingsService.setSidenavColor(color as SidenavColor);
   }
 
   setTheme(themeName: string) {

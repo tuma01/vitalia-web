@@ -1,7 +1,8 @@
-import { Component, OnInit, inject, signal, afterNextRender } from '@angular/core';
+import { Component, OnInit, inject, signal, afterNextRender, HostBinding } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/services/theme.service';
 import { LanguageService } from './core/services/language.service';
+import { UiDirectionService } from './shared/ui/services/ui-direction.service';
 import { PreloaderService } from '@core';
 
 @Component({
@@ -11,9 +12,13 @@ import { PreloaderService } from '@core';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
+  @HostBinding('attr.dir') get dir() { return this.uiDirectionService.dir(); }
+  @HostBinding('attr.lang') get lang() { return this.languageService.currentLanguage(); }
+
   protected readonly title = signal('vitalia-web');
   private themeService = inject(ThemeService);
   private languageService = inject(LanguageService);
+  private uiDirectionService = inject(UiDirectionService);
   private readonly preloader = inject(PreloaderService);
 
   constructor() {

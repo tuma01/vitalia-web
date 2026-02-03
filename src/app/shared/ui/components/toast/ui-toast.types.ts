@@ -22,4 +22,6 @@ export interface UiToastConfig {
     i18n?: {
         closeAriaLabel?: string;
     };
+    /** Optional custom panel class(es) */
+    panelClass?: string | string[];
 }

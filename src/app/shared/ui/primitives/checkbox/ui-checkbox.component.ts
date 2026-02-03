@@ -1,11 +1,12 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef, HostBinding, ChangeDetectorRef, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, forwardRef, HostBinding, ChangeDetectorRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatCheckbox, MatCheckboxModule, MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
     selector: 'ui-checkbox',
     standalone: true,
-    imports: [ReactiveFormsModule, FormsModule],
+    imports: [ReactiveFormsModule, FormsModule, MatCheckboxModule],
     templateUrl: './ui-checkbox.component.html',
     styleUrls: ['./ui-checkbox.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,6 +40,9 @@ export class UiCheckboxComponent implements ControlValueAccessor, OnInit {
         }
     }
 
+    @ViewChild(MatCheckbox) matCheckbox!: MatCheckbox;
+    @Input() indeterminate = false;
+
     // ControlValueAccessor API
     onChange: (value: any) => void = () => { };
     onTouched: () => void = () => { };
@@ -62,24 +66,15 @@ export class UiCheckboxComponent implements ControlValueAccessor, OnInit {
     }
 
     // Event Handlers
-    onInputChange(event: Event): void {
-        event.stopPropagation();
-        const input = event.target as HTMLInputElement;
-        if (input) {
-            this.checked = input.checked;
-            this.onChange(this.checked);
-            this.onTouched();
-            this.toggle.emit(this.checked);
-        }
+    onCheckboxChange(event: MatCheckboxChange): void {
+        this.checked = event.checked;
+        this.onChange(this.checked);
+        this.toggle.emit(this.checked);
     }
 
-    onInputBlur(): void {
+    onBlur(): void {
         this.focused = false;
         this.onTouched();
-    }
-
-    onInputFocus(): void {
-        this.focused = true;
     }
 
     // Host bindings for styling

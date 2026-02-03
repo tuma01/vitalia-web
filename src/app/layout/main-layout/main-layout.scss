@@ -1,8 +1,6 @@
 .sidenav-container {
-    // Occupy full viewport minus header
-    height: calc(100vh - 64px);
-    // Fallback and dynamic viewport support
-    height: calc(100dvh - 64px);
+    height: calc(100vh - var(--ui-header-height, 64px));
+    height: calc(100dvh - var(--ui-header-height, 64px));
     width: 100%;
     margin: 0;
     overflow: hidden;
@@ -31,7 +29,7 @@
     box-sizing: border-box;
     padding: 0; // Padding moved to wrapper
 
-    background-color: var(--body-background-color, #f4f6f8);
+    background-color: var(--ui-background-default);
 
     // Use 100% to fill the parent .sidenav-container
     height: 100%;

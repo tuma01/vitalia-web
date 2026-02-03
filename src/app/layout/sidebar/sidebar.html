@@ -1,8 +1,9 @@
-<div class="sidebar-container" [class.collapsed]="isCollapsed && !isHovering" [class.hovering]="isHovering"
-    [class.sidebar-light]="sidebarColor() === 'light'" [class.sidebar-dark]="sidebarColor() === 'dark'"
-    (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+<ui-sidenav [items]="menuItems" [activeItemId]="activeItemId"
+    [state]="isCollapsed && !isHovering ? 'collapsed' : 'expanded'" (mouseenter)="onMouseEnter()"
+    (mouseleave)="onMouseLeave()">
+
     <!-- Logo/Brand Section -->
-    <div class="sidebar-header">
+    <div header class="sidebar-header-content">
         @if (!isCollapsed || isHovering) {
         <div class="logo">
             <span class="logo-text">{{ 'app.title' | translate }}</span>
@@ -15,76 +16,15 @@
         }
     </div>
 
-    <!-- Menu Items -->
-    <div class="menu-list">
-        @for (item of menuItems; track item.name) {
-        <!-- Simple Link (no children) - EXPANDED -->
-        @if (item.type === 'link' && (!isCollapsed || isHovering)) {
-        <a class="menu-item" [routerLink]="item.route" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}"
-            [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
-            <ui-icon class="menu-icon">{{ item.icon || 'circle' }}</ui-icon>
-            <span class="menu-text">{{ 'menu.' + item.name | translate }}</span>
-            @if (item.badge) {
-            <span class="badge" [style.background-color]="item.badge.color">
-                {{ item.badge.value }}
-            </span>
-            }
-        </a>
-        }
+    <!-- Main Content (optional if routing is handled internally) -->
+    <ng-content></ng-content>
 
-        <!-- Simple Link (no children) - COLLAPSED -->
-        @if (item.type === 'link' && isCollapsed && !isHovering) {
-        <a class="menu-item collapsed-item" [routerLink]="item.route" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: item.route === '/dashboard' || item.route === '/'}"
-            [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
-            <ui-icon class="menu-icon">{{ item.icon || 'circle' }}</ui-icon>
-        </a>
-        }
-
-        <!-- Submenu/Group Level 1 (has children) - EXPANDED -->
-        @if ((item.type === 'sub' || item.type === 'group') && (!isCollapsed || isHovering)) {
-        <ui-expansion-panel class="submenu-panel" [title]="'menu.' + item.name | translate"
-            [icon]="item.icon || 'folder'" [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
-
-            <!-- Submenu Items Level 2 -->
-            <div class="submenu-list">
-                @for (subItem of item.children; track subItem.name) {
-                <!-- Level 2: Simple Link -->
-                @if (subItem.type === 'link') {
-                <a class="submenu-item" [routerLink]="subItem.route" routerLinkActive="active"
-                    [uiTooltip]="'menu.' + subItem.name | translate" uiTooltipPosition="right">
-                    <span class="submenu-text">{{ 'menu.' + subItem.name | translate }}</span>
-                </a>
-                }
-
-                <!-- Level 2: Nested Submenu -->
-                @if (subItem.type === 'sub' || subItem.type === 'group') {
-                <ui-expansion-panel class="nested-panel" [title]="'menu.' + subItem.name | translate"
-                    [icon]="subItem.icon" [uiTooltip]="'menu.' + subItem.name | translate" uiTooltipPosition="right">
-
-                    <!-- Level 3: Nested Items -->
-                    <div class="nested-list">
-                        @for (nestedItem of subItem.children; track nestedItem.name) {
-                        <a class="nested-item" [routerLink]="nestedItem.route" routerLinkActive="active"
-                            [uiTooltip]="'menu.' + nestedItem.name | translate" uiTooltipPosition="right">
-                            <span class="nested-item-text">{{ 'menu.' + nestedItem.name | translate }}</span>
-                        </a>
-                        }
-                    </div>
-                </ui-expansion-panel>
-                }
-                }
-            </div>
-        </ui-expansion-panel>
-        }
-
-        <!-- Submenu/Group (has children) - COLLAPSED -->
-        @if ((item.type === 'sub' || item.type === 'group') && isCollapsed && !isHovering) {
-        <a class="menu-item collapsed-item" [uiTooltip]="'menu.' + item.name | translate" uiTooltipPosition="right">
-            <ui-icon class="menu-icon">{{ item.icon || 'folder' }}</ui-icon>
-        </a>
-        }
+    <!-- Footer Section -->
+    <div footer class="sidebar-footer-content">
+        @if (!isCollapsed || isHovering) {
+        <div class="version-info">
+            v1.0.0-vitalia
+        </div>
         }
     </div>
-</div>
+</ui-sidenav>

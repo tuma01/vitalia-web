@@ -1,0 +1,37 @@
+
+ RUN  v4.0.15 F:/JAVA-PROJET/vitalia/workspace/vitalia-web
+
+ Γ¥» src/app/core/services/theme.service.spec.ts (5 tests | 5 failed) 27ms
+     ├ù should initialize with PAL_DEFAULT in light mode by default 10ms
+     ├ù should toggle mode and update theme name 2ms
+     ├ù should apply tenant theme with brand-mode naming convention 3ms
+     ├ù should fallback to PAL_DEFAULT if tenant theme is invalid 2ms
+     ├ù should generate RGB tokens for action colors 2ms
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 5 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  src/app/core/services/theme.service.spec.ts:25:5 > UiThemeService Modes (v2.6.1) > should initialize with PAL_DEFAULT in light mode by default
+ FAIL  src/app/core/services/theme.service.spec.ts:33:5 > UiThemeService Modes (v2.6.1) > should toggle mode and update theme name
+ FAIL  src/app/core/services/theme.service.spec.ts:43:5 > UiThemeService Modes (v2.6.1) > should apply tenant theme with brand-mode naming convention
+ FAIL  src/app/core/services/theme.service.spec.ts:55:5 > UiThemeService Modes (v2.6.1) > should fallback to PAL_DEFAULT if tenant theme is invalid
+ FAIL  src/app/core/services/theme.service.spec.ts:67:5 > UiThemeService Modes (v2.6.1) > should generate RGB tokens for action colors
+Error: Need to call TestBed.initTestEnvironment() first
+ Γ¥» TestBedImpl.get compiler [as compiler] node_modules/@angular/core/fesm2022/testing.mjs:1486:13
+ Γ¥» TestBedImpl.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1402:10
+ Γ¥» Function.configureTestingModule node_modules/@angular/core/fesm2022/testing.mjs:1273:33
+ Γ¥» src/app/core/services/theme.service.spec.ts:12:17
+     10| 
+     11|     beforeEach(() => {
+     12|         TestBed.configureTestingModule({
+       |                 ^
+     13|             providers: [ThemeService]
+     14|         });
+
+ Test Files  1 failed (1)
+      Tests  5 failed (5)
+   Start at  01:13:53
+   Duration  2.87s (transform 485ms, setup 0ms, import 2.11s, tests 27ms, environment 0ms)
+
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/5]ΓÄ»
+

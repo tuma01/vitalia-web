@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { routes } from './app.routes';
 import { AuthService } from './core/services/auth.service';
 import { TenantThemeService } from './core/services/tenant-theme.service';
+import { TenantConfigService } from './core/services/tenant-config.service';
 import { TokenService } from './core/token/token.service';
 import { RefreshTokenService } from './core/token/refresh-token.service';
 import { API_ROOT_URL } from './api/api-configuration';
@@ -88,6 +89,14 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeTheme,
       deps: [TenantThemeService, AuthService],
+      multi: true
+    },
+
+    // NEW: Global Config Initialization (Before Login)
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (configService: TenantConfigService) => () => configService.loadConfiguration(),
+      deps: [TenantConfigService],
       multi: true
     },
 

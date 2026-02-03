@@ -1,8 +1,9 @@
 import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChildren, QueryList, forwardRef, Input, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UiRadioButtonComponent } from './ui-radio.component';
 import { Subject, takeUntil } from 'rxjs';
+import { UiRadioButtonComponent } from './ui-radio.component';
+import { UI_RADIO_GROUP } from './ui-radio-group.token';
 
 @Component({
     selector: 'ui-radio-group',
@@ -15,6 +16,10 @@ import { Subject, takeUntil } from 'rxjs';
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => UiRadioGroupComponent),
             multi: true
+        },
+        {
+            provide: UI_RADIO_GROUP,
+            useExisting: UiRadioGroupComponent
         }
     ],
     host: {
@@ -27,6 +32,9 @@ import { Subject, takeUntil } from 'rxjs';
 export class UiRadioGroupComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
     @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
     @Input() name: string = `ui-radio-group-${Math.random().toString(36).substr(2, 9)}`;
+    @Input() set disabled(val: boolean) {
+        this.setDisabledState(val);
+    }
 
     @ContentChildren(UiRadioButtonComponent, { descendants: true }) radios!: QueryList<UiRadioButtonComponent>;
 
