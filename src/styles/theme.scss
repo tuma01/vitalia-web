@@ -1,0 +1,70 @@
+/**
+ * 🎨 MATERIAL BASE THEME — TOKEN DRIVEN
+ * Material aporta estructura, los colores vienen del ThemeService.
+ */
+
+@use '@angular/material' as mat;
+
+/* ===============================
+   1️⃣ CORE (una sola vez)
+================================ */
+@include mat.core();
+
+/* ===============================
+   2️⃣ TEMA BASE NEUTRO
+   ⚠️ SIN PALETAS FUERTES
+================================ */
+$base-theme: mat.define-theme((color: (theme-type: light,
+                use-system-variables: true,
+            ),
+            density: (scale: 0),
+        ));
+
+/* ===============================
+   3️⃣ APLICAR BASE A ROOT
+================================ */
+:root {
+    @include mat.all-component-themes($base-theme);
+}
+
+/* ===============================
+   4️⃣ DARK MODE
+   Material invierte estructura,
+   pero los colores reales los controla ThemeService
+================================ */
+.theme-dark {
+    $dark-theme: mat.define-theme((color: (theme-type: dark,
+                    use-system-variables: true,
+                ),
+            ));
+    @include mat.all-component-colors($dark-theme);
+}
+
+/* ===============================
+   5️⃣ DENSIDAD
+================================ */
+.density-compact {
+    @include mat.all-component-densities(-2);
+}
+
+.density-default {
+    @include mat.all-component-densities(0);
+}
+
+.density-expanded {
+    @include mat.all-component-densities(1);
+}
+
+/* ===============================
+   6️⃣ TIPOGRAFÍA
+================================ */
+body {
+    font-family: var(--app-font-family, 'Roboto', sans-serif);
+}
+
+/* ===============================
+   7️⃣ TRANSICIONES SUAVES
+================================ */
+* {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}

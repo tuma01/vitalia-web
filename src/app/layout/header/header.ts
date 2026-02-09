@@ -3,23 +3,19 @@ import { Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '../../core/services/language.service';
-import { ThemeService, Theme } from '../../core/services/theme.service';
+import { ThemeService } from '../../core/theme/theme.service';
 import { SessionService } from '../../core/services/session.service';
 import { Subscription } from 'rxjs';
-import {
-  UiBadgeComponent,
-  UiToolbarComponent,
-  UiIconButtonComponent,
-  UiIconComponent,
-  UiMenuComponent,
-  UiMenuItemDirective,
-  UiMenuTriggerDirective,
-  UiDividerComponent,
-  UiInputComponent,
-  UiFormFieldComponent,
-  UiPrefixDirective,
-  UiInputDirective
-} from '@ui';
+
+// Material Components
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-header',
@@ -28,18 +24,14 @@ import {
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    UiBadgeComponent,
-    UiToolbarComponent,
-    UiIconButtonComponent,
-    UiIconComponent,
-    UiMenuComponent,
-    UiMenuItemDirective,
-    UiMenuTriggerDirective,
-    UiDividerComponent,
-    UiInputComponent,
-    UiFormFieldComponent,
-    UiPrefixDirective,
-    UiInputDirective
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule,
+    MatBadgeModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './header.html',
   styleUrl: './header.scss',
@@ -51,47 +43,23 @@ export class Header implements OnDestroy {
   private languageService = inject(LanguageService);
   private themeService = inject(ThemeService);
   private translateService = inject(TranslateService);
-  private sessionService = inject(SessionService); // Injected SessionService
-  private router = inject(Router); // Injected Router
+  private sessionService = inject(SessionService);
+  private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private langSubscription?: Subscription;
 
-  // Language
   availableLanguages: Language[] = this.languageService.availableLanguages;
-
-
-
-  // Search
-  searchForm = new FormGroup({
-    query: new FormControl('')
-  });
-
-  searchQuery = ''; // Keep for compat if needed, but we'll use form
   isMobile = signal(window.innerWidth < 768);
-
-  // Notifications (mock data)
   notificationCount = 3;
-
-  // User info (mock data - will be replaced with auth service)
   userName = 'Usuario Demo';
   userRole = 'Administrador';
 
   constructor() {
-    // Listen for window resize
     window.addEventListener('resize', () => {
       this.isMobile.set(window.innerWidth < 768);
     });
 
-    // Subscribe to language changes to force view update
     this.langSubscription = this.translateService.onLangChange.subscribe(() => {
-      console.log('[Header] Language changed, triggering change detection');
-      this.cdr.markForCheck();
-    });
-
-    // Subscribe to theme changes
-    this.themeService.themeChange$.subscribe(() => {
-      console.log('[Header] Theme changed, triggering view update');
-      // Force update for styles
       this.cdr.markForCheck();
     });
   }
@@ -105,16 +73,7 @@ export class Header implements OnDestroy {
   }
 
   switchLanguage(langCode: string): void {
-    console.log('[Header] Switching language to:', langCode);
     this.languageService.setLanguage(langCode);
-  }
-
-  onSearch(): void {
-    const query = this.searchForm.value.query;
-    if (query && query.trim()) {
-      console.log('Searching for:', query);
-      // TODO: Implement search functionality
-    }
   }
 
   openSettings(): void {
@@ -124,7 +83,6 @@ export class Header implements OnDestroy {
   logout(): void {
     const isSuperAdmin = this.sessionService.hasRole('ROLE_SUPER_ADMIN');
     this.sessionService.logout();
-
     if (isSuperAdmin) {
       this.router.navigate(['/super-admin/login']);
     } else {

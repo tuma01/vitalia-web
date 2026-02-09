@@ -1,132 +1,62 @@
 .login-wrapper {
-    min-height: 100vh; // Ensure it covers 100% of viewport
+    min-height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    // Use theme background instead of gradient as requested
-    background-color: var(--ui-background-body, #f8fafc);
-    background-image: none; // Remove previous gradient
+
+    /* Modern Mesh Gradient Background */
+    background-color: #f8fafc;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(var(--color-primary-rgb), 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(var(--color-accent-rgb), 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(var(--color-primary-rgb), 0.05) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(var(--color-accent-rgb), 0.05) 0px, transparent 50%);
+
+    transition: all 0.5s ease;
 
     @media (max-width: 968px) {
-        padding: 1rem;
-    }
-}
-
-// ... (skipping unchanged .login-card styles) ...
-
-// Social Login (Cliniva Style Replicated)
-.social-login {
-    margin-top: 0.4rem; // Moved up ~5px (from 0.7rem) as requested
-    display: flex;
-    justify-content: center;
-
-    .social-buttons {
-        display: flex;
-        gap: 15px; // Matches reference spacing
-        justify-content: center;
-
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px; // Reference size
-            height: 42px;
-            background-color: #ffffff; // White background
-            border-radius: 50%; // Circular
-            border: 1px solid #ebebeb; // Subtle border
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05); // Soft shadow
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            outline: none;
-
-            ui-icon,
-            svg {
-                width: 24px; // Increased size as requested
-                height: 24px;
-                transition: transform 0.3s ease;
-            }
-
-            // Google: Multi-color handled by SVG itself
-            // Facebook: Brand color handled by SVG
-            // Apple: Black handled by SVG
-
-            &:hover {
-                transform: translateY(-3px); // Lift effect
-                box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); // Deepen shadow
-                background-color: #f8f9fa;
-            }
-        }
+        padding: 0;
+        align-items: stretch;
     }
 }
 
 .login-card {
     width: 100%;
-    max-width: 1100px;
-    // max-height: 92vh;
-    padding: 0 !important;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+    max-width: 1000px;
+    height: auto;
     border-radius: 20px !important;
-    background: var(--ui-card-bg) !important;
-
-    // Fix: Hide empty header slot which causes the top gap
-    ::ng-deep .ui-card__header-slot,
-    ::ng-deep .ui-card__footer-slot {
-        display: none !important;
-    }
-
-    // Ensure content has no padding constraint
-    ::ng-deep .ui-card__content-slot {
-        display: none !important; // Hide explicit content slot if unused
-    }
-
-    // For the login content itself which falls into fallback
-    ::ng-deep>.ui-card-content {
-        // Just in case it gets wrapped
-        padding: 0 !important;
-    }
+    /* Deep, Elegant Master Shadow */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 10px 20px -5px rgba(0, 0, 0, 0.15),
+        0 0 0 1px var(--sys-border-subtle) !important;
+    overflow: hidden;
+    background: var(--sys-surface-1);
 
     @media (max-width: 968px) {
-        max-height: 96vh;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0;
     }
 }
 
 .login-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    height: 100%;
-    max-height: 92vh;
+    grid-template-columns: 1.1fr 0.9fr;
+    min-height: 520px; // Compacted from 600px
 
     @media (max-width: 968px) {
         grid-template-columns: 1fr;
-        max-height: 96vh;
     }
 }
 
 .login-form-zone {
-    padding: 1rem 3rem !important; // Reduced top padding to move header up, wide sides for centering look
-    height: 100%;
+    padding: 2rem 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: center; // Keep vertical centering but with less top padding it will feel "higher"
-    overflow-y: auto;
-    position: relative;
-
-    /* Custom scrollbar */
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 3px;
-    }
+    justify-content: center;
+    background-color: var(--sys-surface-1);
 
     @media (max-width: 640px) {
         padding: 1.5rem;
@@ -134,61 +64,36 @@
 
     .login-header {
         text-align: center;
-        margin-bottom: 1rem;
-        padding-top: 0.5rem;
+        margin-bottom: 1.5rem;
 
         h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 0 !important; // Removed gap as requested
-            line-height: 1.2;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            color: var(--sys-text-primary);
+            letter-spacing: -0.02em;
         }
 
         p {
-            color: var(--ui-color-text-secondary);
-            font-size: 0.85rem;
-            margin-top: 0.2rem !important; // Very close to title
+            color: var(--sys-text-secondary);
+            font-size: 0.9rem;
         }
     }
 
     form {
         display: flex;
         flex-direction: column;
-        gap: 0.6rem !important; // Tighter gap for modern feel
-
-        // Override internal Form Field spacing for tight layout
-        ::ng-deep .ui-form-field {
-            margin-bottom: 0 !important;
-        }
+        gap: 0.75rem; // Reduced from 1.15rem
     }
 }
 
-// Role Selector - Vibrant Icon Box Style
 .role-selector {
-    margin-bottom: 0.8rem;
-
-    label {
-        display: none; // Hide label as requested "no es necesario"
-        font-weight: 600;
-        margin-bottom: 1rem;
-        font-size: 0.9rem;
-        color: var(--ui-color-text-primary);
-        letter-spacing: 0.3px;
-    }
+    margin-bottom: 0.25rem;
 
     .role-grid {
         display: grid;
-        grid-template-columns: repeat(5, 1fr); // Restore 5-column grid
-        gap: 0.8rem;
-
-        @media (max-width: 640px) {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-        }
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.75rem;
     }
 
     .role-card {
@@ -196,233 +101,204 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
         gap: 0.5rem;
-        padding: 0;
-        background: transparent;
-        border: none;
         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        min-height: auto;
-        outline: none;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
         .role-icon-wrapper {
-            display: flex; // Restore icon wrapper
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 12px;
-            // Always show color tint
-            background: color-mix(in srgb, var(--role-color) 12%, white) !important;
-            border: 2px solid color-mix(in srgb, var(--role-color) 30%, #e2e8f0) !important;
+            display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            background: var(--sys-surface-2);
+            border: 1px solid var(--sys-border-subtle);
 
-            ui-icon {
-                font-size: 1.5rem;
-                color: var(--role-color) !important;
-                transition: transform 0.3s ease, color 0.3s ease;
+            mat-icon {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                color: var(--role-color);
             }
         }
 
         .role-label {
             font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--ui-color-text-secondary);
-            transition: color 0.3s ease;
-            text-align: center;
-            margin-top: -0.1rem;
-            line-height: 1.2;
+            font-weight: 400; // LIGHT
+            text-transform: uppercase; // MAYUSCULA
+            letter-spacing: 0.05em; // Dynamic look
+            color: var(--sys-text-secondary);
         }
 
         .active-indicator {
-            display: flex; // Restore active indicator
             position: absolute;
-            top: -5px; // Original Stable Position
-            right: 1px; // Moved left by 2px more (total 6px from original)
-            background: white;
+            top: -4px;
+            right: -4px;
+            background: var(--sys-surface-1);
             border-radius: 50%;
-            width: 22px; // Original Stable Size
-            height: 22px; // Original Stable Size
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 5;
+            display: flex;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-            // KEY FIX: Use transform to shrink perfectly towards the corner
-            transform: scale(0.75);
-            transform-origin: top right;
-
-            ui-icon {
-                font-size: 1.1rem; // Original Stable Icon Size
+            mat-icon {
+                font-size: 16px;
+                width: 16px;
+                height: 16px;
                 color: var(--role-color);
             }
         }
 
-        .soon-badge {
-            display: block; // Restore badge
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            font-size: 0.6rem;
-            background: #f3f4f6;
-            color: #9ca3af;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-            z-index: 5;
-            white-space: nowrap;
+        &.active {
+            .role-icon-wrapper {
+                background: var(--role-color);
+                border-color: var(--role-color);
+                box-shadow: 0 4px 12px color-mix(in srgb, var(--role-color) 30%, transparent);
+
+                mat-icon {
+                    color: #ffffff; // Usually contrast is high enough for white
+                }
+            }
+
+            .role-label {
+                color: var(--role-color);
+                font-weight: 600; // Refined from 700 to stay 'light-ish'
+            }
         }
 
-        // Hover State
-        &:hover:not(.disabled) {
+        &:hover:not(.active) {
+            transform: translateY(-2px);
+
             .role-icon-wrapper {
                 border-color: var(--role-color);
-                box-shadow: 0 8px 20px -5px color-mix(in srgb, var(--role-color) 20%, transparent);
-                transform: translateY(-3px);
-
-                ui-icon {
-                    color: var(--role-color);
-                }
-            }
-
-            .role-label {
-                color: var(--role-color);
+                background: var(--state-hover-surface);
             }
         }
-
-        // Active State
-        &.active {
-            // override pill styles back to icon box active state
-            background-color: transparent !important;
-            box-shadow: none !important;
-            transform: none !important;
-
-            .role-icon-wrapper {
-                background: linear-gradient(135deg, var(--role-color) 0%, color-mix(in srgb, var(--role-color) 20%, black) 100%) !important;
-                border-color: transparent !important;
-                box-shadow: 0 10px 25px -5px color-mix(in srgb, var(--role-color) 40%, transparent);
-                transform: translateY(-3px);
-
-                ui-icon {
-                    color: white !important;
-                }
-            }
-
-            .role-label {
-                color: var(--role-color) !important;
-                font-weight: 700;
-            }
-        }
-
-        // Disabled State
-        &.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-
-            .role-icon-wrapper {
-                background: #f8fafc !important;
-                border-color: #e2e8f0 !important;
-                box-shadow: none;
-
-                ui-icon {
-                    color: #cbd5e1 !important;
-                }
-            }
-        }
-
-        // Focus State
-        &:focus-visible {
-            .role-icon-wrapper {
-                box-shadow: 0 0 0 3px color-mix(in srgb, var(--role-color) 30%, transparent);
-            }
-        }
-    }
-
-    .error-text {
-        color: var(--ui-color-danger);
-        font-size: 0.8rem;
-        margin-top: 0.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
     }
 }
 
-@keyframes popIn {
-    0% {
-        transform: scale(0);
-    }
-
-    100% {
-        transform: scale(1);
-    }
+.full-width {
+    width: 100%;
 }
 
 .login-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: -1.25rem; // Pulled closer to the password field
+    margin-bottom: 0.25rem;
 
     .forgot-link {
-        color: #667eea;
+        color: var(--color-link);
         text-decoration: none;
-        font-size: 0.8rem;
-        font-weight: 500;
-        transition: color 0.2s;
+        font-size: 0.875rem;
+        font-weight: 600;
 
         &:hover {
-            color: #764ba2;
+            color: var(--color-link-hover);
             text-decoration: underline;
+        }
+    }
+
+    mat-checkbox {
+        ::ng-deep .mdc-form-field {
+            font-weight: 500;
+            color: var(--sys-text-secondary);
         }
     }
 }
 
-.error-banner {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.65rem;
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-    border: 1px solid #fca5a5;
-    border-radius: 8px;
-    color: #dc2626;
-    font-size: 0.8rem;
-
-    ui-icon {
-        font-size: 1rem;
-    }
+.login-btn {
+    height: 52px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    margin-top: -0.25rem;
+    letter-spacing: 0.02em;
 }
 
-// Sign Up Prompt
 .signup-prompt {
-    margin-top: 0.8rem; // Moved up ~3px (from 1rem)
     text-align: center;
     font-size: 0.9rem;
-    color: var(--ui-color-text-secondary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
+    margin-top: 0.25rem;
+    color: var(--sys-text-secondary);
 
     .signup-link {
-        color: var(--ui-color-primary, #2563eb);
-        font-weight: 600;
+        color: var(--color-link);
+        font-weight: 700;
         text-decoration: none;
-        transition: color 0.2s;
+        margin-left: 0.25rem;
 
         &:hover {
-            color: var(--ui-color-primary-dark, #1d4ed8);
+            color: var(--color-link-hover);
             text-decoration: underline;
         }
     }
 }
 
+.divider-text {
+    text-align: center;
+    position: relative;
+    margin: 1.25rem 0;
 
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+        background-color: var(--sys-border-subtle);
+        z-index: 1;
+    }
 
-// Hero Zone
+    span {
+        position: relative;
+        z-index: 2;
+        background-color: var(--sys-surface-1);
+        padding: 0 1rem;
+        color: var(--sys-text-secondary);
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: lowercase;
+    }
+}
+
+.social-login {
+    .social-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+
+        .social-btn {
+            min-width: 56px;
+            width: 56px;
+            height: 56px;
+            padding: 0;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sys-surface-1);
+            border: 1px solid var(--sys-border-subtle);
+            transition: all 0.2s ease;
+            color: var(--sys-text-primary);
+
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            &:hover {
+                background: var(--sys-surface-2);
+                transform: translateY(-2px);
+                border-color: var(--color-primary);
+                box-shadow: var(--sys-shadow-md);
+            }
+        }
+    }
+}
+
+/* RIGHT: Hero Zone */
 .login-hero-zone {
     position: relative;
     background-image: url('/images/login.png');
@@ -431,84 +307,78 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
-    overflow: hidden;
-    height: 100%; // Force full height
-    min-height: 100%; // Ensure it fills the grid cell
-
+    padding: 3rem;
+    color: #ffffff;
 
     .hero-overlay {
         position: absolute;
         inset: 0;
         background: linear-gradient(135deg,
-                rgba(102, 126, 234, 0.92) 0%,
-                rgba(118, 75, 162, 0.92) 100%);
+                rgba(var(--color-primary-rgb), 0.75) 0%,
+                rgba(var(--color-accent-rgb), 0.85) 100%);
     }
 
     .hero-content {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         text-align: center;
-        color: white;
-        max-width: 380px;
+        max-width: 360px;
 
         .hero-logo {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 1.2rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
 
-            ui-icon {
-                font-size: 2.2rem;
-                color: white;
+            mat-icon {
+                font-size: 36px;
+                width: 36px;
+                height: 36px;
             }
         }
 
         h2 {
-            font-size: 2rem;
+            font-size: 2.25rem;
             font-weight: 800;
-            margin-bottom: 0.8rem;
-            line-height: 1.2;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: #ffffff;
         }
 
         p {
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1.05rem;
+            line-height: 1.6;
             opacity: 0.95;
-            text-shadow: 0 1px 10px rgba(0, 0, 0, 0.15);
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
+            color: #ffffff;
         }
 
         .hero-features {
             display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
 
             .feature {
                 display: flex;
                 align-items: center;
-                gap: 0.35rem;
-                padding: 0.5rem 0.8rem;
-                background: rgba(255, 255, 255, 0.15);
-                backdrop-filter: blur(10px);
-                border-radius: 8px;
-                border: 1px solid rgba(255, 255, 255, 0.2);
+                gap: 1rem;
 
-                ui-icon {
-                    font-size: 1rem;
+                mat-icon {
+                    font-size: 20px;
+                    width: 20px;
+                    height: 20px;
                 }
 
                 span {
-                    font-size: 0.8rem;
-                    font-weight: 500;
+                    font-size: 1rem;
+                    font-weight: 600;
                 }
             }
         }

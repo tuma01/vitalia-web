@@ -1,5 +1,0 @@
-// Solo importa M3 limpio
-@use './_material-m3' as *;
-
-// Aplica el theme en todo el proyecto
-@include apply-m3-theme();

@@ -8,27 +8,37 @@
 
     <section class="stats-grid">
         @for (stat of stats; track stat.title) {
-        <ui-card class="stat-card">
-            <div class="stat-icon" [attr.data-variant]="stat.variant">
-                <ui-icon [fontIcon]="stat.icon"></ui-icon>
-            </div>
-            <div class="stat-content">
-                <p class="stat-title">{{ stat.title }}</p>
-                <div class="stat-value-row">
-                    <span class="stat-value">{{ stat.value }}</span>
+        <mat-card class="stat-card">
+            <mat-card-content>
+                <div class="stat-row">
+                    <div class="stat-icon-box" [attr.data-variant]="stat.variant">
+                        <mat-icon>{{ stat.icon }}</mat-icon>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-title">{{ stat.title }}</p>
+                        <div class="stat-value-row">
+                            <span class="stat-value">{{ stat.value }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </ui-card>
+            </mat-card-content>
+        </mat-card>
         }
     </section>
 
-    <!-- Simple Content for Employee -->
     <div class="content-grid">
-        <ui-card>
-            <div class="card-header">
-                <h3><ui-icon>announcement</ui-icon> Comunicados</h3>
-            </div>
-            <p style="color: var(--ui-color-text-secondary); padding: 1rem;">No hay comunicados nuevos.</p>
-        </ui-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="header-with-icon">
+                        <mat-icon color="primary">announcement</mat-icon>
+                        Comunicados
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <p class="empty-state-text">No hay comunicados nuevos.</p>
+            </mat-card-content>
+        </mat-card>
     </div>
 </div>

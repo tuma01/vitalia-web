@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-// PAL Components
-import {
-    UiCardComponent,
-    UiIconComponent,
-    UiButtonComponent
-} from '@ui';
+// Material Components
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 
 // Core Services
 import { SessionService } from '../../../core/services/session.service';
@@ -34,19 +33,18 @@ interface StatCard {
         CommonModule,
         RouterModule,
         TranslateModule,
-        UiCardComponent,
-        UiIconComponent,
-        UiButtonComponent
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDividerModule
     ],
 })
 export class NurseDashboardComponent implements OnInit {
     private sessionService = inject(SessionService);
 
-    // Signals
     tenantName = signal<string>('');
     userName = signal<string>('');
 
-    // Nurse Stats Cards
     stats: StatCard[] = [
         {
             title: 'Pacientes Asignados',

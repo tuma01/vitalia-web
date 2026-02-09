@@ -1,0 +1,104 @@
+{
+    "version": 1,
+    "stats": [
+        {
+            "id": "staff",
+            "titleKey": "dashboard.admin.stats.total_staff",
+            "icon": "groups",
+            "color": "primary-container",
+            "value": 156,
+            "route": "/admin/users/staff",
+            "requiredPermission": "VIEW_STAFF"
+        },
+        {
+            "id": "patients",
+            "titleKey": "dashboard.admin.stats.active_patients",
+            "icon": "personal_injury",
+            "color": "tertiary-container",
+            "value": 1243,
+            "route": "/admin/users/patients",
+            "requiredPermission": "VIEW_PATIENTS"
+        },
+        {
+            "id": "appointments",
+            "titleKey": "dashboard.admin.stats.appointments_today",
+            "icon": "event",
+            "color": "secondary-container",
+            "value": 47,
+            "requiredPermission": "VIEW_APPOINTMENTS"
+        },
+        {
+            "id": "occupancy",
+            "titleKey": "dashboard.admin.stats.bed_occupancy",
+            "icon": "bed",
+            "color": "error-container",
+            "value": "78%",
+            "requiredPermission": "VIEW_FACILITY"
+        }
+    ],
+    "activities": [
+        {
+            "id": "new_doctor",
+            "titleKey": "dashboard.admin.activity.new_doctor",
+            "timeKey": "dashboard.admin.activity.time.minutes_ago",
+            "timeParams": {
+                "value": 5
+            },
+            "icon": "person_add",
+            "variant": "primary",
+            "requiredPermission": "VIEW_ACTIVITY_LOG"
+        },
+        {
+            "id": "appt_confirmed",
+            "titleKey": "dashboard.admin.activity.appointment_confirmed",
+            "timeKey": "dashboard.admin.activity.time.minutes_ago",
+            "timeParams": {
+                "value": 15
+            },
+            "icon": "event_available",
+            "variant": "tertiary",
+            "requiredPermission": "VIEW_APPOINTMENTS"
+        },
+        {
+            "id": "config_update",
+            "titleKey": "dashboard.admin.activity.config_update",
+            "timeKey": "dashboard.admin.activity.time.hour_ago",
+            "icon": "edit_note",
+            "variant": "secondary",
+            "requiredPermission": "VIEW_SYSTEM_LOGS"
+        }
+    ],
+    "quickActions": [
+        {
+            "id": "manage_staff",
+            "labelKey": "dashboard.admin.quick_actions.manage_staff",
+            "icon": "badge",
+            "route": "/admin/users/staff",
+            "actionType": "route",
+            "requiredPermission": "MANAGE_STAFF"
+        },
+        {
+            "id": "view_patients",
+            "labelKey": "dashboard.admin.quick_actions.view_patients",
+            "icon": "personal_injury",
+            "route": "/admin/users/patients",
+            "actionType": "route",
+            "requiredPermission": "VIEW_PATIENTS"
+        },
+        {
+            "id": "config",
+            "labelKey": "dashboard.admin.quick_actions.config",
+            "icon": "settings",
+            "route": "/admin/settings",
+            "actionType": "route",
+            "requiredPermission": "MANAGE_SETTINGS"
+        },
+        {
+            "id": "reports",
+            "labelKey": "dashboard.admin.quick_actions.reports",
+            "icon": "assessment",
+            "actionType": "route",
+            "requiredPermission": "VIEW_REPORTS"
+        }
+    ]
+}

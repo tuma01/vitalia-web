@@ -1,45 +1,227 @@
-.sidebar-header-content {
+/* 🚀 SIDEBAR STYLES - Absolute Token Isolation */
+
+app-sidebar {
+    /* Default (Dynamic based on global theme) */
+    --sidebar-bg: var(--sys-surface-1);
+    --sidebar-text: var(--sys-text-primary);
+    --sidebar-text-muted: var(--sys-text-secondary);
+    --sidebar-border: var(--sys-border-subtle);
+    --sidebar-item-active-bg: var(--color-primary-container);
+    --sidebar-item-active-text: var(--color-primary);
+}
+
+/* 🎨 Theme Force Mixin */
+@mixin force-sidebar-theme($bg, $text, $text-muted, $border, $surface1, $surface2, $hover) {
+    // 🧱 System Token Overrides (Forced locally)
+    --sys-surface-0: #{$bg};
+    --sys-surface-1: #{$surface1};
+    --sys-surface-2: #{$surface2};
+    --sys-text-primary: #{$text};
+    --sys-text-secondary: #{$text-muted};
+    --sys-border-subtle: #{$border};
+    --state-hover-surface: #{$hover};
+
+    // 🧱 Material 3 Token Overrides (Forced locally)
+    --mat-sys-surface: var(--sys-surface-1);
+    --mat-sys-on-surface: var(--sys-text-primary);
+    --mat-sys-on-surface-variant: var(--sys-text-secondary);
+    --mat-sys-background: var(--sys-surface-0);
+    --mat-sys-on-background: var(--sys-text-primary);
+    --mat-sys-outline-variant: var(--sys-border-subtle);
+
+    // 🧱 MDC Component Overrides
+    --mdc-list-item-label-text-color: var(--sys-text-primary);
+    --mdc-list-item-supporting-text-color: var(--sys-text-secondary);
+    --mdc-list-item-leading-icon-color: var(--sys-text-secondary);
+
+    // 🧱 Sidebar Specifics
+    --sidebar-bg: var(--sys-surface-0);
+    --sidebar-text: var(--sys-text-primary);
+    --sidebar-text-muted: var(--sys-text-secondary);
+    --sidebar-border: var(--sys-border-subtle);
+
+    /* 🚨 FORCE COLORS (Extreme Specificity) */
+    .sidebar,
+    .sidebar-header,
+    .user-info,
+    mat-nav-list,
+    mat-list-item,
+    .name,
+    .role,
+    span,
+    mat-icon:not(.brand-icon) {
+        color: var(--sidebar-text) !important;
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg) !important;
+    }
+
+    .sidebar-header {
+        border-bottom-color: var(--sidebar-border) !important;
+    }
+
+    .user-info {
+        background-color: var(--sys-surface-2) !important;
+    }
+}
+
+/* ☀ FORCE LIGHT SIDEBAR (No matter the global theme) */
+body.sidebar-light app-sidebar {
+    @include force-sidebar-theme(#ffffff,
+        /* bg */
+        #1e293b,
+        /* text (slate-800) */
+        #64748b,
+        /* text-muted (slate-500) */
+        rgba(0, 0, 0, 0.05),
+        /* border */
+        #f8f9fa,
+        /* s1 */
+        #f1f3f5,
+        /* s2 */
+        rgba(0, 0, 0, 0.04)
+        /* hover */
+    );
+
+    /* Selection parity */
+    mat-list-item.mat-mdc-list-item-activated {
+        background-color: var(--color-primary-container) !important;
+        color: var(--color-primary) !important;
+
+        mat-icon,
+        span {
+            color: var(--color-primary) !important;
+        }
+    }
+}
+
+/* 🌙 FORCE DARK SIDEBAR (No matter the global theme) */
+body.sidebar-dark app-sidebar {
+    @include force-sidebar-theme(#121212,
+        /* bg */
+        #ffffff,
+        /* text */
+        #cbd5e1,
+        /* text-muted (slate-300) */
+        rgba(255, 255, 255, 0.05),
+        /* border */
+        #1e1e1e,
+        /* s1 */
+        #232323,
+        /* s2 */
+        rgba(255, 255, 255, 0.05)
+        /* hover */
+    );
+
+    /* Selection parity */
+    mat-list-item.mat-mdc-list-item-activated {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+
+        mat-icon,
+        span {
+            color: #ffffff !important;
+        }
+    }
+}
+
+/* ================================ */
+/* CORE STRUCTURE */
+/* ================================ */
+
+.sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid var(--sidebar-border);
+    transition: background 0.2s ease, color 0.2s ease;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    height: 64px;
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--sidebar-border);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        .logo-text {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--ui-color-primary);
-            letter-spacing: -0.02em;
-        }
-    }
-
-    .logo-icon {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        color: var(--ui-color-primary);
-
-        ui-icon {
-            font-size: 24px;
-        }
+    mat-icon:not(.brand-icon) {
+        color: var(--color-primary);
     }
 }
 
-.sidebar-footer-content {
-    .version-info {
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: var(--sys-surface-2);
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+
+    mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        color: var(--color-primary);
+    }
+
+    .name {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .role {
         font-size: 0.75rem;
-        color: var(--ui-color-text-secondary);
-        opacity: 0.7;
     }
 }
 
-// Ensure the host takes full height
-:host {
-    display: block;
-    height: 100%;
+mat-nav-list {
+    padding-top: 8px;
+    flex: 1;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--sidebar-border);
+        border-radius: 10px;
+    }
+}
+
+mat-list-item {
+    border-radius: 8px;
+    margin: 4px 12px;
+    height: 44px !important;
+    transition: all 0.2s ease;
+    color: var(--sidebar-text-muted);
+
+    mat-icon {
+        margin-right: 8px;
+    }
+
+    &.mat-mdc-list-item-activated {
+        background-color: var(--sidebar-item-active-bg) !important;
+        color: var(--sidebar-item-active-text) !important;
+
+        mat-icon,
+        span {
+            color: inherit !important;
+        }
+    }
+
+    &:hover:not(.mat-mdc-list-item-activated) {
+        background-color: var(--state-hover-surface);
+    }
 }

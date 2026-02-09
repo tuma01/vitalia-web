@@ -1,0 +1,82 @@
+@if (dashboard(); as db) {
+<div class="dashboard-container">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>{{ 'dashboard.title' | translate }}</h1>
+            <p>{{ 'dashboard.admin.welcome' | translate }}, <strong>{{ userName() }}</strong> - {{ tenantName() }}</p>
+        </div>
+        <button mat-flat-button color="primary">
+            <mat-icon>add</mat-icon>
+            {{ 'dashboard.admin.new_user' | translate }}
+        </button>
+    </header>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+        @for (stat of db.stats; track stat.id) {
+        <app-stat-card [data]="stat"></app-stat-card>
+        }
+    </section>
+
+    <!-- Content Grid -->
+    <div class="content-grid">
+        <!-- Recent Activity -->
+        @if (db.activities?.length) {
+        <mat-card class="activity-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="header-with-icon">
+                        <mat-icon color="primary">history</mat-icon>
+                        {{ 'dashboard.admin.activity.title' | translate }}
+                    </div>
+                </mat-card-title>
+                <span class="spacer"></span>
+                <button mat-button color="primary">{{ 'dashboard.admin.activity.view_all' | translate }}</button>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="activity-list">
+                    @for (activity of db.activities; track activity.id) {
+                    <div class="activity-item">
+                        <div class="item-icon" [ngClass]="activity.variant + '-bg'">
+                            <mat-icon>{{ activity.icon }}</mat-icon>
+                        </div>
+                        <div class="activity-info">
+                            <p class="activity-title">{{ activity.titleKey | translate }}</p>
+                            <p class="activity-time">{{ activity.timeKey | translate: activity.timeParams }}</p>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+
+        <!-- Quick Actions -->
+        @if (db.quickActions?.length) {
+        <mat-card class="quick-actions-card">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="header-with-icon">
+                        <mat-icon color="primary">bolt</mat-icon>
+                        {{ 'dashboard.admin.quick_actions.title' | translate }}
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="actions-grid">
+                    @for (action of db.quickActions; track action.id) {
+                    <button mat-stroked-button class="action-btn" (click)="router.navigate([action.route])">
+                        <mat-icon>{{ action.icon }}</mat-icon>
+                        {{ action.labelKey | translate }}
+                    </button>
+                    }
+                </div>
+            </mat-card-content>
+        </mat-card>
+        }
+    </div>
+</div>
+} @else {
+<app-dashboard-skeleton></app-dashboard-skeleton>
+}

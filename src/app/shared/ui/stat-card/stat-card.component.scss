@@ -1,0 +1,84 @@
+@use '@angular/material' as mat;
+
+.stat-card {
+    border-radius: var(--mat-sys-shape-medium);
+    @include mat.elevation(1); // ✅ Added subtle elevation
+    background-color: var(--mat-sys-surface);
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.stat-icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--mat-sys-shape-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // ✅ M3 color roles (UI Constitution Article 8)
+    &[data-tone="primary"] {
+        background: var(--mat-sys-primary-container);
+        color: var(--mat-sys-on-primary-container);
+    }
+
+    &[data-tone="secondary"] {
+        background: var(--mat-sys-secondary-container);
+        color: var(--mat-sys-on-secondary-container);
+    }
+
+    &[data-tone="tertiary"] {
+        background: var(--mat-sys-tertiary-container);
+        color: var(--mat-sys-on-tertiary-container);
+    }
+
+    &[data-tone="error"] {
+        background: var(--mat-sys-error-container);
+        color: var(--mat-sys-on-error-container);
+    }
+}
+
+.stat-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--mat-sys-outline);
+    margin: 0;
+}
+
+.stat-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--mat-sys-on-surface);
+}
+
+.stat-trend {
+    display: flex;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    mat-icon {
+        font-size: 14px;
+        width: 14px;
+        height: 14px;
+        margin-right: 2px;
+    }
+
+    &.positive {
+        color: var(--mat-sys-tertiary);
+    }
+
+    &.negative {
+        color: var(--mat-sys-error);
+    }
+}

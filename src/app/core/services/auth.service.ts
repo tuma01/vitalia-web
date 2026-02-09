@@ -203,7 +203,7 @@ export class AuthService {
     if (this.sessionService.hasRole('ROLE_SUPER_ADMIN')) {
       this.router.navigate(['/admin/dashboard']);
     } else if (this.sessionService.hasAnyRole(['ROLE_ADMIN', 'ROLE_TENANT_ADMIN'])) {
-      this.router.navigate(['/admin/hospital-dashboard']);
+      this.router.navigate(['/admin/dashboard']);
     } else if (this.sessionService.hasRole('ROLE_DOCTOR')) {
       this.router.navigate(['/doctor/dashboard']);
     } else if (this.sessionService.hasRole('ROLE_NURSE')) {
@@ -211,9 +211,9 @@ export class AuthService {
     } else if (this.sessionService.hasRole('ROLE_EMPLOYEE')) {
       this.router.navigate(['/employee/dashboard']);
     } else if (this.sessionService.hasRole('ROLE_PATIENT')) {
-      this.router.navigate(['/patient/portal']);
+      this.router.navigate(['/patient/dashboard']);
     } else {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/login']);
     }
   }
 

@@ -1,5 +1,198 @@
-// Aplica nuestro theme principal
-@use 'styles/_themes' as *;
+/**
+ *  GLOBAL DESIGN SYSTEM — VITALIA APP
+ * Conecta:
+ * - Design Tokens (generados por ThemeService)
+ * - Angular Material 3
+ * - Componentes base de la app
+ */
 
-// Opcional: dark mode overrides
-// @include apply-m3-dark-overrides();
+/* ===============================
+   1️⃣ MATERIAL & DENSITY
+================================ */
+@use './styles/theme';
+@use './app/core/styles/density.scss';
+
+/* ===============================
+   2️⃣ RESET & BASE
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--app-font-family, 'Roboto', sans-serif);
+    background: var(--sys-surface-0);
+    color: var(--sys-text-primary);
+    transition: background 150ms ease, color 150ms ease;
+}
+
+/* ===============================
+   3️⃣ SURFACES (Cards, Panels)
+================================ */
+.mat-mdc-card,
+.app-surface {
+    background: var(--sys-surface-1);
+    color: var(--sys-text-primary);
+    border: 1px solid var(--sys-border-subtle);
+    border-radius: 12px;
+}
+
+/* ===============================
+   4️⃣ PRIMARY BUTTONS (CTA)
+================================ */
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-unelevated-button.mat-primary {
+    background: var(--btn-primary-bg) !important;
+    color: var(--btn-primary-text) !important;
+
+    &:hover {
+        background: var(--btn-primary-hover) !important;
+    }
+
+    &:disabled {
+        background: var(--sys-disabled-bg) !important;
+        color: var(--sys-disabled-text) !important;
+    }
+}
+
+/* ===============================
+   5️⃣ OUTLINED / SECONDARY BUTTONS
+================================ */
+.mat-mdc-outlined-button.mat-primary {
+    border-color: var(--btn-secondary-border) !important;
+    color: var(--btn-secondary-text) !important;
+
+    &:hover {
+        background: var(--color-primary-container) !important;
+    }
+}
+
+/* ===============================
+   6️⃣ WARN BUTTONS
+================================ */
+.mat-mdc-raised-button.mat-warn {
+    background: var(--color-warn) !important;
+    color: var(--color-warn-contrast) !important;
+
+    &:hover {
+        background: var(--color-warn-hover) !important;
+    }
+}
+
+/* ===============================
+   7️⃣ TOGGLES & SELECTED CHIPS
+================================ */
+.mat-button-toggle {
+    background: var(--sys-surface-1);
+    color: var(--sys-text-primary);
+}
+
+.mat-button-toggle-checked {
+    background: var(--toggle-selected-bg) !important;
+    color: var(--toggle-selected-text) !important;
+}
+
+/* ===============================
+   8️⃣ INPUTS & FORM FIELDS
+================================ */
+.mat-mdc-text-field-wrapper {
+    color: var(--input-text);
+}
+
+.mat-mdc-form-field-label {
+    color: var(--input-label);
+}
+
+.mat-mdc-form-field-focus-overlay {
+    background: transparent;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+    border-color: var(--input-border-focus) !important;
+}
+
+input,
+textarea {
+    caret-color: var(--input-caret);
+}
+
+/* ===============================
+   9️⃣ LINKS
+================================ */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+
+    &:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+    }
+}
+
+/* ===============================
+   🔟 GLOBAL FOCUS STATE
+================================ */
+*:focus-visible {
+    outline: 2px solid var(--state-focus-ring);
+    outline-offset: 2px;
+}
+
+/* ===============================
+   1️⃣1️⃣ DISABLED GLOBAL
+================================ */
+[disabled],
+.mat-mdc-button-disabled {
+    background: var(--sys-disabled-bg) !important;
+    color: var(--sys-disabled-text) !important;
+    cursor: not-allowed;
+}
+
+/* ===============================
+   1️⃣2️⃣ MAT OVERLAYS POLISH
+   Material M3 uses its internal tokens mapped via ThemeService.
+   The overlays will now natively use Surface Container (Surface 0).
+================================ */
+.mat-mdc-menu-panel,
+.mat-mdc-select-panel,
+.mat-mdc-autocomplete-panel {
+    border: 1px solid var(--sys-border-subtle);
+    border-radius: 8px !important;
+    box-shadow: var(--sys-shadow-lg) !important;
+    overflow: hidden !important;
+}
+
+// Ensure options and menu items have proper Material height but 
+// LET MATERIAL HANDLE BACKGROUNDS AND STATE LAYERS
+.mat-mdc-menu-item,
+.mat-mdc-option {
+    min-height: 48px !important;
+}
+
+/* ===============================
+   1️⃣3️⃣ SCROLLBAR
+================================ */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sys-border-subtle);
+    border-radius: 6px;
+}
+
+/* 🎨 Global Divider Refinement */
+mat-divider,
+.mat-divider {
+    border-top-color: rgba(0, 0, 0, 0.25) !important;
+    opacity: 0.6 !important;
+}

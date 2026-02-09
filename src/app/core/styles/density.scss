@@ -1,0 +1,26 @@
+// ✅ Density classes - Applied by SettingsService
+// Material 3 density tokens
+
+body.density-compact {
+    --mat-list-item-density: -2;
+    --mat-button-density: -2;
+    --mat-card-density: -1;
+    --mat-form-field-density: -2;
+    --mat-toolbar-density: -1;
+}
+
+body.density-default {
+    --mat-list-item-density: 0;
+    --mat-button-density: 0;
+    --mat-card-density: 0;
+    --mat-form-field-density: 0;
+    --mat-toolbar-density: 0;
+}
+
+body.density-expanded {
+    --mat-list-item-density: 1;
+    --mat-button-density: 1;
+    --mat-card-density: 0;
+    --mat-form-field-density: 1;
+    --mat-toolbar-density: 1;
+}

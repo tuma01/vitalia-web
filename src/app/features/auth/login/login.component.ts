@@ -1,23 +1,19 @@
-import { Component, ChangeDetectionStrategy, inject, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
 
-// PAL Components
-import {
-  UiButtonComponent,
-  UiInputComponent,
-  UiFormFieldComponent,
-  UiPrefixDirective,
-  UiSuffixDirective,
-  UiSelectNativeComponent,
-  UiSelectNativeOption,
-  UiCheckboxComponent,
-  UiIconComponent,
-  UiCardComponent,
-  UiToastService // Import Toast Service
-} from '@ui';
+// Material Components
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 // API Services
 import { TenantService } from '../../../api/services/tenant.service';
@@ -25,7 +21,7 @@ import { Tenant } from '../../../api/models/tenant';
 
 // Core Services
 import { AuthService } from '../../../core/services/auth.service';
-import { TenantThemeService } from '../../../core/services/tenant-theme.service';
+import { ThemeService } from '../../../core/theme/theme.service';
 import { switchMap } from 'rxjs';
 
 interface RoleOption {
@@ -33,7 +29,7 @@ interface RoleOption {
   label: string;
   icon: string;
   color: string;
-  enabled: boolean; // Solo Admin habilitado por ahora
+  enabled: boolean;
 }
 
 @Component({
@@ -47,23 +43,22 @@ interface RoleOption {
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
-    UiButtonComponent,
-    UiInputComponent,
-    UiFormFieldComponent,
-    UiPrefixDirective,
-    UiSuffixDirective,
-    UiSelectNativeComponent,
-    UiCheckboxComponent,
-    UiIconComponent,
-    UiCardComponent
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatProgressBarModule
   ],
 })
 export class LoginComponent {
   private router = inject(Router);
   private tenantApiService = inject(TenantService);
   private authService = inject(AuthService);
-  private tenantThemeService = inject(TenantThemeService);
-  private toastService = inject(UiToastService); // Inject Service
+  private themeService = inject(ThemeService);
+  private toastService = inject(ToastrService);
 
   // Signals
   selectedRole = signal<string>('');
@@ -71,13 +66,13 @@ export class LoginComponent {
   isLoading = signal<boolean>(false);
   showPassword = signal<boolean>(false);
 
-  // Roles configuration - Solo Admin habilitado
+  // Roles configuration
   roles: RoleOption[] = [
-    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: '#16a34a', enabled: true }, // Green (Reference)
-    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: '#f97316', enabled: false },  // Orange (Reference)
-    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: '#2563eb', enabled: false },      // Blue
-    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: '#9333ea', enabled: false },         // Purple
-    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: '#06b6d4', enabled: false }           // Cyan
+    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: 'var(--color-success)', enabled: true },
+    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: 'var(--color-warning)', enabled: true },
+    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: 'var(--color-primary)', enabled: true },
+    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: 'var(--color-accent)', enabled: true },
+    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: 'var(--color-info)', enabled: true }
   ];
 
   // Form
@@ -89,14 +84,6 @@ export class LoginComponent {
     rememberMe: new FormControl<boolean>(false)
   });
 
-  // Tenant options for select
-  get tenantOptions(): UiSelectNativeOption[] {
-    return this.tenants().map(t => ({
-      value: t.code || '',
-      label: t.name || ''
-    }));
-  }
-
   constructor() {
     this.loadTenants();
   }
@@ -105,10 +92,14 @@ export class LoginComponent {
     this.tenantApiService.getPublicAllTenants().subscribe({
       next: (tenants) => {
         this.tenants.set(tenants);
+        // Autoselect first tenant if only one
+        if (tenants.length === 1) {
+          this.loginForm.patchValue({ tenantCode: tenants[0].code });
+        }
       },
       error: (error) => {
         console.error('Error loading tenants:', error);
-        this.toastService.error('Error al cargar la lista de hospitales', 'Error', { position: 'bottom-center' });
+        this.toastService.error('Error al cargar la lista de hospitales');
       }
     });
   }
@@ -117,7 +108,7 @@ export class LoginComponent {
     const role = this.roles.find(r => r.value === roleValue);
 
     if (!role?.enabled) {
-      this.toastService.info('Este rol estará disponible próximamente', 'Información', { position: 'bottom-center' });
+      this.toastService.info('Este rol estará disponible próximamente');
       return;
     }
 
@@ -128,7 +119,7 @@ export class LoginComponent {
   onLogin(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      this.toastService.warning('Por favor verifica los datos del formulario.', 'Formulario Inválido', { position: 'bottom-center' });
+      this.toastService.warning('Por favor verifica los datos del formulario.');
       return;
     }
 
@@ -140,36 +131,19 @@ export class LoginComponent {
 
     this.authService.login(email, password, tenantCode).pipe(
       // SwitchMap to load theme immediately after successful login
-      switchMap(() => this.tenantThemeService.loadThemeForTenant(tenantCode))
+      switchMap(() => this.themeService.loadTheme(tenantCode))
     ).subscribe({
       next: (theme) => {
         this.isLoading.set(false);
         console.log('[Login] Theme loaded successfully', theme);
-        // AuthService ya maneja la redirección
         this.authService.navigateBasedOnRole();
       },
       error: (error) => {
         this.isLoading.set(false);
-        console.error('Login error full object:', error);
-
-        if (error.status === 404) {
-          this.toastService.error('Servidor o recurso no encontrado (404). Verifica el Tenant.', 'Error de Conexión', { position: 'bottom-center' });
-        } else {
-          this.toastService.error('Credenciales inválidas o error de servidor.', 'Error de Acceso', { position: 'bottom-center' });
-        }
+        console.error('Login error:', error);
+        this.toastService.error('Credenciales inválidas o error de servidor.');
       }
     });
-  }
-
-  getError(fieldName: string): string | null {
-    const control = this.loginForm.get(fieldName);
-    if (!control || !control.touched || !control.errors) return null;
-
-    if (control.errors['required']) return 'Este campo es requerido';
-    if (control.errors['email']) return 'Email inválido';
-    if (control.errors['minlength']) return 'Mínimo 8 caracteres';
-
-    return null;
   }
 
   togglePassword() {
