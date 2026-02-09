@@ -323,6 +323,32 @@
             "alerts": {
                 "title": "System Alerts",
                 "maintenance_needed": "servers require maintenance"
+            },
+            "welcome": "Welcome",
+            "new_user": "New User",
+            "stats": {
+                "total_staff": "Total Staff",
+                "active_patients": "Active Patients",
+                "appointments_today": "Appointments Today",
+                "bed_occupancy": "Bed Occupancy"
+            },
+            "activity": {
+                "title": "Recent Activity",
+                "view_all": "View All",
+                "new_doctor": "New doctor registered",
+                "appointment_confirmed": "Appointment confirmed",
+                "config_update": "Configuration updated",
+                "time": {
+                    "minutes_ago": "{{value}} minutes ago",
+                    "hour_ago": "1 hour ago"
+                }
+            },
+            "quick_actions": {
+                "title": "Quick Actions",
+                "manage_staff": "Manage Staff",
+                "view_patients": "View Patients",
+                "config": "Configuration",
+                "reports": "Reports"
             }
         },
         "stats": {

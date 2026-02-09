@@ -29,6 +29,9 @@ export interface MenuPermissions {
  * Individual menu item
  */
 export interface MenuItem {
+  /** Unique identifier for the menu item */
+  id: string;
+
   /** Route path (can be relative or absolute) */
   route: string;
 

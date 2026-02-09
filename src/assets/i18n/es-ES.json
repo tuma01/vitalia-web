@@ -130,6 +130,7 @@
         "patient_list": "Lista de Pacientes",
         "billingPayments": "Facturación y Pagos",
         "my_tasks": "Mis Tareas",
+        "staff": "Personal",
         "staff_directory": "Directorio de Personal",
         "overview": "Resumen",
         "logout": "Cerrar Sesión",
@@ -299,6 +300,32 @@
         "tenant": "Organización",
         "this_month": "este mes",
         "admin": {
+            "welcome": "Bienvenido",
+            "new_user": "Nuevo Usuario",
+            "stats": {
+                "total_staff": "Total Personal",
+                "active_patients": "Pacientes Activos",
+                "appointments_today": "Citas Hoy",
+                "bed_occupancy": "Ocupación Camas"
+            },
+            "activity": {
+                "title": "Actividad Reciente",
+                "view_all": "Ver todo",
+                "new_doctor": "Nuevo médico registrado",
+                "appointment_confirmed": "Cita confirmada",
+                "config_update": "Actualización de configuración",
+                "time": {
+                    "minutes_ago": "Hace {{value}} minutos",
+                    "hour_ago": "Hace 1 hora"
+                }
+            },
+            "quick_actions": {
+                "title": "Acciones Rápidas",
+                "manage_staff": "Gestionar Personal",
+                "view_patients": "Ver Pacientes",
+                "config": "Configuración",
+                "reports": "Reportes"
+            },
             "patients": {
                 "title": "Todos los Pacientes",
                 "subtitle": "Registros activos"

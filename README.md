@@ -4,7 +4,7 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## 🚀 Key Features & Updates
 
-### 📱 Responsive Dashboard
+### 📱 Responsive- **Dashboard Engine**: Framework basado en configuración para paneles dinámicos. Revisar [docs/dashboard-framework.md](file:///f:/JAVA-PROJET/vitalia/workspace/vitalia-web/docs/dashboard-framework.md) para más detalles técnicos.
 *   **Mobile & Tablet Support**: The dashboard sidebar automatically switches to a hidden "drawer" mode on screens smaller than **992px**.
 *   **Push-on-Hover**: On desktop, hovering over the collapsed sidebar triggers a smooth content push animation instead of an overlay, ensuring content remains visible.
 *   **Auto-Close**: Sidebar automatically closes on mobile navigation.

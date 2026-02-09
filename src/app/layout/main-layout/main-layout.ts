@@ -1,8 +1,8 @@
 import { Component, ViewChild, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { RouterModule, Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { filter } from 'rxjs/operators';
 import { Header } from '../header/header';
 import { Sidebar } from '../sidebar/sidebar';
@@ -21,61 +21,53 @@ export class MainLayout implements OnInit {
   private router = inject(Router);
   private cd = inject(ChangeDetectorRef);
 
-  @ViewChild('sidebar') sidebar!: Sidebar;
+  @ViewChild('sidebar') sidebarComponent!: Sidebar;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
 
-  // Responsive state
   isMobile = false;
-
-  // Sidebar state
   sidenavOpened = true;
   sidebarCollapsed = false;
   sidebarHovered = false;
+  settingsPanelOpen = false;
 
   ngOnInit(): void {
-    // Breakpoint: 992px (Tablets/Mobile < 992px)
-    this.breakpointObserver.observe(['(max-width: 992px)'])
+    this.breakpointObserver.observe([Breakpoints.Handset, '(max-width: 992px)'])
       .subscribe(result => {
         this.isMobile = result.matches;
 
         if (this.isMobile) {
-          this.sidenavOpened = false; // Closed by default on mobile
-          this.sidebarCollapsed = false; // Never collapsed on mobile (always full width when open)
+          this.sidenavOpened = false;
+          this.sidebarCollapsed = false;
         } else {
-          this.sidenavOpened = true; // Open by default on desktop
-          this.sidebarCollapsed = false; // Expanded by default on desktop init
+          this.sidenavOpened = true;
         }
-
-        // Force UI update to prevent layout glitches on initial load/resize
-        this.cd.detectChanges();
+        this.cd.markForCheck();
       });
 
-    // Close sidenav on navigation (mobile only)
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
-      if (this.isMobile) {
-        this.sidenavOpened = false;
+      if (this.isMobile && this.sidenav) {
+        this.sidenav.close();
       }
     });
   }
 
   toggleSidebar(): void {
-    if (this.isMobile) {
-      // On mobile: Toggle visibility (Open/Close)
-      this.sidenavOpened = !this.sidenavOpened;
+    if (this.isMobile && this.sidenav) {
+      this.sidenav.toggle();
     } else {
-      // On desktop: Toggle collapse state (Shrink/Expand)
       this.sidebarCollapsed = !this.sidebarCollapsed;
-      this.sidebar.setCollapsed(this.sidebarCollapsed);
-
-      // Reset hover state immediately to prevent "stuck" expansion
-      if (!this.sidebarCollapsed) {
-        this.sidebarHovered = false;
-      }
     }
+    this.cd.markForCheck();
   }
 
   onSidebarHover(isHovering: boolean): void {
     this.sidebarHovered = isHovering;
+    this.cd.markForCheck();
+  }
+
+  toggleSettings(): void {
+    this.settingsPanelOpen = !this.settingsPanelOpen;
   }
 }

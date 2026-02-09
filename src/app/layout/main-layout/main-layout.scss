@@ -1,88 +1,78 @@
+:host {
+    display: block;
+    height: 100vh;
+}
+
 .sidenav-container {
-    // Occupy full viewport minus header
-    height: calc(100vh - 64px);
-    // Fallback and dynamic viewport support
-    height: calc(100dvh - 64px);
+    height: 100vh;
+    height: 100dvh;
     width: 100%;
-    margin: 0;
-    overflow: hidden;
-    background-color: transparent !important;
+    background-color: var(--sys-surface-0);
+
+    --sidebar-width: 270px;
+    --sidebar-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.side-collapsed {
+        --sidebar-width: 70px;
+    }
 }
 
 .sidenav {
-    width: 260px;
+    width: var(--sidebar-width);
     background: transparent;
-    /* Let sidebar component handle bg */
-    border: none;
-    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    overflow-x: hidden !important;
-    /* Prevent horizontal scrollbar on the drawer itself */
-
-    /* When collapsed, restrict width */
-    &.collapsed {
-        width: 80px;
-        /* Match sidebar.scss collapsed width */
-        min-width: 80px;
-    }
+    transition: width var(--sidebar-transition);
+    overflow: visible !important;
+    z-index: 100 !important;
+    box-shadow: none !important;
 }
 
 .content {
-    // sidebar-like behavior: simple padding + border-box
-    box-sizing: border-box;
-    padding: 0; // Padding moved to wrapper
-
-    background-color: var(--body-background-color, #f4f6f8);
-
-    // Use 100% to fill the parent .sidenav-container
+    display: flex;
+    flex-direction: column;
     height: 100%;
+    margin-left: var(--sidebar-width) !important;
+    transition: margin-left var(--sidebar-transition);
+    overflow: visible;
 
-    overflow-y: auto;
-
-    // Transition for collapse animation
-    transition: margin-left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    &.collapsed {
-        margin-left: 80px !important;
+    @media (max-width: 992px) {
+        margin-left: 0 !important;
     }
 }
 
-
 .main-content-wrapper {
-    min-height: 100%;
-    box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
-    padding: 0; // Remove padding so Footer can be full width
+    background-color: var(--sys-surface-0);
+    transition: background-color 0.3s ease;
 
-    // Container for the actual page content
     .page-content {
         flex: 1;
-        padding: 24px; // Restore padding here
+        padding: 24px;
 
         @media (max-width: 600px) {
             padding: 16px;
         }
     }
 
-    // Footer is now full width
     >app-footer {
         margin-top: auto;
-        width: 100%;
-        z-index: 10;
-        position: relative;
     }
 }
 
-
-/* Material overrides to prevent shadow artifacts and white flash */
-.mat-drawer-inner-container {
-    overflow-x: hidden !important;
-    background-color: transparent !important;
-    /* Force transparent inner container */
+/* Force Material Sidenav fill the height */
+::ng-deep .mat-drawer-container {
+    height: 100% !important;
+    background-color: var(--sys-surface-0) !important;
 }
 
-/* Force the drawer itself to be transparent so our sidebar component handles the bg */
+.mat-drawer-inner-container {
+    overflow: hidden !important;
+}
+
 .mat-drawer,
 .mat-sidenav {
     background-color: transparent !important;
+    height: 100% !important;
 }

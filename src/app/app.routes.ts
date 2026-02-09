@@ -4,38 +4,23 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { RoleRedirectGuard } from './core/guards/role-redirect.guard';
-import { PilotFormComponent } from './features/pilot-form/pilot-form.component';
 
 export const routes: Routes = [
-    // Public routes (no authentication required)
-    { path: 'login', component: LoginComponent, data: { title: 'Login Page' } },
-    {
-        path: 'auth/login',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    // Mini-Pilot Route
-    { path: 'pilot', component: PilotFormComponent, data: { title: 'Design System Pilot' } },
+    // Public routes
+    { path: 'login', component: LoginComponent, data: { title: 'Login' } },
+    { path: 'auth/login', redirectTo: 'login', pathMatch: 'full' },
 
-    // Super Admin Login (separate from regular login)
-    // {
-    //     path: 'super-admin/login',
-    //     loadComponent: () => import('./features/auth/super-admin-login/super-admin-login.component').then(m => m.SuperAdminLoginComponent),
-    //     data: { title: 'Super Admin Login' }
-    // },
-
-    // Protected routes (authentication required)
+    // Protected routes
     {
         path: '',
         component: MainLayout,
-        canActivate: [authGuard], // Protect all routes under MainLayout
+        canActivate: [authGuard],
         children: [
-            // SMART REDIRECT: '/' and '/dashboard' now automatically send user to their specific role dashboard
             {
                 path: '',
                 pathMatch: 'full',
                 canActivate: [RoleRedirectGuard],
-                children: [] // Guard handles the redirect, no component needed
+                children: []
             },
             {
                 path: 'dashboard',
@@ -43,7 +28,7 @@ export const routes: Routes = [
                 children: []
             },
 
-            // Role-based dashboards - Admin enabled, others now implemented
+            // Admin
             {
                 path: 'admin',
                 canActivate: [roleGuard],
@@ -51,26 +36,25 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'dashboard',
-                        loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
-                    },
-                    {
-                        // Legacy alias support
-                        path: 'hospital-dashboard',
-                        loadComponent: () => import('./features/admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
+                        loadComponent: () => import('./features/admin/dashboard/role-dashboard.component').then(m => m.RoleDashboardComponent)
                     }
                 ]
             },
-            {
-                path: 'doctor',
-                canActivate: [roleGuard],
-                data: { roles: ['ROLE_DOCTOR'] },
-                children: [
-                    {
-                        path: 'dashboard',
-                        loadComponent: () => import('./features/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent)
-                    }
-                ]
-            },
+
+            // Doctor - COMMENTED OUT (dashboard deleted)
+            // {
+            //     path: 'doctor',
+            //     canActivate: [roleGuard],
+            //     data: { roles: ['ROLE_DOCTOR'] },
+            //     children: [
+            //         {
+            //             path: 'dashboard',
+            //             loadComponent: () => import('./features/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent)
+            //         }
+            //     ]
+            // },
+
+            // Nurse
             {
                 path: 'nurse',
                 canActivate: [roleGuard],
@@ -82,6 +66,8 @@ export const routes: Routes = [
                     }
                 ]
             },
+
+            // Employee
             {
                 path: 'employee',
                 canActivate: [roleGuard],
@@ -93,6 +79,8 @@ export const routes: Routes = [
                     }
                 ]
             },
+
+            // Patient
             {
                 path: 'patient',
                 canActivate: [roleGuard],
@@ -103,29 +91,10 @@ export const routes: Routes = [
                         loadComponent: () => import('./features/patient/dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent)
                     }
                 ]
-            },
-            /*
-            // Super Admin routes (Coming soon)
-            {
-                path: 'super-admin',
-                canActivate: [roleGuard],
-                data: { roles: ['ROLE_SUPER_ADMIN'] },
-                children: [
-                    {
-                        path: 'dashboard',
-                        loadComponent: () => import('./features/super-admin/dashboard/super-admin-dashboard.component').then(m => m.SuperAdminDashboardComponent)
-                    },
-                    {
-                        path: 'geography',
-                        loadChildren: () => import('./features/super-admin/geography/geography.routes').then(m => m.routes)
-                    }
-                ]
             }
-            */
-
         ]
     },
 
-    // Fallback route
+    // Fallback
     { path: '**', redirectTo: 'login' }
 ];

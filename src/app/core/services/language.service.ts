@@ -1,6 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
  * Supported languages
@@ -19,10 +18,10 @@ export interface Language {
 })
 export class LanguageService {
     private translate = inject(TranslateService);
-    private currentLanguageSubject = new BehaviorSubject<string>('es-ES');
+    private _currentLanguage = signal<string>('es-ES');
 
-    /** Observable of current language code */
-    public currentLanguage$ = this.currentLanguageSubject.asObservable();
+    /** Signal of current language code */
+    public readonly currentLanguage = this._currentLanguage.asReadonly();
 
     /** Available languages */
     public readonly availableLanguages: Language[] = [
@@ -44,64 +43,35 @@ export class LanguageService {
         const stored = localStorage.getItem(this.STORAGE_KEY);
         const defaultLang = 'es-ES';
 
-        // Set default and fallback
         this.translate.setDefaultLang(defaultLang);
-
-        // Use stored language if valid, otherwise use default
         const langToUse = stored && this.isValidLanguage(stored) ? stored : defaultLang;
         this.setLanguage(langToUse);
     }
 
     /**
      * Set the current language
-     * @param langCode Language code (e.g., 'es-ES', 'en-US')
      */
     setLanguage(langCode: string): void {
-        if (!this.isValidLanguage(langCode)) {
-            console.warn(`Invalid language code: ${langCode}`);
-            return;
-        }
+        if (!this.isValidLanguage(langCode)) return;
 
-        console.log('[LanguageService] Switching to language:', langCode);
         this.translate.use(langCode).subscribe({
             next: () => {
-                console.log('[LanguageService] Language switched successfully to:', langCode);
-                this.currentLanguageSubject.next(langCode);
+                this._currentLanguage.set(langCode);
                 localStorage.setItem(this.STORAGE_KEY, langCode);
 
-                // Update HTML lang attribute
-                document.documentElement.lang = langCode;
+                // Auto-sync direction based on language
+                const direction = langCode.startsWith('ar') || langCode.startsWith('he') ? 'rtl' : 'ltr';
+                document.documentElement.dir = direction;
             },
-            error: (err) => {
-                console.error('[LanguageService] Error switching language:', err);
-            }
+            error: (err) => console.error('[LanguageService] Error switching language:', err)
         });
     }
 
-    /**
-     * Get current language code
-     * @returns Current language code
-     */
     getCurrentLanguage(): string {
-        return this.currentLanguageSubject.value;
+        return this._currentLanguage();
     }
 
-    /**
-     * Check if language code is valid
-     * @param langCode Language code to check
-     * @returns True if valid
-     */
     private isValidLanguage(langCode: string): boolean {
         return this.availableLanguages.some(lang => lang.code === langCode);
-    }
-
-    /**
-     * Get language name by code
-     * @param langCode Language code
-     * @returns Language name or code if not found
-     */
-    getLanguageName(langCode: string): string {
-        const lang = this.availableLanguages.find(l => l.code === langCode);
-        return lang ? lang.name : langCode;
     }
 }

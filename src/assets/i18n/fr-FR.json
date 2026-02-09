@@ -316,6 +316,32 @@
             "alerts": {
                 "title": "Alertes Système",
                 "maintenance_needed": "serveurs nécessitent une maintenance"
+            },
+            "welcome": "Bienvenue",
+            "new_user": "Nouvel Utilisateur",
+            "stats": {
+                "total_staff": "Personnel Total",
+                "active_patients": "Patients Actifs",
+                "appointments_today": "Rendez-vous Aujourd'hui",
+                "bed_occupancy": "Occupation des Lits"
+            },
+            "activity": {
+                "title": "Activité Récente",
+                "view_all": "Voir tout",
+                "new_doctor": "Nouveau médecin enregistré",
+                "appointment_confirmed": "Rendez-vous confirmé",
+                "config_update": "Mise à jour de la configuration",
+                "time": {
+                    "minutes_ago": "Il y a {{value}} minutes",
+                    "hour_ago": "Il y a 1 heure"
+                }
+            },
+            "quick_actions": {
+                "title": "Actions Rapides",
+                "manage_staff": "Gérer le Personnel",
+                "view_patients": "Voir les Patients",
+                "config": "Configuration",
+                "reports": "Rapports"
             }
         },
         "stats": {

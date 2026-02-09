@@ -1,111 +1,121 @@
-.toolbar-start,
-.toolbar-end {
+.app-header {
+    height: var(--app-header-height, 64px);
     display: flex;
     align-items: center;
-    gap: 8px;
+    background: var(--color-primary) !important;
+    color: var(--color-primary-contrast) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25) !important; // Tighter shadow
+    transition: all 0.3s ease;
+    z-index: 1000;
+    position: relative;
+
+    mat-icon {
+        color: inherit !important;
+    }
 }
 
-.app-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ui-color-text, #1f2937);
-    letter-spacing: -0.01em;
+.spacer {
+    flex: 1 1 auto;
 }
 
-// Premium Search Bar
 .header-search {
-    display: flex;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 12px;
-    padding: 6px 14px;
-    width: 100%;
-    max-width: 480px;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    width: var(--app-header-search-width, 280px);
+    margin: 0 12px;
 
-    &:focus-within {
-        background: #ffffff;
-        border-color: rgba(0, 85, 164, 0.3);
-        box-shadow: 0 4px 12px rgba(0, 85, 164, 0.08);
-        transform: translateY(-1px);
-    }
+    ::ng-deep {
+        .mat-mdc-text-field-wrapper {
+            height: 40px !important;
+            padding: 0 12px !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-radius: 20px !important;
+        }
 
-    .search-icon {
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-        color: #9ca3af;
-    }
+        .mat-mdc-form-field-flex {
+            height: 100% !important;
+        }
 
-    .search-input {
-        background: transparent;
-        border: none;
-        outline: none;
-        font-size: 14px;
-        font-weight: 500;
-        width: 100%;
-        color: #1f2937;
+        .mat-mdc-form-field-infix {
+            padding: 0 !important;
+            min-height: 40px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
 
-        &::placeholder {
-            color: #9ca3af;
+        .mdc-floating-label {
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            left: 32px !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+
+            &.mdc-floating-label--float-above {
+                display: none;
+            }
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none !important;
+        }
+
+        input.mat-mdc-input-element {
+            padding-left: 28px !important;
+            color: #ffffff !important;
+            caret-color: #ffffff !important;
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.5) !important;
+            }
+        }
+
+        .mat-mdc-form-field-icon-prefix {
+            position: absolute !important;
+            left: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            height: 40px !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+
+            .mat-icon {
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+            border: none !important;
         }
     }
 }
 
-// User Menu Info Section
-.user-info {
+/* User menu */
+.user-menu-header {
     padding: 16px;
-    min-width: 200px;
-
-    .user-name {
-        font-weight: 700;
-        font-size: 14px;
-        color: #1f2937;
-        margin-bottom: 2px;
-    }
-
-    .user-role {
-        font-size: 12px;
-        color: #6b7280;
-    }
+    min-width: 180px;
+    background-color: var(--sys-surface-1);
 }
 
-// Dark Mode Overrides
-:host-context(.theme-dark) {
-    .app-title {
-        color: #f3f4f6;
-    }
-
-    .header-search {
-        background: rgba(255, 255, 255, 0.08);
-        border-color: rgba(255, 255, 255, 0.05);
-
-        &:focus-within {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(0, 85, 164, 0.5);
-            color: white;
-        }
-
-        .search-input {
-            color: white;
-        }
-    }
-
-    .user-info {
-        .user-name {
-            color: white;
-        }
-
-        .user-role {
-            color: #9ca3af;
-        }
-    }
+.user-name {
+    font-weight: 600;
+    color: var(--sys-text-primary);
 }
 
-@media (max-width: 768px) {
-    .app-title {
-        display: none;
+.user-role {
+    font-size: 0.8rem;
+    color: var(--sys-text-secondary);
+}
+
+/* ================================ */
+/* BUTTONS & STATES */
+/* ================================ */
+
+button[mat-icon-button] {
+    transition: background-color 0.2s ease;
+    color: inherit; // Use header contrast
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 }

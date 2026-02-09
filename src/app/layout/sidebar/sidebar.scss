@@ -1,480 +1,227 @@
-.sidebar-container {
+/* 🚀 SIDEBAR STYLES - Absolute Token Isolation */
+
+app-sidebar {
+    /* Default (Dynamic based on global theme) */
+    --sidebar-bg: var(--sys-surface-1);
+    --sidebar-text: var(--sys-text-primary);
+    --sidebar-text-muted: var(--sys-text-secondary);
+    --sidebar-border: var(--sys-border-subtle);
+    --sidebar-item-active-bg: var(--color-primary-container);
+    --sidebar-item-active-text: var(--color-primary);
+}
+
+/* 🎨 Theme Force Mixin */
+@mixin force-sidebar-theme($bg, $text, $text-muted, $border, $surface1, $surface2, $hover) {
+    // 🧱 System Token Overrides (Forced locally)
+    --sys-surface-0: #{$bg};
+    --sys-surface-1: #{$surface1};
+    --sys-surface-2: #{$surface2};
+    --sys-text-primary: #{$text};
+    --sys-text-secondary: #{$text-muted};
+    --sys-border-subtle: #{$border};
+    --state-hover-surface: #{$hover};
+
+    // 🧱 Material 3 Token Overrides (Forced locally)
+    --mat-sys-surface: var(--sys-surface-1);
+    --mat-sys-on-surface: var(--sys-text-primary);
+    --mat-sys-on-surface-variant: var(--sys-text-secondary);
+    --mat-sys-background: var(--sys-surface-0);
+    --mat-sys-on-background: var(--sys-text-primary);
+    --mat-sys-outline-variant: var(--sys-border-subtle);
+
+    // 🧱 MDC Component Overrides
+    --mdc-list-item-label-text-color: var(--sys-text-primary);
+    --mdc-list-item-supporting-text-color: var(--sys-text-secondary);
+    --mdc-list-item-leading-icon-color: var(--sys-text-secondary);
+
+    // 🧱 Sidebar Specifics
+    --sidebar-bg: var(--sys-surface-0);
+    --sidebar-text: var(--sys-text-primary);
+    --sidebar-text-muted: var(--sys-text-secondary);
+    --sidebar-border: var(--sys-border-subtle);
+
+    /* 🚨 FORCE COLORS (Extreme Specificity) */
+    .sidebar,
+    .sidebar-header,
+    .user-info,
+    mat-nav-list,
+    mat-list-item,
+    .name,
+    .role,
+    span,
+    mat-icon:not(.brand-icon) {
+        color: var(--sidebar-text) !important;
+    }
+
+    .sidebar {
+        background-color: var(--sidebar-bg) !important;
+    }
+
+    .sidebar-header {
+        border-bottom-color: var(--sidebar-border) !important;
+    }
+
+    .user-info {
+        background-color: var(--sys-surface-2) !important;
+    }
+}
+
+/* ☀ FORCE LIGHT SIDEBAR (No matter the global theme) */
+body.sidebar-light app-sidebar {
+    @include force-sidebar-theme(#ffffff,
+        /* bg */
+        #1e293b,
+        /* text (slate-800) */
+        #64748b,
+        /* text-muted (slate-500) */
+        rgba(0, 0, 0, 0.05),
+        /* border */
+        #f8f9fa,
+        /* s1 */
+        #f1f3f5,
+        /* s2 */
+        rgba(0, 0, 0, 0.04)
+        /* hover */
+    );
+
+    /* Selection parity */
+    mat-list-item.mat-mdc-list-item-activated {
+        background-color: var(--color-primary-container) !important;
+        color: var(--color-primary) !important;
+
+        mat-icon,
+        span {
+            color: var(--color-primary) !important;
+        }
+    }
+}
+
+/* 🌙 FORCE DARK SIDEBAR (No matter the global theme) */
+body.sidebar-dark app-sidebar {
+    @include force-sidebar-theme(#121212,
+        /* bg */
+        #ffffff,
+        /* text */
+        #cbd5e1,
+        /* text-muted (slate-300) */
+        rgba(255, 255, 255, 0.05),
+        /* border */
+        #1e1e1e,
+        /* s1 */
+        #232323,
+        /* s2 */
+        rgba(255, 255, 255, 0.05)
+        /* hover */
+    );
+
+    /* Selection parity */
+    mat-list-item.mat-mdc-list-item-activated {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+
+        mat-icon,
+        span {
+            color: #ffffff !important;
+        }
+    }
+}
+
+/* ================================ */
+/* CORE STRUCTURE */
+/* ================================ */
+
+.sidebar {
     height: 100%;
-    width: 260px;
-    /* Default expanded width */
     display: flex;
     flex-direction: column;
-    overflow-x: hidden !important;
-    /* Force hide horizontal scrollbar */
-    overflow-y: hidden;
-    transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
-    &.sidebar-dark {
-        background: #111116;
-        /* Deep Dark Background (Not Blue Gradient) */
-        color: white;
-
-        .sidebar-header .logo-text,
-        .sidebar-header mat-icon {
-            color: white;
-        }
-
-        .menu-item {
-            color: white;
-        }
-
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .menu-item .menu-icon,
-        .menu-item .menu-text {
-            color: white;
-        }
-    }
-
-    &.sidebar-light {
-        background: #ffffff;
-        color: #333;
-        border-right: 1px solid #e0e0e0;
-
-        .sidebar-header {
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .sidebar-header .logo-text,
-        .sidebar-header mat-icon {
-            color: #333;
-        }
-
-        // Level 1 Items
-        .menu-item {
-            color: #424242;
-        }
-
-        .menu-item:hover {
-            background-color: #f5f5f5;
-        }
-
-        .menu-item.active {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-
-        .menu-item.active .menu-icon,
-        .menu-item.active .menu-text {
-            color: #1976d2;
-        }
-
-        .menu-item .menu-icon,
-        .menu-item .menu-text {
-            color: #616161;
-        }
-
-        // Level 1 Expansion Panel
-        ::ng-deep .submenu-panel {
-            .mat-expansion-panel-header {
-                &:hover {
-                    background-color: #f5f5f5 !important;
-                }
-
-                .mat-expansion-panel-header-title {
-                    color: #424242;
-                }
-            }
-
-            .menu-icon,
-            .menu-text {
-                color: #616161;
-            }
-
-            .mat-expansion-indicator::after {
-                color: #616161 !important;
-            }
-        }
-
-        // Level 2 Items
-        .submenu-item {
-            color: #616161;
-
-            &:hover {
-                background-color: #f5f5f5;
-            }
-
-            &.active {
-                background-color: #e3f2fd;
-                color: #1976d2;
-            }
-
-            .submenu-text {
-                color: inherit;
-            }
-        }
-
-        // Level 2 Nested Panel
-        ::ng-deep .nested-panel {
-            .mat-expansion-panel-header {
-                &:hover {
-                    background-color: #f5f5f5 !important;
-                }
-            }
-
-            .nested-icon,
-            .nested-text {
-                color: #616161;
-            }
-
-            .mat-expansion-indicator::after {
-                color: #616161 !important;
-            }
-        }
-
-        // Level 3 Items
-        .nested-item {
-            color: #616161;
-
-            &:hover {
-                background-color: #f5f5f5;
-            }
-
-            &.active {
-                background-color: #e3f2fd;
-                color: #1976d2;
-            }
-        }
-
-        // Adjust badge for light mode
-        .badge {
-            color: white;
-            background-color: #764ba2 !important;
-        }
-
-        // Light mode scrollbar overrides
-        .menu-list {
-            scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
-
-            &::-webkit-scrollbar-thumb {
-                background-color: rgba(0, 0, 0, 0.2);
-            }
-
-            &::-webkit-scrollbar-thumb:hover {
-                background-color: rgba(0, 0, 0, 0.4);
-            }
-        }
-    }
-
-    &.collapsed {
-        width: 80px;
-
-        /* Explicit collapsed width */
-        .sidebar-header .logo-text {
-            display: none;
-        }
-    }
-
-    // .hovering style REMOVED: managed by parent layout logic for push effect
+    background-color: var(--sidebar-bg);
+    color: var(--sidebar-text);
+    border-right: 1px solid var(--sidebar-border);
+    transition: background 0.2s ease, color 0.2s ease;
+    overflow: hidden;
 }
 
 .sidebar-header {
-    padding: 20px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    min-height: 80px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--sidebar-border);
+    font-weight: 700;
+    font-size: 1.1rem;
     flex-shrink: 0;
 
-    .logo {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    .logo-text {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: white;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .logo-icon {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-
-        mat-icon {
-            font-size: 32px;
-            width: 32px;
-            height: 32px;
-            color: white;
-        }
+    mat-icon:not(.brand-icon) {
+        color: var(--color-primary);
     }
 }
 
-.menu-list {
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: var(--sys-surface-2);
+    flex-shrink: 0;
+    transition: background-color 0.2s ease;
+
+    mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        color: var(--color-primary);
+    }
+
+    .name {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .role {
+        font-size: 0.75rem;
+    }
+}
+
+mat-nav-list {
+    padding-top: 8px;
     flex: 1;
     overflow-y: auto;
-    overflow-x: hidden;
-    padding: 8px 0; // Reset padding
-    // ... rest of scrollbar styles
-
-    // Force spacing at the end using pseudo-element
-    &::after {
-        content: '';
-        display: block;
-        min-height: 60px; // Explicit space at the bottom
-        width: 100%;
-    }
-
-    // Custom Thin Scrollbar
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 
     &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: transparent;
+        width: 4px;
     }
 
     &::-webkit-scrollbar-thumb {
-        background-color: rgba(255, 255, 255, 0.3);
-        border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(255, 255, 255, 0.5);
+        background: var(--sidebar-border);
+        border-radius: 10px;
     }
 }
 
-// UNIFIED MENU ITEM STYLING - Level 1
-.menu-item {
-    display: flex;
-    align-items: center;
-    height: 44px;
-    margin: 2px 8px;
-    padding: 0 16px;
+mat-list-item {
     border-radius: 8px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    margin: 4px 12px;
+    height: 44px !important;
+    transition: all 0.2s ease;
+    color: var(--sidebar-text-muted);
 
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+    mat-icon {
+        margin-right: 8px;
     }
 
-    &.active {
-        background-color: rgba(255, 255, 255, 0.2);
-    }
+    &.mat-mdc-list-item-activated {
+        background-color: var(--sidebar-item-active-bg) !important;
+        color: var(--sidebar-item-active-text) !important;
 
-    .menu-icon {
-        color: white;
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
-
-    .menu-text {
-        color: white;
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    &.collapsed-item {
-        justify-content: center;
-        width: 50px;
-        margin: 2px auto;
-        padding: 0;
-
-        .menu-icon {
-            margin-right: 0;
-        }
-    }
-}
-
-.badge {
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 600;
-    color: white;
-    margin-left: auto;
-}
-
-// Expansion panels Level 1
-.submenu-panel {
-    background: transparent !important;
-    box-shadow: none !important;
-    margin: 2px 8px !important;
-    border-radius: 8px !important;
-}
-
-::ng-deep .submenu-panel {
-    .mat-expansion-panel-header {
-        height: 44px !important;
-        min-height: 44px !important;
-        padding: 0 16px !important;
-        border-radius: 8px !important;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-        }
-
-        .mat-expansion-panel-header-title {
-            display: flex;
-            align-items: center;
-            margin: 0;
-            padding-right: 28px; // Fix text overlap with indicator
-            overflow: hidden; // Ensure text truncates properly
+        mat-icon,
+        span {
+            color: inherit !important;
         }
     }
 
-    .mat-expansion-panel-body {
-        padding: 0 !important;
-    }
-
-    .mat-expansion-indicator::after {
-        color: white !important;
-    }
-
-    .menu-icon {
-        color: white;
-        font-size: 24px;
-        width: 24px;
-        height: 24px;
-        margin-right: 12px;
-        flex-shrink: 0;
-    }
-
-    .menu-text {
-        color: white;
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-// Submenu items - Level 2
-.submenu-list {
-    padding: 4px 0;
-}
-
-.submenu-item {
-    display: flex;
-    align-items: center;
-    height: 36px;
-    margin: 0 8px;
-    padding: 0 16px 0 52px;
-    border-radius: 4px;
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.08);
-    }
-
-    &.active {
-        background-color: rgba(255, 255, 255, 0.15);
-    }
-
-    .submenu-text {
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-// Nested panel - Level 2 expansion
-.nested-panel {
-    background: transparent !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-}
-
-::ng-deep .nested-panel {
-    .mat-expansion-panel-header {
-        height: 36px !important;
-        min-height: 36px !important;
-        padding: 0 16px 0 52px !important;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .mat-expansion-panel-header-title {
-            display: flex;
-            align-items: center;
-            margin: 0;
-        }
-    }
-
-    .mat-expansion-panel-body {
-        padding: 0 !important;
-    }
-
-    .mat-expansion-indicator::after {
-        color: rgba(255, 255, 255, 0.7) !important;
-    }
-}
-
-.nested-icon {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-    margin-right: 10px;
-}
-
-.nested-text {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-// Level 3 items
-.nested-list {
-    padding: 4px 0;
-}
-
-.nested-item {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    margin: 0 8px;
-    padding: 0 16px 0 80px; // More indentation for level 3
-    border-radius: 4px;
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-
-    &:hover {
-        background-color: rgba(255, 255, 255, 0.06);
-    }
-
-    &.active {
-        background-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .nested-item-text {
-        font-size: 14px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    &:hover:not(.mat-mdc-list-item-activated) {
+        background-color: var(--state-hover-surface);
     }
 }

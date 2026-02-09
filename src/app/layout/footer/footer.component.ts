@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy, computed, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { UiConfigService } from '../../shared/ui/config/ui-config.service';
+import { ThemeService } from '../../core/theme/theme.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,7 +12,7 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
     <footer class="app-footer">
       <div class="footer-content">
         <span class="copyright">
-          &copy; {{ currentYear }} <strong>{{ brandName() }}</strong>. All rights reserved.
+          &copy; {{ currentYear }} Vitalia Health All rights reserved.
         </span>
         
         <div class="footer-links">
@@ -28,15 +28,14 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
     :host {
       display: block;
       width: 100%;
-      margin-top: auto; // Push to bottom if flex container
+      margin-top: auto;
     }
 
     .app-footer {
-      padding: var(--ui-space-md) var(--ui-space-xl);
-      // Light Mode: Neutral gray (darker than body #f4f6f8)
-      background: #e5e5e5; 
-      border-top: 1px solid var(--ui-color-border-subtle);
-      transition: background-color 0.3s ease;
+      padding: 1rem 2rem;
+      background: var(--mat-sys-surface, #ffffff);
+      border-top: 1px solid var(--mat-sys-outline-variant, #e2e8f0);
+      color: var(--mat-sys-outline);
       
       .footer-content {
         max-width: 1600px;
@@ -45,7 +44,7 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: var(--ui-space-md);
+        gap: 1rem;
       }
 
       @media (max-width: 768px) {
@@ -56,52 +55,41 @@ import { UiConfigService } from '../../shared/ui/config/ui-config.service';
       }
     }
 
-    // Explicit Dark Mode Override using :host-context for encapsulation safety
-    :host-context(.theme-dark) .app-footer {
-        background-color: #1e1e1e !important; // VS Code Editor Background (Standard Dark)
-        border-top-color: #2b2b2b !important; // Subtle Border
-        color: #cccccc !important; // Lighter text
-    }
-
     .copyright {
       font-size: 0.875rem;
-      color: var(--ui-color-text-secondary);
       
       strong {
-        color: var(--ui-color-primary);
+        color: var(--mat-sys-primary);
+        font-weight: 600;
       }
     }
 
     .footer-links {
       display: flex;
       align-items: center;
-      gap: var(--ui-space-lg);
+      gap: 1.5rem;
       
       .footer-link {
         font-size: 0.875rem;
-        color: var(--ui-color-text-secondary);
+        color: var(--mat-sys-outline);
         text-decoration: none;
-        transition: color 0.2s;
-        
         &:hover {
-          color: var(--ui-color-primary);
+          color: var(--mat-sys-primary);
         }
       }
 
       .version {
         font-size: 0.75rem;
-        color: var(--ui-color-text-tertiary);
-        margin-left: var(--ui-space-sm);
-        padding: 2px 6px;
-        background: var(--ui-background-default);
+        color: var(--mat-sys-outline);
+        opacity: 0.8;
+        padding: 2px 8px;
+        background: var(--mat-sys-surface-variant);
         border-radius: 4px;
       }
     }
   `]
 })
 export class FooterComponent {
-  private uiConfig = inject(UiConfigService);
-
-  brandName = computed(() => this.uiConfig.brand() === 'school' ? 'Vitalia School' : 'Vitalia Health');
+  private themeService = inject(ThemeService);
   currentYear = new Date().getFullYear();
 }

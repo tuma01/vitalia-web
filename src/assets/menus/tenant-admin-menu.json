@@ -4,7 +4,7 @@
     "menu": [
         {
             "id": "dashboard",
-            "name": "Dashboard",
+            "name": "dashboard",
             "type": "link",
             "icon": "dashboard",
             "route": "/admin/dashboard",
@@ -12,21 +12,21 @@
         },
         {
             "id": "users",
-            "name": "Usuarios",
+            "name": "users",
             "type": "group",
             "icon": "people",
             "visible": true,
             "children": [
                 {
                     "id": "staff",
-                    "name": "Personal",
+                    "name": "staff",
                     "type": "link",
                     "route": "/admin/users/staff",
                     "icon": "badge"
                 },
                 {
                     "id": "patients",
-                    "name": "Pacientes",
+                    "name": "patients",
                     "type": "link",
                     "route": "/admin/users/patients",
                     "icon": "personal_injury"
@@ -35,7 +35,7 @@
         },
         {
             "id": "settings",
-            "name": "Configuración",
+            "name": "settings",
             "type": "link",
             "icon": "settings",
             "route": "/admin/settings",
