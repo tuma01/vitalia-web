@@ -23,6 +23,7 @@ import { Tenant } from '../../../api/models/tenant';
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/theme/theme.service';
 import { switchMap } from 'rxjs';
+import { ROLE_COLORS } from '@core/constants/role-colors';
 
 interface RoleOption {
   value: string;
@@ -67,12 +68,19 @@ export class LoginComponent {
   showPassword = signal<boolean>(false);
 
   // Roles configuration
+  // roles: RoleOption[] = [
+  //   { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: 'var(--color-success)', enabled: true },
+  //   { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: 'var(--color-warning)', enabled: true },
+  //   { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: 'var(--color-primary)', enabled: true },
+  //   { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: 'var(--color-accent)', enabled: true },
+  //   { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: 'var(--color-info)', enabled: true }
+  // ];
   roles: RoleOption[] = [
-    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: 'var(--color-success)', enabled: true },
-    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: 'var(--color-warning)', enabled: true },
-    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: 'var(--color-primary)', enabled: true },
-    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: 'var(--color-accent)', enabled: true },
-    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: 'var(--color-info)', enabled: true }
+    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: ROLE_COLORS.ROLE_ADMIN, enabled: true },
+    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: ROLE_COLORS.ROLE_DOCTOR, enabled: true },
+    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: ROLE_COLORS.ROLE_NURSE, enabled: true },
+    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: ROLE_COLORS.ROLE_EMPLOYEE, enabled: true },
+    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: ROLE_COLORS.ROLE_PATIENT, enabled: true }
   ];
 
   // Form
