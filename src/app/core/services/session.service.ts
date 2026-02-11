@@ -60,10 +60,9 @@ export class SessionService {
 
       this.appContext.setContext('app', tenantInfo);
 
-      // Store tenant info in sessionStorage for context initialization on refresh
-      if (loginData.user.tenantCode) {
-        sessionStorage.setItem('tenant-code', loginData.user.tenantCode);
-      }
+      // Store in storage for context initialization on refresh
+      localStorage.setItem('vitalia-current-user', JSON.stringify(loginData.user));
+      localStorage.setItem('vitalia-tenant-code', loginData.user.tenantCode || '');
 
       console.log('[SessionService] 🔥 Context set to APP for tenant:', tenantInfo.code);
     }
@@ -172,7 +171,7 @@ export class SessionService {
 
   private setUser(user: UserSummary): void {
     try {
-      localStorage.setItem('currentUser', JSON.stringify(user));
+      localStorage.setItem('vitalia-current-user', JSON.stringify(user));
       this.userSubject.next(user);
     } catch (error) {
       console.error('Error saving user to localStorage:', error);
@@ -183,7 +182,8 @@ export class SessionService {
 
   private clearUser(): void {
     try {
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem('vitalia-current-user');
+      localStorage.removeItem('vitalia-tenant-code');
       localStorage.removeItem('tenantTheme');
     } catch (error) {
       console.error('Error clearing user from localStorage:', error);
@@ -194,7 +194,7 @@ export class SessionService {
 
   private getUserFromStorage(): UserSummary | null {
     try {
-      const userString = localStorage.getItem('currentUser');
+      const userString = localStorage.getItem('vitalia-current-user');
       if (!userString) return null;
 
       const user = JSON.parse(userString) as UserSummary;
@@ -217,7 +217,7 @@ export class SessionService {
 
     // Escuchar cambios en localStorage de otras pestañas
     window.addEventListener('storage', (event: StorageEvent) => {
-      if (event.key === 'currentUser') {
+      if (event.key === 'vitalia-current-user') {
         this.handleUserStorageChange(event);
       }
 
