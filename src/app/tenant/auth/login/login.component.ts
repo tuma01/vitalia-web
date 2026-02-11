@@ -22,7 +22,8 @@ import { Tenant } from '../../../api/models/tenant';
 // Core Services
 import { AuthService } from '../../../core/services/auth.service';
 import { ThemeService } from '../../../core/theme/theme.service';
-import { switchMap } from 'rxjs';
+import { AppContextService } from '../../../core/services/app-context.service'; // 🔥 ADDED
+import { switchMap, tap } from 'rxjs';
 import { ROLE_COLORS } from '@core/constants/role-colors';
 
 interface RoleOption {
@@ -60,6 +61,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private themeService = inject(ThemeService);
   private toastService = inject(ToastrService);
+  private appContext = inject(AppContextService); // 🔥 ADDED
 
   // Signals
   selectedRole = signal<string>('');
@@ -94,15 +96,62 @@ export class LoginComponent {
 
   constructor() {
     this.loadTenants();
+    this.setupTenantBrandingListener();
+  }
+
+  /**
+   * 🎨 Dynamically re-brands the login page when a tenant is selected
+   */
+  private setupTenantBrandingListener(): void {
+    const tenantControl = this.loginForm.get('tenantCode');
+    if (!tenantControl) return;
+
+    // 1️⃣ Listen for changes (User selection or patchValue)
+    tenantControl.valueChanges.subscribe(code => {
+      console.log('[Login] 🔄 Tenant selection changed:', code);
+      this.applyTenantBranding(code);
+    });
+
+    // 2️⃣ Apply initial value if already present
+    if (tenantControl.value) {
+      this.applyTenantBranding(tenantControl.value);
+    }
+  }
+
+  private applyTenantBranding(code: string | null): void {
+    if (!code) return;
+
+    const selectedTenant = this.tenants().find(t => t.code === code);
+    if (selectedTenant && selectedTenant.code) {
+      console.log('[Login] 🎨 Applying branding for:', selectedTenant.name);
+      this.appContext.setContext('app', {
+        code: selectedTenant.code,
+        name: selectedTenant.name
+      });
+    }
   }
 
   loadTenants(): void {
     this.tenantApiService.getPublicAllTenants().subscribe({
       next: (tenants) => {
         this.tenants.set(tenants);
-        // Autoselect first tenant if only one
-        if (tenants.length === 1) {
-          this.loginForm.patchValue({ tenantCode: tenants[0].code });
+
+        // 🚀 AUTO-SELECT STRATEGY:
+        // 1. Try to restore last used tenant from localStorage
+        const lastTenantCode = localStorage.getItem('vitalia-tenant-code');
+
+        if (lastTenantCode && tenants.some(t => t.code === lastTenantCode)) {
+          console.log('[Login] 🔄 Restoring last used tenant:', lastTenantCode);
+          this.loginForm.patchValue({ tenantCode: lastTenantCode });
+
+          // 🔥 FORCE BRANDING after patchValue to ensure signals are ready
+          this.applyTenantBranding(lastTenantCode);
+        }
+        // 2. Fallback: Autoselect first tenant if ONLY one available
+        else if (tenants.length === 1 && tenants[0].code) {
+          const firstCode = tenants[0].code;
+          this.loginForm.patchValue({ tenantCode: firstCode });
+          this.applyTenantBranding(firstCode);
         }
       },
       error: (error) => {
