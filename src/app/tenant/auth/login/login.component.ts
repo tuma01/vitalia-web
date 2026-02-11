@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -178,9 +179,19 @@ export class LoginComponent {
 
     this.selectedRole.set(roleValue);
     this.loginForm.patchValue({ role: roleValue });
+
+    // 🚀 DEV UX: Cambiar el email por defecto según el rol seleccionado
+    if (roleValue === 'ROLE_DOCTOR') {
+      this.loginForm.patchValue({ email: 'doctor-dev@test.com' });
+    } else if (roleValue === 'ROLE_ADMIN') {
+      this.loginForm.patchValue({ email: 'admin-dev@test.com' });
+    }
   }
 
   onLogin(): void {
+    // 🛡️ Guard against multiple clicks
+    if (this.isLoading()) return;
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       this.toastService.warning('Por favor verifica los datos del formulario.');
@@ -197,12 +208,43 @@ export class LoginComponent {
       next: () => {
         this.isLoading.set(false);
         console.log('[Login] Login successful, theme will load automatically');
-        this.authService.navigateBasedOnRole();
+        // 🔥 PASS THE SELECTED ROLE to prioritize dashboard
+        this.authService.navigateBasedOnRole(this.selectedRole());
       },
-      error: (error) => {
+      error: (err: HttpErrorResponse) => {
         this.isLoading.set(false);
-        console.error('Login error:', error);
-        this.toastService.error('Credenciales inválidas o error de servidor.');
+        console.error('[Login] Full error response:', err);
+
+        const backendMsg = err.error?.message || err.error?.error || err.message;
+        console.log('[Login] Backend error message detected:', backendMsg);
+
+        switch (err.status) {
+          case 400:
+          case 401:
+          case 403:
+            if (backendMsg === 'ACCOUNT_LOCKED' || (backendMsg && backendMsg.includes('locked'))) {
+              this.toastService.error('Tu cuenta está bloqueada. Contacta a soporte.');
+            } else {
+              // 🛡️ Unificar mensaje para errores de credenciales (backend suele devolver 400 o 401)
+              this.toastService.error('Correo o contraseña incorrectos.');
+            }
+            break;
+
+          case 423:
+            this.toastService.error('Tu cuenta está temporalmente bloqueada.');
+            break;
+
+          case 0:
+            this.toastService.error('No se pudo conectar al servidor. Verifica que el backend esté corriendo y tu conexión a internet.');
+            break;
+
+          case 500:
+            this.toastService.error('Error interno del servidor (500). Inténtalo más tarde.');
+            break;
+
+          default:
+            this.toastService.error(`Error (${err.status}): ${backendMsg || 'Ocurrió un error inesperado.'}`);
+        }
       }
     });
   }

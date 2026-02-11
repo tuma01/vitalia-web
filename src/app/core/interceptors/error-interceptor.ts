@@ -12,6 +12,14 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      // 🛡️ SKIP global side-effects for Authentication requests
+      // This allows LoginComponent to show its own specialized error messages.
+      const isAuthRequest = req.url.includes('/auth/');
+
+      if (isAuthRequest) {
+        return throwError(() => error);
+      }
+
       // Ignore 401 for Mock Users to allow simulation without logout
       const isMockToken = tokenService.accessToken?.startsWith('mock-');
       if (error.status === 401 && isMockToken) {
@@ -22,16 +30,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if ([403, 500].includes(error.status)) {
         router.navigateByUrl(`/${error.status}`, { skipLocationChange: true });
       } else if (error.status === 401) {
-        // Token expired or invalid -> Logout? 
-        // Usually handled by app state, but we could redirect here if needed.
-        // Currently it falls through to toast if not handled? 
-        // Wait, the original code didn't handle 401 explicitely?
-        // If 401 comes, it shows toast. 
-        // If AuthService handles it, fine.
-
         toast.error('Session expired. Please login again.');
         router.navigate(['/auth/login']);
-
       } else if (error.status === 404) {
         // Ignorar 404 (recurso no encontrado), no mostrar Toast.
       } else if (error.status === 400) {

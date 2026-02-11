@@ -1,0 +1,110 @@
+.dashboard-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.dashboard-header {
+    .welcome-section {
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--sys-text-primary);
+            margin: 0;
+        }
+
+        .tenant-badge {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: var(--color-primary-container);
+            color: var(--color-on-primary-container);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+    }
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    border-radius: 16px;
+    border: none;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+
+    mat-card-content {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem !important;
+    }
+
+    .stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        mat-icon {
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+    }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+
+        .stat-title {
+            font-size: 0.875rem;
+            color: var(--sys-text-secondary);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--sys-text-primary);
+        }
+    }
+
+    &.variant-primary .stat-icon {
+        background: rgba(var(--color-primary-rgb), 0.1);
+        color: var(--color-primary);
+    }
+
+    &.variant-success .stat-icon {
+        background: rgba(var(--color-success-rgb), 0.1);
+        color: var(--color-success);
+    }
+
+    &.variant-warning .stat-icon {
+        background: rgba(var(--color-warning-rgb), 0.1);
+        color: var(--color-warning);
+    }
+
+    &.variant-info .stat-icon {
+        background: rgba(var(--color-info-rgb), 0.1);
+        color: var(--color-info);
+    }
+}
+
+.placeholder-content {
+    mat-card {
+        border-radius: 16px;
+        padding: 1rem;
+    }
+}
