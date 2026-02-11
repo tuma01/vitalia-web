@@ -122,8 +122,19 @@ body {
 }
 
 input,
-textarea {
-    caret-color: var(--input-caret);
+textarea,
+.mat-mdc-input-element {
+    caret-color: var(--input-caret) !important;
+}
+
+// 🛡️ Nuclear fallback for Dark Mode caret visibility
+.theme-dark {
+
+    input,
+    textarea,
+    .mat-mdc-input-element {
+        caret-color: #ffffff !important;
+    }
 }
 
 /* ===============================
