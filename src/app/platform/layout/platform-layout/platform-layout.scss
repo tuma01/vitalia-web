@@ -1,0 +1,89 @@
+.platform-sidenav-container {
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    background-color: var(--sys-surface-0);
+
+    --sidebar-width: 270px;
+    --sidebar-transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.side-collapsed {
+        --sidebar-width: 70px;
+    }
+}
+
+.platform-sidenav {
+    width: var(--sidebar-width);
+    background: transparent;
+    transition: width var(--sidebar-transition);
+    overflow: visible !important;
+    z-index: 100 !important;
+    box-shadow: none !important;
+}
+
+
+.platform-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 100vh;
+    background: transparent;
+    // margin-left: var(--sidebar-width) !important;
+    // transition: margin-left var(--sidebar-transition);
+    // overflow: visible;
+
+    @media (max-width: 992px) {
+        margin-left: 0 !important;
+    }
+}
+
+
+.platform-main {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+
+    // Custom scrollbar for dark theme
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(148, 163, 184, 0.3);
+        border-radius: 4px;
+
+        &:hover {
+            background: rgba(148, 163, 184, 0.5);
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 992px) {
+    .platform-main {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .platform-main {
+        padding: 12px;
+    }
+}
+
+// Dark theme overrides for Material components
+::ng-deep {
+    .platform-layout-container {
+        .mat-drawer-container {
+            background: transparent;
+        }
+
+        .mat-drawer-backdrop {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+}

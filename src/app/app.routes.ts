@@ -1,14 +1,36 @@
 import { Routes } from '@angular/router';
-import { MainLayout } from './layout/main-layout/main-layout';
-import { LoginComponent } from './features/auth/login/login.component';
+import { MainLayout } from './tenant/layout/main-layout/main-layout';
+import { PlatformLayout } from './platform/layout/platform-layout/platform-layout';
+import { LoginComponent } from './tenant/auth/login/login.component';
 import { authGuard } from './core/guards/auth.guard';
 import { roleGuard } from './core/guards/role.guard';
 import { RoleRedirectGuard } from './core/guards/role-redirect.guard';
+import { platformGuard } from './core/guards/platform.guard';
 
 export const routes: Routes = [
-    // Public routes
-    { path: 'login', component: LoginComponent, data: { title: 'Login' } },
+    // ============================================
+    // 🟩 TENANT APP
+    // ============================================
+
+    // Tenant Login
+    {
+        path: 'login',
+        component: LoginComponent,
+        data: { title: 'Login - Vitalia' }
+    },
     { path: 'auth/login', redirectTo: 'login', pathMatch: 'full' },
+
+    // ============================================
+    // 🟦 PLATFORM (SuperAdmin)
+    // ============================================
+
+    // Platform Login
+    {
+        path: 'platform/login',
+        loadComponent: () => import('./platform/auth/login/super-admin-login.component')
+            .then(m => m.SuperAdminLoginComponent),
+        data: { title: 'Platform Login - Vitalia' }
+    },
 
     // Protected routes
     {
@@ -32,27 +54,14 @@ export const routes: Routes = [
             {
                 path: 'admin',
                 canActivate: [roleGuard],
-                data: { roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN', 'ROLE_TENANT_ADMIN'] },
+                data: { roles: ['ROLE_TENANT_ADMIN', 'ROLE_ADMIN'] },
                 children: [
                     {
                         path: 'dashboard',
-                        loadComponent: () => import('./features/admin/dashboard/role-dashboard.component').then(m => m.RoleDashboardComponent)
+                        loadComponent: () => import('./tenant/admin/dashboard/role-dashboard.component').then(m => m.RoleDashboardComponent)
                     }
                 ]
             },
-
-            // Doctor - COMMENTED OUT (dashboard deleted)
-            // {
-            //     path: 'doctor',
-            //     canActivate: [roleGuard],
-            //     data: { roles: ['ROLE_DOCTOR'] },
-            //     children: [
-            //         {
-            //             path: 'dashboard',
-            //             loadComponent: () => import('./features/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent)
-            //         }
-            //     ]
-            // },
 
             // Nurse
             {
@@ -62,7 +71,7 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'dashboard',
-                        loadComponent: () => import('./features/nurse/dashboard/nurse-dashboard.component').then(m => m.NurseDashboardComponent)
+                        loadComponent: () => import('./tenant/nurse/dashboard/nurse-dashboard.component').then(m => m.NurseDashboardComponent)
                     }
                 ]
             },
@@ -75,7 +84,7 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'dashboard',
-                        loadComponent: () => import('./features/employee/dashboard/employee-dashboard.component').then(m => m.EmployeeDashboardComponent)
+                        loadComponent: () => import('./tenant/employee/dashboard/employee-dashboard.component').then(m => m.EmployeeDashboardComponent)
                     }
                 ]
             },
@@ -88,13 +97,31 @@ export const routes: Routes = [
                 children: [
                     {
                         path: 'dashboard',
-                        loadComponent: () => import('./features/patient/dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent)
+                        loadComponent: () => import('./tenant/patient/dashboard/patient-dashboard.component').then(m => m.PatientDashboardComponent)
                     }
                 ]
             }
         ]
     },
 
+    // ============================================
+    // 🟦 PLATFORM Routes
+    // ============================================
+    {
+        path: 'platform',
+        component: PlatformLayout,
+        canActivate: [authGuard, platformGuard],
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./tenant/admin/dashboard/role-dashboard.component')
+                    .then(m => m.RoleDashboardComponent),
+                data: { title: 'Platform Dashboard' }
+            }
+        ]
+    },
+
     // Fallback
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' }
 ];
