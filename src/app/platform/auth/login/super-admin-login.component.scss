@@ -13,7 +13,7 @@
 }
 
 .login-card {
-    background: #ffffff;
+    background: var(--sys-surface-0);
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     overflow: hidden;
@@ -22,8 +22,8 @@
 .login-header {
     text-align: center;
     padding: 2.5rem 2rem 1.5rem;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
+    background: var(--sys-surface-0);
+    border-bottom: 1px solid var(--sys-border-subtle);
 }
 
 .logo-section {
@@ -45,14 +45,14 @@
     margin: 0;
     font-size: 1.875rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--sys-text-primary);
     letter-spacing: -0.5px;
 }
 
 .subtitle {
     margin: 0;
     font-size: 0.9375rem;
-    color: #6b7280;
+    color: var(--sys-text-secondary);
     font-weight: 500;
 }
 
@@ -66,7 +66,7 @@
 
 .login-content {
     padding: 2rem;
-    background: #ffffff;
+    background: var(--sys-surface-0);
 }
 
 .full-width {
@@ -95,8 +95,8 @@
 
 .login-footer {
     padding: 1.25rem 2rem;
-    background: #f9fafb;
-    border-top: 1px solid #e5e7eb;
+    background: var(--sys-surface-1);
+    border-top: 1px solid var(--sys-border-subtle);
 }
 
 .footer-text {
@@ -106,7 +106,7 @@
     gap: 0.5rem;
     margin: 0;
     font-size: 0.875rem;
-    color: #6b7280;
+    color: var(--sys-text-secondary);
     font-weight: 500;
 
     mat-icon {
@@ -124,18 +124,18 @@
         // Form fields
         .mat-mdc-form-field {
             .mat-mdc-text-field-wrapper {
-                background-color: #f9fafb;
+                background-color: var(--sys-surface-1);
             }
 
             // Input text color
             .mat-mdc-input-element {
-                color: #1f2937;
+                color: var(--sys-text-primary);
                 caret-color: #667eea;
             }
 
             // Label color
             .mat-mdc-floating-label {
-                color: #6b7280;
+                color: var(--sys-text-secondary);
             }
 
             // Focused label
@@ -145,7 +145,7 @@
 
             // Outline color
             .mat-mdc-notch-piece {
-                border-color: #d1d5db;
+                border-color: var(--sys-border-subtle);
             }
 
             // Focused outline
@@ -156,7 +156,7 @@
 
         // Icons
         .mat-icon {
-            color: #9ca3af;
+            color: var(--sys-text-secondary);
         }
 
         // Checkbox
@@ -168,7 +168,7 @@
             --mdc-checkbox-selected-pressed-icon-color: #667eea;
 
             .mdc-label {
-                color: #374151;
+                color: var(--sys-text-primary);
             }
         }
 
