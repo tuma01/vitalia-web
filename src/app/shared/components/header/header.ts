@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService, Language } from '../../../core/services/language.service';
 import { ThemeService } from '../../../core/theme/theme.service';
 import { SessionService } from '../../../core/services/session.service';
+import { AppContextService } from '../../../core/services/app-context.service'; // 🔥 ADDED
 import { Subscription } from 'rxjs';
 
 // Material Components
@@ -44,6 +45,7 @@ export class Header implements OnDestroy {
   private themeService = inject(ThemeService);
   private translateService = inject(TranslateService);
   private sessionService = inject(SessionService);
+  private appContext = inject(AppContextService); // 🔥 ADDED
   private router = inject(Router);
   private cdr = inject(ChangeDetectorRef);
   private langSubscription?: Subscription;
@@ -81,9 +83,12 @@ export class Header implements OnDestroy {
   }
 
   logout(): void {
-    const isSuperAdmin = this.sessionService.hasRole('ROLE_SUPER_ADMIN');
+    // 🛡️ Use context instead of role for reliable redirection
+    const isPlatform = this.appContext.isPlatform();
+
     this.sessionService.logout();
-    if (isSuperAdmin) {
+
+    if (isPlatform) {
       this.router.navigate(['/platform/login']);
     } else {
       this.router.navigate(['/login']);

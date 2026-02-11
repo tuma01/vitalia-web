@@ -183,7 +183,8 @@ export class SessionService {
   private clearUser(): void {
     try {
       localStorage.removeItem('vitalia-current-user');
-      localStorage.removeItem('vitalia-tenant-code');
+      // 🛡️ DO NOT remove vitalia-tenant-code here.
+      // We keep it as a 'hint' for the login page to remember the last used hospital.
       localStorage.removeItem('tenantTheme');
     } catch (error) {
       console.error('Error clearing user from localStorage:', error);

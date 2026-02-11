@@ -7,6 +7,7 @@ import { MenuService } from '../../../core/services/menu.service';
 import { MenuItem } from '../../../core/models/menu.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { SessionService } from '../../../core/services/session.service';
+import { AppContextService } from '../../../core/services/app-context.service'; // 🔥 ADDED
 import { filter } from 'rxjs/operators';
 
 // Material Components
@@ -43,6 +44,7 @@ export class Sidebar implements OnInit {
   private menuService = inject(MenuService);
   private settingsService = inject(SettingsService);
   private sessionService = inject(SessionService);
+  private appContext = inject(AppContextService); // 🔥 ADDED
   private translate = inject(TranslateService);
   private router = inject(Router);
   private breakpointObserver = inject(BreakpointObserver);
@@ -139,7 +141,8 @@ export class Sidebar implements OnInit {
   }
 
   private getMenuRoleFromUserRole(): string {
-    if (this.sessionService.hasRole('ROLE_SUPER_ADMIN')) return 'super-admin';
+    // 🛡️ Use context for super-admin detection as it's more reliable
+    if (this.appContext.isPlatform()) return 'super-admin';
     if (this.sessionService.hasRole('ROLE_TENANT_ADMIN') || this.sessionService.hasRole('ROLE_ADMIN')) {
       return 'tenant-admin';
     }
