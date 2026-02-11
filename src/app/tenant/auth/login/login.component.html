@@ -96,7 +96,8 @@
                         @if (isLoading()) {
                         <mat-progress-bar mode="indeterminate" class="btn-progress"></mat-progress-bar>
                         } @else {
-                        Iniciar Sesión
+                        <mat-icon>login</mat-icon>
+                        {{ 'common.login' | translate }}
                         }
                     </button>
 

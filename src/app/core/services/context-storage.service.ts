@@ -3,7 +3,7 @@ import { AppContextService, AppContext } from './app-context.service';
 import { combineLatest } from 'rxjs';
 
 /**
- * Context-Scoped Storage Service (V3 - Absolute Tenant Isolation)
+ * Context-Scoped Storage Service (V4 - Absolute Tenant Isolation)
  * 
  * Wraps localStorage to automatically scope keys by application context (platform vs tenant).
  * This ensures that Platform and Tenant settings don't interfere with each other.
@@ -13,13 +13,13 @@ import { combineLatest } from 'rxjs';
  * 
  * Storage key format: `${prefix}_${version}_${key}`
  * Format examples:
- * - 'platform_v3_theme'
- * - 'app_HOSP_A_v3_theme'
- * - 'app_no-tenant_v3_theme' (login page)
+ * - 'platform_v4_theme'
+ * - 'app_HOSP_A_v4_theme'
+ * - 'app_no-tenant_v4_theme' (login page)
  */
 @Injectable({ providedIn: 'root' })
 export class ContextStorageService {
-    private readonly VERSION = 'v3'; // 🔥 BUMP TO V3 to force clear state
+    private readonly VERSION = 'v4'; // 🔥 V4: Absolute Isolation
     private currentPrefix = '__NOCTX__';
 
     constructor(private appContext: AppContextService) {
@@ -42,12 +42,6 @@ export class ContextStorageService {
 
     /**
      * Builds a context-scoped key with versioning
-     * 
-     * @param key - The base key (e.g., 'theme', 'headerColor')
-     * @returns Scoped key (e.g., 'platform_v2_theme', 'app_v2_theme')
-     * 
-     * 🚨 If context is not set yet (during bootstrap), uses '__NOCTX__' prefix
-     * to prevent crashes while still being detectable in DevTools.
      */
     private buildKey(key: string): string {
         return `${this.currentPrefix}_${this.VERSION}_${key}`;
@@ -100,4 +94,3 @@ export class ContextStorageService {
         return this.currentPrefix;
     }
 }
-

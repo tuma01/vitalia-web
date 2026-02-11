@@ -89,13 +89,31 @@ export class AppContextService {
 
     /**
      * Reset context (typically on logout)
+     * 
+     * 🔥 SMART RESET: Instead of setting to null, re-evaluates context from URL
+     * to keep login page themes stable.
      */
     reset(): void {
-        this.currentContext.set(null);
-        this.contextSubject.next(null); // 🔥 Emit reset to subscribers
-        this.tenantInfo.set(null);
-        this.tenantSubject.next(null);
-        console.log('[AppContext] 🔄 Context reset');
+        console.log('[AppContext] 🔄 Resetting context (logout flow)...');
+        this.detectFromUrl();
+    }
+
+    /**
+     * Detects context from the current URL
+     */
+    private detectFromUrl(): void {
+        const url = window.location.pathname;
+        if (url.startsWith('/platform')) {
+            this.setContext('platform');
+            console.log('[AppContext] ✅ Context set to PLATFORM from URL');
+        } else {
+            // Default to app context for tenant login
+            this.currentContext.set('app');
+            this.contextSubject.next('app');
+            this.tenantInfo.set(null);
+            this.tenantSubject.next(null);
+            console.log('[AppContext] ✅ Context set to APP from URL (no tenant)');
+        }
     }
 
     /**
@@ -115,38 +133,21 @@ export class AppContextService {
     /**
      * 🚨 CRITICAL: Initialize context from existing session (for app bootstrap)
      * 
-     * This MUST run in APP_INITIALIZER and MUST return a Promise so Angular waits.
-     * This runs BEFORE any other service that depends on context.
-     * 
      * Bootstrap order:
-     * 1. APP_INITIALIZER #1 → AppContextService.initFromSession() ← YOU ARE HERE
+     * 1. APP_INITIALIZER #1 → AppContextService.initFromSession()
      * 2. APP_INITIALIZER #2 → ThemeService.initTheme()
-     * 3. Angular creates root services
-     * 4. Components render
      */
     initFromSession(): Promise<void> {
         return new Promise(resolve => {
-            console.log('[AppContext] 🚀 Initializing context from session...');
+            console.log('[AppContext] 🚀 Initializing context from session storage...');
 
-            // Try to get user from session storage
-            const userJson = sessionStorage.getItem('current-user');
+            // Try to get user from local storage (unified key)
+            const userJson = localStorage.getItem('vitalia-current-user');
 
             if (!userJson) {
                 // No session - determine context from URL (for login pages)
-                const url = window.location.pathname;
-
-                if (url.startsWith('/platform')) {
-                    this.setContext('platform');
-                    console.log('[AppContext] ✅ Context initialized as PLATFORM from URL (no session)');
-                } else {
-                    // Default to app context for tenant login, but NO tenant yet
-                    // Tenant will be set when user selects from dropdown
-                    this.currentContext.set('app');
-                    this.contextSubject.next('app'); // 🔥 Emit initial value
-                    this.tenantInfo.set(null);
-                    console.log('[AppContext] ✅ Context initialized as APP from URL (no tenant yet)');
-                }
-                resolve(); // ✅ Context is now set
+                this.detectFromUrl();
+                resolve();
                 return;
             }
 
