@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from "rxjs";
+import { signal } from '@angular/core';
 import { TokenService } from "../token/token.service";
 import { AuthService } from "./auth.service";
 import { UserRegisterRequest, UserSummary } from "../../api/models";
@@ -13,6 +14,12 @@ export class SessionService {
   // ✅ Usar UserSummary (lo que devuelve la API)
   private userSubject = new BehaviorSubject<UserSummary | null>(null);
   public readonly user$ = this.userSubject.asObservable();
+  public readonly user = signal<UserSummary | null>(null);
+
+  // 🏆 Persistent Active Role (for dashboard redirection)
+  private activeRoleSubject = new BehaviorSubject<string | null>(null);
+  public readonly activeRole$ = this.activeRoleSubject.asObservable();
+  public readonly activeRole = signal<string | null>(null);
 
   constructor(
     private tokenService: TokenService,
@@ -80,6 +87,7 @@ export class SessionService {
 
     // 🔥 RESET CONTEXT - this triggers contextChanges$ subscribers
     this.appContext.reset();
+    this.setActiveRole(null);
     console.log('[SessionService] 🔥 Context reset on logout');
   }
 
@@ -88,6 +96,23 @@ export class SessionService {
    */
   isAuthenticated(): boolean {
     return this.tokenService.isAccessTokenValid() && !!this.getCurrentUser();
+  }
+
+  /**
+   * Gestiona el rol activo para redirecciones de dashboard
+   */
+  setActiveRole(role: string | null): void {
+    if (role) {
+      localStorage.setItem('vitalia-active-role', role);
+    } else {
+      localStorage.removeItem('vitalia-active-role');
+    }
+    this.activeRoleSubject.next(role);
+    this.activeRole.set(role);
+  }
+
+  getActiveRoleSync(): string | null {
+    return this.activeRoleSubject.getValue();
   }
 
   /**
@@ -157,6 +182,13 @@ export class SessionService {
 
     if (tokenValid && storedUser) {
       this.userSubject.next(storedUser);
+
+      // Restore active role if present
+      const storedRole = localStorage.getItem('vitalia-active-role');
+      if (storedRole) {
+        this.activeRoleSubject.next(storedRole);
+        this.activeRole.set(storedRole);
+      }
     } else if (tokenValid && !storedUser) {
       // Token válido pero no hay usuario -> sesión inconsistente
       console.warn('[SessionService] Valid token but no user found in storage. Clearing session.');
@@ -173,6 +205,7 @@ export class SessionService {
     try {
       localStorage.setItem('vitalia-current-user', JSON.stringify(user));
       this.userSubject.next(user);
+      this.user.set(user);
     } catch (error) {
       console.error('Error saving user to localStorage:', error);
       // En modo incógnito o storage lleno, al menos mantener en memoria
@@ -190,6 +223,7 @@ export class SessionService {
       console.error('Error clearing user from localStorage:', error);
     } finally {
       this.userSubject.next(null);
+      this.user.set(null);
     }
   }
 

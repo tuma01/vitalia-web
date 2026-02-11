@@ -63,6 +63,19 @@ export const routes: Routes = [
                 ]
             },
 
+            // Doctor
+            {
+                path: 'doctor',
+                canActivate: [roleGuard],
+                data: { roles: ['ROLE_DOCTOR'] },
+                children: [
+                    {
+                        path: 'dashboard',
+                        loadComponent: () => import('./tenant/doctor/dashboard/doctor-dashboard.component').then(m => m.DoctorDashboardComponent)
+                    }
+                ]
+            },
+
             // Nurse
             {
                 path: 'nurse',

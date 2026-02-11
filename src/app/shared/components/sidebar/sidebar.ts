@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, Output, EventEmitter, signal, input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, inject, Output, EventEmitter, input, ViewEncapsulation, computed, effect } from '@angular/core';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -7,8 +7,8 @@ import { MenuService } from '../../../core/services/menu.service';
 import { MenuItem } from '../../../core/models/menu.model';
 import { SettingsService } from '../../../core/services/settings.service';
 import { SessionService } from '../../../core/services/session.service';
-import { AppContextService } from '../../../core/services/app-context.service'; // 🔥 ADDED
-import { filter } from 'rxjs/operators';
+import { AppContextService } from '../../../core/services/app-context.service';
+import { filter, map } from 'rxjs/operators';
 
 // Material Components
 import { MatListModule } from '@angular/material/list';
@@ -49,18 +49,35 @@ export class Sidebar implements OnInit {
   private router = inject(Router);
   private breakpointObserver = inject(BreakpointObserver);
 
-  menuItems: SidenavItem[] = [];
   activeItemId = '';
   isCollapsed = input(false);
   isHovering = false;
   isMobile = false;
 
-  // ✅ User info
-  userName = signal<string>('');
-  userRole = signal<string>('');
+  // ✅ Reactive User info (from signals)
+  userName = computed(() => this.sessionService.user()?.personName || 'Usuario');
+
+  // 🏆 The role to display in sidebar (matched with template)
+  userRole = computed(() => {
+    const active = this.sessionService.activeRole();
+    if (active) return active;
+    return this.sessionService.user()?.roles?.[0] || 'Rol';
+  });
+
+  menuItems: SidenavItem[] = [];
 
   @Output() hoverChange = new EventEmitter<boolean>();
   @Output() menuItemClick = new EventEmitter<void>();
+
+  constructor() {
+    // 🔄 Reactively reload menu when role changes
+    effect(() => {
+      const role = this.userRole();
+      if (role) {
+        this.loadMenu();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.breakpointObserver.observe([Breakpoints.Handset])
@@ -68,9 +85,7 @@ export class Sidebar implements OnInit {
         this.isMobile = result.matches;
       });
 
-    this.loadMenu();
     this.trackActiveRoute();
-    this.loadUserInfo(); // ✅ Load user info
   }
 
   onMenuItemClick(): void {
@@ -79,16 +94,7 @@ export class Sidebar implements OnInit {
     }
   }
 
-  /**
-   * ✅ Load user information from SessionService
-   */
-  private loadUserInfo(): void {
-    const user = this.sessionService.getCurrentUser();
-    if (user) {
-      this.userName.set(user.personName || 'Usuario');
-      this.userRole.set(user.roles?.[0] || 'Rol'); // ✅ Use first role from roles array
-    }
-  }
+  // loadUserInfo is no longer needed as we use computed signals
 
   loadMenu(): void {
     const userRole = this.getMenuRoleFromUserRole();
@@ -141,8 +147,21 @@ export class Sidebar implements OnInit {
   }
 
   private getMenuRoleFromUserRole(): string {
-    // 🛡️ Use context for super-admin detection as it's more reliable
+    // 🛡️ Prioritize context for platform detection
     if (this.appContext.isPlatform()) return 'super-admin';
+
+    // 🏆 PRIORITY 1: Respect the active role from session (the one selected at login)
+    const activeRole = this.sessionService.getActiveRoleSync();
+    if (activeRole) {
+      if (activeRole === 'ROLE_SUPER_ADMIN') return 'super-admin';
+      if (activeRole === 'ROLE_ADMIN' || activeRole === 'ROLE_TENANT_ADMIN') return 'tenant-admin';
+      if (activeRole === 'ROLE_DOCTOR') return 'doctor';
+      if (activeRole === 'ROLE_NURSE') return 'nurse';
+      if (activeRole === 'ROLE_EMPLOYEE') return 'employee';
+      if (activeRole === 'ROLE_PATIENT') return 'patient';
+    }
+
+    // 🏆 PRIORITY 2: Discovery fallback (standard priority)
     if (this.sessionService.hasRole('ROLE_TENANT_ADMIN') || this.sessionService.hasRole('ROLE_ADMIN')) {
       return 'tenant-admin';
     }
@@ -150,6 +169,7 @@ export class Sidebar implements OnInit {
     if (this.sessionService.hasRole('ROLE_NURSE')) return 'nurse';
     if (this.sessionService.hasRole('ROLE_EMPLOYEE')) return 'employee';
     if (this.sessionService.hasRole('ROLE_PATIENT')) return 'patient';
+
     return '';
   }
 
