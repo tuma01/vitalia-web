@@ -144,13 +144,10 @@ export class LoginComponent {
 
     this.isLoading.set(true);
 
-    this.authService.login(email, password, tenantCode).pipe(
-      // SwitchMap to load theme immediately after successful login
-      switchMap(() => this.themeService.loadTheme(tenantCode))
-    ).subscribe({
-      next: (theme) => {
+    this.authService.login(email, password, tenantCode).subscribe({
+      next: () => {
         this.isLoading.set(false);
-        console.log('[Login] Theme loaded successfully', theme);
+        console.log('[Login] Login successful, theme will load automatically');
         this.authService.navigateBasedOnRole();
       },
       error: (error) => {

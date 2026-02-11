@@ -1,20 +1,22 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, tap, catchError, of, firstValueFrom } from 'rxjs';
+import { firstValueFrom, skip, merge, debounceTime } from 'rxjs';
 import { ThemeDto } from '../../api/models/theme-dto';
-import { API_ROOT_URL } from '../../api/api-configuration';
+import { AppContextService } from '../services/app-context.service';
+import { ContextStorageService } from '../services/context-storage.service';
+import { SettingsResolver } from './settings-resolver.service';
 
 /**
- * 🎨 Theme Default Fallback
+ * 🎨 Platform Default Theme (Admin/SuperAdmin context)
+ * Professional, neutral colors for administrative interface
  */
-export const VITALIA_DEFAULT_THEME: ThemeDto = {
+export const PLATFORM_DEFAULT_THEME: ThemeDto = {
   id: 0,
-  code: 'DEFAULT',
-  name: 'Vitalia Default',
-  primaryColor: '#3f51b5',
-  secondaryColor: '#455a64',
-  accentColor: '#3949ab', // ✅ Serious Indigo instead of Pink/Purple
+  code: 'PLATFORM_DEFAULT',
+  name: 'Platform Admin Theme',
+  primaryColor: '#1976d2',      // Professional Blue
+  secondaryColor: '#424242',    // Dark Gray
+  accentColor: '#0288d1',       // Light Blue
   backgroundColor: '#ffffff',
   textColor: '#000000',
   themeMode: 'LIGHT',
@@ -23,107 +25,151 @@ export const VITALIA_DEFAULT_THEME: ThemeDto = {
 };
 
 /**
- * 🎨 ThemeService - SIMPLE Multi-Tenant Theming
+ * 🎨 Tenant Default Theme (Medical/Healthcare context)
+ * Calming, healthcare-focused colors
+ */
+export const TENANT_DEFAULT_THEME: ThemeDto = {
+  id: 0,
+  code: 'TENANT_DEFAULT',
+  name: 'Vitalia Medical Theme',
+  primaryColor: '#00897b',      // Medical Teal
+  secondaryColor: '#455a64',    // Blue Gray
+  accentColor: '#26a69a',       // Light Teal
+  backgroundColor: '#ffffff',
+  textColor: '#000000',
+  themeMode: 'LIGHT',
+  active: true,
+  allowCustomCss: false
+};
+
+/**
+ * 🎨 Fallback Theme (when context is unknown)
+ */
+export const VITALIA_DEFAULT_THEME: ThemeDto = TENANT_DEFAULT_THEME; // Default to tenant theme
+
+/**
+ * 🎨 ThemeService - Context-Aware Multi-Tenant Theming
  * 
- * Gestiona theming dinámico por tenant desde backend.
- * Sin capas innecesarias ni sobreingeniería.
+ * Applies themes to the DOM. Theme resolution is handled by SettingsResolver.
  * 
- * Flujo:
- * 1. Login → tenantId
- * 2. loadTheme(tenantId) → backend
- * 3. applyTheme(theme) → DOM
+ * 🔥 CRITICAL: This service reacts to context changes via AppContextService.contextChanges$
+ * 
+ * Bootstrap order:
+ * 1. APP_INITIALIZER #1 → AppContextService.initFromSession() (context ready)
+ * 2. APP_INITIALIZER #2 → ThemeService.initTheme() ← YOU ARE HERE
+ * 3. Angular creates root services
+ * 4. Components render with correct theme
+ * 
+ * Responsibilities:
+ * - Apply theme styles to DOM
+ * - Listen to context changes
+ * - Listen to background theme updates from SettingsResolver
  */
 @Injectable({
   providedIn: 'root'
 })
 export class ThemeService {
-  private readonly STORAGE_KEY = 'vitalia-theme-config';
   private currentTheme: ThemeDto | null = null;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(API_ROOT_URL) private apiRootUrl: string,
-    private http: HttpClient
-  ) { }
+    private appContext: AppContextService,
+    private settingsResolver: SettingsResolver,
+    private storage: ContextStorageService
+  ) {
+    // 🔄 Subscribe to context/tenant changes (skip initial value to avoid double-load)
+    merge(
+      this.appContext.contextChanges$,
+      this.appContext.tenantChanges$
+    ).pipe(
+      skip(2), // Skip both initial subjects emissions
+      debounceTime(50) // Prevent double-load when context and tenant change simultaneously
+    ).subscribe(async () => {
+      console.log('[ThemeService] 🔄 Context or Tenant changed, reloading settings...');
+      this.clearTheme(); // Clear previous context's visual state
+      await this.loadThemeForContext(); // Load new context's theme
+    });
+
+    // 🔄 Subscribe to background theme updates from SettingsResolver
+    this.settingsResolver.themeUpdates$
+      .subscribe(theme => {
+        console.log('[ThemeService] 🔄 Applying updated theme from backend');
+        this.applyTheme(theme);
+      });
+  }
 
   /**
-   * 🚀 Inicialización al arrancar
-   * Prioridad: Backend > LocalStorage > Default
+   * 🚀 Inicialización al arrancar (APP_INITIALIZER #2)
+   * 
+   * 🔥 CRITICAL: Context is already set by APP_INITIALIZER #1 (AppContextService.initFromSession)
+   * 
    * Retorna Promise para APP_INITIALIZER (previene FOUC)
    */
   async initTheme(): Promise<void> {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // 1️⃣ Obtener preferencia de modo guardada (vitalia-layout)
-    const userModePref = localStorage.getItem('vitalia-layout') as 'light' | 'dark' | null;
+    console.log('[ThemeService] 🚀 Initializing theme (context already set)...');
 
-    // 2️⃣ Obtener theme guardado completo (para colores de marca previos)
-    let savedTheme: ThemeDto | null = null;
-    const savedJson = localStorage.getItem(this.STORAGE_KEY);
-    if (savedJson) {
-      try {
-        savedTheme = JSON.parse(savedJson);
-      } catch {
-        savedTheme = null;
-      }
-    }
-
-    // 3️⃣ Cargar theme del backend (tenant default: vitalia)
-    try {
-      // Intentamos cargar el tema del backend para tener colores actualizados
-      const backendTheme = await firstValueFrom(this.loadTheme('vitalia'));
-      console.log('[ThemeService] 🌐 Loaded theme from Backend');
-
-      // Aplicamos jerarquía: Si backend es AUTO o null, usamos userModePref
-      if (backendTheme.themeMode === 'AUTO' || !backendTheme.themeMode) {
-        const finalMode = userModePref ? (userModePref.toUpperCase() as 'LIGHT' | 'DARK') : 'LIGHT';
-        this.applyTheme({ ...backendTheme, themeMode: finalMode });
-      } else {
-        // El backend manda
-        this.applyTheme(backendTheme);
-      }
-    } catch (error) {
-      console.warn('[ThemeService] ⚠️ Backend init failed, using fallback', error);
-      // Fallback a Storage o Default
-      const fallback = savedTheme || VITALIA_DEFAULT_THEME;
-      this.applyTheme(fallback);
-    }
+    // Load theme using resolver
+    await this.loadThemeForContext();
   }
 
   /**
-   * 🔄 Carga theme desde backend con fallback de seguridad
+   * 🔄 Load theme for current context using SettingsResolver
    */
-  loadTheme(tenantId: string): Observable<ThemeDto> {
-    const url = `${this.apiRootUrl}/tenants/${tenantId}/theme`;
-    return this.http.get<ThemeDto>(url).pipe(
-      tap(theme => this.applyTheme(theme)),
-      catchError((error: HttpErrorResponse) => {
-        console.warn(`[ThemeService] ⚠️ Error loading theme for ${tenantId}, using default:`, error.message);
-        this.applyTheme(VITALIA_DEFAULT_THEME);
-        return of(VITALIA_DEFAULT_THEME);
-      })
-    );
+  private async loadThemeForContext(): Promise<void> {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const theme = await firstValueFrom(this.settingsResolver.resolveInitialTheme());
+    this.applyTheme(theme);
+  }
+
+  /**
+   * 🧹 Clear theme (prevents visual flash during context switch)
+   */
+  private clearTheme(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const root = this.document.documentElement;
+    const body = this.document.body;
+
+    // Remove theme mode classes
+    body.classList.remove('theme-light', 'theme-dark');
+
+    // Remove sidebar classes
+    body.classList.remove('sidebar-light', 'sidebar-dark');
+
+    // Remove density classes
+    body.classList.remove('density-compact', 'density-comfortable', 'density-default', 'density-expanded');
+
+    // Clear data attribute
+    root.removeAttribute('data-theme');
+
+    console.log('[ThemeService] 🧹 Theme cleared');
   }
 
   /**
    * 🎨 Aplica theme al DOM usando variables CSS de Material 3
+   * 
+   * Implements "Elegant Merge" pattern:
+   * 1. User preferences (localStorage) override backend theme
+   * 2. Backend theme provides defaults
+   * 3. Hardcoded fallbacks if both are missing
    */
   applyTheme(theme: ThemeDto): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
     this.currentTheme = theme;
 
-    // Persistir
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(theme));
-
     const root = this.document.documentElement;
     const body = this.document.body;
+
     // 🌓 Determinar el modo (Light/Dark) con el "Merge Elegante":
-    // 1️⃣ Preferencia de Usuario en LocalStorage (Dispositivo manda)
+    // 1️⃣ Preferencia de Usuario en ContextStorage (Dispositivo manda, scoped por contexto)
     // 2️⃣ Preferencia del Tenant en Backend
     // 3️⃣ Default (LIGHT)
-    const userPref = localStorage.getItem('vitalia-layout') as 'light' | 'dark' | null;
+    const userPref = this.storage.getItem('layout') as 'light' | 'dark' | null;
     let mode = userPref ? (userPref.toUpperCase() as 'LIGHT' | 'DARK') : theme.themeMode;
 
     // Si sigue siendo AUTO o null, forzamos LIGHT
@@ -133,9 +179,9 @@ export class ThemeService {
 
     const isDark = mode === 'DARK';
 
-    // 🎨 Determinar colores de marca (Prioridad: LocalStorage Overrides > Backend)
-    const userPrimary = localStorage.getItem('vitalia-brand-primary');
-    const userAccent = localStorage.getItem('vitalia-brand-accent');
+    // 🎨 Determinar colores de marca (Prioridad: ContextStorage Overrides > Backend)
+    const userPrimary = this.storage.getItem('brand-primary');
+    const userAccent = this.storage.getItem('brand-accent');
 
     const primary = userPrimary || theme.primaryColor || '#3f51b5';
     const accent = userAccent || theme.accentColor || '#3949ab';

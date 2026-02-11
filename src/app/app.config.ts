@@ -22,6 +22,7 @@ import {
   noopInterceptor
 } from '@core';
 import { ThemeService } from './core/theme/theme.service';
+import { AppContextService } from './core/services/app-context.service';
 
 // Loader para traducciones
 export class WebpackTranslateLoader implements TranslateLoader {
@@ -31,7 +32,12 @@ export class WebpackTranslateLoader implements TranslateLoader {
   }
 }
 
-// Inicializa theme del tenant al startup (SIMPLIFICADO)
+// 🔥 CRITICAL: Initialize context BEFORE theme (APP_INITIALIZER #1)
+export function initializeContext(contextService: AppContextService) {
+  return () => contextService.initFromSession();
+}
+
+// Initialize theme after context is ready (APP_INITIALIZER #2)
 export function initializeTheme(themeService: ThemeService) {
   return () => themeService.initTheme();
 }
@@ -69,6 +75,16 @@ export const appConfig: ApplicationConfig = {
       })
     ),
 
+    // 🔥 CRITICAL: APP_INITIALIZER order matters!
+    // #1 - Context MUST be initialized first
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeContext,
+      deps: [AppContextService],
+      multi: true
+    },
+
+    // #2 - Theme loads AFTER context is ready
     {
       provide: APP_INITIALIZER,
       useFactory: initializeTheme,

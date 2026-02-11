@@ -1,4 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
  * Application context types
@@ -24,10 +25,21 @@ export interface TenantInfo {
  * - HTTP interceptor behavior
  * - Guard logic
  * - Feature availability
+ * - Context-scoped storage
+ * 
+ * 🔥 CRITICAL: This service MUST be initialized via APP_INITIALIZER before any other service
+ * that depends on context (ThemeService, ContextStorageService, etc.)
  */
 @Injectable({ providedIn: 'root' })
 export class AppContextService {
-    // Private signals
+    // 🔄 Reactive context stream (for services to subscribe)
+    private contextSubject = new BehaviorSubject<AppContext | null>(null);
+    public readonly contextChanges$: Observable<AppContext | null> = this.contextSubject.asObservable();
+
+    private tenantSubject = new BehaviorSubject<TenantInfo | null>(null);
+    public readonly tenantChanges$: Observable<TenantInfo | null> = this.tenantSubject.asObservable();
+
+    // 📡 Signals for template usage (reactive UI)
     private currentContext = signal<AppContext | null>(null);
     private tenantInfo = signal<TenantInfo | null>(null);
 
@@ -47,15 +59,19 @@ export class AppContextService {
      */
     setContext(context: AppContext, tenant?: TenantInfo): void {
         this.currentContext.set(context);
+        this.contextSubject.next(context); // 🔥 Emit to subscribers
 
         if (context === 'platform') {
             // Platform context has no tenant
             this.tenantInfo.set(null);
-            console.log('[AppContext] Context set to PLATFORM');
+            this.tenantSubject.next(null);
+            console.log('[AppContext] ✅ Context set to PLATFORM');
         } else {
             // App context requires tenant info
-            this.tenantInfo.set(tenant || null);
-            console.log('[AppContext] Context set to APP', tenant);
+            const t = tenant || null;
+            this.tenantInfo.set(t);
+            this.tenantSubject.next(t);
+            console.log('[AppContext] ✅ Context set to APP', tenant);
         }
     }
 
@@ -76,8 +92,10 @@ export class AppContextService {
      */
     reset(): void {
         this.currentContext.set(null);
+        this.contextSubject.next(null); // 🔥 Emit reset to subscribers
         this.tenantInfo.set(null);
-        console.log('[AppContext] Context reset');
+        this.tenantSubject.next(null);
+        console.log('[AppContext] 🔄 Context reset');
     }
 
     /**
@@ -88,50 +106,77 @@ export class AppContextService {
     }
 
     /**
-     * Initialize context from existing session (for app bootstrap)
-     * This runs BEFORE any other service that depends on context
+     * Get context snapshot (synchronous, for guards/interceptors)
      */
-    initFromSession(): void {
-        // Try to get user from session storage
-        const userJson = sessionStorage.getItem('current-user');
+    getContextSnapshot(): AppContext | null {
+        return this.contextSubject.value;
+    }
 
-        if (!userJson) {
-            // No session - determine context from URL (for login pages)
-            const url = window.location.pathname;
+    /**
+     * 🚨 CRITICAL: Initialize context from existing session (for app bootstrap)
+     * 
+     * This MUST run in APP_INITIALIZER and MUST return a Promise so Angular waits.
+     * This runs BEFORE any other service that depends on context.
+     * 
+     * Bootstrap order:
+     * 1. APP_INITIALIZER #1 → AppContextService.initFromSession() ← YOU ARE HERE
+     * 2. APP_INITIALIZER #2 → ThemeService.initTheme()
+     * 3. Angular creates root services
+     * 4. Components render
+     */
+    initFromSession(): Promise<void> {
+        return new Promise(resolve => {
+            console.log('[AppContext] 🚀 Initializing context from session...');
 
-            if (url.startsWith('/platform')) {
-                this.setContext('platform');
-                console.log('[AppContext] ✅ Context initialized as PLATFORM from URL (no session)');
-            } else {
-                // Default to app context for tenant login, but NO tenant yet
-                // Tenant will be set when user selects from dropdown
-                this.currentContext.set('app');
-                this.tenantInfo.set(null);
-                console.log('[AppContext] ✅ Context initialized as APP from URL (no tenant yet)');
+            // Try to get user from session storage
+            const userJson = sessionStorage.getItem('current-user');
+
+            if (!userJson) {
+                // No session - determine context from URL (for login pages)
+                const url = window.location.pathname;
+
+                if (url.startsWith('/platform')) {
+                    this.setContext('platform');
+                    console.log('[AppContext] ✅ Context initialized as PLATFORM from URL (no session)');
+                } else {
+                    // Default to app context for tenant login, but NO tenant yet
+                    // Tenant will be set when user selects from dropdown
+                    this.currentContext.set('app');
+                    this.contextSubject.next('app'); // 🔥 Emit initial value
+                    this.tenantInfo.set(null);
+                    console.log('[AppContext] ✅ Context initialized as APP from URL (no tenant yet)');
+                }
+                resolve(); // ✅ Context is now set
+                return;
             }
-            return;
-        }
 
-        try {
-            const user = JSON.parse(userJson);
+            try {
+                const user = JSON.parse(userJson);
 
-            // Determine context from user roles
-            if (user.roles?.includes('ROLE_SUPER_ADMIN')) {
-                this.setContext('platform');
-                console.log('[AppContext] ✅ Context initialized as PLATFORM from session');
-            } else {
-                // Get tenant from session
-                const tenantCode = sessionStorage.getItem('tenant-code');
-                const tenantName = sessionStorage.getItem('tenant-name');
+                // Determine context from user roles
+                if (user.roles?.includes('ROLE_SUPER_ADMIN')) {
+                    this.setContext('platform');
+                    console.log('[AppContext] ✅ Context initialized as PLATFORM from session');
+                } else {
+                    // Get tenant from session
+                    const tenantCode = sessionStorage.getItem('tenant-code');
+                    const tenantName = sessionStorage.getItem('tenant-name');
 
-                this.setContext('app', {
-                    code: tenantCode || 'unknown',
-                    name: tenantName || undefined
-                });
-                console.log('[AppContext] ✅ Context initialized as APP from session');
+                    this.setContext('app', {
+                        code: tenantCode || 'unknown',
+                        name: tenantName || undefined
+                    });
+                    console.log('[AppContext] ✅ Context initialized as APP from session');
+                }
+            } catch (error) {
+                console.error('[AppContext] ❌ Failed to parse session user:', error);
+                // Fallback to URL-based detection
+                const url = window.location.pathname;
+                this.setContext(url.startsWith('/platform') ? 'platform' : 'app');
             }
-        } catch (error) {
-            console.error('[AppContext] Failed to parse session user:', error);
-        }
+
+            resolve(); // ✅ Context is now set
+        });
     }
 }
+
