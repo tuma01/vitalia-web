@@ -208,13 +208,39 @@
 }
 
 .login-btn {
-    height: 52px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 12px;
+    height: 52px !important;
+    border-radius: 12px !important;
     margin-top: -0.25rem;
-    letter-spacing: 0.02em;
-    color: var(--sys-text-secondary);
+
+    // 🛡️ Nuclear Alignment & Contrast Fix
+    &::ng-deep {
+        &.mat-mdc-flat-button {
+            --mdc-flat-button-label-text-color: #ffffff !important;
+            --mat-mdc-button-persistent-ripple-color: #ffffff !important;
+            --mat-mdc-button-ripple-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .mdc-button__label {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            color: #ffffff !important; // 💥 Force Pure White
+            line-height: 1 !important;
+            height: 100% !important;
+        }
+
+        .mat-icon {
+            color: #ffffff !important; // 💥 Force Pure White
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 24px !important;
+            height: 24px !important;
+            font-size: 24px !important;
+        }
+    }
 }
 
 .login-button {
