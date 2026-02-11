@@ -270,7 +270,7 @@ export class ThemeService {
     setVar('--input-text', 'var(--sys-text-primary)');
     setVar('--input-label', 'var(--sys-text-secondary)');
     setVar('--input-border-focus', 'var(--color-primary)');
-    setVar('--input-caret', 'var(--color-primary)');
+    setVar('--input-caret', isDark ? '#ffffff' : 'var(--color-primary)');
 
     setVar('--link-color', 'var(--color-link)');
     setVar('--link-hover', 'var(--color-link-hover)');
