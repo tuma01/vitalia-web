@@ -1,11 +1,20 @@
 import { Injectable, inject, signal, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ThemeService } from '../theme/theme.service';
+import { ContextStorageService } from './context-storage.service';
+import { AppContextService } from './app-context.service';
+import { merge, debounceTime, skip } from 'rxjs';
 
 export type LayoutMode = 'light' | 'dark';
 export type SidenavColor = 'light' | 'dark';
 export type Density = 'compact' | 'default' | 'expanded';
 
+/**
+ * SettingsService - Context-Aware UI Settings
+ * 
+ * 🔥 CRITICAL: Uses ContextStorageService for all persistence
+ * Settings are automatically scoped by context (platform vs tenant)
+ */
 @Injectable({
     providedIn: 'root'
 })
@@ -13,32 +22,47 @@ export class SettingsService {
     private themeService = inject(ThemeService);
     private platformId = inject(PLATFORM_ID);
     private document = inject(DOCUMENT);
+    private storage = inject(ContextStorageService); // 🔥 Use context-scoped storage
 
     // Signals para el estado visual de la app
     layoutMode = signal<LayoutMode>('light');
     sidenavColor = signal<SidenavColor>('light');
     density = signal<Density>('default');
-    headerColor = signal<string>('#ffffff'); // ✅ Fixed default or tenant default
+    headerColor = signal<string>('#ffffff');
+
+    private appContext = inject(AppContextService);
 
     constructor() {
         this.loadSettings();
+
+        // 🔄 Subscribe to context/tenant changes to reload settings from the correct storage scope
+        merge(
+            this.appContext.contextChanges$,
+            this.appContext.tenantChanges$
+        ).pipe(
+            skip(2), // Skip initial emissions
+            debounceTime(50)
+        ).subscribe(() => {
+            console.log('[SettingsService] 🔄 Refreshing settings due to context/tenant change');
+            this.loadSettings();
+        });
     }
 
     setHeaderColor(color: string): void {
         this.headerColor.set(color);
-        localStorage.setItem('vitalia-header-color', color);
+        this.storage.setItem('header-color', color); // 🔥 Context-scoped
 
         // Determinar el color de marca (Indigo si el header es blanco/default)
         const brandColor = (color.toLowerCase() === '#ffffff') ? '#3f51b5' : color;
 
         // ✅ Persistir Override de Marca si no es blanco
         if (color.toLowerCase() !== '#ffffff') {
-            localStorage.setItem('vitalia-brand-primary', brandColor);
-            localStorage.setItem('vitalia-brand-accent', brandColor);
+            this.storage.setItem('brand-primary', brandColor); // 🔥 Context-scoped
+            this.storage.setItem('brand-accent', brandColor);  // 🔥 Context-scoped
         } else {
             // Si es blanco, eliminamos overrides para permitir que mande el branding del hospital
-            localStorage.removeItem('vitalia-brand-primary');
-            localStorage.removeItem('vitalia-brand-accent');
+            this.storage.removeItem('brand-primary');
+            this.storage.removeItem('brand-accent');
         }
 
         this.applyHeaderStyles(color);
@@ -88,7 +112,7 @@ export class SettingsService {
 
     setLayoutMode(mode: LayoutMode): void {
         this.layoutMode.set(mode);
-        localStorage.setItem('vitalia-layout', mode);
+        this.storage.setItem('layout', mode); // 🔥 Context-scoped
 
         // ✅ Sincronizar Sidebar Color con el Layout
         this.setSidenavColor(mode);
@@ -109,7 +133,7 @@ export class SettingsService {
 
     setSidenavColor(color: SidenavColor): void {
         this.sidenavColor.set(color);
-        localStorage.setItem('vitalia-sidenav', color);
+        this.storage.setItem('sidenav', color); // 🔥 Context-scoped
 
         if (!isPlatformBrowser(this.platformId)) return;
         const body = this.document.body;
@@ -122,7 +146,7 @@ export class SettingsService {
         if (!isPlatformBrowser(this.platformId)) return;
 
         this.density.set(density);
-        localStorage.setItem('vitalia-density', density);
+        this.storage.setItem('density', density); // 🔥 Context-scoped
 
         // Aplicar clase al body
         const body = this.document.body;
@@ -133,26 +157,29 @@ export class SettingsService {
     private loadSettings(): void {
         if (!isPlatformBrowser(this.platformId)) return;
 
-        const layout = localStorage.getItem('vitalia-layout') as LayoutMode;
-        const sidenav = localStorage.getItem('vitalia-sidenav') as SidenavColor;
-        const density = localStorage.getItem('vitalia-density') as Density;
-        const header = localStorage.getItem('vitalia-header-color');
+        const layout = this.storage.getItem('layout') as LayoutMode; // 🔥 Context-scoped
+        const sidenav = this.storage.getItem('sidenav') as SidenavColor; // 🔥 Context-scoped
+        const density = this.storage.getItem('density') as Density; // 🔥 Context-scoped
+        const header = this.storage.getItem('header-color'); // 🔥 Context-scoped
 
-        if (layout) {
-            this.layoutMode.set(layout);
-        }
+        // 🛡️ RESET TO ABSOLUTE DEFAULTS BEFORE LOADING
+        // This prevents leakage from previous tenant if current tenant has no settings
+        this.layoutMode.set('light');
+        this.sidenavColor.set('light');
+        this.density.set('default');
+        this.headerColor.set('#ffffff');
 
-        if (sidenav) {
-            this.setSidenavColor(sidenav);
-        }
+        // 🛡️ Apply values from storage if they exist
+        if (layout) this.setLayoutMode(layout);
+        if (sidenav) this.setSidenavColor(sidenav);
+        if (density) this.setDensity(density);
 
         if (header) {
-            this.headerColor.set(header);
-            this.applyHeaderStyles(header);
-        }
-
-        if (density) {
-            this.setDensity(density);
+            this.setHeaderColor(header);
+        } else {
+            // Apply default header for current mode (resetting to white/dark)
+            const autoColor = this.layoutMode() === 'dark' ? '#111421' : '#ffffff';
+            this.applyHeaderStyles(autoColor);
         }
     }
 }

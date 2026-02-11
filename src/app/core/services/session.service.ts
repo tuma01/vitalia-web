@@ -4,6 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { TokenService } from "../token/token.service";
 import { AuthService } from "./auth.service";
 import { UserRegisterRequest, UserSummary } from "../../api/models";
+import { AppContextService } from "./app-context.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class SessionService {
 
   constructor(
     private tokenService: TokenService,
+    private appContext: AppContextService, // 🔥 Inject context service
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -27,6 +29,9 @@ export class SessionService {
 
   /**
    * Inicia sesión completa
+   * 
+   * 🔥 CRITICAL: This sets the application context based on user roles
+   * Context must be set BEFORE any service reads from ContextStorageService
    */
   login(loginData: {
     accessToken: string;
@@ -41,14 +46,42 @@ export class SessionService {
 
     // 2. Guardar usuario
     this.setUser(loginData.user);
+
+    // 3. 🔥 SET CONTEXT based on user roles
+    if (loginData.user.roles?.includes('ROLE_SUPER_ADMIN')) {
+      this.appContext.setContext('platform');
+      console.log('[SessionService] 🔥 Context set to PLATFORM for super admin');
+    } else {
+      // Tenant user - set app context with tenant info
+      const tenantInfo = {
+        code: loginData.user.tenantCode || 'unknown',
+        name: loginData.user.tenantCode // Could be enhanced with tenant name from API
+      };
+
+      this.appContext.setContext('app', tenantInfo);
+
+      // Store tenant info in sessionStorage for context initialization on refresh
+      if (loginData.user.tenantCode) {
+        sessionStorage.setItem('tenant-code', loginData.user.tenantCode);
+      }
+
+      console.log('[SessionService] 🔥 Context set to APP for tenant:', tenantInfo.code);
+    }
   }
 
   /**
    * Cierra sesión completamente
+   * 
+   * 🔥 CRITICAL: This resets the application context
+   * Services subscribed to contextChanges$ will react and reset their state
    */
   logout(): void {
     this.tokenService.clearTokens();
     this.clearUser();
+
+    // 🔥 RESET CONTEXT - this triggers contextChanges$ subscribers
+    this.appContext.reset();
+    console.log('[SessionService] 🔥 Context reset on logout');
   }
 
   /**
