@@ -1,0 +1,28 @@
+<mat-sidenav-container class="platform-sidenav-container" autosize
+    [class.side-collapsed]="sidebarCollapsed && !sidebarHovered && !isMobile">
+    <!-- Sidebar -->
+    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" [opened]="sidenavOpened" class="platform-sidenav">
+        <app-sidebar #sidebar [isCollapsed]="sidebarCollapsed && !sidebarHovered && !isMobile"
+            (hoverChange)="onSidebarHover($event)" (menuItemClick)="isMobile ? sidenav.close() : null">
+        </app-sidebar>
+    </mat-sidenav>
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="platform-content">
+        <!-- Header -->
+        <app-header (toggleSidebarFn)="toggleSidebar()" (toggleSettingsFn)="toggleSettings()">
+        </app-header>
+
+        <!-- Page Content -->
+        <main class="platform-main">
+            <router-outlet></router-outlet>
+        </main>
+
+        <!-- Footer -->
+        <app-footer></app-footer>
+
+        <!-- Settings Panel -->
+        <app-settings-panel [isOpen]="settingsPanelOpen">
+        </app-settings-panel>
+    </mat-sidenav-content>
+</mat-sidenav-container>

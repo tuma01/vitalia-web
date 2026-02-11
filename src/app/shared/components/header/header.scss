@@ -1,0 +1,121 @@
+.app-header {
+    height: var(--app-header-height, 64px);
+    display: flex;
+    align-items: center;
+    background: var(--color-primary) !important;
+    color: var(--color-primary-contrast) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25) !important; // Tighter shadow
+    transition: all 0.3s ease;
+    z-index: 1000;
+    position: relative;
+
+    mat-icon {
+        color: inherit !important;
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.header-search {
+    width: var(--app-header-search-width, 280px);
+    margin: 0 12px;
+
+    ::ng-deep {
+        .mat-mdc-text-field-wrapper {
+            height: 40px !important;
+            padding: 0 12px !important;
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-radius: 20px !important;
+        }
+
+        .mat-mdc-form-field-flex {
+            height: 100% !important;
+        }
+
+        .mat-mdc-form-field-infix {
+            padding: 0 !important;
+            min-height: 40px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .mdc-floating-label {
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            left: 32px !important;
+            color: rgba(255, 255, 255, 0.7) !important;
+
+            &.mdc-floating-label--float-above {
+                display: none;
+            }
+        }
+
+        .mat-mdc-form-field-subscript-wrapper {
+            display: none !important;
+        }
+
+        input.mat-mdc-input-element {
+            padding-left: 28px !important;
+            color: #ffffff !important;
+            caret-color: #ffffff !important;
+
+            &::placeholder {
+                color: rgba(255, 255, 255, 0.5) !important;
+            }
+        }
+
+        .mat-mdc-form-field-icon-prefix {
+            position: absolute !important;
+            left: 8px !important;
+            display: flex !important;
+            align-items: center !important;
+            height: 40px !important;
+            color: rgba(255, 255, 255, 0.8) !important;
+
+            .mat-icon {
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        .mdc-notched-outline__leading,
+        .mdc-notched-outline__notch,
+        .mdc-notched-outline__trailing {
+            border: none !important;
+        }
+    }
+}
+
+/* User menu */
+.user-menu-header {
+    padding: 16px;
+    min-width: 180px;
+    background-color: var(--sys-surface-1);
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--sys-text-primary);
+}
+
+.user-role {
+    font-size: 0.8rem;
+    color: var(--sys-text-secondary);
+}
+
+/* ================================ */
+/* BUTTONS & STATES */
+/* ================================ */
+
+button[mat-icon-button] {
+    transition: background-color 0.2s ease;
+    color: inherit; // Use header contrast
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
