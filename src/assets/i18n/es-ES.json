@@ -16,6 +16,8 @@
         "login": "Iniciar Sesión",
         "delete_all": "Eliminar Todo",
         "delete_selected": "Eliminar Seleccionados",
+        "delete_selection": "Eliminar selección",
+        "deselect_all": "Anular selección",
         "select_all": "Seleccionar Todo",
         "ok": "Ok",
         "searchPlaceholder": "Buscar {{entityName}}...",

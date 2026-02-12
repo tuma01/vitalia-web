@@ -1,0 +1,96 @@
+@if (mode === 'list') {
+<mtx-grid #grid [data]="filteredData" [columns]="columns" [loading]="isLoading"
+    [columnResizable]="config.table?.columnResizable ?? false"
+    [multiSelectable]="config.table?.multiSelectable ?? false" [rowSelectable]="config.table?.rowSelectable ?? false"
+    [hideRowSelectionCheckbox]="config.table?.hideRowSelectionCheckbox ?? false"
+    [rowHover]="config.table?.rowHover ?? true" [rowStriped]="config.table?.rowStriped ?? true" [showToolbar]="true"
+    [toolbarTemplate]="toolbarTemplate" [toolbarTitle]="''" [showColumnMenuButton]="true"
+    [columnMenuButtonType]="'icon'" [columnSortable]="config.table?.columnSortable ?? true"
+    [columnMenuButtonIcon]="'view_column'" [columnPinnable]="config.table?.columnPinnable ?? true"
+    [expandable]="config.table?.expandable ?? false" [showPaginator]="config.table?.showPaginator ?? true"
+    [pageSize]="config.table?.pageSize ?? 10" [pageSizeOptions]="config.table?.pageSizeOptions ?? [5, 10, 50, 100]"
+    (rowSelectedChange)="onRowSelectionChange($event)">
+
+    <!-- Cell Templates -->
+    @for (col of columns; track col.field) {
+    @if (cellTemplates[col.field]) {
+    <ng-template [mtxGridCellTemplate]="col.field" let-row let-index="index">
+        <ng-container [ngTemplateOutlet]="cellTemplates[col.field]"
+            [ngTemplateOutletContext]="{ $implicit: row, index: index }">
+        </ng-container>
+    </ng-template>
+    }
+    }
+
+    <!-- Toolbar Template (Reorganized Grouping) -->
+    <ng-template #toolbarTemplate>
+        <div class="toolbar-container">
+            <!-- Left cluster: search -->
+            <div class="toolbar-left">
+                <mat-form-field appearance="outline" class="search-field mb-0" subscriptSizing="dynamic">
+                    <input matInput #searchInput (keyup)="onSearch(searchInput.value)"
+                        [placeholder]="'common.search' | translate">
+                    <mat-icon matPrefix>search</mat-icon>
+                    @if (searchInput.value) {
+                    <button matSuffix mat-icon-button (click)="clearSearch(searchInput)">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    }
+                </mat-form-field>
+            </div>
+
+            <!-- Right cluster: Bulk Actions + Primary Actions -->
+            <div class="toolbar-right">
+                <!-- Delete Selection -->
+                <button mat-icon-button color="warn" [disabled]="selectedRows.length < 2"
+                    (click)="bulkDelete.emit(selectedRows)" matTooltip="{{ 'common.delete_selection' | translate }}"
+                    matTooltipPosition="above">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+                <!-- Deselect All (X) -->
+                <button mat-icon-button [disabled]="selectedRows.length < 2" (click)="clearSelection()"
+                    matTooltip="{{ 'common.deselect_all' | translate }}" matTooltipPosition="above">
+                    <mat-icon>highlight_off</mat-icon>
+                </button>
+
+                <!-- Add (+) -->
+                @if (config.enableAdd !== false) {
+                <button mat-icon-button (click)="create.emit()"
+                    matTooltip="{{ 'common.add' | translate }} {{ config.entityName | translate }}"
+                    matTooltipPosition="above">
+                    <mat-icon>add_circle_outline</mat-icon>
+                </button>
+                }
+
+                <!-- Refresh -->
+                <button mat-icon-button (click)="onRefresh()" matTooltip="{{ 'common.refresh' | translate }}"
+                    matTooltipPosition="above">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</mtx-grid>
+} @else {
+<mat-card class="m-16">
+    <mat-card-header class="m-b-16">
+        <mat-card-title>
+            {{ (mode === 'add' ? 'common.add' : 'common.edit') | translate }} {{ config.entityName | translate }}
+        </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <ng-content select="[form]"></ng-content>
+
+        <div class="d-flex justify-content-end gap-8 m-t-16">
+            <button mat-stroked-button type="button" (click)="cancel.emit()">
+                {{ 'common.cancel' | translate }}
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="save.emit()">
+                {{ 'common.save' | translate }}
+            </button>
+        </div>
+    </mat-card-content>
+</mat-card>
+}
