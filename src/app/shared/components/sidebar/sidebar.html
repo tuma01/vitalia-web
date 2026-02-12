@@ -1,7 +1,7 @@
-<div class="sidebar">
+<div class="sidebar" [class.collapsed]="isCollapsed()">
 
     <div class="sidebar-header">
-        <mat-icon>local_hospital</mat-icon>
+        <mat-icon class="brand-icon">local_hospital</mat-icon>
         @if (!isCollapsed()) {
         <span>{{ 'app.title' | translate }}</span>
         }
@@ -17,18 +17,6 @@
     </div>
     }
 
-    <mat-nav-list>
-        @for (item of menuItems; track item.id) {
-        <a mat-list-item [routerLink]="item.route" routerLinkActive #rla="routerLinkActive" [activated]="rla.isActive">
-
-            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-
-            @if (!isCollapsed()) {
-            <span matListItemTitle>{{ item.label | translate }}</span>
-            }
-
-        </a>
-        }
-    </mat-nav-list>
+    <app-sidemenu [isCollapsed]="isCollapsed()" (menuItemClick)="onMenuItemClick()"></app-sidemenu>
 
 </div>

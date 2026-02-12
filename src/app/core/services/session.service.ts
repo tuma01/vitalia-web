@@ -182,6 +182,7 @@ export class SessionService {
 
     if (tokenValid && storedUser) {
       this.userSubject.next(storedUser);
+      this.user.set(storedUser); // 🔥 Fix: Sync signal on rehydration
 
       // Restore active role if present
       const storedRole = localStorage.getItem('vitalia-active-role');
