@@ -3,22 +3,25 @@ import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 /**
- * Role Guard - Protects routes based on user roles
- * Usage in routes:
- * {
- *   path: 'admin',
- *   canActivate: [roleGuard],
- *   data: { roles: ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'] }
- * }
+ * Role Guard - Protects routes based on user roles (Tenant Domain)
+ * Blocks SUPER_ADMIN from accidentally entering tenant routes.
  */
 export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state) => {
     const authService = inject(AuthService);
     const router = inject(Router);
 
     const user = authService.getCurrentUser();
+    const userRole = authService.currentUserRole();
 
     if (!user) {
         router.navigate(['/login']);
+        return false;
+    }
+
+    // 🚫 SUPER ADMIN NO PUEDE ENTRAR A TENANT (Domain Isolation)
+    if (userRole === 'ROLE_SUPER_ADMIN') {
+        console.warn('[RoleGuard] SuperAdmin attempted to access tenant route. Redirecting to platform.');
+        router.navigate(['/platform/dashboard']);
         return false;
     }
 

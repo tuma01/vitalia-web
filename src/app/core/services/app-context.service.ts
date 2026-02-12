@@ -76,6 +76,20 @@ export class AppContextService {
     }
 
     /**
+     * Helper to set Platform context
+     */
+    setPlatformContext(): void {
+        this.setContext('platform');
+    }
+
+    /**
+     * Helper to set Tenant context
+     */
+    setTenantContext(tenant?: TenantInfo): void {
+        this.setContext('app', tenant);
+    }
+
+    /**
      * Get tenant info, throws if not available
      * Use this when tenant is required for an operation
      */

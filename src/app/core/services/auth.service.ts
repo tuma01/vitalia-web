@@ -293,7 +293,11 @@ export class AuthService {
    */
   private navToDashboard(role: string): void {
     console.log(`[AuthService] Navigating to dashboard for role: ${role}`);
-    if (role === 'ROLE_SUPER_ADMIN' || role === 'ROLE_ADMIN' || role === 'ROLE_TENANT_ADMIN') {
+
+    // 🛡️ REGLA: Redirección por dominio absoluto
+    if (role === 'ROLE_SUPER_ADMIN') {
+      this.router.navigate(['/platform/dashboard']);
+    } else if (role === 'ROLE_ADMIN' || role === 'ROLE_TENANT_ADMIN') {
       this.router.navigate(['/admin/dashboard']);
     } else if (role === 'ROLE_DOCTOR') {
       this.router.navigate(['/doctor/dashboard']);
