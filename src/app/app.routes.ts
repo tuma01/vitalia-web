@@ -9,35 +9,48 @@ import { platformGuard } from './core/guards/platform.guard';
 
 export const routes: Routes = [
     // ============================================
-    // 🟩 TENANT APP
+    // 🔓 PUBLIC ROUTES
     // ============================================
-
-    // Tenant Login
     {
         path: 'login',
         component: LoginComponent,
         data: { title: 'Login - Vitalia' }
     },
-    { path: 'auth/login', redirectTo: 'login', pathMatch: 'full' },
-
-    // ============================================
-    // 🟦 PLATFORM (SuperAdmin)
-    // ============================================
-
-    // Platform Login
     {
         path: 'platform/login',
         loadComponent: () => import('./platform/auth/login/super-admin-login.component')
             .then(m => m.SuperAdminLoginComponent),
         data: { title: 'Platform Login - Vitalia' }
     },
+    { path: 'auth/login', redirectTo: 'login', pathMatch: 'full' },
 
-    // Protected routes
+    // ============================================
+    // 🟦 PLATFORM DOMAIN (SuperAdmin)
+    // ============================================
+    {
+        path: 'platform',
+        component: PlatformLayout,
+        canActivate: [authGuard, platformGuard],
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./tenant/admin/dashboard/role-dashboard.component') // Temporalmente compartiendo componente
+                    .then(m => m.RoleDashboardComponent),
+                data: { title: 'Platform Dashboard' }
+            },
+            { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+        ]
+    },
+
+    // ============================================
+    // 🟩 TENANT DOMAIN (Admin, Doctor, Patient, etc)
+    // ============================================
     {
         path: '',
         component: MainLayout,
         canActivate: [authGuard],
         children: [
+            // Redirection logic for root
             {
                 path: '',
                 pathMatch: 'full',
@@ -50,7 +63,7 @@ export const routes: Routes = [
                 children: []
             },
 
-            // Admin
+            // Admin / Management
             {
                 path: 'admin',
                 canActivate: [roleGuard],
@@ -118,23 +131,8 @@ export const routes: Routes = [
     },
 
     // ============================================
-    // 🟦 PLATFORM Routes
+    // 🛠️ UTILS & FALLBACK
     // ============================================
-    {
-        path: 'platform',
-        component: PlatformLayout,
-        canActivate: [authGuard, platformGuard],
-        children: [
-            {
-                path: 'dashboard',
-                loadComponent: () => import('./tenant/admin/dashboard/role-dashboard.component')
-                    .then(m => m.RoleDashboardComponent),
-                data: { title: 'Platform Dashboard' }
-            }
-        ]
-    },
-
-    // Fallback
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: '**', redirectTo: 'login' }
 ];
