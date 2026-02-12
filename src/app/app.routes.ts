@@ -38,6 +38,10 @@ export const routes: Routes = [
                     .then(m => m.RoleDashboardComponent),
                 data: { title: 'Platform Dashboard' }
             },
+            {
+                path: 'geography/pais',
+                loadChildren: () => import('./platform/pages/geography/pais/pais.routes').then(m => m.routes)
+            },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
         ]
     },

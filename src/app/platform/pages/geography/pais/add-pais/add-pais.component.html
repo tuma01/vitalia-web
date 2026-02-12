@@ -1,0 +1,67 @@
+<app-crud-template [mode]="entityId ? 'edit' : 'add'"
+    [config]="{ entityName: entityNameKey, entityNamePlural: '', getId: config.getId, columns: [], apiService: config.apiService }"
+    (save)="onSubmit()" (cancel)="onCancel()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" form>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.iso' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: CA" formControlName="iso" required minlength="2" maxlength="2">
+                    @if (getControl('iso')?.invalid && (getControl('iso')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('iso') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.iso3' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: CAN" formControlName="iso3" minlength="3" maxlength="3">
+                    @if (getControl('iso3')?.invalid && (getControl('iso3')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('iso3') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.name' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: Canadá" formControlName="name" required>
+                    @if (getControl('name')?.invalid && (getControl('name')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('name') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.niceName' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: Canada" formControlName="niceName" required>
+                    @if (getControl('niceName')?.invalid && (getControl('niceName')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('niceName') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.numCode' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: 124" formControlName="numCode" type="number">
+                    @if (getControl('numCode')?.invalid && (getControl('numCode')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('numCode') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="col-sm-6 col-md-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'country.phoneCode' | translate }}</mat-label>
+                    <input matInput placeholder="Ej: 1" type="number" formControlName="phoneCode" required>
+                    @if (getControl('phoneCode')?.invalid && (getControl('phoneCode')?.touched || submitted)) {
+                    <mat-error>{{ getErrorMessage('phoneCode') }}</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</app-crud-template>

@@ -133,21 +133,21 @@
                             "id": "countries-list",
                             "name": "paises",
                             "type": "link",
-                            "route": "/super-admin/geography/pais/paises",
+                            "route": "/platform/geography/pais/paises",
                             "visible": true
                         },
                         {
                             "id": "countries-add",
                             "name": "addPais",
                             "type": "link",
-                            "route": "/super-admin/geography/pais/add",
+                            "route": "/platform/geography/pais/addPais",
                             "visible": true
                         },
                         {
                             "id": "countries-edit",
                             "name": "editPais",
                             "type": "link",
-                            "route": "/super-admin/geography/pais/edit",
+                            "route": "/platform/geography/pais/editPais",
                             "visible": false
                         }
                     ]
