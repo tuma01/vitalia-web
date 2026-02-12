@@ -1,0 +1,145 @@
+/* 🕊️ Legacy-Style Flat Menu Architecture (Sidemenu Component) */
+.matero-sidemenu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+
+    &.level-0 {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+
+        /* 🎀 Sidebar Slim Scrollbar (FORCED 5px) */
+        &::-webkit-scrollbar {
+            width: 5px !important; // 📏 User requested exactly 5px
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    }
+
+    .menu-item {
+        position: relative;
+        margin: 2px 0;
+        border-radius: 8px;
+        transition: background-color 0.2s ease;
+
+        .level-0>& {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &.active>.menu-heading {
+            background-color: var(--sidebar-item-active-bg);
+            color: var(--sidebar-item-active-text);
+            font-weight: 600;
+        }
+
+        &.expanded>.menu-toggle>.menu-caret {
+            transform: rotate(180deg);
+        }
+    }
+
+    .menu-heading {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 10px 16px;
+        font-size: 0.95rem;
+        color: var(--sidebar-text-muted);
+        text-decoration: none;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+
+        .menu-icon {
+            margin-right: 12px;
+            font-size: 22px;
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+        }
+
+        .menu-caret {
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
+    .collapsed-group-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 48px;
+        color: var(--sidebar-text-muted);
+
+        mat-icon {
+            font-size: 22px;
+        }
+    }
+
+    &.sidemenu-collapsed {
+        .menu-item {
+            margin: 4px 0;
+            border-radius: 0;
+
+            .level-0>& {
+                margin: 4px 0;
+            }
+
+            .menu-heading,
+            .collapsed-group-icon {
+                height: 48px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
+                width: 100%;
+
+                .menu-icon,
+                mat-icon {
+                    margin-right: 0;
+                    font-size: 24px;
+                }
+            }
+        }
+    }
+}
+
+.theme-dark .matero-sidemenu.level-0::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+}
