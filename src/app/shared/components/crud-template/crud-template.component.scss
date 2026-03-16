@@ -443,26 +443,31 @@
 .radio-field-container,
 .checkbox-field-container {
     display: flex;
-    flex-direction: column;
     padding: 8px 12px;
     margin-bottom: 16px;
 }
 
+.radio-field-container {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.checkbox-field-container {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
 .radio-group-label {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--sys-text-secondary);
-    margin-bottom: 8px;
 }
 
 .radio-group {
     display: flex;
     gap: 24px;
     align-items: center;
-}
-
-.checkbox-field-container {
-    justify-content: center;
-    height: 100%;
 }
 
 /* ── Utility: Full Width ── */

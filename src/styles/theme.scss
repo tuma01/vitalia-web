@@ -61,10 +61,3 @@ $base-theme: mat.define-theme((color: (theme-type: light,
 body {
     font-family: var(--app-font-family, 'Roboto', sans-serif);
 }
-
-/* ===============================
-   7️⃣ TRANSICIONES SUAVES
-================================ */
-* {
-    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}

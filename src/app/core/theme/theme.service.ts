@@ -92,11 +92,12 @@ export class ThemeService {
       this.appContext.contextChanges$,
       this.appContext.tenantChanges$
     ).pipe(
-      debounceTime(50) // Prevent double-load when context and tenant change simultaneously
+      debounceTime(50) 
     ).subscribe(async () => {
       console.log('[ThemeService] 🔄 Context or Tenant changed, reloading settings...');
-      this.clearTheme(); // Clear previous context's visual state
-      await this.loadThemeForContext(); // Load new context's theme
+      // 🛡️ REMOVED clearTheme() - Calling clearTheme() here causes the FOUC/Flicker
+      // because it removes classes BEFORE the new theme is resolved and applied.
+      await this.loadThemeForContext(); 
     });
 
     // 🔄 Subscribe to background theme updates from SettingsResolver
@@ -171,16 +172,16 @@ export class ThemeService {
     // 🛡️ Guard: Evitar reaplicación redundante (Rompe bucles circulares con SettingsService)
     const themeSnapshot = JSON.stringify(theme);
     const currentSnapshot = JSON.stringify(this.currentTheme);
-    if (themeSnapshot === currentSnapshot) {
-      // console.log('[ThemeService] ⏭️ Theme already applied, skipping...');
+    
+    const root = this.document.documentElement;
+    const body = this.document.body;
+
+    if (themeSnapshot === currentSnapshot && (body.classList.contains('theme-light') || body.classList.contains('theme-dark'))) {
       return;
     }
 
     console.log('[ThemeService] 🎨 Applying theme:', theme.name);
     this.currentTheme = theme;
-
-    const root = this.document.documentElement;
-    const body = this.document.body;
 
     const userPref = this.storage.getItem('layout') as 'light' | 'dark' | null;
 

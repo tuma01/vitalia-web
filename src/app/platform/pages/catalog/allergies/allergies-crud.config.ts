@@ -48,7 +48,8 @@ export const ALLERGIES_CRUD_CONFIG = (): CrudConfig<Allergy> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -56,7 +57,8 @@ export const ALLERGIES_CRUD_CONFIG = (): CrudConfig<Allergy> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'badge'
                 },
                 {
                     name: 'type',
@@ -64,7 +66,8 @@ export const ALLERGIES_CRUD_CONFIG = (): CrudConfig<Allergy> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 50
+                    maxLength: 50,
+                    icon: 'category'
                 },
                 {
                     name: 'active',

@@ -25,6 +25,8 @@ import { getPaginatedTenants } from '../fn/tenant/get-paginated-tenants';
 import { GetPaginatedTenants$Params } from '../fn/tenant/get-paginated-tenants';
 import { getPublicAllTenants } from '../fn/tenant/get-public-all-tenants';
 import { GetPublicAllTenants$Params } from '../fn/tenant/get-public-all-tenants';
+import { getPublicTenantByCode } from '../fn/tenant/get-public-tenant-by-code';
+import { GetPublicTenantByCode$Params } from '../fn/tenant/get-public-tenant-by-code';
 import { getTenantById } from '../fn/tenant/get-tenant-by-id';
 import { GetTenantById$Params } from '../fn/tenant/get-tenant-by-id';
 import { PageResponseDtoTenant } from '../models/page-response-dto-tenant';
@@ -282,6 +284,31 @@ export class TenantService extends BaseService {
     );
   }
 
+  /** Path part for operation `getPublicTenantByCode()` */
+  static readonly GetPublicTenantByCodePath = '/tenants/by-code/{code}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getPublicTenantByCode()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getPublicTenantByCode$Response(params: GetPublicTenantByCode$Params, context?: HttpContext): Observable<StrictHttpResponse<Tenant>> {
+    return getPublicTenantByCode(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getPublicTenantByCode$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getPublicTenantByCode(params: GetPublicTenantByCode$Params, context?: HttpContext): Observable<Tenant> {
+    return this.getPublicTenantByCode$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Tenant>): Tenant => r.body)
+    );
+  }
+
   /** Path part for operation `getAllTenants()` */
   static readonly GetAllTenantsPath = '/super-admin/tenants/all';
 
@@ -312,32 +339,6 @@ export class TenantService extends BaseService {
   getAllTenants(params?: GetAllTenants$Params, context?: HttpContext): Observable<Array<Tenant>> {
     return this.getAllTenants$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<Tenant>>): Array<Tenant> => r.body)
-    );
-  }
-
-  /**
-   * Obtiene un tenant por su código (público).
-   */
-  getPublicTenantByCode$Response(params: { code: string }, context?: HttpContext): Observable<StrictHttpResponse<Tenant>> {
-    const rb = new (class {
-      url = '';
-      method = 'GET';
-      body = null;
-    })();
-    rb.url = this.rootUrl + '/tenants/by-code/' + params.code;
-    
-    return this.http.request(rb.method, rb.url, {
-      observe: 'response',
-      responseType: 'json',
-      context
-    } as any).pipe(
-      map((r: any) => r as StrictHttpResponse<Tenant>)
-    );
-  }
-
-  getPublicTenantByCode(params: { code: string }, context?: HttpContext): Observable<Tenant> {
-    return this.getPublicTenantByCode$Response(params, context).pipe(
-      map((r: StrictHttpResponse<Tenant>): Tenant => r.body)
     );
   }
 

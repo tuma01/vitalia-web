@@ -59,8 +59,8 @@ export const TENANT_CONFIGS_CRUD_CONFIG = (): CrudConfig<TenantConfig> => {
                 { name: 'allowLocal', label: 'menu.tenant_governance.tenant_config.fields.allowLocal', type: 'checkbox', colSpan: 1 },
                 { name: 'requireEmailVerification', label: 'menu.tenant_governance.tenant_config.fields.requireEmailVerification', type: 'checkbox', colSpan: 1 },
                 { name: 'fallbackHeader', label: 'menu.tenant_governance.tenant_config.fields.fallbackHeader', type: 'text', colSpan: 2, icon: 'badge' },
-                { name: 'passwordPolicyJson', label: 'menu.tenant_governance.tenant_config.fields.passwordPolicyJson', type: 'textarea', colSpan: 2, icon: 'password' },
-                { name: 'extraJson', label: 'menu.tenant_governance.tenant_config.fields.extraJson', type: 'textarea', colSpan: 2, icon: 'settings_ethernet' }
+                { name: 'passwordPolicyJson', label: 'menu.tenant_governance.tenant_config.fields.passwordPolicyJson', type: 'textarea', colSpan: 2 },
+                { name: 'extraJson', label: 'menu.tenant_governance.tenant_config.fields.extraJson', type: 'textarea', colSpan: 2 }
             ]
         },
 

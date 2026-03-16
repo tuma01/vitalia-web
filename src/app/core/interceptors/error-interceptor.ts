@@ -36,7 +36,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       if ([403, 500].includes(error.status)) {
-        router.navigateByUrl(`/${error.status}`, { skipLocationChange: true });
+        // 🛡️ Guard: Only navigate to error pages if we are in APP context
+        // and NOT in Platform (SuperAdmin prefers staying on page with Toast).
+        // Also avoids triggering wildcard redirect to tenant login.
+        const isPlatform = router.url.startsWith('/platform');
+
+        if (isPlatform) {
+          toast.error(`Platform Error (${error.status}): ${error.error?.message || 'Server error'}`);
+        } else {
+          router.navigateByUrl(`/${error.status}`, { skipLocationChange: true });
+        }
       } else if (error.status === 404) {
         // Ignorar 404 (recurso no encontrado), no mostrar Toast.
       } else if (error.status === 400) {

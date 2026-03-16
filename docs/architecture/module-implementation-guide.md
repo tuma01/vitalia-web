@@ -1,10 +1,18 @@
 # Vitalia Web — Module Implementation Guide
 > [!IMPORTANT]
 > **REPOSITORIO DEL BACKEND**: El código del servidor (Spring Boot) se encuentra en:  
-> `F:\PROJECTOS\JAVA\VITALIA\workspace\vitalia-app`
+> `F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform`
 
 > **LEER OBLIGATORIAMENTE antes de implementar cualquier nueva sección.**  
 > Este documento define la arquitectura estándar que TODOS los módulos deben seguir sin excepción.
+
+---
+
+> [!CAUTION]
+> ### 🛡️ GOLDEN PROTOCOL: REGLAS CRÍTICAS DE ESTABILIDAD
+> 1. **ANÁLISIS GLOBAL OBLIGATORIO**: Antes de realizar cualquier cambio (Frontend o Backend), es **OBLIGATORIO** analizar el impacto en todo el sistema. Nunca apliques "parches locales" sin verificar dependencias globales (ej: ¿cómo afecta este filtro de entidad al SuperAdmin?).
+> 2. **REPOSITORIO BACKEND ÚNICO**: El código del servidor (Spring Boot) se encuentra **EXCLUSIVAMENTE** en `F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform`. No usar otros repertorios o copias parciales.
+> 3. **CERO REGRESIONES**: Si una funcionalidad ya era estable (ej: filtrado por Tenant Code), no la modifiques por "optimización" sin un análisis profundo de por qué se implementó así originalmente.
 
 ---
 
@@ -172,8 +180,8 @@ export const {MODULES}_CRUD_CONFIG = (): CrudConfig<{Entity}> => {
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'code', label: 'menu.catalog.{module}.fields.code', type: 'text', required: true, colSpan: 1, maxLength: 20, icon: 'badge' },
-                { name: 'name', label: 'menu.catalog.{module}.fields.name', type: 'text', required: true, colSpan: 1, maxLength: 100, icon: 'label' },
+                { name: 'code', label: 'menu.catalog.{module}.fields.code', type: 'text', required: true, colSpan: 1, maxLength: 20, icon: 'qr_code' },
+                { name: 'name', label: 'menu.catalog.{module}.fields.name', type: 'text', required: true, colSpan: 1, maxLength: 100, icon: 'badge' },
                 { name: 'active', label: 'menu.catalog.{module}.fields.active', type: 'radio', colSpan: 1,
                     options: [
                         { label: 'common.active', value: true },
@@ -572,7 +580,12 @@ Al implementar módulos de gestión para organizaciones (Tenants):
 
 Para mantener una interfaz profesional y moderna:
 
-1.  **Iconos en Inputs**: Es obligatorio añadir iconos a los campos más pertinentes (ej: email, password, nombre, código, teléfono). No es necesario en campos extensos como "Descripción" o "Notas".
-    - Uso: Añadir `icon: 'icon_name'` en la configuración del campo en el `CRUD_CONFIG`.
+1.  **Iconos en Inputs**: Es obligatorio añadir iconos representativos al crear componentes de formulario (páginas *Agregar* / *Editar*). Para mantener uniformidad en el sistema, respeta el siguiente estándar:
+    - `code` (Código): `icon: 'qr_code'`
+    - `name` (Nombre): `icon: 'badge'`
+    - `email` (Correo electrónico): `icon: 'email'`
+    - `phone` (Teléfono): `icon: 'phone'`
+    - Uso general: Añadir la propiedad `icon: 'icon_name'` en la configuración de cada campo del `CRUD_CONFIG`.
+    - **Excepción**: Los componentes de tipo `textarea` (empleados para Descripciones, Configuraciones Extra como JSON, Notas, etc.) **NO deben llevar icono**, ya que no son necesarios visualmente.
 2.  **Agrupación Visual**: Evitar el uso de bordes pesados. El `CrudTemplate` ya gestiona el estilo "Ultra-Clean" sin bordes ni sombras internas.
 3.  **Action Bar**: El sistema de botones Guardar/Cancelar flota automáticamente en la parte inferior. Asegurarse de que el contenido del formulario tenga suficiente padding inferior para no quedar oculto detrás de la barra (gestionado por `.form-page`).

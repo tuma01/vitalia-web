@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI specification - vitalia-app",
-    "description": "This API exposes endpoints to manage vitalia-app",
+    "title": "OpenAPI specification - amachi-platform",
+    "description": "This API exposes endpoints to manage amachi-platform",
     "termsOfService": "https://www.amachi.com/terms",
     "contact": {
       "name": "Juan Amachi",
@@ -89,6 +89,10 @@
     {
       "name": "ICD-10 Diagnosis",
       "description": "REST API para gestionar el catálogo de diagnósticos CIE-10 (MDM)."
+    },
+    {
+      "name": "Employee",
+      "description": "Gestión de personal médico y administrativo (Employees)"
     },
     {
       "name": "Departamento",
@@ -3602,6 +3606,101 @@
         }
       }
     },
+    "/employees/{id}": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Obtener empleado por ID",
+        "operationId": "getEmployeeById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Actualizar empleado existente",
+        "operationId": "updateEmployee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Eliminar empleado (borrado lógico)",
+        "operationId": "deleteEmployee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/departamentos/{id}": {
       "get": {
         "tags": [
@@ -6626,6 +6725,78 @@
         }
       }
     },
+    "/employees": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Obtener empleados paginados con filtros",
+        "operationId": "getPaginatedEmployees",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoEmployee"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Crear nuevo empleado",
+        "operationId": "createEmployee",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/departamentos": {
       "get": {
         "tags": [
@@ -7399,6 +7570,68 @@
         }
       }
     },
+    "/tenants/by-code/{code}": {
+      "get": {
+        "tags": [
+          "Tenant"
+        ],
+        "operationId": "getPublicTenantByCode",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tenantConfigs/current": {
+      "get": {
+        "tags": [
+          "TenantConfig"
+        ],
+        "summary": "Obtener configuración del Tenant actual",
+        "description": "Devuelve la configuración del hospital asociado al usuario autenticado.",
+        "operationId": "getMyTenantConfig",
+        "responses": {
+          "200": {
+            "description": "Configuración encontrada.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantConfig"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Configuración no encontrada para el tenant actual.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tenantConfigs/all": {
       "get": {
         "tags": [
@@ -8077,6 +8310,30 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Allergy"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employees/all": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Obtener todos los empleados",
+        "operationId": "getAllEmployees",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
                   }
                 }
               }
@@ -9573,6 +9830,228 @@
           "type"
         ]
       },
+      "Employee": {
+        "type": "object",
+        "description": "Esquema que contiene la información detallada de un empleado (Médico, Administrativo, etc.)",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id de la Persona",
+            "example": 1
+          },
+          "nationalId": {
+            "type": "string",
+            "description": "Identificador Nacional",
+            "example": "A12345678"
+          },
+          "nationalHealthId": {
+            "type": "string",
+            "description": "Identificador Nacional de Salud",
+            "example": 123456789
+          },
+          "personType": {
+            "type": "string",
+            "description": "Tipo de Persona",
+            "enum": [
+              "DOCTOR",
+              "NURSE",
+              "PATIENT",
+              "EMPLOYEE",
+              "SUPER_ADMIN",
+              "ADMIN",
+              "RECEPTIONIST",
+              "LAB_TECHNICIAN",
+              "PHARMACIST"
+            ],
+            "example": "PATIENT"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre de la Persona",
+            "example": "Eric",
+            "minLength": 1
+          },
+          "segundoNombre": {
+            "type": "string",
+            "description": "Segundo nombre de la Persona",
+            "example": "Juan"
+          },
+          "apellidoPaterno": {
+            "type": "string",
+            "description": "Apellido Paterno de la Persona",
+            "example": "Bouchard",
+            "minLength": 1
+          },
+          "apellidoMaterno": {
+            "type": "string",
+            "description": "Apellido Materno de la Persona",
+            "example": "Larico"
+          },
+          "fechaNacimiento": {
+            "type": "string",
+            "format": "date",
+            "description": "La fecha de nacimiento de la Persona",
+            "example": "24-06-2000"
+          },
+          "estadoCivil": {
+            "type": "string",
+            "enum": [
+              "SOLTERO",
+              "CASADO",
+              "UNION_LIBRE",
+              "SEPARADO",
+              "DIVORCIADO",
+              "VIUDO"
+            ]
+          },
+          "genero": {
+            "type": "string",
+            "enum": [
+              "MASCULINO",
+              "FEMENINO",
+              "OTRO",
+              "DESCONOCIDO"
+            ]
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "description": "Objeto Direcci├│n Completo (Para creaci├│n inline)"
+          },
+          "telefono": {
+            "type": "string",
+            "description": "Telefono de la Persona",
+            "example": 514,
+            "minLength": 1
+          },
+          "celular": {
+            "type": "string",
+            "description": "Celular de la Persona",
+            "example": 514
+          },
+          "personTenantsIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "uniqueItems": true
+          },
+          "documentType": {
+            "type": "string",
+            "description": "Tipo de Documento de Identidad",
+            "enum": [
+              "DNI",
+              "PASSPORT",
+              "FOREIGN_ID",
+              "HEALTH_CARD",
+              "DRIVER_LICENSE",
+              "SOCIAL_SECURITY",
+              "OTHER"
+            ],
+            "example": "DNI, PASAPORTE, etc."
+          },
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico personal",
+            "example": "eric@example.com"
+          },
+          "employeeType": {
+            "type": "string",
+            "description": "Tipo de empleado",
+            "enum": [
+              "ADMINISTRATIVO",
+              "MEDICO",
+              "ENFERMERO",
+              "TECNICO",
+              "LABORATORISTA",
+              "FARMACEUTICO",
+              "OTRO"
+            ],
+            "example": "MEDICO"
+          },
+          "employeeStatus": {
+            "type": "string",
+            "description": "Estado laboral del empleado",
+            "enum": [
+              "ACTIVO",
+              "INACTIVO",
+              "SUSPENDIDO",
+              "LICENCIA",
+              "BAJA"
+            ],
+            "example": "ACTIVO"
+          },
+          "profesion": {
+            "type": "string",
+            "description": "Profesión del empleado",
+            "example": "Médico General",
+            "maxLength": 150,
+            "minLength": 0
+          },
+          "puesto": {
+            "type": "string",
+            "description": "Puesto de trabajo",
+            "example": "Jefe de Servicio",
+            "maxLength": 120,
+            "minLength": 0
+          },
+          "cargo": {
+            "type": "string",
+            "description": "Cargo administrativo",
+            "example": "Director Médico",
+            "maxLength": 120,
+            "minLength": 0
+          },
+          "nroColegioMedico": {
+            "type": "string",
+            "description": "Número de colegiado médico",
+            "example": "CM-12345",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "matriculaProfesional": {
+            "type": "string",
+            "description": "Matrícula profesional",
+            "example": "MP-67890",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "codigoEmpleado": {
+            "type": "string",
+            "description": "Código interno del empleado",
+            "example": "EMP-001",
+            "maxLength": 20,
+            "minLength": 0
+          },
+          "fechaIngreso": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de ingreso al hospital",
+            "example": "2024-01-15"
+          },
+          "fechaSalida": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de salida o cese",
+            "example": "2025-01-15"
+          },
+          "fkIdUser": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del usuario asociado para login",
+            "example": 10
+          }
+        },
+        "required": [
+          "apellidoPaterno",
+          "codigoEmpleado",
+          "employeeStatus",
+          "employeeType",
+          "nombre",
+          "telefono"
+        ]
+      },
       "Departamento": {
         "type": "object",
         "description": "Detalles del Departamento a crear.",
@@ -9813,6 +10292,12 @@
           "personName": {
             "type": "string",
             "description": "Nombre completo derivado de la entidad Person"
+          },
+          "tenantId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del tenant (hospital) actual",
+            "example": 1
           },
           "tenantCode": {
             "type": "string",
@@ -10808,6 +11293,46 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Allergy"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseDtoEmployee": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Employee"
             }
           },
           "totalElements": {

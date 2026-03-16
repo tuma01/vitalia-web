@@ -17,8 +17,12 @@ export const tenantContextInterceptor: HttpInterceptorFn = (req, next) => {
     let tenantCode: string | undefined;
 
     if (appContext.isPlatform()) {
-        tenantCode = 'GLOBAL';
-    } else if (appContext.isApp()) {
+        // Platform context (SuperAdmin) requests do NOT need X-Tenant-Code.
+        // The backend identifies the user role and platform scope via token.
+        return next(req);
+    } 
+
+    if (appContext.isApp()) {
         tenantCode = appContext.tenant()?.code;
     }
 
@@ -28,12 +32,7 @@ export const tenantContextInterceptor: HttpInterceptorFn = (req, next) => {
                 'X-Tenant-Code': tenantCode
             }
         });
-
-        if (appContext.isPlatform()) {
-            console.log('[TenantContextInterceptor] Added X-Tenant-Code: GLOBAL (Platform Context)');
-        } else {
-            console.log('[TenantContextInterceptor] Added X-Tenant-Code header:', tenantCode);
-        }
+        console.log('[TenantContextInterceptor] Added X-Tenant-Code header:', tenantCode);
         return next(clonedReq);
     }
 

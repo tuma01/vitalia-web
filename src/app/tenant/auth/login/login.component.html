@@ -158,7 +158,7 @@
                         <mat-icon>local_hospital</mat-icon>
                     </div>
                     <h2>{{ appContext.tenant()?.name || 'Vitalia' }}</h2>
-                    <p>{{ appContext.tenant() 
+                    <p>{{ appContext.tenant()?.name 
                         ? 'Bienvenido al portal oficial de ' + (appContext.tenant()?.name) + '. Por favor ingresa tus credenciales para continuar.' 
                         : 'Sistema integral de gestión hospitalaria para mejorar la atención médica y optimizar procesos administrativos.' }}</p>
                     <div class="hero-features">

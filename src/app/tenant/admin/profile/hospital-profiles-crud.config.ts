@@ -8,8 +8,8 @@ export const HOSPITAL_PROFILES_CRUD_CONFIG = (): CrudConfig<TenantConfig> => {
     const service = inject(TenantConfigService);
 
     return {
-        entityName: 'menu.tenant_admin.admin.hospital_profile.singular',
-        entityNamePlural: 'menu.tenant_admin.admin.hospital_profile.plural',
+        entityName: 'menu.tenant_admin.admin.profile.singular',
+        entityNamePlural: 'menu.tenant_admin.admin.profile.plural',
 
         getId: (entity: TenantConfig) => entity.id!,
 
@@ -26,13 +26,15 @@ export const HOSPITAL_PROFILES_CRUD_CONFIG = (): CrudConfig<TenantConfig> => {
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'defaultDomain', label: 'menu.tenant_admin.admin.hospital_profile.fields.defaultDomain', type: 'text', required: true, colSpan: 1, icon: 'dns' },
-                { name: 'timezone', label: 'menu.tenant_admin.admin.hospital_profile.fields.timezone', type: 'select', colSpan: 1, options: [], icon: 'access_time' },
-                { name: 'locale', label: 'menu.tenant_admin.admin.hospital_profile.fields.locale', type: 'select', colSpan: 1, options: [], icon: 'translate' },
-                { name: 'requireEmailVerification', label: 'menu.tenant_admin.admin.hospital_profile.fields.requireEmailVerification', type: 'checkbox', colSpan: 1 },
-                { name: 'fallbackHeader', label: 'menu.tenant_admin.admin.hospital_profile.fields.fallbackHeader', type: 'text', colSpan: 2, icon: 'badge' },
-                { name: 'passwordPolicyJson', label: 'menu.tenant_admin.admin.hospital_profile.fields.passwordPolicyJson', type: 'textarea', colSpan: 2, icon: 'password' },
-                { name: 'extraJson', label: 'menu.tenant_admin.admin.hospital_profile.fields.extraJson', type: 'textarea', colSpan: 2, icon: 'settings_ethernet' }
+                { name: 'defaultDomain', label: 'menu.tenant_admin.admin.profile.fields.defaultDomain', type: 'text', required: true, colSpan: 1, icon: 'dns' },
+                { name: 'timezone', label: 'menu.tenant_admin.admin.profile.fields.timezone', type: 'select', colSpan: 1, options: [], icon: 'access_time' },
+                { name: 'locale', label: 'menu.tenant_admin.admin.profile.fields.locale', type: 'select', colSpan: 1, options: [], icon: 'translate' },
+                { name: 'maxUsers', label: 'menu.tenant_admin.admin.profile.fields.maxUsers', type: 'number', colSpan: 1, icon: 'people', disabled: true },
+                { name: 'storageQuotaBytes', label: 'menu.tenant_admin.admin.profile.fields.storageQuotaBytes', type: 'number', colSpan: 1, icon: 'storage', disabled: true },
+                { name: 'requireEmailVerification', label: 'menu.tenant_admin.admin.profile.fields.requireEmailVerification', type: 'checkbox', colSpan: 1 },
+                { name: 'fallbackHeader', label: 'menu.tenant_admin.admin.profile.fields.fallbackHeader', type: 'text', colSpan: 2, icon: 'badge' },
+                { name: 'passwordPolicyJson', label: 'menu.tenant_admin.admin.profile.fields.passwordPolicyJson', type: 'textarea', colSpan: 2, icon: 'password' },
+                { name: 'extraJson', label: 'menu.tenant_admin.admin.profile.fields.extraJson', type: 'textarea', colSpan: 2, icon: 'settings_ethernet' }
             ]
         },
 

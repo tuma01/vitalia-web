@@ -17,6 +17,8 @@ import { deleteTenantConfig } from '../fn/tenant-config/delete-tenant-config';
 import { DeleteTenantConfig$Params } from '../fn/tenant-config/delete-tenant-config';
 import { getAllTenantConfigs } from '../fn/tenant-config/get-all-tenant-configs';
 import { GetAllTenantConfigs$Params } from '../fn/tenant-config/get-all-tenant-configs';
+import { getMyTenantConfig } from '../fn/tenant-config/get-my-tenant-config';
+import { GetMyTenantConfig$Params } from '../fn/tenant-config/get-my-tenant-config';
 import { getPaginatedTenantConfigs } from '../fn/tenant-config/get-paginated-tenant-configs';
 import { GetPaginatedTenantConfigs$Params } from '../fn/tenant-config/get-paginated-tenant-configs';
 import { getTenantConfigById } from '../fn/tenant-config/get-tenant-config-by-id';
@@ -201,6 +203,39 @@ export class TenantConfigService extends BaseService {
     );
   }
 
+  /** Path part for operation `getMyTenantConfig()` */
+  static readonly GetMyTenantConfigPath = '/tenantConfigs/current';
+
+  /**
+   * Obtener configuración del Tenant actual.
+   *
+   * Devuelve la configuración del hospital asociado al usuario autenticado.
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getMyTenantConfig()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getMyTenantConfig$Response(params?: GetMyTenantConfig$Params, context?: HttpContext): Observable<StrictHttpResponse<TenantConfig>> {
+    return getMyTenantConfig(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Obtener configuración del Tenant actual.
+   *
+   * Devuelve la configuración del hospital asociado al usuario autenticado.
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getMyTenantConfig$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getMyTenantConfig(params?: GetMyTenantConfig$Params, context?: HttpContext): Observable<TenantConfig> {
+    return this.getMyTenantConfig$Response(params, context).pipe(
+      map((r: StrictHttpResponse<TenantConfig>): TenantConfig => r.body)
+    );
+  }
+
   /** Path part for operation `getAllTenantConfigs()` */
   static readonly GetAllTenantConfigsPath = '/tenantConfigs/all';
 
@@ -231,32 +266,6 @@ export class TenantConfigService extends BaseService {
   getAllTenantConfigs(params?: GetAllTenantConfigs$Params, context?: HttpContext): Observable<Array<TenantConfig>> {
     return this.getAllTenantConfigs$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<TenantConfig>>): Array<TenantConfig> => r.body)
-    );
-  }
-
-  /**
-   * Obtiene la configuración del tenant actual (de contexto).
-   */
-  getMyTenantConfig$Response(params?: {}, context?: HttpContext): Observable<StrictHttpResponse<TenantConfig>> {
-    const rb = new (class {
-      url = '';
-      method = 'GET';
-      body = null;
-    })();
-    rb.url = this.rootUrl + '/tenantConfigs/current';
-    
-    return this.http.request(rb.method, rb.url, {
-      observe: 'response',
-      responseType: 'json',
-      context
-    } as any).pipe(
-      map((r: any) => r as StrictHttpResponse<TenantConfig>)
-    );
-  }
-
-  getMyTenantConfig(params?: {}, context?: HttpContext): Observable<TenantConfig> {
-    return this.getMyTenantConfig$Response(params, context).pipe(
-      map((r: StrictHttpResponse<TenantConfig>): TenantConfig => r.body)
     );
   }
 

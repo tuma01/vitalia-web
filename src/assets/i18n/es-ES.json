@@ -67,6 +67,7 @@
         "field_max_length": "Máximo {{max}} caracteres",
         "delete_success": "Registro eliminado correctamente",
         "delete_error": "Error al eliminar. Inténtalo de nuevo",
+        "active": "Activo",
         "inactive": "Inactivo",
         "show": "Mostrar",
         "hide": "Ocultar",
@@ -384,7 +385,14 @@
                     "change_password": "Cambiar contraseña",
                     "password_hint": "Campo protegido. Use el checkbox para habilitar el cambio.",
                     "password_placeholder_edit": "Nueva contraseña",
-                    "adminLevel": "Nivel de Admin"
+                    "adminLevel": "Nivel de Admin",
+                    "level1": "Nivel 1 (Básico)",
+                    "level2": "Nivel 2 (Intermedio)",
+                    "level3": "Nivel 3 (Total)",
+                    "level1_short": "Nivel 1",
+                    "level2_short": "Nivel 2",
+                    "level3_short": "Nivel 3",
+                    "orgAdmin": "Administrador de Organización"
                 }
             },
             "tenant_config": {
@@ -748,7 +756,7 @@
             },
             "admin": {
                 "title": "Administración",
-                "hospital_profile": {
+                "profile": {
                     "title": "Perfil Hospital",
                     "singular": "Perfil de Hospital",
                     "plural": "Perfiles de Hospital",
@@ -760,7 +768,9 @@
                         "requireEmailVerification": "Verificar Email",
                         "fallbackHeader": "Header Alternativo",
                         "passwordPolicyJson": "Política de Password (JSON)",
-                        "extraJson": "Configuración Extra (JSON)"
+                        "extraJson": "Configuración Extra (JSON)",
+                        "maxUsers": "Usuarios Máximos (Plan)",
+                        "storageQuotaBytes": "Cuota de Almacenamiento (Plan)"
                     }
                 },
                 "users": "Usuarios",

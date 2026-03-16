@@ -18,6 +18,7 @@
         <!-- Row 1: País | Departamento -->
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.country' | translate }}</mat-label>
+            <mat-icon matPrefix>public</mat-icon>
             <mat-select formControlName="countryId" (selectionChange)="onCountryUserChange($event.value)">
                 @for (country of countries; track country.id) {
                 <mat-option [value]="country.id">{{ country.niceName }}</mat-option>
@@ -27,6 +28,7 @@
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.departamento' | translate }}</mat-label>
+            <mat-icon matPrefix>map</mat-icon>
             <mat-select formControlName="departamentoId" (selectionChange)="onDepartamentoUserChange($event.value)">
                 @if (filteredDepartamentos.length === 0) {
                 <mat-option [value]="null" disabled>{{ 'no_departments_found' | translate }}</mat-option>
@@ -43,6 +45,7 @@
         <!-- Row 2: Provincia | Municipio -->
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.provincia' | translate }}</mat-label>
+            <mat-icon matPrefix>explore</mat-icon>
             <mat-select formControlName="provinciaId" (selectionChange)="onProvinciaUserChange($event.value)">
                 @if (filteredProvincias.length === 0) {
                 <mat-option [value]="null" disabled>{{ 'no_provinces_found' | translate }}</mat-option>
@@ -58,6 +61,7 @@
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.municipio' | translate }}</mat-label>
+            <mat-icon matPrefix>location_city</mat-icon>
             <mat-select formControlName="municipioId">
                 @if (filteredMunicipios.length === 0) {
                 <mat-option [value]="null" disabled>{{ 'no_municipalities_found' | translate }}</mat-option>
@@ -74,9 +78,9 @@
         <!-- Row 3: Dirección (full width) -->
         <mat-form-field appearance="outline" class="w-100 col-span-2">
             <mat-label>{{ 'address.direccion' | translate }}</mat-label>
+            <mat-icon matPrefix>home</mat-icon>
             <input matInput type="text" formControlName="direccion"
                 [placeholder]="'address.direccion_placeholder' | translate">
-            <mat-icon matSuffix>home</mat-icon>
             @if (addressForm.get('direccion')?.invalid && addressForm.get('direccion')?.touched) {
             <mat-error>{{ 'address.direccion_required' | translate }}</mat-error>
             }
@@ -85,21 +89,25 @@
         <!-- Row 4: Ciudad | Número | Piso | Casilla Postal -->
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.ciudad' | translate }}</mat-label>
+            <mat-icon matPrefix>location_city</mat-icon>
             <input matInput type="text" formControlName="ciudad">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.numero' | translate }}</mat-label>
+            <mat-icon matPrefix>tag</mat-icon>
             <input matInput type="text" formControlName="numero">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.piso' | translate }}</mat-label>
+            <mat-icon matPrefix>layers</mat-icon>
             <input matInput type="number" formControlName="piso">
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="w-100">
             <mat-label>{{ 'address.casillaPostal' | translate }}</mat-label>
+            <mat-icon matPrefix>markunread_mailbox</mat-icon>
             <input matInput type="text" formControlName="casillaPostal">
         </mat-form-field>
 

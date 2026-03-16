@@ -48,7 +48,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'genericName',
@@ -56,7 +57,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'medication'
                 },
                 {
                     name: 'commercialName',
@@ -64,7 +66,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'local_pharmacy'
                 },
                 {
                     name: 'concentration',
@@ -72,7 +75,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'science'
                 },
                 {
                     name: 'pharmaceuticalForm',
@@ -80,7 +84,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'category'
                 },
                 {
                     name: 'presentation',
@@ -88,7 +93,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'inventory_2'
                 },
                 {
                     name: 'active',

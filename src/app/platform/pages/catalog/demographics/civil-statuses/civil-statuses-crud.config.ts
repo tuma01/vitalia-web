@@ -47,7 +47,8 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -55,7 +56,8 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'badge'
                 },
                 {
                     name: 'active',

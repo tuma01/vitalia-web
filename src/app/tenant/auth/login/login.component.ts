@@ -107,8 +107,7 @@ export class LoginComponent {
   private checkInitialTenant(): void {
     const detectedTenant = this.appContext.tenant();
     if (detectedTenant?.code) {
-      console.log('[Login] 🌐 Detected tenant from URL:', detectedTenant.code);
-      // We don't patch form yet, loadTenants will handle the full strategy
+      console.log('[Login] 🌐 Initial tenant ready from URL detection');
     }
   }
 
@@ -129,6 +128,13 @@ export class LoginComponent {
   private applyTenantBranding(code: string | null): void {
     if (!code) return;
 
+    // 🛡️ Guard: Do NOT hijack context if we are in PLATFORM mode already
+    // (e.g. SuperAdmin navigating but hitting a redirect loop)
+    if (this.appContext.isPlatform()) {
+      console.log('[Login] 🛡️ Ignoring tenant branding - currently in PLATFORM context');
+      return;
+    }
+
     // 🛡️ Guard: Avoid redundant context updates if already set
     const currentContext = this.appContext.tenant();
     if (currentContext?.code === code && currentContext?.name) {
@@ -138,6 +144,13 @@ export class LoginComponent {
     const selectedTenant = this.tenants().find(t => t.code === code);
     if (selectedTenant && selectedTenant.code) {
       console.log('[Login] 🎨 Applying branding for:', selectedTenant.name);
+      
+      // Save code and name synchronously so next load has no flicker
+      localStorage.setItem('vitalia-tenant-code', selectedTenant.code);
+      if (selectedTenant.name) {
+        localStorage.setItem('vitalia-tenant-name', selectedTenant.name);
+      }
+
       this.appContext.setContext('app', {
         code: selectedTenant.code,
         name: selectedTenant.name
@@ -166,7 +179,7 @@ export class LoginComponent {
         const lastTenantCode = localStorage.getItem('vitalia-tenant-code');
 
         if (lastTenantCode && publicTenants.some(t => t.code === lastTenantCode)) {
-          console.log('[Login] 🔄 Restoring last used tenant:', lastTenantCode);
+          console.log('[Login] 🔄 Restoring last used tenant from API match:', lastTenantCode);
           this.loginForm.get('tenantCode')?.patchValue(lastTenantCode, { emitEvent: false });
           this.applyTenantBranding(lastTenantCode);
         }

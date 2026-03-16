@@ -38,7 +38,7 @@ import { getTimezones, getAppLocales } from '@shared/utils/i18n-utils';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HospitalProfilesEditComponent extends CrudBaseAddEditComponent<TenantConfig> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_admin.admin.hospital_profile.singular';
+    protected override entityNameKey = 'menu.tenant_admin.admin.profile.singular';
     public readonly config = HOSPITAL_PROFILES_CRUD_CONFIG();
     private appContext = inject(AppContextService);
     private tenantConfigService = inject(TenantConfigService);

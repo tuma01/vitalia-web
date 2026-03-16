@@ -48,7 +48,8 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -56,7 +57,8 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'badge'
                 },
                 {
                     name: 'targetProfession',
@@ -64,6 +66,7 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                     type: 'select',
                     required: true,
                     colSpan: 1,
+                    icon: 'group',
                     options: [
                         { label: 'menu.catalog.specialty.fields.targetProfession_options.doctor', value: 'DOCTOR' },
                         { label: 'menu.catalog.specialty.fields.targetProfession_options.nurse', value: 'NURSE' },

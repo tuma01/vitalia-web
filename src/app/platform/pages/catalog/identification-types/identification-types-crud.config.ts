@@ -47,25 +47,27 @@ export const IDENTIFICATION_TYPES_CRUD_CONFIG = (): CrudConfig<IdentificationTyp
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
-                },
-                {
-                    name: 'active',
-                    label: 'menu.catalog.identification_type.fields.active',
-                    type: 'radio',
-                    colSpan: 1,
-                    options: [
-                        { label: 'common.active', value: true },
-                        { label: 'common.inactive', value: false }
-                    ]
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
                     label: 'menu.catalog.identification_type.fields.name',
                     type: 'text',
                     required: true,
+                    colSpan: 1,
+                    maxLength: 100,
+                    icon: 'badge'
+                },
+                {
+                    name: 'active',
+                    label: 'menu.catalog.identification_type.fields.active',
+                    type: 'radio',
                     colSpan: 2,
-                    maxLength: 100
+                    options: [
+                        { label: 'common.active', value: true },
+                        { label: 'common.inactive', value: false }
+                    ]
                 }
             ]
         },

@@ -47,7 +47,8 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'active',

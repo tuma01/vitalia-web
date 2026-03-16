@@ -47,7 +47,8 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -55,7 +56,8 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'badge'
                 },
                 {
                     name: 'active',

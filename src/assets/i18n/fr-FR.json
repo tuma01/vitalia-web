@@ -67,6 +67,7 @@
         "field_max_length": "Maximum {{max}} caractères",
         "delete_success": "Enregistrement supprimé avec succès",
         "delete_error": "Erreur lors de la suppression. Veuillez réessayer",
+        "active": "Actif",
         "inactive": "Inactif",
         "show": "Afficher",
         "hide": "Masquer",
@@ -384,7 +385,14 @@
                     "change_password": "Modifier le mot de passe",
                     "password_hint": "Champ protégé. Utilisez la case à cocher pour activer.",
                     "password_placeholder_edit": "Nouveau mot de passe",
-                    "adminLevel": "Niveau Admin"
+                    "adminLevel": "Niveau Admin",
+                    "level1": "Niveau 1 (Basique)",
+                    "level2": "Niveau 2 (Intermédiaire)",
+                    "level3": "Niveau 3 (Total)",
+                    "level1_short": "Niveau 1",
+                    "level2_short": "Niveau 2",
+                    "level3_short": "Niveau 3",
+                    "orgAdmin": "Administrateur d'Organisation"
                 }
             },
             "tenant_config": {
@@ -748,7 +756,7 @@
             },
             "admin": {
                 "title": "Administration",
-                "hospital_profile": {
+                "profile": {
                     "title": "Profil de l'Hôpital",
                     "singular": "Profil de l'Hôpital",
                     "plural": "Profils de l'Hôpital",
@@ -760,7 +768,9 @@
                         "requireEmailVerification": "Vérifier l'E-mail",
                         "fallbackHeader": "En-tête de Secours",
                         "passwordPolicyJson": "Politique de Mot de Passe (JSON)",
-                        "extraJson": "Config. Supplémentaire (JSON)"
+                        "extraJson": "Config. Supplémentaire (JSON)",
+                        "maxUsers": "Utilisateurs Maximum (Plan)",
+                        "storageQuotaBytes": "Quota de Stockage (Plan)"
                     }
                 },
                 "users": "Utilisateurs",

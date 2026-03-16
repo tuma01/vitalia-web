@@ -47,7 +47,8 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 10
+                    maxLength: 10,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -55,7 +56,8 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 50
+                    maxLength: 50,
+                    icon: 'badge'
                 },
                 {
                     name: 'active',

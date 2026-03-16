@@ -62,16 +62,25 @@ export class AppContextService {
      * @param tenant - Tenant information (required for 'app' context)
      */
     setContext(context: AppContext, tenant?: TenantInfo): void {
+        const currentSnap = this.contextSubject.value;
+        const tenantSnap = this.tenantSubject.value;
+        const newTenant = tenant || null;
+
+        // 🛡️ Guard: Skip if context and tenant are identical to current
+        if (currentSnap === context && 
+            tenantSnap?.code === newTenant?.code && 
+            tenantSnap?.id === newTenant?.id) {
+            return;
+        }
+
         this.currentContext.set(context);
-        this.contextSubject.next(context); // 🔥 Emit to subscribers
+        this.contextSubject.next(context); 
 
         if (context === 'platform') {
-            // Platform context has no tenant
             this.tenantInfo.set(null);
             this.tenantSubject.next(null);
             console.log('[AppContext] ✅ Context set to PLATFORM');
         } else {
-            // App context requires tenant info
             const t = tenant || null;
             this.tenantInfo.set(t);
             this.tenantSubject.next(t);
@@ -145,7 +154,17 @@ export class AppContextService {
             
             if (!reserved.includes(sub)) {
                 console.log(`[AppContext] 🌐 Tenant subdomain detected: ${sub}`);
-                this.setTenantContext({ code: sub });
+                
+                // 🚀 Sync Hydration: Try to get name from localStorage immediately
+                const savedCode = localStorage.getItem('vitalia-tenant-code');
+                const savedName = localStorage.getItem('vitalia-tenant-name');
+                const initialTenant: TenantInfo = { code: sub };
+                
+                if (savedCode === sub && savedName) {
+                    initialTenant.name = savedName;
+                }
+
+                this.setTenantContext(initialTenant);
                 this.loadTenantDetails(sub);
                 return;
             }
@@ -162,6 +181,13 @@ export class AppContextService {
     private loadTenantDetails(code: string): void {
         this.tenantService.getPublicTenantByCode({ code }).subscribe({
             next: (tenant: any) => {
+                // 🛡️ Guard: Only update if we are not in platform mode
+                // This prevents race conditions where an async public load overwrites a SuperAdmin session.
+                if (this.currentContext() === 'platform') {
+                    console.log(`[AppContext] 🛡️ Ignoring tenant details for ${code} - current context is PLATFORM`);
+                    return;
+                }
+
                 console.log(`[AppContext] ✅ Tenant details loaded for: ${code}`, tenant);
                 this.setTenantContext({
                     id: tenant.id,

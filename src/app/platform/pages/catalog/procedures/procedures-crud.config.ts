@@ -48,7 +48,8 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'name',
@@ -56,7 +57,8 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'badge'
                 },
                 {
                     name: 'type',
@@ -64,7 +66,8 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'category'
                 },
                 {
                     name: 'active',

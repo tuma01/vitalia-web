@@ -50,7 +50,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 20
+                    maxLength: 20,
+                    icon: 'qr_code'
                 },
                 {
                     name: 'taxId',
@@ -58,7 +59,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                     type: 'text',
                     required: true,
                     colSpan: 1,
-                    maxLength: 50
+                    maxLength: 50,
+                    icon: 'badge'
                 },
                 {
                     name: 'name',
@@ -66,7 +68,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                     type: 'text',
                     required: true,
                     colSpan: 2,
-                    maxLength: 200
+                    maxLength: 200,
+                    icon: 'badge'
                 },
                 {
                     name: 'email',
@@ -74,7 +77,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 100
+                    maxLength: 100,
+                    icon: 'email'
                 },
                 {
                     name: 'phone',
@@ -82,7 +86,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                     type: 'text',
                     required: false,
                     colSpan: 1,
-                    maxLength: 50
+                    maxLength: 50,
+                    icon: 'phone'
                 },
                 {
                     name: 'active',

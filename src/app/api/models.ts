@@ -15,6 +15,7 @@ export type { CivilStatus } from './models/civil-status';
 export type { CivilStatusSearchDto } from './models/civil-status-search-dto';
 export type { Country } from './models/country';
 export type { Departamento } from './models/departamento';
+export type { Employee } from './models/employee';
 export type { Gender } from './models/gender';
 export type { GenderSearchDto } from './models/gender-search-dto';
 export type { HealthcareProvider } from './models/healthcare-provider';
@@ -32,6 +33,7 @@ export type { PageResponseDtoBloodType } from './models/page-response-dto-blood-
 export type { PageResponseDtoCivilStatus } from './models/page-response-dto-civil-status';
 export type { PageResponseDtoCountry } from './models/page-response-dto-country';
 export type { PageResponseDtoDepartamento } from './models/page-response-dto-departamento';
+export type { PageResponseDtoEmployee } from './models/page-response-dto-employee';
 export type { PageResponseDtoGender } from './models/page-response-dto-gender';
 export type { PageResponseDtoHealthcareProvider } from './models/page-response-dto-healthcare-provider';
 export type { PageResponseDtoIcd10 } from './models/page-response-dto-icd-10';
