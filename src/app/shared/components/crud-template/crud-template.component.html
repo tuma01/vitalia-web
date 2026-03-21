@@ -12,17 +12,6 @@
     [pageSizeOptions]="config.table?.pageSizeOptions ?? [5, 10, 50, 100]"
     (rowSelectedChange)="onRowSelectionChange($event)" (rowClick)="onRowClick($event)" (page)="onPageChange($event)">
 
-    <!-- User-provided cell templates (from parent via [cellTemplates]) -->
-    @for (col of columns; track col.field) {
-    @if (cellTemplates[col.field]) {
-    <ng-template [mtxGridCellTemplate]="col.field" let-row let-index="index">
-        <ng-container [ngTemplateOutlet]="cellTemplates[col.field]"
-            [ngTemplateOutletContext]="{ $implicit: row, index: index }">
-        </ng-container>
-    </ng-template>
-    }
-    }
-
     <!-- Static tag badge template — assigned to columns via ngAfterViewInit -->
     <!-- Context: rowData = row object, colDef = column definition (MtxGridCell provides both) -->
     <ng-template #tagCellTemplate let-rowData="rowData" let-colDef="colDef">

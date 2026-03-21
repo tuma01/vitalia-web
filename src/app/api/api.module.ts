@@ -13,6 +13,7 @@ import { TenantAdminManagementService } from './services/tenant-admin-management
 import { SuperAdminService } from './services/super-admin.service';
 import { TenantService } from './services/tenant.service';
 import { TenantAdminService } from './services/tenant-admin.service';
+import { RoleService } from './services/role.service';
 import { ProvinciaService } from './services/provincia.service';
 import { MunicipioService } from './services/municipio.service';
 import { VaccineService } from './services/vaccine.service';
@@ -32,6 +33,7 @@ import { DepartamentoService } from './services/departamento.service';
 import { CountryService } from './services/country.service';
 import { AddressService } from './services/address.service';
 import { AuthenticationService } from './services/authentication.service';
+import { UserInvitationsService } from './services/user-invitations.service';
 import { AccountService } from './services/account.service';
 
 /**
@@ -49,6 +51,7 @@ import { AccountService } from './services/account.service';
     SuperAdminService,
     TenantService,
     TenantAdminService,
+    RoleService,
     ProvinciaService,
     MunicipioService,
     VaccineService,
@@ -68,6 +71,7 @@ import { AccountService } from './services/account.service';
     CountryService,
     AddressService,
     AuthenticationService,
+    UserInvitationsService,
     AccountService,
     ApiConfiguration
   ],

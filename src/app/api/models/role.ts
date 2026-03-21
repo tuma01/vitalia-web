@@ -4,7 +4,7 @@
 
 
 /**
- * Schema to hold Role information
+ * Detalles del Role a crear.
  */
 export interface Role {
 

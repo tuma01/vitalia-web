@@ -5,3 +5,4 @@ export * from './token-interceptor';
 export * from './api-response-interceptor';
 export * from './error-interceptor';
 export * from './logging-interceptor';
+export * from './tenant-context.interceptor';

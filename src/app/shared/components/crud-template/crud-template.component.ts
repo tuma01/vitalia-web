@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, TemplateRef, ViewChild, inject, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, TemplateRef, ViewChild, inject, AfterViewInit, ChangeDetectorRef, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -45,7 +45,7 @@ import { CrudConfig, CrudMode } from './crud-config';
     templateUrl: './crud-template.component.html',
     styleUrls: ['./crud-template.component.scss']
 })
-export class CrudTemplateComponent<T> extends CrudBaseComponent<T> implements AfterViewInit {
+export class CrudTemplateComponent<T> extends CrudBaseComponent<T> implements AfterViewInit, OnChanges {
     @Input() override mode: CrudMode = 'list';
     @ViewChild('tagCellTemplate', { static: true }) tagCellTemplate!: TemplateRef<any>;
 
@@ -70,18 +70,38 @@ export class CrudTemplateComponent<T> extends CrudBaseComponent<T> implements Af
         super();
     }
 
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['cellTemplates'] || changes['config']) {
+            this.assignCustomTemplates();
+        }
+    }
+
     ngAfterViewInit(): void {
         this.assignCustomTemplates();
     }
 
     private assignCustomTemplates(): void {
-        // Only target columns that explicitly have a tag configuration
-        const needsTemplate = this.columns.filter(col => (col as any).tag && !col.cellTemplate);
+        if (!this.columns || this.columns.length === 0) return;
 
-        if (needsTemplate.length > 0) {
-            needsTemplate.forEach(col => {
+        let hasChanged = false;
+        this.columns.forEach(col => {
+            const field = col.field as string;
+            
+            // 1. Tag Templates (Badge mapping)
+            if ((col as any).tag && !col.cellTemplate) {
                 col.cellTemplate = this.tagCellTemplate;
-            });
+                hasChanged = true;
+            }
+
+            // 2. Custom Templates (from parent/implementation)
+            if (field && this.cellTemplates[field] && col.cellTemplate !== this.cellTemplates[field]) {
+                console.log(`[CrudTemplate] 🔗 Binding custom template to column: ${field}`);
+                col.cellTemplate = this.cellTemplates[field];
+                hasChanged = true;
+            }
+        });
+
+        if (hasChanged) {
             this.columns = [...this.columns]; // Force grid to re-render
             this.cdr.detectChanges();
         }

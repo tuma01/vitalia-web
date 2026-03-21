@@ -161,15 +161,23 @@ export class SidemenuComponent implements OnInit {
     }
 
     private mapMenuItems(items: any[]): SidenavItem[] {
-        return items.map(item => ({
-            id: item.id || item.name,
-            label: 'menu.' + item.name,
-            icon: item.icon,
-            route: item.route,
-            type: item.type,
-            badge: item.badge?.value,
-            badgeColor: 'primary',
-            children: item.children ? this.mapMenuItems(item.children) : undefined
-        }));
+        return items.map(item => {
+            const name = item.name || '';
+            // 🏷️ Si la clave ya parece ser absoluta (contiene puntos) o comienza con prefijos conocidos, se usa tal cual
+            const label = (name.includes('.') || name.startsWith('tenant_admin') || name.startsWith('platform'))
+                ? name
+                : 'menu.' + name;
+
+            return {
+                id: item.id || name,
+                label: label,
+                icon: item.icon,
+                route: item.route,
+                type: item.type,
+                badge: item.badge?.value,
+                badgeColor: 'primary',
+                children: item.children ? this.mapMenuItems(item.children) : undefined
+            };
+        });
     }
 }

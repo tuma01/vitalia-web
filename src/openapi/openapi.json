@@ -55,6 +55,10 @@
       "description": "REST API para gestionar el catálogo maestro de parentescos (MDM)."
     },
     {
+      "name": "User Invitations",
+      "description": "REST API for the two-step user onboarding flow: Admin sends invitation → User completes self-registration."
+    },
+    {
       "name": "Healthcare Provider",
       "description": "REST API para gestionar el catálogo de aseguradoras y pagadores de salud (MDM)."
     },
@@ -65,6 +69,10 @@
     {
       "name": "Blood Type",
       "description": "REST API para gestionar el catálogo maestro de tipos de sangre (MDM)."
+    },
+    {
+      "name": "Role",
+      "description": "REST API para gestionar detalles de roles: crear, actualizar, obtener y eliminar."
     },
     {
       "name": "Civil Status",
@@ -1219,6 +1227,176 @@
           },
           "404": {
             "description": "TenantAdmin no encontrado."
+          },
+          "500": {
+            "description": "Error interno del servidor."
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Obtener un Role por ID",
+        "description": "Devuelve un objeto Role por ID especificado.",
+        "operationId": "getRoleById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Role a recuperar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role encontrado con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida: ID nulo o datos incompletos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Role no encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Actualizar un Role por ID",
+        "description": "Actualiza un Role  existente usando su ID y los datos proporcionados.",
+        "operationId": "updateRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Role a actualizar.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Role actualizado con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida: ID nulo o datos incompletos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Role no encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Role a eliminar por ID",
+        "description": "Elimina un Role existente usando su ID.",
+        "operationId": "deleteRole",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID del Role a eliminar.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Role eliminado con éxito (sin contenido)."
+          },
+          "400": {
+            "description": "Solicitud inválida: ID nulo o no válido."
+          },
+          "404": {
+            "description": "Role no encontrado."
           },
           "500": {
             "description": "Error interno del servidor."
@@ -5033,6 +5211,124 @@
         }
       }
     },
+    "/roles": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Obtiene una lista paginada de Role",
+        "description": "Devuelve una lista paginada de Role",
+        "operationId": "getPaginatedRoles",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "Índice de la página a recuperar.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Tamaño de la página.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de Role recuperada con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoRole"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de paginación inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoRole"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoRole"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Crear un Role",
+        "description": "Crea un nuevo Role usando los datos proporcionados en el cuerpo de la solicitud.",
+        "operationId": "createRole",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Role creado con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos de entrada inválidos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/provincias": {
       "get": {
         "tags": [
@@ -7162,6 +7458,262 @@
         }
       }
     },
+    "/auth/invitations": {
+      "get": {
+        "tags": [
+          "User Invitations"
+        ],
+        "summary": "Get paginated invitations [TENANT_ADMIN]",
+        "description": "Retrieves a paginated list of all invitations emitted by the specified tenant. Useful for rendering the invitations administrative dashboard.",
+        "operationId": "getInvitations",
+        "parameters": [
+          {
+            "name": "tenantCode",
+            "in": "query",
+            "description": "The target Hospital tenant code.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Optional filter by invitation status.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "description": "Optional filter by role name.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "Zero-based page index.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Size of the records per page.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of invitations successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoInvitationResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Not authorized to read this tenant's data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoInvitationResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoInvitationResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "User Invitations"
+        ],
+        "summary": "Send a user invitation [TENANT_ADMIN]",
+        "description": "Creates a pending Invitation and sends an activation email to the specified address. Requires TENANT_ADMIN role.",
+        "operationId": "createInvitation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InvitationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Invitation created and email dispatched.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data (missing fields, bad email format).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A pending invitation already exists for this email in the tenant.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/invitations/{id}/resend": {
+      "post": {
+        "tags": [
+          "User Invitations"
+        ],
+        "summary": "Resend invitation email [TENANT_ADMIN]",
+        "description": "Generates a new secure token, pushes back the expiration date by 48 hours, and dispatches a fresh email to the original recipient. Applicable for PENDING or EXPIRED invitations; fails if ACCEPTED.",
+        "operationId": "resendInvitation",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The database ID of the target UserInvitation to resend.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invitation resent and metadata updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot resend an already ACCEPTED invitation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invitation ID not found in the Database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/invitations/accept": {
+      "post": {
+        "tags": [
+          "User Invitations"
+        ],
+        "summary": "Accept invitation and complete self-registration [PUBLIC]",
+        "description": "The invited person submits their personal details and credentials. The system creates the User + Person accounts and activates them immediately (auto-activation — no additional Admin approval required).",
+        "operationId": "acceptInvitation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteRegistrationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Onboarding complete. Account activated."
+          },
+          "400": {
+            "description": "Invalid form data (missing required fields, weak password, bad email)."
+          },
+          "404": {
+            "description": "Token not found, expired, or already accepted."
+          },
+          "409": {
+            "description": "The chosen login email is already registered in the system."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/addresses": {
       "get": {
         "tags": [
@@ -7778,6 +8330,44 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/SuperAdmin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/roles/all": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Obtiene todos los Role",
+        "description": "Devuelve la lista completa de Role",
+        "operationId": "getAllRoles",
+        "responses": {
+          "200": {
+            "description": "Lista de Role recuperada con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
                   }
                 }
               }
@@ -8443,6 +9033,69 @@
         }
       }
     },
+    "/auth/invitations/validate": {
+      "get": {
+        "tags": [
+          "User Invitations"
+        ],
+        "summary": "Validate an invitation token [PUBLIC]",
+        "description": "Verifies that the given token corresponds to a PENDING, non-expired Invitation. Called by the frontend before rendering the onboarding form.",
+        "operationId": "validateToken_1",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "One-time token from the invitation URL.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token is valid. Returns invitation metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Token parameter missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Token not found, expired, or already accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/addresses/all": {
       "get": {
         "tags": [
@@ -8533,7 +9186,7 @@
     "schemas": {
       "Role": {
         "type": "object",
-        "description": "Schema to hold Role information",
+        "description": "Detalles del Role a crear.",
         "properties": {
           "id": {
             "type": "integer",
@@ -10360,6 +11013,232 @@
           "tenantCode"
         ]
       },
+      "InvitationRequest": {
+        "type": "object",
+        "description": "Invitation details provided by the TenantAdmin.",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "Recipient email for the invitation link.",
+            "example": "maria.garcia@gmail.com",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "roleName": {
+            "type": "string",
+            "description": "Role name to assign to the user after onboarding.",
+            "example": "ROLE_DOCTOR",
+            "minLength": 1
+          },
+          "tenantCode": {
+            "type": "string",
+            "description": "Code of the target tenant.",
+            "example": "hospital-san-borja",
+            "minLength": 1
+          },
+          "personType": {
+            "type": "string",
+            "description": "Type of person being invited.",
+            "enum": [
+              "DOCTOR",
+              "NURSE",
+              "PATIENT",
+              "EMPLOYEE",
+              "SUPER_ADMIN",
+              "ADMIN",
+              "RECEPTIONIST",
+              "LAB_TECHNICIAN",
+              "PHARMACIST"
+            ],
+            "example": "ADMIN"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "First name of the invitee.",
+            "example": "Juan",
+            "minLength": 1
+          },
+          "apellidoPaterno": {
+            "type": "string",
+            "description": "Last name of the invitee.",
+            "example": "Pérez",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "apellidoPaterno",
+          "email",
+          "nombre",
+          "personType",
+          "roleName",
+          "tenantCode"
+        ]
+      },
+      "InvitationResponse": {
+        "type": "object",
+        "description": "Response payload carrying the result of an invitation operation.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Internal ID of the invitation.",
+            "example": 42
+          },
+          "email": {
+            "type": "string",
+            "description": "Email that received the invitation link.",
+            "example": "maria.garcia@gmail.com"
+          },
+          "roleName": {
+            "type": "string",
+            "description": "Role that will be granted upon acceptance.",
+            "example": "ROLE_DOCTOR"
+          },
+          "tenantCode": {
+            "type": "string",
+            "description": "Code of the target tenant.",
+            "example": "hospital-san-borja"
+          },
+          "tenantName": {
+            "type": "string",
+            "description": "Name of the target hospital/clinic.",
+            "example": "Hospital San Borja"
+          },
+          "status": {
+            "type": "string",
+            "description": "Current status of the invitation.",
+            "enum": [
+              "PENDING",
+              "ACCEPTED",
+              "EXPIRED",
+              "CANCELLED"
+            ],
+            "example": "PENDING"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp."
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Expiration timestamp of the one-time link."
+          },
+          "personType": {
+            "type": "string",
+            "description": "Type of person being invited.",
+            "enum": [
+              "DOCTOR",
+              "NURSE",
+              "PATIENT",
+              "EMPLOYEE",
+              "SUPER_ADMIN",
+              "ADMIN",
+              "RECEPTIONIST",
+              "LAB_TECHNICIAN",
+              "PHARMACIST"
+            ],
+            "example": "EMPLOYEE"
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Invitee's first name.",
+            "example": "Juan"
+          },
+          "apellidoPaterno": {
+            "type": "string",
+            "description": "Invitee's paternal last name.",
+            "example": "Pérez"
+          }
+        }
+      },
+      "CompleteRegistrationRequest": {
+        "type": "object",
+        "description": "Self-onboarding form submitted by the invited person.",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "One-time activation token from the invitation URL.",
+            "example": "a3f9b2c1-4d5e-6789-abcd-ef0123456789",
+            "minLength": 1
+          },
+          "loginEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "Definitive login email (User.email). Can be professional or personal.",
+            "example": "maria@hospital-san-borja.com",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "password": {
+            "type": "string",
+            "description": "User-chosen password. Minimum 8 characters.",
+            "example": "Secure@2025!",
+            "maxLength": 100,
+            "minLength": 8
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Legal first name.",
+            "example": "María",
+            "maxLength": 50,
+            "minLength": 2
+          },
+          "segundoNombre": {
+            "type": "string",
+            "description": "Optional second given name.",
+            "example": "Alejandra",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "apellidoPaterno": {
+            "type": "string",
+            "description": "Paternal surname.",
+            "example": "García",
+            "maxLength": 50,
+            "minLength": 2
+          },
+          "apellidoMaterno": {
+            "type": "string",
+            "description": "Maternal surname.",
+            "example": "López",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "telefono": {
+            "type": "string",
+            "description": "Mobile or office phone number.",
+            "example": "+591 70000000",
+            "maxLength": 50,
+            "minLength": 0,
+            "pattern": "^[+]?[0-9\\s\\-()]{7,20}$"
+          },
+          "personalEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "Personal contact email (Person.email). Different from the login email.",
+            "example": "maria.garcia@gmail.com",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "tenantCode": {
+            "type": "string",
+            "description": "Code of the target tenant.",
+            "example": "hospital-san-borja",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "apellidoPaterno",
+          "loginEmail",
+          "nombre",
+          "password",
+          "tenantCode",
+          "token"
+        ]
+      },
       "PasswordResetConfirmationRequest": {
         "type": "object",
         "properties": {
@@ -10640,6 +11519,46 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SuperAdmin"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseDtoRole": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
             }
           },
           "totalElements": {
@@ -11413,6 +12332,46 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Country"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseDtoInvitationResponse": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InvitationResponse"
             }
           },
           "totalElements": {

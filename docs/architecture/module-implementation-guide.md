@@ -1,4 +1,4 @@
-# Vitalia Web — Module Implementation Guide
+# Amachi Platform — Module Implementation Guide
 > [!IMPORTANT]
 > **REPOSITORIO DEL BACKEND**: El código del servidor (Spring Boot) se encuentra en:  
 > `F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform`
@@ -10,9 +10,19 @@
 
 > [!CAUTION]
 > ### 🛡️ GOLDEN PROTOCOL: REGLAS CRÍTICAS DE ESTABILIDAD
-> 1. **ANÁLISIS GLOBAL OBLIGATORIO**: Antes de realizar cualquier cambio (Frontend o Backend), es **OBLIGATORIO** analizar el impacto en todo el sistema. Nunca apliques "parches locales" sin verificar dependencias globales (ej: ¿cómo afecta este filtro de entidad al SuperAdmin?).
-> 2. **REPOSITORIO BACKEND ÚNICO**: El código del servidor (Spring Boot) se encuentra **EXCLUSIVAMENTE** en `F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform`. No usar otros repertorios o copias parciales.
-> 3. **CERO REGRESIONES**: Si una funcionalidad ya era estable (ej: filtrado por Tenant Code), no la modifiques por "optimización" sin un análisis profundo de por qué se implementó así originalmente.
+> 1. **ANÁLISIS GLOBAL OBLIGATORIO (CRÍTICO)**: Antes de realizar cualquier cambio, por pequeño que parezca (Frontend o Backend), es **ESTRICTAMENTE OBLIGATORIO** realizar un análisis profundo del impacto en todo el sistema. **Si se realiza una modificación en el Backend, es MANDATORIO analizar la regresión que puede crear en el Frontend (contratos, tipos, DTOs)**. No se permiten cambios "ad-hoc" sin verificar dependencias cruzadas.
+> 2. **SINCRONIZACIÓN DE API (MANDATORIO)**: Si se crea, modifica (agregar/borrar campos) o elimina una entidad o endpoint en el Backend, es **OBLIGATORIO** sincronizar el contrato siguiendo este flujo:
+>    - **Backend**: Ejecutar `mvn clean install` e iniciar la aplicación.
+>    - **Swagger**: Acceder a `http://localhost:8088/api/v1/swagger-ui/index.html`, copiar el contenido JSON de la definición de la API.
+>    - **Frontend**: Pegar el contenido en `src/openapi/openapi.json`.
+>    - **Generación**: Ejecutar `npm run gen-api` para actualizar modelos y servicios de Angular.
+>    - *Nota*: No realizar cambios manuales en los modelos del Frontend que deban ser sincronizados desde el servidor.
+> 3. **REPOSITORIO BACKEND ÚNICO**: El código del servidor reside exclusivamente en `F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform`.
+> 4. **CERO REGRESIONES**: Se prohíbe modificar funcionalidades estables para "limpiar código" o "optimizar" sin justificación técnica y verificación exhaustiva de impacto global. La estabilidad es prioridad absoluta sobre la estética del código.
+> 5. **POST-MORTEM DE ERRORES**: Cada regresión debe ser analizada para entender por qué falló el "Análisis Global" y documentar la lección aprendida en este protocolo.
+>    - **CASO ROLES (16/03/2026)**: El cambio en la firma de `getAll` en el backend rompió el contrato de la interfaz `CrudApiService` en el frontend. **Lección**: Cualquier cambio en el Backend requiere verificación inmediata del impacto en el Frontend. El uso de subcarpetas en módulos causó fallos; se debe seguir el patrón plano de `allergies/`.
+> 6. **VALIDACIÓN SINTÁCTICA DE i18n (MANDATORIO)**: Cualquier adición o modificación de claves en los archivos `es-ES.json`, `en-US.json` o `fr-FR.json` requiere una validación estructural estricta (balance de llaves `{}` y comas). Una regresión en estos archivos invalida la carga de recursos de la aplicación, mostrando claves crudas en lugar de textos. **Lección**: Validar siempre con `JSON.parse` o herramientas de linting antes de dar por cerrada la tarea.
+> 7. **PROHIBICIÓN ABSOLUTA DE PARCHES (CRÍTICO)**: Está **ESTRICTAMENTE PROHIBIDO** realizar "parches" manuales (como scripts de post-procesamiento JSON o modificaciones manuales de archivos generados) para solucionar problemas de contrato o visibilidad. Si un campo no aparece en la API, se debe corregir la causa raíz en el código del Backend (ej. eliminando `@Hidden`). La arquitectura debe ser 100% automática y profesional. **Regla de Oro: NO PARCHES**.
 
 ---
 

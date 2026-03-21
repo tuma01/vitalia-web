@@ -1,0 +1,106 @@
+<div class="login-wrapper">
+    <mat-card class="login-card">
+        <div class="login-content">
+            
+            <!-- LEFT: Form Zone -->
+            <div class="login-form-zone">
+                <div class="login-header">
+                    <h1>{{ 'auth.signup.title' | translate }}</h1>
+                    <p>{{ 'auth.signup.subtitle' | translate }}</p>
+                </div>
+
+                <form [formGroup]="signupForm" (ngSubmit)="onSignup()" autocomplete="off">
+                    
+                    <!-- Tenant Selector (HIDDEN if resolved from URL Subdomain) -->
+                    @if (!isSubdomain) {
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{ 'auth.signup.fields.tenant' | translate }}</mat-label>
+                        <mat-select formControlName="tenantCode" [placeholder]="'auth.signup.fields.tenant_placeholder' | translate">
+                            @for (tenant of tenants(); track tenant.code) {
+                            <mat-option [value]="tenant.code">{{ tenant.name }}</mat-option>
+                            }
+                        </mat-select>
+                        @if (signupForm.get('tenantCode')?.hasError('required')) {
+                        <mat-error>{{ 'validation.required' | translate }}</mat-error>
+                        }
+                    </mat-form-field>
+                    }
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{ 'auth.signup.fields.name' | translate }}</mat-label>
+                        <input matInput formControlName="nombre" placeholder="Ej: María">
+                        <mat-icon matPrefix>badge</mat-icon>
+                        <mat-error *ngIf="signupForm.get('nombre')?.hasError('required')">{{ 'validation.required' | translate }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{ 'auth.signup.fields.paternal_last_name' | translate }}</mat-label>
+                        <input matInput formControlName="apellidoPaterno" placeholder="Ej: García">
+                        <mat-icon matPrefix>badge</mat-icon>
+                        <mat-error *ngIf="signupForm.get('apellidoPaterno')?.hasError('required')">{{ 'validation.required' | translate }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{ 'auth.signup.fields.email' | translate }}</mat-label>
+                        <input matInput formControlName="email" type="email">
+                        <mat-icon matPrefix>email</mat-icon>
+                        <mat-error *ngIf="signupForm.get('email')?.hasError('required')">{{ 'validation.required' | translate }}</mat-error>
+                        <mat-error *ngIf="signupForm.get('email')?.hasError('email')">{{ 'validation.email' | translate }}</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>{{ 'auth.signup.fields.password' | translate }}</mat-label>
+                        <input matInput [type]="showPassword() ? 'text' : 'password'" formControlName="password" placeholder="••••••••">
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <button type="button" mat-icon-button matSuffix (click)="togglePassword()">
+                            <mat-icon>{{ showPassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="signupForm.get('password')?.hasError('required')">{{ 'validation.required' | translate }}</mat-error>
+                        <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">{{ 'validation.minlength' | translate: { requiredLength: 6 } }}</mat-error>
+                    </mat-form-field>
+
+                    <!-- Submit Button -->
+                    <button mat-flat-button color="primary" type="submit" class="login-btn" style="margin-top: 0.5rem;" [disabled]="signupForm.invalid || isLoading()">
+                        <ng-container *ngIf="!isLoading()">
+                            <mat-icon>how_to_reg</mat-icon>
+                            {{ 'auth.signup.button' | translate }}
+                        </ng-container>
+                        <mat-progress-bar *ngIf="isLoading()" mode="indeterminate" class="btn-progress"></mat-progress-bar>
+                    </button>
+
+                    <!-- Login Link -->
+                    <div class="signup-prompt" style="margin-top: 1rem;">
+                        <span>{{ 'auth.signup.have_account' | translate }}</span>
+                        <a routerLink="/login" class="signup-link">{{ 'auth.signup.login_link' | translate }}</a>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- RIGHT: Hero Zone -->
+            <div class="login-hero-zone">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-logo">
+                        <mat-icon>app_registration</mat-icon>
+                    </div>
+                    <h2>{{ appContext.tenant()?.name || 'Vitalia' }}</h2>
+                    <p>{{ appContext.tenant()?.name 
+                        ? ('auth.signup.hero.welcome_to' | translate:{ tenantName: appContext.tenant()?.name })
+                        : ('auth.signup.hero.description' | translate) }}</p>
+                    <div class="hero-features">
+                        <div class="feature">
+                            <mat-icon>verified</mat-icon>
+                            <span>{{ 'auth.signup.hero.secure_registration' | translate }}</span>
+                        </div>
+                        <div class="feature">
+                            <mat-icon>speed</mat-icon>
+                            <span>{{ 'auth.signup.hero.fast_onboarding' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </mat-card>
+</div>

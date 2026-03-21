@@ -11,6 +11,11 @@ Los siguientes campos están definidos en la base de datos pero su lógica de ne
 - **`passwordPolicyJson` (JSON)**: Implementar validador dinámico en el `AuthService` (Backend) que lea estas reglas (longitud mínima, caracteres especiales, etc.) al crear o resetear contraseñas.
 - **`extraJson` (JSON)**: Implementar un servicio de "Feature Flags" o "Dynamic Config" que permita extender la funcionalidad por inquilino sin alterar el esquema de la base de datos (ej: habilitar telemedicina, claves de API externas, etc.).
 
+### 2. Carga Masiva de Usuarios (Bulk Onboarding)
+Para escalar el onboarding de nuevos hospitales, es imperativo diseñar un flujo de importación asíncrono.
+- **Frontend:** Añadir un botón flotante "Importar CSV" en la vista de *Gestión de Usuarios* que ofrezca al Administrador una plantilla `.xlsx` o `.csv` vacía (Columnas: `Email`, `Nombre`, `Role`).
+- **Backend (`POST /invitations/bulk`):** Crear un procesador por lotes (Spring Batch o Colas de Mensajes) que itere el archivo subido, cree registros de `UserInvitation` y envíe silenciosamente miles de emails transaccionales al mismo tiempo sin saturar la banda o colgar la solicitud HTTP.
+
 ## ⚠️ Deuda Técnica
 
 ### 1. Centralización de Temas

@@ -24,6 +24,7 @@ import {
   apiResponseInterceptor,
   errorInterceptor,
   loggingInterceptor,
+  tenantContextInterceptor,
   noopInterceptor
 } from '@core';
 import { ThemeService } from './core/theme/theme.service';
@@ -59,6 +60,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([
         baseUrlInterceptor,
+        tenantContextInterceptor,
         tokenInterceptor,
         settingsInterceptor,
         apiResponseInterceptor,

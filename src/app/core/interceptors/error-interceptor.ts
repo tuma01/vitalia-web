@@ -38,7 +38,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if ([403, 500].includes(error.status)) {
         // 🛡️ Guard: Only navigate to error pages if we are in APP context
         // and NOT in Platform (SuperAdmin prefers staying on page with Toast).
-        // Also avoids triggering wildcard redirect to tenant login.
         const isPlatform = router.url.startsWith('/platform');
 
         if (isPlatform) {
