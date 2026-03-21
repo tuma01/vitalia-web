@@ -22,6 +22,10 @@ Este documento centraliza las tareas pendientes y deuda técnica identificada pa
 ### 4. Estandarización de Infraestructura (Maven)
 - **Estandarización UTF-8**: Asegurar que todos los plugins críticos (`maven-compiler-plugin`, `maven-resources-plugin`) tengan configurado explícitamente el encoding UTF-8 en el BOM o POM raíz para evitar problemas de caracteres en diferentes entornos.
 
+### 5. Optimización y Rendimiento (Caché con Redis)
+- **Implementación de Capa de Caché**: Integrar Redis como sistema de caché. Esta mejora no solo es útil, sino que llegará a ser **necesaria** para garantizar el rendimiento, la escalabilidad y reducir la carga sobre la base de datos principal a medida que el sistema crezca.
+    - **Casos de uso críticos**: Datos maestros y catálogos médicos (alta lectura, baja escritura), configuraciones de Inquilinos/Tenants, manejo de sesiones/tokens y bloqueos distribuidos.
+
 ---
 
 *Documento generado para seguimiento de tareas a largo plazo.*

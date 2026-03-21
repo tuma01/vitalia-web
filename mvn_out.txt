@@ -1,0 +1,124 @@
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] Amachi Platform                                                    [pom]
+[INFO] core-common                                                        [jar]
+[INFO] core-geography                                                     [jar]
+[INFO] core-domain                                                        [jar]
+[INFO] core-auth                                                          [jar]
+[INFO] 
+[INFO] --------------< com.amachi.app.platform:amachi-platform >---------------
+[INFO] Building Amachi Platform 1.0.0-SNAPSHOT                            [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ amachi-platform ---
+[INFO] 
+[INFO] ----------------< com.amachi.app.platform:core-common >-----------------
+[INFO] Building core-common 1.0.0-SNAPSHOT                                [2/5]
+[INFO]   from core-common\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ core-common ---
+[INFO] Deleting F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform\core-common\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core-common ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ core-common ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 48 source files with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] ---------------< com.amachi.app.platform:core-geography >---------------
+[INFO] Building core-geography 1.0.0-SNAPSHOT                             [3/5]
+[INFO]   from core-geography\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ core-geography ---
+[INFO] Deleting F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform\core-geography\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core-geography ---
+[INFO] Copying 13 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ core-geography ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 46 source files with javac [debug release 21] to target\classes
+[WARNING] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-geography/src/main/java/com/amachi/app/core/geography/address/mapper/AddressMapper.java:[36,32] Unmapped source properties: "createdBy, createdDate, lastModifiedBy, lastModifiedDate".
+[INFO] 
+[INFO] ----------------< com.amachi.app.platform:core-domain >-----------------
+[INFO] Building core-domain 1.0.0-SNAPSHOT                                [4/5]
+[INFO]   from core-domain\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ core-domain ---
+[INFO] Deleting F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform\core-domain\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core-domain ---
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ core-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug release 21] to target\classes
+[WARNING] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-domain/src/main/java/com/amachi/app/core/domain/tenant/mapper/TenantMapper.java:[27,10] Unmapped source properties: "id, themeId, themeName".
+[INFO] 
+[INFO] -----------------< com.amachi.app.platform:core-auth >------------------
+[INFO] Building core-auth 1.0.0-SNAPSHOT                                  [5/5]
+[INFO]   from core-auth\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ core-auth ---
+[INFO] Deleting F:\PROJECTOS\JAVA\VITALIA\workspace\amachi-platform\core-auth\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ core-auth ---
+[INFO] Copying 19 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ core-auth ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 102 source files with javac [debug release 21] to target\classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[32,44] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[32,52] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,19] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,52] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,61] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,19] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,51] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,60] class, interface, enum, or record expected
+[INFO] 8 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for Amachi Platform 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] Amachi Platform .................................... SUCCESS [  0.195 s]
+[INFO] core-common ........................................ SUCCESS [  4.675 s]
+[INFO] core-geography ..................................... SUCCESS [  5.243 s]
+[INFO] core-domain ........................................ SUCCESS [  4.345 s]
+[INFO] core-auth .......................................... FAILURE [  1.073 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  16.033 s
+[INFO] Finished at: 2026-03-19T12:25:57-04:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project core-auth: Compilation failure: Compilation failure: 
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[32,44] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[32,52] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,19] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,52] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[33,61] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,19] class, interface, enum, or record expected
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,51] illegal character: '\u2014'
+[ERROR] /F:/PROJECTOS/JAVA/VITALIA/workspace/amachi-platform/core-auth/src/main/java/com/amachi/app/core/auth/controller/InvitationController.java:[34,60] class, interface, enum, or record expected
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :core-auth

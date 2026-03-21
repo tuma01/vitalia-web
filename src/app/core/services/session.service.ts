@@ -62,8 +62,8 @@ export class SessionService {
       // Tenant user - set app context with tenant info
       const tenantInfo = {
         id: loginData.user.tenantId,
-        code: loginData.user.tenantCode || 'unknown',
-        name: loginData.user.tenantName || loginData.user.tenantCode
+        code: loginData.user.tenantCode || '',
+        name: loginData.user.tenantName || loginData.user.tenantCode || 'Vitalia'
       };
 
       this.appContext.setContext('app', tenantInfo);

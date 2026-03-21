@@ -1,41 +1,45 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AppContextService } from '../services/app-context.service';
+import { TENANT_HEADER_OVERRIDE } from './http-context.tokens';
 
 /**
  * Tenant Context Interceptor
  * 
- * Automatically adds X-Tenant-ID header to HTTP requests when in APP context.
- * Platform context requests do NOT include tenant header.
- * 
- * This ensures proper multi-tenancy at the HTTP level.
+ * Automatically adds X-Tenant-Code header to HTTP requests.
+ * 1. Favors TENANT_HEADER_OVERRIDE from HttpContext (if present).
+ * 2. Uses AppContextService if in 'app' mode.
+ * 3. Falls back to 'GLOBAL' if in 'platform' mode (SuperAdmin).
  */
 export const tenantContextInterceptor: HttpInterceptorFn = (req, next) => {
     const appContext = inject(AppContextService);
-
-    // Determine tenant code based on context
     let tenantCode: string | undefined;
 
-    if (appContext.isPlatform()) {
-        // Platform context (SuperAdmin) requests do NOT need X-Tenant-Code.
-        // The backend identifies the user role and platform scope via token.
-        return next(req);
+    // 1. Check for manual override in HttpContext (highest priority)
+    const override = req.context.get(TENANT_HEADER_OVERRIDE);
+    if (override) {
+        tenantCode = override;
     } 
-
-    if (appContext.isApp()) {
+    // 2. Otherwise use global context
+    else if (appContext.isApp()) {
         tenantCode = appContext.tenant()?.code;
     }
+    // 3. Super-Admin platform context -> GLOBAL fallback
+    else if (appContext.isPlatform()) {
+        tenantCode = 'GLOBAL';
+    }
 
-    if (tenantCode) {
+    // 🔥 Only add header if tenantCode is a valid string (not 'unknown' or empty)
+    if (tenantCode && tenantCode !== 'unknown' && tenantCode.trim() !== '') {
         const clonedReq = req.clone({
             setHeaders: {
                 'X-Tenant-Code': tenantCode
             }
         });
-        console.log('[TenantContextInterceptor] Added X-Tenant-Code header:', tenantCode);
+        console.log(`[TenantContextInterceptor] ✅ Set X-Tenant-Code: ${tenantCode} (source: ${override ? 'HttpContext' : 'AppContext'})`);
         return next(clonedReq);
     }
 
-    // Platform context or no tenant → no header
+    // Default: no header
     return next(req);
 };

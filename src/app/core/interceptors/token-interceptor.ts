@@ -19,8 +19,19 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const refreshTokenService = inject(RefreshTokenService);
   const sessionService = inject(SessionService);
 
-  // 🛡️ SKIP auth endpoints to prevent loops
-  const isAuthRequest = req.url.includes('/auth/login') || req.url.includes('/auth/refresh');
+  // 🛡️ SKIP public auth endpoints to prevent token loops
+  const publicEndpoints = [
+    '/auth/login', 
+    '/auth/refresh', 
+    '/auth/invitations/validate', 
+    '/auth/invitations/accept', 
+    '/themes'
+  ];
+  const isAuthRequest = publicEndpoints.some(endpoint => req.url.includes(endpoint));
+
+  if (isAuthRequest) {
+    console.log('[TokenInterceptor] 🔓 Skipping token logic for public endpoint:', req.url);
+  }
 
   const accessToken = tokenService.accessToken;
 

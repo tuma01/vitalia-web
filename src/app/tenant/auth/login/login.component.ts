@@ -158,6 +158,14 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * 🌐 Domain heuristics to prevent localStorage from falsely hiding the universal Tenant Selector
+   */
+  get isSubdomain(): boolean {
+    const host = window.location.hostname;
+    return host !== 'localhost' && host !== '127.0.0.1' && !host.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/);
+  }
+
   loadTenants(): void {
     this.tenantApiService.getPublicAllTenants().subscribe({
       next: (tenants) => {
@@ -166,16 +174,18 @@ export class LoginComponent {
         this.tenants.set(publicTenants);
 
         // 🚀 AUTO-SELECT STRATEGY:
-        // 1. Check if we have a detected tenant from URL
-        const detectedTenant = this.appContext.tenant();
-        if (detectedTenant?.code && publicTenants.some(t => t.code === detectedTenant.code)) {
-          console.log('[Login] 🌐 Applying subdomain tenant branding:', detectedTenant.code);
-          this.loginForm.get('tenantCode')?.patchValue(detectedTenant.code, { emitEvent: false });
-          this.applyTenantBranding(detectedTenant.code);
+        // 1. If strictly inside a subdomain, lock the tenant branding completely
+        if (this.isSubdomain) {
+          const detectedTenant = this.appContext.tenant();
+          if (detectedTenant?.code && publicTenants.some(t => t.code === detectedTenant.code)) {
+            console.log('[Login] 🌐 Applying subdomain tenant branding:', detectedTenant.code);
+            this.loginForm.get('tenantCode')?.patchValue(detectedTenant.code, { emitEvent: false });
+            this.applyTenantBranding(detectedTenant.code);
+          }
           return;
         }
 
-        // 2. Try to restore last used tenant from localStorage
+        // 2. Try to restore last used tenant from localStorage ONLY for pre-filling the selector
         const lastTenantCode = localStorage.getItem('vitalia-tenant-code');
 
         if (lastTenantCode && publicTenants.some(t => t.code === lastTenantCode)) {

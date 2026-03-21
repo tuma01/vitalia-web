@@ -319,14 +319,38 @@
                 },
                 {
                     "id": "tenant-users",
-                    "name": "tenant_admin.admin.users",
+                    "name": "tenant_admin.admin.users.title",
+                    "type": "sub",
+                    "icon": "manage_accounts",
+                    "visible": true,
+                    "children": [
+                        {
+                            "id": "users-list",
+                            "name": "tenant_admin.admin.users.list",
+                            "type": "link",
+                            "route": "/admin/admin/users/list",
+                            "visible": true
+                        },
+                        {
+                            "id": "users-add",
+                            "name": "tenant_admin.admin.users.add",
+                            "type": "link",
+                            "route": "/admin/admin/users/add",
+                            "visible": true
+                        }
+                    ]
+                },
+                {
+                    "id": "invitations",
+                    "name": "tenant_admin.admin.invitations.plural",
                     "type": "link",
-                    "route": "/admin/admin/users",
-                    "icon": "manage_accounts"
+                    "route": "/admin/admin/invitations",
+                    "icon": "mail",
+                    "visible": true
                 },
                 {
                     "id": "tenant-roles",
-                    "name": "tenant_admin.admin.roles",
+                    "name": "tenant_admin.admin.roles.title",
                     "type": "link",
                     "route": "/admin/admin/roles",
                     "icon": "verified_user"

@@ -7,6 +7,7 @@ interface CustomButtonOptions {
     tooltipKey: string;
     handler: (record: any) => void;
     color?: string;
+    disabled?: (record: any) => boolean;
 }
 
 interface OperationColumnOptions {
@@ -80,12 +81,15 @@ export function getOperationColumn(
                 tooltip: { message: translate.instant(btn.tooltipKey), position: 'above' },
                 color: btn.color as any,
                 click: btn.handler,
+                disabled: btn.disabled
             };
             return customBtn;
         }));
     }
 
-    const colWidth = buttons.length * 42 + 25;
+    // Determined width for all tables: 120px. 
+    // We maintain this as a baseline to ensure absolute visual homogeneity in the 'Operations' column.
+    const colWidth = Math.max(120, buttons.length * 42 + 25);
 
     return {
         header: translate.stream('common.operations'),

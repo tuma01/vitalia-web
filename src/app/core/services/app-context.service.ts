@@ -155,17 +155,29 @@ export class AppContextService {
             if (!reserved.includes(sub)) {
                 console.log(`[AppContext] 🌐 Tenant subdomain detected: ${sub}`);
                 
-                // 🚀 Sync Hydration: Try to get name from localStorage immediately
+                // 🚀 Sync Hydration: Try to recover from existing store or localStorage
+                const currentTenant = this.tenantInfo();
                 const savedCode = localStorage.getItem('vitalia-tenant-code');
                 const savedName = localStorage.getItem('vitalia-tenant-name');
+                
                 const initialTenant: TenantInfo = { code: sub };
                 
-                if (savedCode === sub && savedName) {
+                // Preserve ID and name if we already successfully fetched them
+                // This PREVENTS an infinite state loop (code, id:1) -> logout -> (code, id:undefined)
+                if (currentTenant?.code === sub) {
+                    initialTenant.id = currentTenant.id;
+                    initialTenant.name = currentTenant.name;
+                } else if (savedCode === sub && savedName) {
                     initialTenant.name = savedName;
                 }
 
                 this.setTenantContext(initialTenant);
-                this.loadTenantDetails(sub);
+                
+                // Only load async details if we haven't resolved the ID yet
+                // This breaks the infinite loop with the HTTP request cycle
+                if (!initialTenant.id) {
+                    this.loadTenantDetails(sub);
+                }
                 return;
             }
         }
@@ -251,7 +263,7 @@ export class AppContextService {
 
                     this.setContext('app', {
                         id: tenantId ? Number(tenantId) : undefined,
-                        code: tenantCode || 'unknown',
+                        code: tenantCode || '',
                         name: tenantName || undefined
                     });
                     console.log('[AppContext] ✅ Context initialized as APP from session');

@@ -17,6 +17,18 @@ export const routes: Routes = [
         data: { title: 'Login - Vitalia' }
     },
     {
+        path: 'signup',
+        loadComponent: () => import('./tenant/auth/signup/signup.component')
+            .then(m => m.default),
+        data: { title: 'Registrarse - Vitalia' }
+    },
+    {
+        path: 'complete-registration',
+        loadComponent: () => import('./tenant/auth/complete-registration/complete-registration.component')
+            .then(m => m.CompleteRegistrationComponent),
+        data: { title: 'Completar Registro - Vitalia' }
+    },
+    {
         path: 'platform/login',
         loadComponent: () => import('./platform/auth/login/super-admin-login.component')
             .then(m => m.SuperAdminLoginComponent),
@@ -158,6 +170,21 @@ export const routes: Routes = [
     // ============================================
     // 🛠️ UTILS & FALLBACK
     // ============================================
+    { 
+        path: '403', 
+        loadComponent: () => import('./shared/components/error-page/error-page.component').then(m => m.ErrorPageComponent), 
+        data: { title: 'Acceso Denegado', code: '403', icon: 'security', message: 'No tienes los permisos necesarios para acceder a este recurso.', color: 'warn' } 
+    },
+    { 
+        path: '404', 
+        loadComponent: () => import('./shared/components/error-page/error-page.component').then(m => m.ErrorPageComponent), 
+        data: { title: 'No Encontrado', code: '404', icon: 'search_off', message: 'Lo sentimos, la página que estás buscando no existe o ha sido movida.', color: 'primary' } 
+    },
+    { 
+        path: '500', 
+        loadComponent: () => import('./shared/components/error-page/error-page.component').then(m => m.ErrorPageComponent), 
+        data: { title: 'Error del Servidor', code: '500', icon: 'dns', message: 'Lo sentimos, ha ocurrido un error interno en el servidor. Inténtalo de nuevo más tarde.', color: 'warn' } 
+    },
     { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: '**', redirectTo: 'login' }
+    { path: '**', redirectTo: '404' }
 ];

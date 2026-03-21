@@ -9,6 +9,7 @@ export { TenantAdminManagementService } from './services/tenant-admin-management
 export { SuperAdminService } from './services/super-admin.service';
 export { TenantService } from './services/tenant.service';
 export { TenantAdminService } from './services/tenant-admin.service';
+export { RoleService } from './services/role.service';
 export { ProvinciaService } from './services/provincia.service';
 export { MunicipioService } from './services/municipio.service';
 export { VaccineService } from './services/vaccine.service';
@@ -28,4 +29,5 @@ export { DepartamentoService } from './services/departamento.service';
 export { CountryService } from './services/country.service';
 export { AddressService } from './services/address.service';
 export { AuthenticationService } from './services/authentication.service';
+export { UserInvitationsService } from './services/user-invitations.service';
 export { AccountService } from './services/account.service';

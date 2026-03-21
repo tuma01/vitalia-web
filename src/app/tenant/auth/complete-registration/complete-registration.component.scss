@@ -1,0 +1,289 @@
+.login-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+
+    /* Modern Mesh Gradient Background */
+    background-color: #f8fafc;
+    background-image:
+        radial-gradient(at 0% 0%, rgba(var(--color-primary-rgb), 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(var(--color-accent-rgb), 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(var(--color-primary-rgb), 0.05) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(var(--color-accent-rgb), 0.05) 0px, transparent 50%);
+
+    @media (max-width: 968px) {
+        padding: 0;
+        align-items: stretch;
+    }
+}
+
+.login-card {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 20px !important;
+    /* Deep, Elegant Master Shadow */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 10px 20px -5px rgba(0, 0, 0, 0.15),
+        0 0 0 1px var(--sys-border-subtle) !important;
+    overflow: hidden;
+    background: var(--sys-surface-1);
+
+    @media (max-width: 968px) {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0;
+    }
+}
+
+.login-content {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    min-height: 520px;
+
+    @media (max-width: 968px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.login-form-zone {
+    padding: 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--sys-surface-1);
+
+    @media (max-width: 640px) {
+        padding: 1.5rem;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: var(--sys-text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            color: var(--sys-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.4;
+
+            strong {
+                color: var(--color-primary);
+                font-weight: 600;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+            
+            &.form-row-2 > * {
+                flex: 1;
+            }
+            
+            @media (max-width: 480px) {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.login-btn {
+    height: 52px !important;
+    border-radius: 12px !important;
+
+    &::ng-deep {
+        &.mat-mdc-flat-button {
+            --mdc-flat-button-label-text-color: #ffffff !important;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent, #764ba2) 100%);
+        }
+
+        .mdc-button__label {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            color: #ffffff !important;
+            font-weight: 600;
+        }
+
+        .mat-icon {
+            color: #ffffff !important;
+        }
+    }
+}
+
+.signup-prompt {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--sys-text-secondary);
+
+    .signup-link {
+        color: var(--color-link);
+        font-weight: 700;
+        text-decoration: none;
+        margin-left: 0.25rem;
+
+        &:hover {
+            color: var(--color-link-hover);
+            text-decoration: underline;
+        }
+    }
+}
+
+/* RIGHT: Hero Zone */
+.login-hero-zone {
+    position: relative;
+    background-image: url('/assets/images/login.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #ffffff;
+    // Hide the actual image block if login.png is absent, using fallback gradient
+
+    .hero-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg,
+                rgba(var(--color-primary-rgb), 0.85) 0%,
+                rgba(var(--color-accent-rgb), 0.92) 100%);
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 360px;
+
+        .hero-logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            mat-icon {
+                font-size: 36px;
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            opacity: 0.95;
+            margin-bottom: 2.5rem;
+            color: #ffffff;
+        }
+
+        .hero-features {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-left: 1rem;
+
+            .feature {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                mat-icon {
+                    font-size: 20px;
+                    width: 20px;
+                    height: 20px;
+                }
+
+                span {
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 968px) {
+        display: none;
+    }
+}
+
+.state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1.5rem;
+    text-align: center;
+    
+    p {
+        color: var(--sys-text-secondary);
+        font-weight: 500;
+    }
+    
+    mat-spinner {
+        circle {
+            stroke: var(--color-primary);
+        }
+    }
+}
+
+.state-error {
+    color: var(--sys-error);
+    
+    mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: -10px;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: var(--sys-text-primary);
+    }
+    
+    p {
+        color: var(--sys-error) !important;
+        margin-bottom: 1rem;
+    }
+}

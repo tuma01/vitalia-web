@@ -42,7 +42,7 @@
                     </div>
 
                     <!-- Tenant Selector (HIDDEN if resolved from URL) -->
-                    @if (!appContext.tenant()) {
+                    @if (!isSubdomain) {
                     <mat-form-field appearance="outline" class="full-width">
                         <mat-label>Hospital/Clínica</mat-label>
                         <mat-select formControlName="tenantCode" placeholder="Selecciona tu hospital">
