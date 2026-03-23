@@ -12,14 +12,14 @@
         },
         {
             "id": "workspace",
-            "name": "clinical_workspace",
+            "name": "doctor.workspace.title",
             "type": "group",
             "icon": "desktop_mac",
             "visible": true,
             "children": [
                 {
-                    "id": "my-queue",
-                    "name": "patient_queue",
+                    "id": "workspace.queue",
+                    "name": "doctor.workspace.queue",
                     "type": "link",
                     "route": "/doctor/queue",
                     "icon": "people_alt",
@@ -29,22 +29,22 @@
                     }
                 },
                 {
-                    "id": "my-schedule",
-                    "name": "my_schedule",
+                    "id": "workspace.schedule",
+                    "name": "doctor.workspace.schedule",
                     "type": "link",
                     "route": "/doctor/schedule",
                     "icon": "calendar_month"
                 },
                 {
-                    "id": "calendar",
-                    "name": "calendar",
+                    "id": "workspace.calendar",
+                    "name": "doctor.workspace.calendar",
                     "type": "link",
                     "route": "/doctor/calendar",
                     "icon": "event"
                 },
                 {
-                    "id": "tasks",
-                    "name": "my_tasks",
+                    "id": "workspace.tasks",
+                    "name": "doctor.workspace.tasks",
                     "type": "link",
                     "route": "/doctor/tasks",
                     "icon": "task_alt",
@@ -56,29 +56,29 @@
             ]
         },
         {
-            "id": "clinical-care",
-            "name": "clinical_care",
+            "id": "clinical.care",
+            "name": "doctor.care.title",
             "type": "group",
             "icon": "monitor_heart",
             "visible": true,
             "children": [
                 {
-                    "id": "my-patients",
-                    "name": "my_patients",
+                    "id": "care.patients",
+                    "name": "doctor.care.patients",
                     "type": "link",
                     "route": "/doctor/patients/list",
                     "icon": "assignment_ind"
                 },
                 {
-                    "id": "rounds",
-                    "name": "inpatient_rounds",
+                    "id": "care.rounds",
+                    "name": "doctor.care.rounds",
                     "type": "link",
                     "route": "/doctor/rounds",
                     "icon": "bed"
                 },
                 {
-                    "id": "orders",
-                    "name": "orders_entry",
+                    "id": "care.orders",
+                    "name": "doctor.care.orders",
                     "type": "link",
                     "route": "/doctor/orders",
                     "icon": "playlist_add_check"
@@ -87,28 +87,28 @@
         },
         {
             "id": "records",
-            "name": "medical_records",
+            "name": "doctor.records.title",
             "type": "group",
             "icon": "folder",
             "visible": true,
             "children": [
                 {
-                    "id": "search-record",
-                    "name": "search_records",
+                    "id": "records.search",
+                    "name": "doctor.records.search",
                     "type": "link",
                     "route": "/doctor/records/search",
                     "icon": "search"
                 },
                 {
-                    "id": "lab-results",
-                    "name": "lab_results_review",
+                    "id": "records.labs",
+                    "name": "doctor.records.labs",
                     "type": "link",
                     "route": "/doctor/results/labs",
                     "icon": "science"
                 },
                 {
-                    "id": "imaging",
-                    "name": "pacs_imaging",
+                    "id": "records.imaging",
+                    "name": "doctor.records.imaging",
                     "type": "link",
                     "route": "/doctor/results/imaging",
                     "icon": "imagesearch_roller"
@@ -117,14 +117,14 @@
         },
         {
             "id": "communication",
-            "name": "communication",
+            "name": "doctor.communication.title",
             "type": "group",
             "icon": "chat",
             "visible": true,
             "children": [
                 {
-                    "id": "inbox",
-                    "name": "clinical_inbox",
+                    "id": "communication.inbox",
+                    "name": "doctor.communication.inbox",
                     "type": "link",
                     "route": "/doctor/inbox",
                     "icon": "mail",
@@ -134,15 +134,15 @@
                     }
                 },
                 {
-                    "id": "chat",
-                    "name": "chat",
+                    "id": "communication.chat",
+                    "name": "doctor.communication.chat",
                     "type": "link",
                     "route": "/doctor/chat",
                     "icon": "chat"
                 },
                 {
-                    "id": "referrals",
-                    "name": "referrals",
+                    "id": "communication.referrals",
+                    "name": "doctor.communication.referrals",
                     "type": "link",
                     "route": "/doctor/referrals",
                     "icon": "share"

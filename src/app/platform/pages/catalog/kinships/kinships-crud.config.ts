@@ -8,8 +8,8 @@ export const KINSHIPS_CRUD_CONFIG = (): CrudConfig<Kinship> => {
     const service = inject(KinshipService);
 
     return {
-        entityName: 'menu.catalog.kinship.singular',
-        entityNamePlural: 'menu.catalog.kinship.plural',
+        entityName: 'catalog.kinships.singular',
+        entityNamePlural: 'catalog.kinships.plural',
 
         getId: (entity: Kinship) => entity.id!,
 
@@ -22,12 +22,12 @@ export const KINSHIPS_CRUD_CONFIG = (): CrudConfig<Kinship> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.kinship.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.kinship.fields.code', sortable: true, width: '120px' },
-            { field: 'name', header: 'menu.catalog.kinship.fields.name', sortable: true, width: '250px' },
+            { field: 'id', header: 'catalog.kinships.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.kinships.fields.code', sortable: true, width: '120px' },
+            { field: 'name', header: 'catalog.kinships.fields.name', sortable: true, width: '250px' },
             {
                 field: 'active',
-                header: 'menu.catalog.kinship.fields.active',
+                header: 'catalog.kinships.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const KINSHIPS_CRUD_CONFIG = (): CrudConfig<Kinship> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.kinship.fields.code',
+                    label: 'catalog.kinships.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const KINSHIPS_CRUD_CONFIG = (): CrudConfig<Kinship> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.kinship.fields.name',
+                    label: 'catalog.kinships.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -61,7 +61,7 @@ export const KINSHIPS_CRUD_CONFIG = (): CrudConfig<Kinship> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.kinship.fields.active',
+                    label: 'catalog.kinships.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

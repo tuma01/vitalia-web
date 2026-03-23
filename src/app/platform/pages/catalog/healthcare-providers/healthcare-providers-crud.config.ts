@@ -8,8 +8,8 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
     const service = inject(HealthcareProviderService);
 
     return {
-        entityName: 'menu.catalog.healthcare_provider.singular',
-        entityNamePlural: 'menu.catalog.healthcare_provider.plural',
+        entityName: 'catalog.healthcare.providers.singular',
+        entityNamePlural: 'catalog.healthcare.providers.plural',
 
         getId: (entity: HealthcareProvider) => entity.id!,
 
@@ -22,15 +22,15 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.healthcare_provider.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.healthcare_provider.fields.code', sortable: true, width: '120px' },
-            { field: 'name', header: 'menu.catalog.healthcare_provider.fields.name', sortable: true, width: '250px' },
-            { field: 'taxId', header: 'menu.catalog.healthcare_provider.fields.taxId', sortable: true, width: '150px' },
-            { field: 'email', header: 'menu.catalog.healthcare_provider.fields.email', sortable: true, width: '200px' },
-            { field: 'phone', header: 'menu.catalog.healthcare_provider.fields.phone', sortable: true, width: '150px' },
+            { field: 'id', header: 'catalog.healthcare.providers.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.healthcare.providers.fields.code', sortable: true, width: '120px' },
+            { field: 'name', header: 'catalog.healthcare.providers.fields.name', sortable: true, width: '250px' },
+            { field: 'taxId', header: 'catalog.healthcare.providers.fields.taxId', sortable: true, width: '150px' },
+            { field: 'email', header: 'catalog.healthcare.providers.fields.email', sortable: true, width: '200px' },
+            { field: 'phone', header: 'catalog.healthcare.providers.fields.phone', sortable: true, width: '150px' },
             {
                 field: 'active',
-                header: 'menu.catalog.healthcare_provider.fields.active',
+                header: 'catalog.healthcare.providers.fields.active',
                 sortable: true,
                 width: '110px',
                 type: 'tag',
@@ -46,7 +46,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.healthcare_provider.fields.code',
+                    label: 'catalog.healthcare.providers.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -55,7 +55,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                 },
                 {
                     name: 'taxId',
-                    label: 'menu.catalog.healthcare_provider.fields.taxId',
+                    label: 'catalog.healthcare.providers.fields.taxId',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -64,7 +64,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.healthcare_provider.fields.name',
+                    label: 'catalog.healthcare.providers.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 2,
@@ -73,7 +73,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                 },
                 {
                     name: 'email',
-                    label: 'menu.catalog.healthcare_provider.fields.email',
+                    label: 'catalog.healthcare.providers.fields.email',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -82,7 +82,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                 },
                 {
                     name: 'phone',
-                    label: 'menu.catalog.healthcare_provider.fields.phone',
+                    label: 'catalog.healthcare.providers.fields.phone',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -91,7 +91,7 @@ export const HEALTHCARE_PROVIDERS_CRUD_CONFIG = (): CrudConfig<HealthcareProvide
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.healthcare_provider.fields.active',
+                    label: 'catalog.healthcare.providers.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

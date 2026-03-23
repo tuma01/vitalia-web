@@ -23,7 +23,7 @@ import { Gender } from 'app/api/models/gender';
   `
 })
 export class GendersAddComponent extends CrudBaseAddEditComponent<Gender> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.demographics.gender.singular';
+    protected override entityNameKey = 'catalog.demographics.genders.singular';
     public readonly config = GENDERS_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

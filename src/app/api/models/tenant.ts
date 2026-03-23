@@ -25,6 +25,11 @@ export interface Tenant {
   description?: string;
 
   /**
+   * Favicon URL for branding
+   */
+  faviconUrl?: string;
+
+  /**
    * Id Tenant
    */
   id?: number;
@@ -33,6 +38,11 @@ export interface Tenant {
    * Indicates if the Tenant is active
    */
   isActive?: boolean;
+
+  /**
+   * Primary Logo URL for branding
+   */
+  logoUrl?: string;
 
   /**
    * Name of the Tenant

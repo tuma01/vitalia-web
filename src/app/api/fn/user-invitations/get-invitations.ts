@@ -13,7 +13,7 @@ import { PageResponseDtoInvitationResponse } from '../../models/page-response-dt
 export interface GetInvitations$Params {
 
 /**
- * The target Hospital tenant code.
+ * The target tenant code.
  */
   tenantCode: string;
 

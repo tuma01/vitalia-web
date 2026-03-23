@@ -23,7 +23,7 @@ import { BloodType } from 'app/api/models/blood-type';
     `
 })
 export class BloodTypesEditComponent extends CrudBaseAddEditComponent<BloodType> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.blood_type.singular';
+    protected override entityNameKey = 'catalog.blood.types.singular';
     public readonly config = BLOOD_TYPES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

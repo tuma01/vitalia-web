@@ -8,8 +8,8 @@ export const DEPARTMENTS_CRUD_CONFIG = (): CrudConfig<Departamento> => {
     const service = inject(DepartamentoService);
 
     return {
-        entityName: 'menu.catalog.geography.department.singular',
-        entityNamePlural: 'menu.catalog.geography.department.plural',
+        entityName: 'catalog.geography.departments.singular',
+        entityNamePlural: 'catalog.geography.departments.plural',
 
         getId: (entity: Departamento) => entity.id!,
 
@@ -23,19 +23,19 @@ export const DEPARTMENTS_CRUD_CONFIG = (): CrudConfig<Departamento> => {
 
         columns: [
             { field: 'id', header: 'common.id', sortable: true, width: '80px' },
-            { field: 'nombre', header: 'menu.catalog.geography.department.fields.name', sortable: true },
-            { field: 'countryId', header: 'menu.catalog.geography.department.fields.country', sortable: false, width: '250px' }
+            { field: 'nombre', header: 'catalog.geography.departments.fields.name', sortable: true },
+            { field: 'countryId', header: 'catalog.geography.departments.fields.country', sortable: false, width: '250px' }
         ],
 
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'nombre', label: 'menu.catalog.geography.department.fields.name', type: 'text', required: true, colSpan: 1 },
-                { name: 'poblacion', label: 'menu.catalog.geography.department.fields.population', type: 'number', colSpan: 1 },
-                { name: 'superficie', label: 'menu.catalog.geography.department.fields.surface', type: 'number', colSpan: 1 },
+                { name: 'nombre', label: 'catalog.geography.departments.fields.name', type: 'text', required: true, colSpan: 1 },
+                { name: 'poblacion', label: 'catalog.geography.departments.fields.population', type: 'number', colSpan: 1 },
+                { name: 'superficie', label: 'catalog.geography.departments.fields.surface', type: 'number', colSpan: 1 },
                 {
                     name: 'countryId',
-                    label: 'menu.catalog.geography.department.fields.country',
+                    label: 'catalog.geography.departments.fields.country',
                     type: 'select',
                     required: true,
                     colSpan: 1,

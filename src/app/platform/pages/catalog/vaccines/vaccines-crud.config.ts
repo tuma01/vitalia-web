@@ -8,8 +8,8 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
     const service = inject(VaccineService);
 
     return {
-        entityName: 'menu.catalog.vaccines.singular',
-        entityNamePlural: 'menu.catalog.vaccines.plural',
+        entityName: 'catalog.vaccines.singular',
+        entityNamePlural: 'catalog.vaccines.plural',
 
         getId: (entity: Vaccine) => entity.id!,
 
@@ -22,12 +22,12 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.vaccines.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.vaccines.fields.code', sortable: true, width: '150px' },
-            { field: 'name', header: 'menu.catalog.vaccines.fields.name', sortable: true, width: '300px' },
+            { field: 'id', header: 'catalog.vaccines.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.vaccines.fields.code', sortable: true, width: '150px' },
+            { field: 'name', header: 'catalog.vaccines.fields.name', sortable: true, width: '300px' },
             {
                 field: 'active',
-                header: 'menu.catalog.vaccines.fields.active',
+                header: 'catalog.vaccines.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.vaccines.fields.code',
+                    label: 'catalog.vaccines.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.vaccines.fields.name',
+                    label: 'catalog.vaccines.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -61,7 +61,7 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.vaccines.fields.active',
+                    label: 'catalog.vaccines.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [
@@ -71,7 +71,7 @@ export const VACCINES_CRUD_CONFIG = (): CrudConfig<Vaccine> => {
                 },
                 {
                     name: 'description',
-                    label: 'menu.catalog.vaccines.fields.description',
+                    label: 'catalog.vaccines.fields.description',
                     type: 'textarea',
                     required: false,
                     colSpan: 2,

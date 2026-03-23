@@ -40,7 +40,7 @@ export interface CrudActionButton<T = any> {
 export interface CrudFormFieldConfig<T = any> {
     name: keyof T | string;
     label: string;
-    type: 'text' | 'number' | 'select' | 'date' | 'checkbox' | 'textarea' | 'password' | 'radio';
+    type: 'text' | 'number' | 'select' | 'date' | 'checkbox' | 'textarea' | 'password' | 'radio' | 'address';
     required?: boolean;
     placeholder?: string;
     disabled?: boolean;
@@ -58,11 +58,14 @@ export interface CrudFormFieldConfig<T = any> {
     pattern?: string | RegExp;
     value?: any;         // Default/Initial value for the field
     icon?: string;        // Material icon name (optional)
+    sectionTitle?: string; // Optional title to display before this field
+    sectionIcon?: string;  // Optional material icon for the section header
 }
 
 export interface CrudFormConfig<T = any> {
     layout: {
         columns: number;
+        mode?: 'sections' | 'tabs'; // Premium navigation: sections (default) or mat-tabs
     };
     fields: CrudFormFieldConfig<T>[];
 }

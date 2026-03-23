@@ -36,7 +36,7 @@ export class ProceduresListComponent {
                 {
                     editHandler: (record: MedicalProcedure) => this.edit(record),
                     deleteHandler: (record: MedicalProcedure) => this.deleteProcedure(record),
-                    entityType: 'menu.catalog.procedures.singular',
+                    entityType: 'catalog.procedures.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

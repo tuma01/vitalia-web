@@ -36,7 +36,7 @@ export class GendersListComponent {
                 {
                     editHandler: (record: Gender) => this.edit(record),
                     deleteHandler: (record: Gender) => this.deleteGender(record),
-                    entityType: 'menu.catalog.demographics.gender.singular',
+                    entityType: 'catalog.demographics.genders.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

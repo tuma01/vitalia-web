@@ -14,8 +14,8 @@ export const ADMINISTRATORS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list
     const tenantService = inject(TenantService);
 
     return {
-        entityName: 'menu.tenant_governance.administrators.singular',
-        entityNamePlural: 'menu.tenant_governance.administrators.plural',
+        entityName: 'tenant_governance.administrators.singular',
+        entityNamePlural: 'tenant_governance.administrators.plural',
 
         getId: (entity: TenantAdmin) => entity.id!,
 
@@ -28,35 +28,35 @@ export const ADMINISTRATORS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list
         }),
 
         columns: [
-            { field: 'id', header: 'menu.tenant_governance.administrators.fields.id', sortable: true, width: '80px' },
+            { field: 'id', header: 'tenant_governance.administrators.fields.id', sortable: true, width: '80px' },
             {
                 field: 'tenant.name',
-                header: 'menu.tenant_governance.administrators.fields.tenantId',
+                header: 'tenant_governance.administrators.fields.tenantId',
                 sortable: true,
                 formatter: (record: TenantAdmin) => record.tenant?.name || ''
             },
             {
                 field: 'nombre',
-                header: 'menu.tenant_governance.administrators.fields.nombre',
+                header: 'tenant_governance.administrators.fields.nombre',
                 sortable: true,
                 formatter: (record: TenantAdmin) => `${record.nombre} ${record.apellidoPaterno}`
             },
             { 
                 field: 'email', 
-                header: 'menu.tenant_governance.administrators.fields.email', 
+                header: 'tenant_governance.administrators.fields.email', 
                 sortable: true,
                 formatter: (record: TenantAdmin) => record.user?.email || '-'
             },
             {
                 field: 'adminLevel',
-                header: 'menu.tenant_governance.administrators.fields.adminLevel',
+                header: 'tenant_governance.administrators.fields.adminLevel',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
                 tag: {
-                    'LEVEL_1': { text: 'menu.tenant_governance.administrators.fields.level1_short', color: '#1976d2' },
-                    'LEVEL_2': { text: 'menu.tenant_governance.administrators.fields.level2_short', color: '#388e3c' },
-                    'LEVEL_3': { text: 'menu.tenant_governance.administrators.fields.level3_short', color: '#f57c00' }
+                    'LEVEL_1': { text: 'tenant_governance.administrators.fields.level1_short', color: '#1976d2' },
+                    'LEVEL_2': { text: 'tenant_governance.administrators.fields.level2_short', color: '#388e3c' },
+                    'LEVEL_3': { text: 'tenant_governance.administrators.fields.level3_short', color: '#f57c00' }
                 }
             }
         ],
@@ -66,7 +66,7 @@ export const ADMINISTRATORS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list
             fields: [
                 {
                     name: 'tenant',
-                    label: 'menu.tenant_governance.administrators.fields.tenantId',
+                    label: 'tenant_governance.administrators.fields.tenantId',
                     type: 'select',
                     icon: 'business',
                     required: true,
@@ -75,43 +75,43 @@ export const ADMINISTRATORS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list
                 },
                 {
                     name: 'adminLevel',
-                    label: 'menu.tenant_governance.administrators.fields.adminLevel',
+                    label: 'tenant_governance.administrators.fields.adminLevel',
                     type: 'select',
                     icon: 'admin_panel_settings',
                     required: true,
                     colSpan: 1,
                     options: [
-                        { label: 'menu.tenant_governance.administrators.fields.level1', value: 'LEVEL_1' },
-                        { label: 'menu.tenant_governance.administrators.fields.level2', value: 'LEVEL_2' },
-                        { label: 'menu.tenant_governance.administrators.fields.level3', value: 'LEVEL_3' }
+                        { label: 'tenant_governance.administrators.fields.level1', value: 'LEVEL_1' },
+                        { label: 'tenant_governance.administrators.fields.level2', value: 'LEVEL_2' },
+                        { label: 'tenant_governance.administrators.fields.level3', value: 'LEVEL_3' }
                     ]
                 },
                 {
                     name: 'password',
-                    label: 'menu.tenant_governance.administrators.fields.password',
+                    label: 'tenant_governance.administrators.fields.password',
                     type: 'password',
                     icon: 'lock',
                     required: mode === 'add',
                     disabled: mode === 'edit',
                     showPasswordToggle: true,
                     placeholder: mode === 'add'
-                        ? 'menu.tenant_governance.administrators.fields.password'
-                        : 'menu.tenant_governance.administrators.fields.password_placeholder_edit',
+                        ? 'tenant_governance.administrators.fields.password'
+                        : 'tenant_governance.administrators.fields.password_placeholder_edit',
                     hint: mode === 'edit'
-                        ? 'menu.tenant_governance.administrators.fields.password_hint'
+                        ? 'tenant_governance.administrators.fields.password_hint'
                         : undefined,
                     colSpan: 1,
                     groupWithNext: mode === 'edit'
                 },
                 ...(mode === 'edit' ? [{
                     name: 'changePassword',
-                    label: 'menu.tenant_governance.administrators.fields.change_password',
+                    label: 'tenant_governance.administrators.fields.change_password',
                     type: 'checkbox' as const,
                     colSpan: 1
                 }] : []),
                 {
                     name: 'userEmail',
-                    label: 'menu.tenant_governance.administrators.fields.email',
+                    label: 'tenant_governance.administrators.fields.email',
                     type: 'text',
                     icon: 'email',
                     required: true,
@@ -120,7 +120,7 @@ export const ADMINISTRATORS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list
                 },
                 {
                     name: 'displayRole',
-                    label: 'menu.tenant_governance.administrators.fields.role_info',
+                    label: 'tenant_governance.administrators.fields.role_info',
                     type: 'text',
                     icon: 'verified_user',
                     disabled: true,

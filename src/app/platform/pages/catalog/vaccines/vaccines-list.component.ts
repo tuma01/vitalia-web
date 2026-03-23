@@ -36,7 +36,7 @@ export class VaccinesListComponent {
                 {
                     editHandler: (record: Vaccine) => this.edit(record),
                     deleteHandler: (record: Vaccine) => this.deleteVaccine(record),
-                    entityType: 'menu.catalog.vaccines.singular',
+                    entityType: 'catalog.vaccines.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

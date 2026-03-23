@@ -1,469 +1,793 @@
 {
-    "app": {
-        "title": "Vitalia",
-        "description": "Système de Gestion Hospitalière"
-    },
-    "address": {
-        "section_title": "Adresse",
-        "loading": "Chargement des données géographiques...",
-        "country": "Pays",
-        "departamento": "Département",
-        "provincia": "Province",
-        "municipio": "Municipalité",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "direccion_placeholder": "Ex: Av. Principale 123",
-        "direccion_required": "L'adresse est requise",
-        "numero": "Numéro",
-        "piso": "Étage",
-        "casillaPostal": "Boîte Postale",
-        "select_country_first": "Sélectionnez un pays d'abord",
-        "select_departamento_first": "Sélectionnez un département d'abord",
-        "select_provincia_first": "Sélectionnez une province d'abord"
-    },
     "common": {
-        "search": "Rechercher",
         "id": "ID",
-        "save": "Enregistrer",
-        "cancel": "Annuler",
-        "required_fields": "Les champs avec * sont obligatoires",
-        "delete": "Supprimer",
-        "edit": "Modifier",
+        "operations": "Opérations",
+        "active": "Actif",
+        "inactive": "Inactif",
+        "confirm_delete_title": "Confirmer la suppression",
+        "confirm_delete_message": "Voulez-vous vraiment supprimer cet enregistrement ?",
+        "confirm_delete_generic": "Supprimer cet enregistrement ?",
         "add": "Ajouter",
-        "close": "Fermer",
-        "loading": "Chargement...",
-        "noData": "Aucune donnée disponible",
-        "login": "Connexion",
-        "delete_all": "Tout supprimer",
-        "delete_selected": "Supprimer la sélection",
-        "delete_selection": "Supprimer la sélection",
+        "edit": "Modifier",
+        "search": "Rechercher...",
+        "refresh": "Actualiser",
         "deselect_all": "Tout désélectionner",
         "item_selected": "élément sélectionné",
         "items_selected": "éléments sélectionnés",
-        "select_all": "Tout sélectionner",
-        "ok": "Ok",
-        "searchPlaceholder": "Rechercher {{entityName}}...",
-        "operations": "Opérations",
-        "refresh": "Actualiser",
-        "remember_me": "Se souvenir de moi",
-        "please_enter": "S'il vous plaît entrez",
-        "field_isRequired": "{{fieldName}} est requis",
-        "have_no_account": "Vous n'avez pas de compte ?",
-        "create_one_account": "Cliquez ici pour en créer un",
-        "sign_up": "Inscrivez-vous",
-        "sign_in": "Connexion",
-        "forgot_password": "Mot de passe oublié ?",
-        "enter_your_credentials": "Entrez vos identifiants pour accéder à votre compte",
-        "select_health_center": "Sélectionner le centre de santé",
-        "select_role_and_credentials": "Sélectionnez votre rôle et entrez vos identifiants",
-        "confirm_delete_generic": "Êtes-vous sûr de vouloir supprimer cet enregistrement ?",
-        "confirmation_delete": "Confirmation de suppression",
-        "confirm_delete_title": "Confirmer la suppression",
-        "confirm_delete_message": "Êtes-vous sûr de vouloir supprimer cet {{entity}} ? Cette action est irréversible.",
-        "confirm_delete_bulk_message": "Êtes-vous sûr de vouloir supprimer les {{name}} {{entity}}(s) sélectionnés ? Cette action est irréversible.",
-        "invalid_field": "Champ invalide",
-        "field_required": "Ce champ est obligatoire",
-        "field_min_length": "Minimum {{min}} caractères",
-        "field_max_length": "Maximum {{max}} caractères",
+        "delete_selection": "Supprimer la sélection",
+        "required_fields": "Champs obligatoires",
+        "actions": {
+            "save": "Enregistrer",
+            "cancel": "Annuler",
+            "edit": "Modifier",
+            "delete": "Supprimer",
+            "add": "Ajouter",
+            "search": "Rechercher",
+            "back": "Retour",
+            "actions": "Opérations",
+            "view_details": "Voir Détails"
+        },
+        "status": {
+            "active": "Actif",
+            "inactive": "Inactif",
+            "pending": "En attente",
+            "completed": "Terminé"
+        },
+        "delete_confirm": "Êtes-vous sûr de vouloir supprimer cet enregistrement ?",
         "delete_success": "Enregistrement supprimé avec succès",
-        "delete_error": "Erreur lors de la suppression. Veuillez réessayer",
-        "active": "Actif",
-        "inactive": "Inactif",
-        "sending": "Envoi...",
-        "show": "Afficher",
-        "hide": "Masquer",
+        "delete_error": "Erreur lors de la suppression",
+        "save_success": "Enregistrement sauvegardé avec succès",
+        "save_error": "Erreur lors de la sauvegarde",
+        "close": "Fermer",
+        "person_types": {
+            "admin": "Administrateur",
+            "employee": "Employé",
+            "nurse": "Infirmier",
+            "doctor": "Médecin",
+            "patient": "Patient"
+        },
+        "login": "Se connecter",
+        "select_role_and_credentials": "Sélectionnez votre rôle et saisissez vos identifiants",
+        "forgot_password": "Mot de passe oublié ?",
+        "errors": {
+            "emailRequired": "L'e-mail est requis",
+            "emailInvalid": "Adresse e-mail invalide",
+            "passwordRequired": "Le mot de passe est requis",
+            "passwordMinLength": "Minimum 6 caractères"
+        },
+        "address": "Adresse",
+        "yes": "Oui",
+        "no": "Non",
+        "delete": "Supprimer",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "confirm_delete_bulk_message": "Êtes-vous sûr de vouloir supprimer ces éléments?",
+        "PASSPORT": "Passeport",
+        "FOREIGN_ID": "ID Étranger",
         "MASCULINO": "Masculin",
         "FEMENINO": "Féminin",
         "OTRO": "Autre",
         "SOLTERO": "Célibataire",
-        "CASADO": "Marié(e)",
-        "DIVORCIADO": "Divorcé(e)",
-        "VIUDO": "Veuf/Veuve",
-        "PASSPORT": "Passeport",
-        "FOREIGN_ID": "ID Étranger",
-        "person_types": {
-            "admin": "Administrateur",
-            "employee": "Employé",
-            "nurse": "Infirmier(e)",
-            "doctor": "Docteur(e)",
-            "patient": "Patient"
+        "CASADO": "Marié",
+        "DIVORCIADO": "Divorcé",
+        "VIUDO": "Veuf"
+    },
+    "person": {
+        "fields": {
+            "nombre": "Prénoms",
+            "segundoNombre": "Deuxième Prénom",
+            "apellidoPaterno": "Nom de Famille",
+            "apellidoMaterno": "Nom de Jeune Fille",
+            "fechaNacimiento": "Date de Naissance",
+            "genero": "Genre",
+            "estadoCivil": "État Civil",
+            "telefono": "Numéro de Téléphone",
+            "email": "Adresse E-mail Personnelle"
         }
     },
-    "crud": {
-        "save_success": "{{entity}} enregistré avec succès",
-        "save_error": "Erreur lors de l'enregistrement de {{entity}}",
-        "load_error": "Erreur lors du chargement des données de {{entity}}",
-        "validation_error": "Le formulaire contient des erreurs. Veuillez les vérifier.",
-        "default_item_name": "Enregistrement"
+    "address": {
+        "section_title": "Situation Géographique",
+        "loading": "Chargement des données géographiques...",
+        "country": "Pays",
+        "departamento": "Département / État",
+        "provincia": "Province",
+        "municipio": "Municipalité",
+        "direccion": "Adresse",
+        "direccion_placeholder": "Ex: 123 Rue Principale",
+        "direccion_required": "L'adresse est obligatoire",
+        "ciudad": "Ville",
+        "numero": "Numéro",
+        "piso": "Étage / Appt",
+        "casillaPostal": "Boîte Postale",
+        "select_country_first": "Sélectionnez un pays d'abord",
+        "select_departamento_first": "Sélectionnez un département d'abord",
+        "select_provincia_first": "Sélectionnez une province d'abord",
+        "no_departments_found": "Aucun département trouvé",
+        "no_provinces_found": "Aucune province trouvée",
+        "no_municipalities_found": "Aucune municipalité trouvée"
     },
     "validation": {
         "required": "Ce champ est obligatoire",
+        "email": "Adresse e-mail invalide",
         "minlength": "Minimum {{requiredLength}} caractères",
         "maxlength": "Maximum {{requiredLength}} caractères",
-        "email": "Adresse e-mail invalide",
         "pattern": "Format invalide"
     },
-    "entity": {
-        "country": "Pays",
-        "countries": "Pays",
-        "department": "Département",
-        "departments": "Départements",
-        "province": "Province",
-        "provinces": "Provinces",
-        "municipality": "Municipalité",
-        "municipalities": "Municipalités",
-        "hospital": "Hôpital",
-        "patient": "Patient",
-        "doctor": "Médecin",
-        "nurse": "Infirmier/ère"
-    },
-    "paginator": {
-        "itemsPerPage": "Éléments par page :",
-        "nextPage": "Page suivante",
-        "previousPage": "Page précédente",
-        "firstPage": "Première page",
-        "lastPage": "Dernière page",
-        "range": "{{start}} - {{end}} de {{length}}",
-        "rangeEmpty": "0 de {{length}}"
+    "login": {
+        "title": "Connexion",
+        "email": "Adresse E-mail",
+        "password": "Mot de passe",
+        "rememberMe": "Se souvenir de moi",
+        "platformTitle": "Plateforme Vitalia",
+        "systemAdmin": "Administration du Système",
+        "loggingIn": "Connexion en cours...",
+        "secureAccess": "Accès sécurisé à la plateforme",
+        "errors": {
+            "emailRequired": "L'e-mail est requis",
+            "emailInvalid": "Adresse e-mail invalide",
+            "passwordRequired": "Le mot de passe est requis",
+            "passwordMinLength": "Minimum 8 caractères"
+        },
+        "messages": {
+            "verify_form": "Veuillez vérifier les données du formulaire.",
+            "account_locked": "Votre compte est bloqué. Contactez le support.",
+            "invalid_credentials": "E-mail ou mot de passe incorrect.",
+            "server_error": "Erreur interne du serveur. Réessayez plus tarde.",
+            "network_error": "Impossible de se connecter au serveur. Vérifiez la connexion et el backend.",
+            "role_unavailable": "Ce rôle sera disponible prochainement.",
+            "login_success": "Connexion réussie"
+        }
     },
     "header": {
         "search": "Rechercher...",
-        "notifications": "Notifications",
-        "profile": "Profil",
+        "profile": "Mon Profil",
         "settings": "Paramètres",
         "logout": "Déconnexion"
+    },
+    "tenant_governance": {
+        "organizations": {
+            "singular": "Organisation",
+            "plural": "Organisations",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom de l'Organisation",
+                "type": "Type",
+                "isActive": "État",
+                "themeId": "Thème Visuel",
+                "description": "Description"
+            },
+            "types": {
+                "hospital": "Hôpital",
+                "clinic": "Clinique",
+                "pharmacy": "Pharmacie",
+                "laboratory": "Laboratoire",
+                "global": "Global / Central"
+            },
+            "tabs": {
+                "general": "Informations Générales",
+                "admins": "Administrateurs"
+            }
+        },
+        "administrators": {
+            "singular": "Administrateur",
+            "plural": "Administrateurs",
+            "fields": {
+                "id": "ID",
+                "tenantId": "Organisation",
+                "nombre": "Nom Complet",
+                "email": "Adresse E-mail",
+                "adminLevel": "Niveau d'Accès",
+                "level1": "Accès Total",
+                "level2": "Gestion Intermédiaire",
+                "level3": "Lecture Seule",
+                "level1_short": "Niveau 1",
+                "level2_short": "Niveau 2",
+                "level3_short": "Niveau 3",
+                "password": "Mot de passe",
+                "password_hint": "Laissez vide pour conserver l'actuel",
+                "password_placeholder_edit": "••••••••",
+                "change_password": "Changer le mot de passe",
+                "role_info": "Rôle de l'Utilisateur"
+            }
+        }
+    },
+    "tenant_config": {
+        "singular": "Configuration du Client",
+        "plural": "Configurations des Clients",
+        "fields": {
+            "id": "ID",
+            "tenantId": "Organisation",
+            "defaultDomain": "Domaine Par Défaut",
+            "maxUsers": "Utilisateurs Maximum",
+            "allowLocal": "Autoriser Accès Local ?",
+            "storageQuotaBytes": "Quota de Stockage",
+            "timezone": "Fuseau Horaire",
+            "locale": "Langue Locale",
+            "requireEmailVerification": "Vérification Requise",
+            "fallbackHeader": "En-tête de Secours",
+            "passwordPolicyJson": "Politique de Mots de Passe",
+            "extraJson": "Configuration Supplémentaire"
+        }
     },
     "menu": {
         "dashboard": {
             "title": "Tableau de Bord"
         },
-        "platform_governance": {
-            "title": "Gouvernance de Plateforme",
-            "super_admins": {
-                "title": "Gestion des SuperAdmins",
-                "singular": "SuperAdmin",
-                "plural": "SuperAdmins",
-                "list": "Liste des SuperAdmins",
-                "add": "Ajouter un SuperAdmin",
-                "edit": "Modifier le SuperAdmin",
-                "fields": {
-                    "id": "ID",
-                    "nombre": "Nom",
-                    "apellidoPaterno": "Premier Nom",
-                    "apellidoMaterno": "Deuxième Nom",
-                    "email": "E-mail (Connexion)",
-                    "level": "Niveau d'Accès",
-                    "globalAccess": "Accès Global",
-                    "password": "Mot de passe",
-                    "change_password": "Changer le mot de passe"
+        "tenant": {
+            "governance": {
+                "title": "Gouvernance des Clients",
+                "organizations": {
+                    "title": "Gestion des Organisations",
+                    "list": "Liste des Organisations",
+                    "add": "Ajouter une Organisation",
+                    "edit": "Modifier l'Organisation"
+                },
+                "administrators": {
+                    "title": "Gestion des Administrateurs",
+                    "list": "Liste des Administrateurs",
+                    "add": "Ajouter un Administrateur",
+                    "edit": "Modifier l'Administrateur"
+                },
+                "billing": {
+                    "licensing": {
+                        "title": "Facturation et Licences"
+                    }
                 }
             },
-            "tenants": {
-                "title": "Gestion des Organisations (Tenants)",
-                "singular": "Organisation",
-                "plural": "Organisations",
-                "list": "Liste des Organisations",
-                "add": "Ajouter une Organisation",
-                "edit": "Modifier l'Organisation",
-                "fields": {
-                    "id": "ID",
-                    "name": "Nom de l'Organisation",
-                    "description": "Description",
-                    "status": "Statut",
-                    "subdomain": "Sous-domaine",
-                    "domain": "Domaine Personnalisé",
-                    "active": "Active",
-                    "createdAt": "Date de Création",
-                    "updatedAt": "Dernière Mise à Jour"
-                }
+            "config": {
+                "title": "Configuration Client",
+                "list": "Configurations",
+                "add": "Nouvelle Configuration",
+                "edit": "Modifier la Configuration"
             },
-            "catalogs": {
-                "title": "Catalogues Maîtres",
-                "document_type": {
-                    "title": "Types de Documents",
-                    "singular": "Type de Document",
-                    "plural": "Types de Document",
-                    "list": "Liste des Types de Document",
-                    "add": "Ajouter un Type de Document",
-                    "edit": "Modifier le Type de Document",
-                    "fields": {
-                        "id": "ID",
-                        "code": "Code",
-                        "name": "Nom",
-                        "active": "Actif"
+            "admin": {
+                "dashboard": {
+                    "title": "Tableau de Bord Principal"
+                },
+                "patients": {
+                    "title": "Gestion des Patients",
+                    "registration": "Enregistrement des Patients",
+                    "records": "Dossiers Médicaux",
+                    "documents": "Documents du Patient"
+                },
+                "admissions": {
+                    "title": "Admissions",
+                    "admission": "Nouvelle Admission",
+                    "emergency": "Urgences",
+                    "transfers": "Transferts",
+                    "discharges": "Sorties Médicales"
+                },
+                "appointments": {
+                    "title": "Soins et RDV",
+                    "calendar": "Agenda Médical",
+                    "outpatient": "Consultation Externe",
+                    "telemedicine": "Télémédecine"
+                },
+                "hospitalization": {
+                    "title": "Hospitalisation",
+                    "beds": "Carte des Lits",
+                    "list": "Patients Hospitalisés"
+                },
+                "clinical": {
+                    "services": {
+                        "title": "Services Cliniques",
+                        "lab": "Laboratoire Clinique",
+                        "imaging": "Imagerie",
+                        "results": "Résultats"
                     }
                 },
-                "gender": {
+                "pharmacy": {
+                    "title": "Pharmacie",
+                    "inventory": "Gestion Inventaire",
+                    "prescriptions": "Ordonnances",
+                    "purchases": "Achats"
+                },
+                "medical": {
+                    "staff": {
+                        "title": "Personnel Médical",
+                        "directory": "Annuaire Médical",
+                        "shifts": "Gestion des Gardes",
+                        "teams": "Équipes"
+                    }
+                },
+                "finance": {
+                    "title": "Assurances et Facturation",
+                    "billing": "Facturation Hospitalière",
+                    "contracts": "Contrats et Assurances",
+                    "payments": "Gestion des Paiements"
+                },
+                "resources": {
+                    "title": "Ressources",
+                    "equipment": "Équipement Médical",
+                    "rooms": "Salles",
+                    "maintenance": "Maintenance"
+                },
+                "reports": {
+                    "title": "Analyses et Rapports",
+                    "statistics": "Statistique Générale",
+                    "kpis": "Indicateurs Clés (KPIs)"
+                },
+                "admin": {
+                    "title": "Administration du Système",
+                    "profile": {
+                        "title": "Profil de l'Institution"
+                    },
+                    "users": {
+                        "title": "Gestion des Accès",
+                        "list": "Liste des Utilisateurs",
+                        "add": "Assigner Utilisateur"
+                    },
+                    "invitations": {
+                        "plural": "Invitations en attente"
+                    },
+                    "roles": {
+                        "title": "Rôles et Permissions",
+                        "list": "Config des Profils"
+                    },
+                    "audit": "Audit",
+                    "integrations": "Intégrations API"
+                }
+            }
+        },
+        "catalog": {
+            "title": "Configuration Maîtresse",
+            "icd10": {
+                "title": "Diagnostics (CIM-10)",
+                "list": "Explorer Diagnostics",
+                "add": "Ajouter Diagnostic",
+                "edit": "Modifier Diagnostic"
+            },
+            "allergies": {
+                "title": "Allergies",
+                "list": "Liste des Allergies",
+                "add": "Nouvelle Allergie",
+                "edit": "Modifier Allergie"
+            },
+            "blood": {
+                "types": {
+                    "title": "Groupes Sanguins",
+                    "list": "Groupes Enregistrés",
+                    "add": "Ajouter Groupe",
+                    "edit": "Modifier Groupe"
+                }
+            },
+            "healthcare": {
+                "providers": {
+                    "title": "Prestataires",
+                    "list": "Liste des Prestataires",
+                    "add": "Nouveau Prestataire",
+                    "edit": "Modifier Prestataire"
+                }
+            },
+            "identification": {
+                "types": {
+                    "title": "Types d'ID",
+                    "list": "Liste des Types",
+                    "add": "Nouveau Type",
+                    "edit": "Modifier Type"
+                }
+            },
+            "kinships": {
+                "title": "Parentés",
+                "list": "Liens Familiaux",
+                "add": "Ajouter Parenté",
+                "edit": "Modifier Parenté"
+            },
+            "medications": {
+                "title": "Médicaments",
+                "list": "Liste des Médicaments",
+                "add": "Ajouter Médicament",
+                "edit": "Modifier Médicament"
+            },
+            "procedures": {
+                "title": "Procédures",
+                "list": "Liste des Procédures",
+                "add": "Nouvelle Procédure",
+                "edit": "Modifier Procédure"
+            },
+            "vaccines": {
+                "title": "Vaccins",
+                "list": "Liste des Vaccins",
+                "add": "Ajouter Vaccin",
+                "edit": "Modifier Vaccin"
+            },
+            "specialties": {
+                "title": "Spécialités",
+                "list": "Liste des Spécialités",
+                "add": "Nouvelle Spécialité",
+                "edit": "Modifier Spécialité"
+            },
+            "demographics": {
+                "title": "Démographie",
+                "civil": {
+                    "statuses": {
+                        "title": "États Civils",
+                        "list": "Liste des États",
+                        "add": "Nouvel État",
+                        "edit": "Modifier État"
+                    }
+                },
+                "genders": {
                     "title": "Genres",
-                    "singular": "Genre",
-                    "plural": "Genres",
                     "list": "Liste des Genres",
-                    "add": "Ajouter un Genre",
-                    "edit": "Modifier le Genre",
-                    "fields": {
-                        "id": "ID",
-                        "code": "Code",
-                        "name": "Nom",
-                        "active": "Actif"
+                    "add": "Ajouter Genre",
+                    "edit": "Modifier Genre"
+                }
+            },
+            "geography": {
+                "title": "Géographie",
+                "countries": {
+                    "title": "Pays",
+                    "list": "Liste des Pays",
+                    "add": "Ajouter Pays",
+                    "edit": "Modifier Pays"
+                },
+                "departments": {
+                    "title": "Départements",
+                    "list": "Liste des Départements",
+                    "add": "Ajouter Département",
+                    "edit": "Modifier Département"
+                },
+                "provinces": {
+                    "title": "Provinces",
+                    "list": "Liste des Provinces",
+                    "add": "Ajouter Province",
+                    "edit": "Modifier Province"
+                },
+                "municipalities": {
+                    "title": "Municipalités",
+                    "list": "Liste des Municipalités",
+                    "add": "Ajouter Municipalité",
+                    "edit": "Modifier Municipalité"
+                }
+            }
+        },
+        "platform": {
+            "governance": {
+                "title": "Gouvernance Globale",
+                "super": {
+                    "admins": {
+                        "title": "Super Administrateurs",
+                        "list": "Liste des SuperAdmins",
+                        "add": "Ajouter SuperAdmin",
+                        "edit": "Modifier Profil"
+                    }
+                }
+            }
+        },
+        "security": {
+            "compliance": {
+                "title": "Sécurité",
+                "audit": {
+                    "logs": {
+                        "title": "Logs d'Audit"
                     }
                 },
-                "civil_status": {
-                    "title": "États Civils",
+                "security": {
+                    "policies": {
+                        "title": "Politiques de Sécurité"
+                    }
+                },
+                "consent": {
+                    "registry": {
+                        "title": "Registres Consentements"
+                    }
+                }
+            }
+        },
+        "interoperability": {
+            "title": "Interopérabilité FHIR",
+            "bridge": {
+                "connectors": {
+                    "title": "Connecteurs Bridge"
+                }
+            },
+            "fhir": {
+                "hl7": {
+                    "profiles": {
+                        "title": "Profils et Extensions"
+                    }
+                }
+            },
+            "empi": {
+                "matching": {
+                    "title": "Matching d'Identité (EMPI)"
+                }
+            }
+        },
+        "intelligence": {
+            "title": "Vitalia Intelligence",
+            "operational": {
+                "stats": {
+                    "title": "Analyse Opérationnelle"
+                }
+            },
+            "broadcast": {
+                "center": {
+                    "title": "Centre de Diffusion"
+                }
+            }
+        },
+        "operational_stats": "Statistiques",
+        "broadcast_center": "Centre de Diffusion",
+        "bridge_connectors": "Connecteurs Bridge",
+        "fhir_hl7_profiles": "Profils FHIR/HL7",
+        "empi_matching": "Correspondance EMPI",
+        "audit_logs": "Journaux d'audit",
+        "security_policies": "Politiques de Sécurité",
+        "consent_registry": "Registre de Consentement",
+        "billing_licensing": "Facturation et Licences",
+        "tenant_admin": {
+            "admin": {
+                "profile": {
+                    "title": "Profil de l'Hôpital"
+                }
+            }
+        }
+    },
+    "catalog": {
+        "icd10": {
+            "singular": "Diagnostic",
+            "plural": "Diagnostics",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "description": "Description",
+                "active": "Actif"
+            }
+        },
+        "allergies": {
+            "singular": "Allergie",
+            "plural": "Allergies",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "type": "Type",
+                "active": "Actif",
+                "description": "Description"
+            }
+        },
+        "blood": {
+            "types": {
+                "singular": "Groupe Sanguin",
+                "plural": "Groupes Sanguins",
+                "fields": {
+                    "id": "ID",
+                    "code": "Code",
+                    "name": "Nom",
+                    "active": "Actif"
+                }
+            }
+        },
+        "healthcare": {
+            "providers": {
+                "singular": "Prestataire",
+                "plural": "Prestataires",
+                "fields": {
+                    "id": "ID",
+                    "code": "Code",
+                    "name": "Nom",
+                    "active": "Actif",
+                    "taxId": "NIF",
+                    "email": "Email",
+                    "phone": "Téléphone"
+                }
+            }
+        },
+        "identification": {
+            "types": {
+                "singular": "Type d'ID",
+                "plural": "Types d'ID",
+                "fields": {
+                    "id": "ID",
+                    "code": "Code",
+                    "name": "Nom",
+                    "active": "Actif"
+                }
+            }
+        },
+        "kinships": {
+            "singular": "Parenté",
+            "plural": "Parentés",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "active": "Actif"
+            }
+        },
+        "medications": {
+            "singular": "Médicament",
+            "plural": "Médicaments",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "active": "Actif",
+                "genericName": "Nom Générique",
+                "commercialName": "Nom Commercial",
+                "pharmaceuticalForm": "Forme Pharmaceutique",
+                "presentation": "Présentation",
+                "concentration": "Concentration"
+            }
+        },
+        "procedures": {
+            "singular": "Procédure",
+            "plural": "Procédures",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "active": "Actif",
+                "type": "Type"
+            }
+        },
+        "vaccines": {
+            "singular": "Vaccin",
+            "plural": "Vaccins",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "active": "Actif",
+                "description": "Description"
+            }
+        },
+        "specialties": {
+            "singular": "Spécialité",
+            "plural": "Spécialités",
+            "fields": {
+                "id": "ID",
+                "code": "Code",
+                "name": "Nom",
+                "description": "Description",
+                "targetProfession": "Profession",
+                "active": "Actif",
+                "targetProfession_options": {
+                    "doctor": "Médecin",
+                    "nurse": "Infirmier/ère",
+                    "both": "Les deux"
+                }
+            }
+        },
+        "demographics": {
+            "civil": {
+                "statuses": {
                     "singular": "État Civil",
                     "plural": "États Civils",
-                    "list": "Liste des États Civils",
-                    "add": "Ajouter un État Civil",
-                    "edit": "Modifier l'État Civil",
                     "fields": {
                         "id": "ID",
                         "code": "Code",
                         "name": "Nom",
                         "active": "Actif"
                     }
-                },
-                "kinship": {
-                    "title": "Parentés",
-                    "singular": "Parenté",
-                    "plural": "Parentés",
-                    "list": "Liste des Parentés",
-                    "add": "Ajouter une Parenté",
-                    "edit": "Modifier la Parenté",
-                    "fields": {
-                        "id": "ID",
-                        "code": "Code",
-                        "name": "Nom",
-                        "active": "Actif"
-                    }
-                },
-                "specialty": {
-                    "title": "Spécialités Médicales",
-                    "singular": "Spécialité",
-                    "plural": "Spécialités",
-                    "list": "Liste des Spécialités",
-                    "add": "Ajouter une Spécialité",
-                    "edit": "Modifier la Spécialité",
-                    "fields": {
-                        "id": "ID",
-                        "code": "Code",
-                        "name": "Nom",
-                        "description": "Description",
-                        "targetProfession": "Profession Cible",
-                        "targetProfession_options": {
-                            "doctor": "Médecin",
-                            "nurse": "Infirmier/ère",
-                            "both": "Les deux"
-                        },
-                        "active": "Actif"
-                    }
-                },
-                "demographics": {
-                    "title": "Données Démographiques",
-                    "civil_status": {
-                        "title": "États Civils",
-                        "singular": "État Civil",
-                        "plural": "États Civils",
-                        "list": "Liste des États Civils",
-                        "add": "Ajouter un État Civil",
-                        "edit": "Modifier l'État Civil",
-                        "fields": {
-                            "id": "ID",
-                            "code": "Code",
-                            "name": "Nom",
-                            "active": "Actif"
-                        }
-                    },
-                    "gender": {
-                        "title": "Genres",
-                        "singular": "Genre",
-                        "plural": "Genres",
-                        "list": "Liste des Genres",
-                        "add": "Ajouter un Genre",
-                        "edit": "Modifier le Genre",
-                        "fields": {
-                            "id": "ID",
-                            "code": "Code",
-                            "name": "Nom",
-                            "active": "Actif"
-                        }
-                    }
-                },
-                "geography": {
-                    "title": "Géographie",
-                    "country": {
-                        "title": "Pays",
-                        "singular": "Pays",
-                        "plural": "Pays",
-                        "list": "Liste des Pays",
-                        "add": "Ajouter un Pays",
-                        "edit": "Modifier le Pays",
-                        "notFound": "Aucun pays trouvé",
-                        "deleted_error": "Erreur lors de la suppression du pays. Il peut être lié à d'autres enregistrements.",
-                        "deleted_success": "Pays supprimé avec succès.",
-                        "fields": {
-                            "code": "Code",
-                            "code3": "Code ISO3",
-                            "name": "Nom",
-                            "niceName": "Nom Commun",
-                            "numCode": "Cód. Num",
-                            "phoneCode": "Cód. Tél",
-                            "currency": "Monnaie",
-                            "status": "Statut"
-                        }
-                    },
-                    "department": {
-                        "title": "Départements",
-                        "singular": "Département",
-                        "plural": "Départements",
-                        "list": "Liste des Départements",
-                        "add": "Ajouter un Département",
-                        "edit": "Modifier le Département",
-                        "fields": {
-                            "name": "Nom",
-                            "country": "Nom du Pays",
-                            "population": "Population",
-                            "surface": "Surface",
-                            "countryId": "ID du Pays"
-                        }
-                    },
-                    "province": {
-                        "title": "Provinces",
-                        "singular": "Province",
-                        "plural": "Provinces",
-                        "list": "Liste des Provinces",
-                        "add": "Ajouter une Province",
-                        "edit": "Modifier la Province",
-                        "fields": {
-                            "name": "Nom",
-                            "department": "Nom du Département",
-                            "population": "Population",
-                            "surface": "Surface",
-                            "departmentId": "ID du Département"
-                        }
-                    },
-                    "municipality": {
-                        "title": "Municipalités",
-                        "singular": "Municipalité",
-                        "plural": "Municipalités",
-                        "list": "Liste des Municipalités",
-                        "add": "Ajouter une Municipalité",
-                        "edit": "Modifier la Municipalité",
-                        "fields": {
-                            "name": "Nom",
-                            "province": "Nom de la Province",
-                            "population": "Population",
-                            "surface": "Surface",
-                            "address": "Adresse",
-                            "code_municipality": "Code de Municipalité",
-                            "provinciaId": "ID de la Province"
-                        }
-                    }
+                }
+            },
+            "genders": {
+                "singular": "Genre",
+                "plural": "Genres",
+                "fields": {
+                    "id": "ID",
+                    "code": "Code",
+                    "name": "Nom",
+                    "active": "Actif"
+                }
+            }
+        },
+        "geography": {
+            "countries": {
+                "singular": "Pays",
+                "plural": "Pays",
+                "fields": {
+                    "code": "Code",
+                    "code3": "ISO3",
+                    "name": "Nom",
+                    "niceName": "Nom Commun",
+                    "numCode": "Cód. Num",
+                    "phoneCode": "Cód. Tel",
+                    "currency": "Monnaie"
+                }
+            },
+            "departments": {
+                "singular": "Département",
+                "plural": "Départements",
+                "fields": {
+                    "name": "Nom",
+                    "country": "Pays",
+                    "population": "Población",
+                    "surface": "Superficie"
+                }
+            },
+            "provinces": {
+                "singular": "Province",
+                "plural": "Provinces",
+                "fields": {
+                    "name": "Nom",
+                    "department": "Département",
+                    "population": "Población",
+                    "surface": "Superficie"
+                }
+            },
+            "municipalities": {
+                "singular": "Municipalité",
+                "plural": "Municipalités",
+                "fields": {
+                    "name": "Nom",
+                    "province": "Province",
+                    "code_municipality": "Código Municipio",
+                    "population": "Población",
+                    "surface": "Superficie",
+                    "address": "Dirección Principal"
                 }
             }
         }
     },
     "tenant_admin": {
-        "dashboard": {
-            "title": "Tableau de Bord"
-        },
-        "patients": {
-            "title": "Patients",
-            "registration": "Enregistrement",
-            "records": "Dossiers Médicaux",
-            "documents": "Documents"
-        },
-        "admissions": {
-            "title": "Admissions",
-            "admission": "Admission",
-            "emergency": "Urgences",
-            "transfers": "Transferts",
-            "discharges": "Sorties"
-        },
-        "appointments": {
-            "title": "Soins et Rendez-vous",
-            "calendar": "Planning Médical",
-            "outpatient": "Soins Ambulatoires",
-            "telemedicine": "Télémédecine"
-        },
-        "hospitalization": {
-            "title": "Hospitalisation",
-            "beds": "Plan des Lits",
-            "list": "Patients Hospitalisés"
-        },
-        "clinical_services": {
-            "title": "Services Clíniques",
-            "lab": "Laboratoire",
-            "imaging": "Imagerie",
-            "results": "Résultats"
-        },
-        "pharmacy": {
-            "title": "Pharmacie",
-            "inventory": "Inventaire",
-            "prescriptions": "Ordonnances",
-            "purchases": "Achats"
-        },
-        "medical_staff": {
-            "title": "Corps Médical",
-            "directory": "Annuaire",
-            "shifts": "Quarts",
-            "teams": "Équipes"
-        },
-        "finance": {
-            "title": "Assurances et Facturation",
-            "billing": "Facturation",
-            "contracts": "Contrats",
-            "payments": "Paiements"
-        },
-        "resources": {
-            "title": "Ressources",
-            "equipment": "Équipement",
-            "rooms": "Salles",
-            "maintenance": "Maintenance"
-        },
-        "reports": {
-            "title": "Rapports",
-            "statistics": "Statistiques",
-            "kpis": "KPIs"
-        },
         "admin": {
-            "title": "Administration",
             "profile": {
-                "title": "Profil de l'Hôpital",
-                "singular": "Profil de l'Hôpital",
-                "plural": "Profils de l'Hôpital",
-                "edit": "Modifier le Profil",
+                "singular": "Profil Hôpital",
+                "plural": "Profils d'Hôpital",
+                "sections": {
+                    "identity": "Identité & Branding",
+                    "legal": "Légal & Fiscal",
+                    "operational": "Capacité Opérationnelle",
+                    "contact": "Contact & Réseaux",
+                    "location": "Localisation Géo",
+                    "subscription": "Abonnement & Contrat",
+                    "technical": "Config & Limites"
+                },
                 "fields": {
-                    "defaultDomain": "Domaine par Défaut",
+                    "tenantName": "Nom Commercial",
+                    "slogan": "Slogan",
+                    "tenantDescription": "Description",
+                    "logoUrl": "Logo Principal (URL)",
+                    "faviconUrl": "Favicon (URL)",
+                    "sealUrl": "Sceau Numérique (URL)",
+                    "legalName": "Nom Légal",
+                    "taxId": "ID Fiscal / SIRET",
+                    "medicalLicense": "Licence Médicale",
+                    "medicalDirector": "Directeur Médical",
+                    "medicalDirectorLicense": "Licence Directeur",
+                    "hospitalCategory": "Catégorie",
+                    "bedCapacity": "Capacité Lits",
+                    "operatingRoomsCount": "Blocs Opératoires",
+                    "emergency247": "Urgences 24/7",
+                    "contactPhone": "Téléphone",
+                    "whatsappNumber": "WhatsApp",
+                    "contactEmail": "E-mail",
+                    "faxNumber": "Fax",
+                    "website": "Site Web",
+                    "socialLinks": "Réseaux Sociaux",
+                    "direccion": "Adresse",
+                    "subscriptionPlan": "Forfait",
+                    "onboardingDate": "Date d'Arrivée",
+                    "expirationDate": "Date d'Expiration",
+                    "defaultDomain": "Domaine Par Défaut",
                     "timezone": "Fuseau Horaire",
                     "locale": "Langue",
-                    "requireEmailVerification": "Vérifier l'E-mail",
-                    "fallbackHeader": "En-tête de Secours",
-                    "passwordPolicyJson": "Politique de Mot de Passe (JSON)",
-                    "extraJson": "Config. Supplémentaire (JSON)",
-                    "maxUsers": "Utilisateurs Maximum (Plan)",
-                    "storageQuotaBytes": "Quota de Stockage (Plan)"
+                    "requireEmailVerification": "Vérif E-mail",
+                    "maxUsers": "Max Utilisateurs",
+                    "storageQuotaBytes": "Quota Stockage"
                 }
             },
             "users": {
-                "title": "Utilisateurs",
                 "singular": "Utilisateur",
-                "plural": "Utilisateurs",
-                "list": "Liste des Utilisateurs",
-                "add": "Assigner un Utilisateur",
-                "edit": "Éditer l'Assignation",
-                "invite": {
-                    "title": "Inviter un Nouvel Utilisateur",
-                    "subtitle": "Envoyez une invitation par e-mail pour que l'utilisateur complète sa propre inscription.",
-                    "send": "Envoyer l'Invitation"
-                },
+                "plural": "Gestion Utilisateurs",
                 "fields": {
                     "id": "ID",
-                    "email": "Adresse de Courriel",
-                    "nombre": "Prénom(s)",
-                    "apellidoPaterno": "Nom de famille",
+                    "email": "Adresse E-mail",
+                    "nombre": "Prénoms",
+                    "apellidoPaterno": "Nom de Famille",
                     "personType": "Type de Personne",
-                    "role": "Rôle",
+                    "role": "Rôle Assigné",
                     "status": "Statut",
-                    "assignedAt": "Date d'Assignation"
+                    "assignedAt": "Assigné le"
+                },
+                "invite": {
+                    "subtitle": "Envoyez une invitation formelle pour rejoindre de nouveaux professionnels à votre institution."
                 }
             },
             "invitations": {
@@ -471,68 +795,45 @@
                 "plural": "Invitations",
                 "fields": {
                     "id": "ID",
-                    "email": "Adresse E-mail",
-                    "role": "Rôle Assigné",
+                    "email": "E-mail",
+                    "role": "Rôle",
                     "status": "Statut",
-                    "expiresAt": "Expire le",
-                    "createdAt": "Envoyé le"
+                    "createdAt": "Envoyée le",
+                    "expiresAt": "Expire le"
                 },
                 "status": {
                     "pending": "En attente",
                     "accepted": "Acceptée",
                     "expired": "Expirée",
                     "cancelled": "Annulée"
-                },
-                "actions": {
-                    "resend": "Renvoyer l'Invitation",
-                    "resend_success": "Invitation renvoyée avec succès à {email}",
-                    "resend_error": "Erreur lors du renvoi de l'invitation"
                 }
-            },
-            "roles": {
-                "title": "Rôles et Permissions",
-                "singular": "Rôle",
-                "plural": "Rôles"
-            },
-            "audit": "Journaux d'Audit",
-            "integrations": "Intégrations"
+            }
         }
     },
     "dashboard": {
         "title": "Tableau de Bord",
+        "tenant": "Institution",
         "welcome": "Bienvenue",
-        "welcome_back": "Bienvenue, {{name}} !",
-        "role": "Rôle",
-        "tenant": "Organisation",
-        "this_month": "ce mois-ci",
+        "welcome_back": "Bienvenue, {{name}}!",
+        "stats": {
+            "total_staff": "Total Personnel",
+            "active_patients": "Patients Actifs"
+        },
         "admin": {
             "welcome": "Bienvenue",
             "new_user": "Nouvel Utilisateur",
-            "patients": {
-                "title": "Tous les Patients",
-                "subtitle": "Dossiers actifs"
-            },
-            "staff": {
-                "title": "Personnel",
-                "subtitle": "Médecins et Infirmiers",
-                "active": "Membres Actifs"
-            },
-            "alerts": {
-                "title": "Alertes Système",
-                "maintenance_needed": "serveurs nécessitent une maintenance"
-            },
             "stats": {
                 "total_staff": "Personnel Total",
-                "active_patients": "Patients Activos",
-                "appointments_today": "Rendez-vous Aujourd'hui",
+                "active_patients": "Patients Actifs",
+                "appointments_today": "RDV Aujourd'hui",
                 "bed_occupancy": "Occupation des Lits"
             },
             "activity": {
                 "title": "Activité Récente",
-                "view_all": "Voir tout",
+                "view_all": "Voir Tout",
                 "new_doctor": "Nouveau médecin enregistré",
                 "appointment_confirmed": "Rendez-vous confirmé",
-                "config_update": "Mise à jour de la configuration",
+                "config_update": "Configuration du système mise à jour",
                 "time": {
                     "minutes_ago": "Il y a {{value}} minutes",
                     "hour_ago": "Il y a 1 heure"
@@ -545,127 +846,17 @@
                 "config": "Configuration",
                 "reports": "Rapports"
             }
-        },
-        "stats": {
-            "overview": "Vue d'Ensemble"
-        }
-    },
-    "no_countries_found": "Aucun pays trouvé",
-    "no_departments_found": "Aucun département trouvé",
-    "no_provinces_found": "Aucune province trouvée",
-    "no_municipalities_found": "Aucune municipalité trouvée",
-    "theme_branding": "Thème et Image de Marque",
-    "primary_color": "Couleur Primaire",
-    "accent_color": "Couleur d'Accent",
-    "warn_color": "Couleur d'Avertissement",
-    "upload_logo": "Télécharger le Logo",
-    "upload_favicon": "Télécharger le Favicon",
-    "theme_mode": "Mode de Thème",
-    "light_mode": "Mode Clair",
-    "dark_mode": "Mode Sombre",
-    "save_theme": "Enregistrer le Thème",
-    "preview_theme": "Aperçu",
-    "reset_theme": "Réinitialiser par Défaut",
-    "pilot": {
-        "breadcrumbs": {
-            "home": "Accueil",
-            "dashboard": "Tableau de Bord",
-            "edit": "Modifier l'utilisateur"
-        },
-        "layout": {
-            "left_label": "Étiquette gauche",
-            "right_value": "Valeur droite",
-            "patient_id": "ID Patient",
-            "patient_name": "Patient: Jean Dupont",
-            "tag_priority": "Haute Priorité",
-            "tag_stable": "Stabilisé"
-        },
-        "description": "Structure et navigation centralisées avec des jetons d'espacement et d'alignement.",
-        "utilities_title": "Primitives de navigation et mise en page"
-    },
-    "platform": {
-        "shell": {
-            "description": "Section Administrative de Vitalia",
-            "wip_title": "En Construction",
-            "wip_message": "Cette fonctionnalité est en cours d'implémentation dans le cadre del nouveau modèle de gouvernance.",
-            "back_dashboard": "Retour au Tableau de Bord"
-        }
-    },
-    "login": {
-        "email": "Adresse E-mail",
-        "password": "Mot de passe",
-        "rememberMe": "Se souvenir de moi",
-        "loggingIn": "Connexion en cours...",
-        "platformTitle": "Plateforme Vitalia",
-        "systemAdmin": "Administration du Système",
-        "secureAccess": "Accès sécurisé à la plateforme",
-        "errors": {
-            "emailRequired": "L'e-mail est requis",
-            "emailInvalid": "Adresse e-mail invalide",
-            "passwordRequired": "Le mot de passe est requis",
-            "passwordMinLength": "Au moins 6 caractères"
         }
     },
     "auth": {
-        "signup": {
-            "title": "S'inscrire sur Vitalia",
-            "subtitle": "Saisissez vos coordonnées pour vous inscrire en tant que Patient dans notre système.",
-            "fields": {
-                "tenant": "Hôpital/Clinique",
-                "tenant_placeholder": "Sélectionnez votre hôpital",
-                "name": "Prénom(s)",
-                "paternal_last_name": "Nom de famille",
-                "email": "Adresse E-mail",
-                "password": "Mot de passe"
-            },
-            "button": "Créer un compte Patient",
-            "have_account": "Vous avez déjà un compte ?",
-            "login_link": "Se Connecter",
-            "error_incomplete": "Veuillez remplir tous les champs obligatoires pour créer votre compte Patient.",
-            "hero": {
-                "welcome_to": "Vous êtes à un pas de rejoindre le système hospitalier de {{tenantName}}.",
-                "description": "Système complet de gestion hospitalière pour améliorer les soins médicaux et optimiser les processus.",
-                "secure_registration": "Inscription Sécurisée",
-                "fast_onboarding": "Intégration Rapide"
-            }
-        },
-        "complete_registration": {
-            "title": "Compte Vitalia",
-            "activation_message": "Complétez vos coordonnées pour activer votre compte en tant que <strong>{{role}}</strong> à <strong>{{tenant}}</strong>.",
-            "fields": {
-                "name": "Prénom(s)",
-                "paternal_last_name": "Nom de famille",
-                "email": "Adresse E-mail (Accès)",
-                "password": "Créer un Mot de passe"
-            },
-            "button": "Terminer l'inscription",
-            "verifying_token": "Validation de votre invitation...",
-            "have_account": "Avez-vous déjà un compte actif ?",
-            "login_link": "Aller à la page de connexion",
-            "error_invalid_token": "Le lien d'invitation est invalide ou a expiré.",
-            "error_missing_token": "Lien invalide. Le jeton de sécurité est manquant.",
-            "error_incomplete": "Nous n'avons pas pu terminer votre inscription. Veuillez réessayer.",
-            "success_message": "Inscription terminée ! Vous pouvez maintenant vous connecter.",
-            "titles": {
-                "invalid_invitation": "Invitation Invalide",
-                "registration_error": "Erreur d'Inscription",
-                "ups": "Oups ! Un problème est survenu"
-            },
-            "hero": {
-                "welcome_to": "Vous êtes à un pas de rejoindre le système hospitalier de {{tenantName}}.",
-                "description": "Système complet de gestion hospitalière pour améliorer les soins médicaux et optimiser les processus.",
-                "secure_registration": "Accès Sécurisé",
-                "fast_onboarding": "Intégration Rapide"
-            }
-        },
         "roles": {
-            "ROLE_SUPER_ADMIN": "Super Administrateur",
-            "ROLE_TENANT_ADMIN": "Administrateur de l'Hôpital",
-            "ROLE_ADMIN": "Administrateur",
+            "ROLE_SUPER_ADMIN": "Super Admin",
+            "ROLE_TENANT_ADMIN": "Admin Hôpital",
             "ROLE_DOCTOR": "Médecin",
-            "ROLE_NURSE": "Infirmier(ère)",
-            "ROLE_EMPLOYEE": "Personnel Administratif",
             "ROLE_PATIENT": "Patient"
         }
+    },
+    "app": {
+        "title": "Vitalia Platform"
     }
 }

@@ -8,9 +8,9 @@ export const COUNTRIES_CRUD_CONFIG = (): CrudConfig<Country> => {
     const service = inject(CountryService);
 
     return {
-        // Aligned with menu.catalog.geography.country structure
-        entityName: 'menu.catalog.geography.country.singular',
-        entityNamePlural: 'menu.catalog.geography.country.plural',
+        // Aligned with catalog.geography.countries structure
+        entityName: 'catalog.geography.countries.singular',
+        entityNamePlural: 'catalog.geography.countries.plural',
 
         getId: (entity: Country) => entity.id!,
 
@@ -24,20 +24,20 @@ export const COUNTRIES_CRUD_CONFIG = (): CrudConfig<Country> => {
 
         columns: [
             { field: 'id', header: 'common.id', sortable: true, width: '80px' },
-            { field: 'iso', header: 'menu.catalog.geography.country.fields.code', sortable: true, width: '100px' },
-            { field: 'niceName', header: 'menu.catalog.geography.country.fields.niceName', sortable: true },
+            { field: 'iso', header: 'catalog.geography.countries.fields.code', sortable: true, width: '100px' },
+            { field: 'niceName', header: 'catalog.geography.countries.fields.niceName', sortable: true },
         ],
 
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'iso', label: 'menu.catalog.geography.country.fields.code', type: 'text', required: true, colSpan: 1, minLength: 2, maxLength: 2 },
-                { name: 'iso3', label: 'menu.catalog.geography.country.fields.code3', type: 'text', colSpan: 1, minLength: 3, maxLength: 3 },
-                { name: 'name', label: 'menu.catalog.geography.country.fields.name', type: 'text', required: true, colSpan: 1 },
-                { name: 'niceName', label: 'menu.catalog.geography.country.fields.niceName', type: 'text', required: true, colSpan: 1 },
-                { name: 'numCode', label: 'menu.catalog.geography.country.fields.numCode', type: 'number', colSpan: 1 },
-                { name: 'phoneCode', label: 'menu.catalog.geography.country.fields.phoneCode', type: 'number', required: true, colSpan: 1 },
-                { name: 'currency', label: 'menu.catalog.geography.country.fields.currency', type: 'text', colSpan: 1 },
+                { name: 'iso', label: 'catalog.geography.countries.fields.code', type: 'text', required: true, colSpan: 1, minLength: 2, maxLength: 2 },
+                { name: 'iso3', label: 'catalog.geography.countries.fields.code3', type: 'text', colSpan: 1, minLength: 3, maxLength: 3 },
+                { name: 'name', label: 'catalog.geography.countries.fields.name', type: 'text', required: true, colSpan: 1 },
+                { name: 'niceName', label: 'catalog.geography.countries.fields.niceName', type: 'text', required: true, colSpan: 1 },
+                { name: 'numCode', label: 'catalog.geography.countries.fields.numCode', type: 'number', colSpan: 1 },
+                { name: 'phoneCode', label: 'catalog.geography.countries.fields.phoneCode', type: 'number', required: true, colSpan: 1 },
+                { name: 'currency', label: 'catalog.geography.countries.fields.currency', type: 'text', colSpan: 1 },
             ]
         },
 

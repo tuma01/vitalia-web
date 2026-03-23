@@ -131,6 +131,10 @@
       "description": "REST API para gestionar detalles del Super Admin: crear, actualizar, obtener y eliminar."
     },
     {
+      "name": "Hospital",
+      "description": "REST API to manage professional Hospital details: create, update, retrieve and delete."
+    },
+    {
       "name": "Identification Type",
       "description": "REST API para gestionar el catálogo de tipos de identificación (MDM)."
     },
@@ -3784,6 +3788,176 @@
         }
       }
     },
+    "/hospitals/{id}": {
+      "get": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Get a Hospital by ID",
+        "description": "Returns a Hospital object by specified ID.",
+        "operationId": "getHospitalById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Hospital to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hospital found successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request: Null ID or incomplete data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Update a Hospital by ID",
+        "description": "Updates an existing Hospital using its ID and provided data.",
+        "operationId": "updateHospital",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Hospital to update.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hospital"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Hospital updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request: Null ID or incomplete data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Hospital not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Hospital to delete by ID",
+        "description": "Deletes an existing Hospital using its ID.",
+        "operationId": "deleteHospital",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Hospital to delete.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Hospital deleted successfully (no content)."
+          },
+          "400": {
+            "description": "Invalid request: Null or invalid ID."
+          },
+          "404": {
+            "description": "Hospital not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        }
+      }
+    },
     "/employees/{id}": {
       "get": {
         "tags": [
@@ -7021,6 +7195,124 @@
         }
       }
     },
+    "/hospitals": {
+      "get": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Get a paginated list of Hospital",
+        "description": "Returns a paginated list of Hospital",
+        "operationId": "getPaginatedHospitals",
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "description": "Page index to retrieve.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "Page size.",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of Hospital retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoHospital"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid pagination parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoHospital"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDtoHospital"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Create a Hospital",
+        "description": "Creates a new Hospital using providing data in the request body.",
+        "operationId": "createHospital",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Hospital"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Hospital created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Hospital"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/employees": {
       "get": {
         "tags": [
@@ -7470,7 +7762,7 @@
           {
             "name": "tenantCode",
             "in": "query",
-            "description": "The target Hospital tenant code.",
+            "description": "The target tenant code.",
             "required": true,
             "schema": {
               "type": "string"
@@ -8908,6 +9200,44 @@
         }
       }
     },
+    "/hospitals/all": {
+      "get": {
+        "tags": [
+          "Hospital"
+        ],
+        "summary": "Get all Hospital",
+        "description": "Returns the complete list of Hospital",
+        "operationId": "getAllHospitals",
+        "responses": {
+          "200": {
+            "description": "List of Hospital retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hospital"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Hospital"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/employees/all": {
       "get": {
         "tags": [
@@ -9429,81 +9759,6 @@
           }
         }
       },
-      "TenantConfig": {
-        "type": "object",
-        "description": "Detalles del TenantConfig a crear.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Id TenantConfig",
-            "example": 1
-          },
-          "tenantId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Tenant ID associated with the TenantConfig",
-            "example": 1
-          },
-          "fallbackHeader": {
-            "type": "string",
-            "description": "Header to be used for tenant identification",
-            "example": "X-Tenant-ID"
-          },
-          "allowLocal": {
-            "type": "boolean",
-            "description": "Allow local logins",
-            "example": true
-          },
-          "defaultDomain": {
-            "type": "string",
-            "description": "Default domain for the tenant",
-            "example": "example.com"
-          },
-          "locale": {
-            "type": "string",
-            "description": "Locale setting for the tenant",
-            "example": "en-US"
-          },
-          "timezone": {
-            "type": "string",
-            "description": "Timezone setting for the tenant",
-            "example": "America/New_York"
-          },
-          "maxUsers": {
-            "type": "integer",
-            "format": "int32",
-            "description": "Maximum number of users allowed for the tenant",
-            "example": 100
-          },
-          "storageQuotaBytes": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Storage quota in bytes for the tenant",
-            "example": 1073741824
-          },
-          "requireEmailVerification": {
-            "type": "boolean",
-            "description": "Require email verification for new users",
-            "example": true
-          },
-          "passwordPolicyJson": {
-            "type": "string",
-            "description": "Password policy in JSON format for extensibility",
-            "example": {
-              "minLength": 8,
-              "requireSpecialChar": true
-            }
-          },
-          "extraJson": {
-            "type": "string",
-            "description": "Extra configuration in JSON format for future use",
-            "example": {
-              "customSetting": "value"
-            }
-          }
-        }
-      },
       "Address": {
         "type": "object",
         "description": "Detalles del Address a crear.",
@@ -9584,6 +9839,211 @@
         },
         "required": [
           "direccion"
+        ]
+      },
+      "TenantConfig": {
+        "type": "object",
+        "description": "Detalles del TenantConfig a crear.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID único de configuración",
+            "example": 1
+          },
+          "tenantId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del Tenant asociado",
+            "example": 1
+          },
+          "fallbackHeader": {
+            "type": "string",
+            "description": "Header personalizado para identificación",
+            "example": "X-Tenant-ID"
+          },
+          "allowLocal": {
+            "type": "boolean",
+            "description": "Permite autenticación local",
+            "example": true
+          },
+          "defaultDomain": {
+            "type": "string",
+            "description": "Dominio principal del Tenant",
+            "example": "vitalia.app"
+          },
+          "locale": {
+            "type": "string",
+            "description": "Configuración regional",
+            "example": "es-ES"
+          },
+          "timezone": {
+            "type": "string",
+            "description": "Zona horaria operativa",
+            "example": "America/La_Paz"
+          },
+          "maxUsers": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Límite de usuarios permitidos",
+            "example": 100,
+            "minimum": 1
+          },
+          "storageQuotaBytes": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Cuota de almacenamiento en bytes",
+            "example": 10737418240
+          },
+          "requireEmailVerification": {
+            "type": "boolean",
+            "description": "Habilita verificación de correo",
+            "example": true
+          },
+          "passwordPolicyJson": {
+            "type": "string",
+            "description": "Política de contraseñas (JSON)",
+            "example": {
+              "minLength": 10
+            }
+          },
+          "extraJson": {
+            "type": "string",
+            "description": "Configuraciones adicionales (JSON)",
+            "example": {
+              "debug": false
+            }
+          },
+          "tenantName": {
+            "type": "string",
+            "description": "Nombre comercial del Hospital",
+            "example": "Hospital San Rafael"
+          },
+          "tenantDescription": {
+            "type": "string",
+            "description": "Resumen institucional",
+            "example": "Líder regional en cuidados críticos"
+          },
+          "logoUrl": {
+            "type": "string",
+            "description": "URL del Logo Principal",
+            "example": "https://vitalia.com/logos/hosp1.png"
+          },
+          "faviconUrl": {
+            "type": "string",
+            "description": "URL del Favicon",
+            "example": "https://vitalia.com/favicons/hosp1.ico"
+          },
+          "slogan": {
+            "type": "string",
+            "description": "Eslogan Institucional",
+            "example": "Tecnología para la vida"
+          },
+          "sealUrl": {
+            "type": "string",
+            "description": "URL del Sello Institucional",
+            "example": "https://vitalia.com/seals/hosp1.png"
+          },
+          "legalName": {
+            "type": "string",
+            "description": "Razón Social Completa",
+            "example": "Sociedad Salud S.A."
+          },
+          "taxId": {
+            "type": "string",
+            "description": "Número de Identificación Tributaria",
+            "example": "NIT-1234567"
+          },
+          "medicalLicense": {
+            "type": "string",
+            "description": "Licencia Sanitaria General",
+            "example": "MS-BOL-99"
+          },
+          "medicalDirector": {
+            "type": "string",
+            "description": "Nombre del Director Médico",
+            "example": "Dr. Alberto Amachi"
+          },
+          "medicalDirectorLicense": {
+            "type": "string",
+            "description": "Matrícula del Director",
+            "example": "MD-5544"
+          },
+          "hospitalCategory": {
+            "type": "string",
+            "description": "Categoría o Nivel",
+            "example": "Hospital de Tercer Nivel"
+          },
+          "bedCapacity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Capacidad instalada (Camas)",
+            "example": 300
+          },
+          "operatingRoomsCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Quirófanos disponibles",
+            "example": 10
+          },
+          "emergency247": {
+            "type": "boolean",
+            "description": "Servicio de Emergencia 24/7",
+            "example": true
+          },
+          "contactPhone": {
+            "type": "string",
+            "description": "Teléfono de contacto público",
+            "example": "2-2441234"
+          },
+          "contactEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "Email de contacto público",
+            "example": "info@hospital.com"
+          },
+          "website": {
+            "type": "string",
+            "description": "URL del sitio web",
+            "example": "www.hospital.com"
+          },
+          "faxNumber": {
+            "type": "string",
+            "description": "Número de Fax",
+            "example": "2-2441235"
+          },
+          "whatsappNumber": {
+            "type": "string",
+            "description": "Número oficial de WhatsApp",
+            "example": 77766554
+          },
+          "socialLinks": {
+            "type": "string",
+            "description": "Redes Sociales (JSON)",
+            "example": {
+              "facebook": "hospital",
+              "twitter": "@hospital"
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "description": "Ubicación física o dirección oficial"
+          },
+          "onboardingDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de Inicio (Onboarding)",
+            "example": "2024-01-01"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date",
+            "description": "Fecha de Expiración del Contrato",
+            "example": "2025-01-01"
+          }
+        },
+        "required": [
+          "tenantId"
         ]
       },
       "SuperAdmin": {
@@ -9794,6 +10254,16 @@
           "address": {
             "$ref": "#/components/schemas/Address",
             "description": "Address of the Tenant"
+          },
+          "logoUrl": {
+            "type": "string",
+            "description": "Primary Logo URL for branding",
+            "example": "https://cdn.vitalia.com/logos/tenant1.png"
+          },
+          "faviconUrl": {
+            "type": "string",
+            "description": "Favicon URL for branding",
+            "example": "https://cdn.vitalia.com/favicons/tenant1.ico"
           }
         }
       },
@@ -10481,6 +10951,174 @@
           "code",
           "name",
           "type"
+        ]
+      },
+      "Hospital": {
+        "type": "object",
+        "description": "Details of the Hospital to create.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Id Tenant",
+            "example": 1
+          },
+          "code": {
+            "type": "string",
+            "description": "Code of the Tenant",
+            "example": "TENANT001"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the Tenant",
+            "example": "Main Hospital"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the Tenant",
+            "enum": [
+              "HOSPITAL",
+              "CLINIC",
+              "LABORATORY",
+              "PHARMACY",
+              "GLOBAL"
+            ],
+            "example": "HOSPITAL"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Indicates if the Tenant is active",
+            "example": true
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the Tenant",
+            "example": "This is the main hospital tenant."
+          },
+          "themeId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Theme ID associated with the Tenant"
+          },
+          "themeName": {
+            "type": "string",
+            "description": "Theme Name associated with the Tenant"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address",
+            "description": "Address of the Tenant"
+          },
+          "logoUrl": {
+            "type": "string",
+            "description": "Primary Logo URL for branding",
+            "example": "https://cdn.vitalia.com/logos/tenant1.png"
+          },
+          "faviconUrl": {
+            "type": "string",
+            "description": "Favicon URL for branding",
+            "example": "https://cdn.vitalia.com/favicons/tenant1.ico"
+          },
+          "legalName": {
+            "type": "string",
+            "description": "Nombre legal de la institución",
+            "example": "Hospital San Rafael",
+            "maxLength": 200,
+            "minLength": 0
+          },
+          "taxId": {
+            "type": "string",
+            "description": "Identificador fiscal (NIT/RUC)",
+            "example": "123456789-0",
+            "maxLength": 50,
+            "minLength": 0
+          },
+          "medicalLicense": {
+            "type": "string",
+            "description": "Licencia sanitaria principal",
+            "example": "LIC-998877",
+            "maxLength": 100,
+            "minLength": 0
+          },
+          "contactPhone": {
+            "type": "string",
+            "description": "Teléfono de contacto principal",
+            "example": "+591 2 2441234"
+          },
+          "contactEmail": {
+            "type": "string",
+            "format": "email",
+            "description": "Email oficial de contacto",
+            "example": "contacto@hospital.com"
+          },
+          "website": {
+            "type": "string",
+            "description": "Sitio web institucional",
+            "example": "https://www.hospital.com"
+          },
+          "medicalDirector": {
+            "type": "string",
+            "description": "Nombre completo del Director Médico",
+            "example": "Dr. Alberto Amachi"
+          },
+          "medicalDirectorLicense": {
+            "type": "string",
+            "description": "Matrícula profesional del Director",
+            "example": "MD-776655"
+          },
+          "hospitalCategory": {
+            "type": "string",
+            "description": "Categoría o nivel del hospital (e.g. Nivel III)",
+            "example": "III-1"
+          },
+          "bedCapacity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Capacidad total de camas",
+            "example": 250
+          },
+          "operatingRoomsCount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Número de quirófanos activos",
+            "example": 12
+          },
+          "emergency247": {
+            "type": "boolean",
+            "description": "Disponibilidad de emergencias 24/7",
+            "example": true
+          },
+          "slogan": {
+            "type": "string",
+            "description": "Slogan o frase institucional",
+            "example": "Tecnología al servicio de la vida"
+          },
+          "faxNumber": {
+            "type": "string",
+            "description": "Número de Fax",
+            "example": "+591 2 2441235"
+          },
+          "whatsappNumber": {
+            "type": "string",
+            "description": "Número oficial de WhatsApp",
+            "example": "+591 77766554"
+          },
+          "socialLinks": {
+            "type": "string",
+            "description": "Enlaces a redes sociales (JSON)",
+            "example": {
+              "twitter": "@hospital"
+            }
+          },
+          "sealUrl": {
+            "type": "string",
+            "description": "URL del sello institucional oficial",
+            "example": "https://vitalia.com/seals/hosp1.png"
+          }
+        },
+        "required": [
+          "legalName",
+          "medicalLicense",
+          "taxId"
         ]
       },
       "Employee": {
@@ -12212,6 +12850,46 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Allergy"
+            }
+          },
+          "totalElements": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "first": {
+            "type": "boolean"
+          },
+          "last": {
+            "type": "boolean"
+          },
+          "empty": {
+            "type": "boolean"
+          },
+          "numberOfElements": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PageResponseDtoHospital": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Hospital"
             }
           },
           "totalElements": {

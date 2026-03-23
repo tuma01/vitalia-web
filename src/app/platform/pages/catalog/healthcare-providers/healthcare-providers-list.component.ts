@@ -36,7 +36,7 @@ export class HealthcareProvidersListComponent {
                 {
                     editHandler: (record: HealthcareProvider) => this.edit(record),
                     deleteHandler: (record: HealthcareProvider) => this.deleteProvider(record),
-                    entityType: 'menu.catalog.healthcare_provider.singular',
+                    entityType: 'catalog.healthcare.providers.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

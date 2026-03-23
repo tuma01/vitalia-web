@@ -28,7 +28,7 @@ import { PersonFormComponent, PersonFormConfig } from '@shared/components/person
     `
 })
 export class AdministratorsAddComponent extends CrudBaseAddEditComponent<TenantAdmin> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_governance.administrators.singular';
+    protected override entityNameKey = 'tenant_governance.administrators.singular';
     public readonly config = ADMINISTRATORS_CRUD_CONFIG('add');
 
     private tenantService = inject(TenantService);

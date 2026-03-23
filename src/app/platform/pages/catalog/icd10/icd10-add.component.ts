@@ -24,7 +24,7 @@ import { Icd10 } from 'app/api/models/icd-10';
     `
 })
 export class Icd10AddComponent extends CrudBaseAddEditComponent<Icd10> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.icd10.singular';
+    protected override entityNameKey = 'catalog.icd10.singular';
     public readonly config = ICD10_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

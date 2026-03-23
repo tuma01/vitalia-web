@@ -40,7 +40,7 @@ export class MunicipalitiesListComponent implements OnInit {
                 {
                     editHandler: (record: Municipio) => this.edit(record),
                     deleteHandler: (record: Municipio) => this.deleteMunicipio(record),
-                    entityType: 'menu.catalog.geography.municipality.singular',
+                    entityType: 'catalog.geography.municipalities.singular',
                     fieldForMessage: 'nombre'
                 },
                 this.confirmDialog

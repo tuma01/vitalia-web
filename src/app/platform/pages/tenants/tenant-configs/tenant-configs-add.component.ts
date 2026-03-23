@@ -7,6 +7,7 @@ import { CrudBaseAddEditComponent } from '@shared/components/crud-template/crud-
 import { TENANT_CONFIGS_CRUD_CONFIG } from './tenant-configs-crud.config';
 import { TenantConfig } from 'app/api/models/tenant-config';
 import { TenantService } from 'app/api/services/tenant.service';
+import { Tenant } from 'app/api/models/tenant';
 import { getTimezones, getAppLocales } from '@shared/utils/i18n-utils';
 
 @Component({
@@ -24,7 +25,7 @@ import { getTimezones, getAppLocales } from '@shared/utils/i18n-utils';
     `
 })
 export class TenantConfigsAddComponent extends CrudBaseAddEditComponent<TenantConfig> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_governance.tenant_config.singular';
+    protected override entityNameKey = 'tenant_config.singular';
     public readonly config = TENANT_CONFIGS_CRUD_CONFIG();
     private tenantService = inject(TenantService);
     private cdr = inject(ChangeDetectorRef);
@@ -59,8 +60,8 @@ export class TenantConfigsAddComponent extends CrudBaseAddEditComponent<TenantCo
                 const tenantField = this.config.form?.fields.find(f => f.name === 'tenantId');
                 if (tenantField) {
                     tenantField.options = tenants
-                        .filter(t => t.type !== 'GLOBAL')
-                        .map(t => ({
+                        .filter((t: Tenant) => t.type !== 'GLOBAL')
+                        .map((t: Tenant) => ({
                             label: `${t.name} (ID: ${t.id})`,
                             value: t.id
                         }));

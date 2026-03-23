@@ -8,8 +8,8 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
     const service = inject(MedicalProcedureService);
 
     return {
-        entityName: 'menu.catalog.procedures.singular',
-        entityNamePlural: 'menu.catalog.procedures.plural',
+        entityName: 'catalog.procedures.singular',
+        entityNamePlural: 'catalog.procedures.plural',
 
         getId: (entity: MedicalProcedure) => entity.id!,
 
@@ -22,13 +22,13 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.procedures.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.procedures.fields.code', sortable: true, width: '120px' },
-            { field: 'name', header: 'menu.catalog.procedures.fields.name', sortable: true, width: '350px' },
-            { field: 'type', header: 'menu.catalog.procedures.fields.type', sortable: true, width: '150px' },
+            { field: 'id', header: 'catalog.procedures.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.procedures.fields.code', sortable: true, width: '120px' },
+            { field: 'name', header: 'catalog.procedures.fields.name', sortable: true, width: '350px' },
+            { field: 'type', header: 'catalog.procedures.fields.type', sortable: true, width: '150px' },
             {
                 field: 'active',
-                header: 'menu.catalog.procedures.fields.active',
+                header: 'catalog.procedures.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -44,7 +44,7 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.procedures.fields.code',
+                    label: 'catalog.procedures.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -53,7 +53,7 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.procedures.fields.name',
+                    label: 'catalog.procedures.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -62,7 +62,7 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                 },
                 {
                     name: 'type',
-                    label: 'menu.catalog.procedures.fields.type',
+                    label: 'catalog.procedures.fields.type',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -71,7 +71,7 @@ export const PROCEDURES_CRUD_CONFIG = (): CrudConfig<MedicalProcedure> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.procedures.fields.active',
+                    label: 'catalog.procedures.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

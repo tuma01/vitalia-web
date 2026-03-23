@@ -12,7 +12,7 @@ export const routes: Routes = [
             {
                 path: 'list',
                 component: PlatformShellComponent,
-                data: { title: 'menu.tenant_governance.organizations.title', icon: 'domain' }
+                data: { title: 'menu.tenant.governance.organizations.title', icon: 'domain' }
             },
             {
                 path: 'administrators',

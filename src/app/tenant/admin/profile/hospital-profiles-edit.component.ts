@@ -75,6 +75,7 @@ export class HospitalProfilesEditComponent extends CrudBaseAddEditComponent<Tena
         this.tenantConfigService.getMyTenantConfig().subscribe({
             next: (config) => {
                 this.entityId = config.id ?? null;
+                // Patch the form including the nested 'address' object
                 this.form.patchValue(config as any);
                 this.loading = false;
                 this.cdr.markForCheck();
@@ -103,10 +104,11 @@ export class HospitalProfilesEditComponent extends CrudBaseAddEditComponent<Tena
     }
 
     protected override getSuccessRoute(): any[] {
-        return ['/admin/profile']; // Stay on same page or go to dashboard
+        return ['/admin/profile'];
     }
 
     protected override saveEntity(formData: TenantConfig): Observable<TenantConfig> {
+        // formData already has the standard 'address' structure from the FormGroup
         return this.config.apiService.update(this.entityId!, formData);
     }
 

@@ -23,7 +23,7 @@ import { Allergy } from 'app/api/models/allergy';
     `
 })
 export class AllergiesAddComponent extends CrudBaseAddEditComponent<Allergy> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.allergy.singular';
+    protected override entityNameKey = 'catalog.allergies.singular';
     public readonly config = ALLERGIES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

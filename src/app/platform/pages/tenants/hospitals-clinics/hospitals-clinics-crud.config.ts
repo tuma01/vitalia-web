@@ -8,8 +8,8 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
     const service = inject(TenantService);
 
     return {
-        entityName: 'menu.tenant_governance.hospitals_clinics.singular',
-        entityNamePlural: 'menu.tenant_governance.hospitals_clinics.plural',
+        entityName: 'tenant_governance.organizations.singular',
+        entityNamePlural: 'tenant_governance.organizations.plural',
 
         getId: (entity: Tenant) => entity.id!,
 
@@ -24,38 +24,38 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
         columns: [
             {
                 field: 'id',
-                header: 'menu.tenant_governance.hospitals_clinics.fields.id',
+                header: 'tenant_governance.organizations.fields.id',
                 sortable: true,
                 width: '70px'
             },
             {
                 field: 'code',
-                header: 'menu.tenant_governance.hospitals_clinics.fields.code',
+                header: 'tenant_governance.organizations.fields.code',
                 sortable: true,
                 width: '120px'
             },
             {
                 field: 'name',
-                header: 'menu.tenant_governance.hospitals_clinics.fields.name',
+                header: 'tenant_governance.organizations.fields.name',
                 sortable: true
             },
             {
                 field: 'type',
-                header: 'menu.tenant_governance.hospitals_clinics.fields.type',
+                header: 'tenant_governance.organizations.fields.type',
                 sortable: true,
                 width: '130px',
                 type: 'tag',
                 tag: {
-                    'HOSPITAL': { text: 'menu.tenant_governance.hospitals_clinics.fields.type_options.HOSPITAL', color: '#1565c0' },
-                    'CLINIC': { text: 'menu.tenant_governance.hospitals_clinics.fields.type_options.CLINIC', color: '#2e7d32' },
-                    'LABORATORY': { text: 'menu.tenant_governance.hospitals_clinics.fields.type_options.LABORATORY', color: '#6a1b9a' },
-                    'PHARMACY': { text: 'menu.tenant_governance.hospitals_clinics.fields.type_options.PHARMACY', color: '#e65100' },
-                    'GLOBAL': { text: 'menu.tenant_governance.hospitals_clinics.fields.type_options.GLOBAL', color: '#37474f' }
+                    'HOSPITAL': { text: 'tenant_governance.organizations.types.hospital', color: '#1565c0' },
+                    'CLINIC': { text: 'tenant_governance.organizations.types.clinic', color: '#2e7d32' },
+                    'LABORATORY': { text: 'tenant_governance.organizations.types.laboratory', color: '#6a1b9a' },
+                    'PHARMACY': { text: 'tenant_governance.organizations.types.pharmacy', color: '#e65100' },
+                    'GLOBAL': { text: 'tenant_governance.organizations.types.global', color: '#37474f' }
                 }
             },
             {
                 field: 'isActive',
-                header: 'menu.tenant_governance.hospitals_clinics.fields.isActive',
+                header: 'tenant_governance.organizations.fields.isActive',
                 sortable: true,
                 width: '110px',
                 type: 'tag',
@@ -71,7 +71,7 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.tenant_governance.hospitals_clinics.fields.code',
+                    label: 'tenant_governance.organizations.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -79,7 +79,7 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.tenant_governance.hospitals_clinics.fields.name',
+                    label: 'tenant_governance.organizations.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -87,21 +87,22 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
                 },
                 {
                     name: 'type',
-                    label: 'menu.tenant_governance.hospitals_clinics.fields.type',
+                    label: 'tenant_governance.organizations.fields.type',
                     type: 'select',
+                    icon: 'local_hospital',
                     required: true,
                     colSpan: 1,
                     options: [
-                        { label: 'menu.tenant_governance.hospitals_clinics.fields.type_options.HOSPITAL', value: 'HOSPITAL' },
-                        { label: 'menu.tenant_governance.hospitals_clinics.fields.type_options.CLINIC', value: 'CLINIC' },
-                        { label: 'menu.tenant_governance.hospitals_clinics.fields.type_options.LABORATORY', value: 'LABORATORY' },
-                        { label: 'menu.tenant_governance.hospitals_clinics.fields.type_options.PHARMACY', value: 'PHARMACY' },
-                        { label: 'menu.tenant_governance.hospitals_clinics.fields.type_options.GLOBAL', value: 'GLOBAL' }
+                        { label: 'tenant_governance.organizations.types.hospital', value: 'HOSPITAL' },
+                        { label: 'tenant_governance.organizations.types.clinic', value: 'CLINIC' },
+                        { label: 'tenant_governance.organizations.types.laboratory', value: 'LABORATORY' },
+                        { label: 'tenant_governance.organizations.types.pharmacy', value: 'PHARMACY' },
+                        { label: 'tenant_governance.organizations.types.global', value: 'GLOBAL' }
                     ]
                 },
                 {
                     name: 'isActive',
-                    label: 'menu.tenant_governance.hospitals_clinics.fields.isActive',
+                    label: 'tenant_governance.organizations.fields.isActive',
                     type: 'radio',
                     colSpan: 1,
                     options: [
@@ -111,7 +112,7 @@ export const HOSPITALS_CLINICS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
                 },
                 {
                     name: 'description',
-                    label: 'menu.tenant_governance.hospitals_clinics.fields.description',
+                    label: 'tenant_governance.organizations.fields.description',
                     type: 'text',
                     required: false,
                     colSpan: 2,

@@ -23,7 +23,7 @@ import { MedicalSpecialty } from 'app/api/models/medical-specialty';
   `
 })
 export class SpecialtiesAddComponent extends CrudBaseAddEditComponent<MedicalSpecialty> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.specialty.singular';
+    protected override entityNameKey = 'catalog.specialties.singular';
     public readonly config = SPECIALTIES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

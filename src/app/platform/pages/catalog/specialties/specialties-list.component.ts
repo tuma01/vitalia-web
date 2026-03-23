@@ -36,7 +36,7 @@ export class SpecialtiesListComponent {
                 {
                     editHandler: (record: MedicalSpecialty) => this.edit(record),
                     deleteHandler: (record: MedicalSpecialty) => this.deleteSpecialty(record),
-                    entityType: 'menu.catalog.specialty.singular',
+                    entityType: 'catalog.specialties.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

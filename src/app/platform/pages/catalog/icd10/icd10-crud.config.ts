@@ -8,8 +8,8 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
     const service = inject(Icd10DiagnosisService);
 
     return {
-        entityName: 'menu.catalog.icd10.singular',
-        entityNamePlural: 'menu.catalog.icd10.plural',
+        entityName: 'catalog.icd10.singular',
+        entityNamePlural: 'catalog.icd10.plural',
 
         getId: (entity: Icd10) => entity.id!,
 
@@ -22,12 +22,12 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.icd10.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.icd10.fields.code', sortable: true, width: '120px' },
-            { field: 'description', header: 'menu.catalog.icd10.fields.description', sortable: true, width: '400px' },
+            { field: 'id', header: 'catalog.icd10.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.icd10.fields.code', sortable: true, width: '120px' },
+            { field: 'description', header: 'catalog.icd10.fields.description', sortable: true, width: '400px' },
             {
                 field: 'active',
-                header: 'menu.catalog.icd10.fields.active',
+                header: 'catalog.icd10.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.icd10.fields.code',
+                    label: 'catalog.icd10.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.icd10.fields.active',
+                    label: 'catalog.icd10.fields.active',
                     type: 'radio',
                     colSpan: 1,
                     options: [
@@ -62,7 +62,7 @@ export const ICD10_CRUD_CONFIG = (): CrudConfig<Icd10> => {
                 },
                 {
                     name: 'description',
-                    label: 'menu.catalog.icd10.fields.description',
+                    label: 'catalog.icd10.fields.description',
                     type: 'textarea',
                     required: true,
                     colSpan: 2,

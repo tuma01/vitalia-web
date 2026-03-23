@@ -24,7 +24,7 @@ import { getTimezones, getAppLocales } from '@shared/utils/i18n-utils';
     `
 })
 export class TenantConfigsEditComponent extends CrudBaseAddEditComponent<TenantConfig> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_governance.tenant_config.singular';
+    protected override entityNameKey = 'tenant_config.singular';
     public readonly config = TENANT_CONFIGS_CRUD_CONFIG();
     private tenantService = inject(TenantService);
     private cdr = inject(ChangeDetectorRef);

@@ -36,7 +36,7 @@ export class CountriesListComponent {
                 {
                     editHandler: (record: Country) => this.edit(record),
                     deleteHandler: (record: Country) => this.deleteCountry(record),
-                    entityType: 'menu.catalog.geography.country.singular',
+                    entityType: 'catalog.geography.countries.singular',
                     fieldForMessage: 'niceName'
                 },
                 this.confirmDialog

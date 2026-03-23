@@ -8,8 +8,8 @@ export const MUNICIPALITIES_CRUD_CONFIG = (): CrudConfig<Municipio> => {
     const service = inject(MunicipioService);
 
     return {
-        entityName: 'menu.catalog.geography.municipality.singular',
-        entityNamePlural: 'menu.catalog.geography.municipality.plural',
+        entityName: 'catalog.geography.municipalities.singular',
+        entityNamePlural: 'catalog.geography.municipalities.plural',
 
         getId: (entity: Municipio) => entity.id!,
 
@@ -23,21 +23,21 @@ export const MUNICIPALITIES_CRUD_CONFIG = (): CrudConfig<Municipio> => {
 
         columns: [
             { field: 'id', header: 'common.id', sortable: true, width: '80px' },
-            { field: 'nombre', header: 'menu.catalog.geography.municipality.fields.name', sortable: true },
-            { field: 'provinciaId', header: 'menu.catalog.geography.municipality.fields.province', sortable: false, width: '250px' }
+            { field: 'nombre', header: 'catalog.geography.municipalities.fields.name', sortable: true },
+            { field: 'provinciaId', header: 'catalog.geography.municipalities.fields.province', sortable: false, width: '250px' }
         ],
 
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'codigoMunicipio', label: 'menu.catalog.geography.municipality.fields.code_municipality', type: 'number', colSpan: 1 },
-                { name: 'nombre', label: 'menu.catalog.geography.municipality.fields.name', type: 'text', required: true, colSpan: 1 },
-                { name: 'poblacion', label: 'menu.catalog.geography.municipality.fields.population', type: 'number', colSpan: 1 },
-                { name: 'superficie', label: 'menu.catalog.geography.municipality.fields.surface', type: 'number', colSpan: 1 },
-                { name: 'direccion', label: 'menu.catalog.geography.municipality.fields.address', type: 'text', colSpan: 1 },
+                { name: 'codigoMunicipio', label: 'catalog.geography.municipalities.fields.code_municipality', type: 'number', colSpan: 1 },
+                { name: 'nombre', label: 'catalog.geography.municipalities.fields.name', type: 'text', required: true, colSpan: 1 },
+                { name: 'poblacion', label: 'catalog.geography.municipalities.fields.population', type: 'number', colSpan: 1 },
+                { name: 'superficie', label: 'catalog.geography.municipalities.fields.surface', type: 'number', colSpan: 1 },
+                { name: 'direccion', label: 'catalog.geography.municipalities.fields.address', type: 'text', colSpan: 1 },
                 {
                     name: 'provinciaId',
-                    label: 'menu.catalog.geography.municipality.fields.province',
+                    label: 'catalog.geography.municipalities.fields.province',
                     type: 'select',
                     required: true,
                     colSpan: 1,

@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ThemeDto } from '../../api/models/theme-dto';
-import { API_ROOT_URL } from '../../api/api-configuration';
+import { ApiConfiguration } from '../../api/api-configuration';
 
 /**
  * 🌐 Theme API Service
@@ -14,7 +14,7 @@ import { API_ROOT_URL } from '../../api/api-configuration';
 export class ThemeApiService {
     constructor(
         private http: HttpClient,
-        @Inject(API_ROOT_URL) private apiRootUrl: string
+        private apiConfig: ApiConfiguration
     ) { }
 
     /**
@@ -22,7 +22,7 @@ export class ThemeApiService {
      * Backend endpoint: GET /themes/tenant/{tenantCode} (ThemeController)
      */
     getThemeForTenant(tenantCode: string): Observable<ThemeDto> {
-        const url = `${this.apiRootUrl}/themes/tenant/${tenantCode}`;
+        const url = `${this.apiConfig.rootUrl}/themes/tenant/${tenantCode}`;
         return this.http.get<ThemeDto>(url);
     }
 }

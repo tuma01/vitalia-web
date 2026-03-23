@@ -27,15 +27,16 @@
 ---
 
 > [!IMPORTANT]
-> **ALINEACIÓN BACKEND OBLIGATORIA**  
-> Aunque esta guía se enfoca en el Frontend, es **REQUISITO CRÍTICO** que la implementación del Backend (Spring Boot) siga estrictamente la arquitectura del módulo `core-geography`.  
-> Esto incluye el uso consistente de:
-> - **DTOs y SearchDTOs**: Para la transferencia de datos y criterios de búsqueda.
-> - **Mappers (MapStruct)**: Para la conversión entre Entidades y DTOs.
-> - **Services (GenericService)**: Implementación de la lógica de negocio siguiendo el patrón estándar.
-> - **Specifications (Criteria API)**: Para el filtrado dinámico y paginación.
-> - **Controllers y APIs**: Definición homogeneous de endpoints y uso de `BaseController`.
-> - **Soft Delete**: Aplicación obligatoria del filtrado de registros eliminados lógicamente.
+> **ALINEACIÓN BACKEND OBLIGATORIA (REGLA DE ORO)**  
+> Toda nueva implementación o modificación debe alinearse al **100%** con el modelo de referencia de `core-geography` para garantizar una arquitectura óptima y profesional. No basta con que la lógica funcione; la **estructura y documentación** deben ser idénticas.
+> 
+> Esta alineación total incluye:
+> - **DTOs Estandarizados**: Uso obligatorio de `@JsonProperty`, `@Valid`, y `@Schema` (con descripción y ejemplos en cada campo) para una documentación OpenAPI impecable. Mensajes de validación compuestos (ej. `"Nombre {err.mandatory}"`).
+> - **Mappers (MapStruct)**: Configuración vía `BaseMapperConfig` y aplicación de `@AuditableIgnoreConfig` y políticas de nulidad para evitar efectos secundarios.
+> - **Services (GenericService)**: Implementación estricta de la interfaz `GenericService` usando `requireNonNull` y `ResourceNotFoundException`.
+> - **Specifications (Criteria API)**: Creación obligatoria de `*SearchDto` y `*Specification` para un filtrado dinámico potente y homogéneo.
+> - **Controllers y APIs**: Herencia de `BaseController` y definición de interfaces `*Api` para separar el contrato de la implementación lógica.
+> - **Soft Delete**: Aplicación rigurosa del filtrado de registros.
 
 ---
 
@@ -51,6 +52,9 @@
 9. [Claves i18n — sincronización obligatoria](#9-claves-i18n--sincronización-obligatoria)
 10. [Configuración del menú (super-admin-menu.json)](#10-configuración-del-menú-super-admin-menujson)
 11. [Checklist de implementación](#11-checklist-de-implementación)
+12. [Reglas de Multi-tenencia (Best Practices)](#12-reglas-de-multi-tenencia-best-practices)
+13. [Detalles de UI/UX (Formularios)](#13-detalles-de-uiux-formularios)
+14. [Estándar de Menú (Regla de Oro)](#14-estándar-de-menú-regla-de-oro)
 
 ---
 
@@ -176,7 +180,7 @@ export const {MODULES}_CRUD_CONFIG = (): CrudConfig<{Entity}> => {
             { field: 'name', header: 'menu.catalog.{module}.fields.name', sortable: true },
             {
                 field: 'active',
-                header: 'menu.catalog.{module}.fields.active',
+                header: 'catalog.{module}.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -218,7 +222,7 @@ export const {MODULES}_CRUD_CONFIG = (): CrudConfig<{Entity}> => {
 };
 ```
 
-> **CRÍTICO:** Las claves i18n en el CRUD config **siempre** usan el prefijo `menu.catalog.{module}.` porque el `CrudTemplate` hace `translate` directo (sin prefijo automático), y los datos de catálogo están anidados bajo `menu.catalog` en los JSONs.
+> **CRÍTICO:** Las claves i18n en el CRUD config **NUNCA** usan el prefijo `menu.` ya que ese prefijo es reservado para el Sidebar. El contenido de negocio vive en bloques de dominio raíz (ej. `catalog.`, `geography.`, etc.).
 
 ---
 
@@ -266,7 +270,7 @@ export class {Modules}ListComponent {
                 {
                     editHandler: (record: {Entity}) => this.edit(record),
                     deleteHandler: (record: {Entity}) => this.delete{Entity}(record),
-                    entityType: 'menu.catalog.{module}.singular',
+                    entityType: 'catalog.{module}.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog
@@ -322,7 +326,7 @@ export class {Modules}ListComponent {
     `
 })
 export class {Modules}AddComponent extends CrudBaseAddEditComponent<{Entity}> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.{module}.singular';
+    protected override entityNameKey = 'catalog.{module}.singular';
     public readonly config = {MODULES}_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(
@@ -479,27 +483,27 @@ Agregar dentro del grupo correspondiente (ej. `medical_catalog`, `tenant_governa
 
 ```json
 {
-    "id": "{modules}",
+    "id": "{module}",
     "name": "{group}.{module}.title",
     "type": "sub",
     "icon": "icon_name",
     "children": [
         {
-            "id": "{module}-list",
+            "id": "{module}.list",
             "name": "{group}.{module}.list",
             "type": "link",
             "route": "/platform/{path}/{modules}/list",
             "visible": true
         },
         {
-            "id": "{module}-add",
+            "id": "{module}.add",
             "name": "{group}.{module}.add",
             "type": "link",
             "route": "/platform/{path}/{modules}/add",
             "visible": true
         },
         {
-            "id": "{module}-edit",
+            "id": "{module}.edit",
             "name": "{group}.{module}.edit",
             "type": "link",
             "route": "/platform/{path}/{modules}/edit",
@@ -508,6 +512,9 @@ Agregar dentro del grupo correspondiente (ej. `medical_catalog`, `tenant_governa
     ]
 }
 ```
+
+> **Nota:** El `id` debe seguir el estándar de puntos definido en la sección 14.
+
 
 > **Nota:** El `edit` siempre `"visible": false` porque se accede desde la fila del listado, no desde el menú.
 > 
@@ -599,3 +606,91 @@ Para mantener una interfaz profesional y moderna:
     - **Excepción**: Los componentes de tipo `textarea` (empleados para Descripciones, Configuraciones Extra como JSON, Notas, etc.) **NO deben llevar icono**, ya que no son necesarios visualmente.
 2.  **Agrupación Visual**: Evitar el uso de bordes pesados. El `CrudTemplate` ya gestiona el estilo "Ultra-Clean" sin bordes ni sombras internas.
 3.  **Action Bar**: El sistema de botones Guardar/Cancelar flota automáticamente en la parte inferior. Asegurarse de que el contenido del formulario tenga suficiente padding inferior para no quedar oculto detrás de la barra (gestionado por `.form-page`).
+
+---
+
+## 14. Estándar de Menú (Regla de Oro)
+
+Para garantizar una arquitectura robusta, todos los archivos de configuración de menú (`*-menu.json`) deben seguir la **notación de puntos**.
+
+| Campo | Regla de Oro | Ejemplo |
+| :--- | :--- | :--- |
+| **`id`** | **Notación de puntos**, jerárquico. | `patients.registration`, `catalog.icd10.list` |
+| **`name`** | **Notación de puntos**. Clave dentro del objeto `menu` en i18n. | `tenant.admin.patients.title` |
+| **`type`** | Enumeración: `link`, `sub`, `group`, `divider`. | `link`, `sub` |
+| **`route`** | Ruta absoluta empezando con `/`. | `/admin/patients/registration` |
+
+> [!CAUTION]
+> **PREFIJO AUTOMÁTICO**: El motor del Sidebar añade el prefijo **`menu.`** automáticamente a la propiedad `name`. En el archivo `*-menu.json`, el nombre nunca debe empezar con `menu.`.
+
+---
+
+## 15. Estándar de Metadatos y Libelles (Campos y Tablas)
+
+A diferencia de los menús, las etiquetas de los campos en tablas y formularios (Libelles) **NO** pertenecen al objeto `menu`. Deben vivir en bloques de dominio raíz para separar la navegación del contenido de negocio.
+
+### Estructura en archivos i18n (`es-ES.json`):
+
+```json
+{
+  "menu": {
+    "catalog": {
+      "allergies": { "title": "Alergias" } 
+    }
+  },
+  "catalog": {
+    "allergies": {
+      "singular": "Alergia",
+      "plural": "Alergias",
+      "fields": {
+        "id": "ID",
+        "name": "Nombre de la Alergia",
+        "type": "Categoría de Alergia"
+      }
+    }
+  }
+}
+```
+
+### Regla para `CRUD_CONFIG`:
+En los archivos de configuración de componentes (`*-crud.config.ts`), las cabeceras de columnas y etiquetas de campos **NUNCA** deben usar el prefijo `menu.`. Deben apuntar directamente al bloque de dominio.
+
+| Context | Prefijo Correcto | Ejemplo de Clave |
+| :--- | :--- | :--- |
+| **Menú / Sidebar** | `menu.` (Automático) | `catalog.allergies.title` |
+| **Tablas / Forms** | (Sin prefijo menu) | `catalog.allergies.fields.name` |
+| **Admin Hospital** | `tenant_admin.` | `tenant_admin.admin.profile.fields.logoUrl` |
+| **Tipos Persona** | `common.person_types.` | `common.person_types.doctor` |
+| **Genéricos** | `common.` | `common.fields.id`, `common.operations` |
+
+### Listado de Raíces de Dominio (Crucial):
+Para evitar colisiones y regresiones, use siempre estas raíces:
+- **`menu`**: Reservado exclusivamente para el Sidebar y títulos de navegación.
+- **`common`**: Elementos transversales (Login, Botones, Acciones, Estados, Tipos Persona).
+- **`catalog`**: Metadatos de catálogos médicos (Alergias, CIE-10, Medicamentos).
+- **`demographics`**: Metadatos de personas (Estados Civiles, Géneros).
+- **`geography`**: Metadatos geográficos (Países, Provincias).
+- **`tenant_admin`**: Metadatos de administración de hospital (Perfil, Usuarios, Invitaciones).
+
+---
+
+## 16. Checklist de Finalización (Cero Regresiones)
+1. ¿El menú se traduce? (Usa objeto `menu` en JSON)
+2. ¿La columna de la tabla se traduce? (Usa objeto de dominio en JSON)
+3. ¿Están sincronizados los 3 idiomas (`es`, `en`, `fr`)?
+4. **Validación JSON**: ¿El archivo i18n es válido sintácticamente? (Cero comas flotantes o llaves sin cerrar).
+
+---
+
+## 17. Protocolo de Gestión de Usuarios (Multi-perfil)
+Al implementar pantallas de usuarios (`tenant_admin.admin.users`), es OBLIGATORIO usar las traducciones de `common.person_types` para los selectores de tipo (ADMIN, DOCTOR, NURSE, etc.). Esto garantiza que la UX sea consistente con el resto de la plataforma y evita traducciones duplicadas.
+
+```json
+"common": {
+    "person_types": {
+        "admin": "Administrador",
+        "doctor": "Médico",
+        "nurse": "Enfermero/a"
+    }
+}
+```

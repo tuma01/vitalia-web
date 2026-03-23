@@ -24,7 +24,7 @@ import { DepartamentoService } from 'app/api/services/departamento.service';
     `
 })
 export class ProvincesAddComponent extends CrudBaseAddEditComponent<Provincia> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.geography.province.singular';
+    protected override entityNameKey = 'catalog.geography.provinces.singular';
     public readonly config = PROVINCES_CRUD_CONFIG();
     private departamentoService = inject(DepartamentoService);
     private cdr = inject(ChangeDetectorRef);

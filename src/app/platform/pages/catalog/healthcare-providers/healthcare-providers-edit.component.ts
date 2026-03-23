@@ -23,7 +23,7 @@ import { HealthcareProvider } from 'app/api/models/healthcare-provider';
     `
 })
 export class HealthcareProvidersEditComponent extends CrudBaseAddEditComponent<HealthcareProvider> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.healthcare_provider.singular';
+    protected override entityNameKey = 'catalog.healthcare.providers.singular';
     public readonly config = HEALTHCARE_PROVIDERS_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

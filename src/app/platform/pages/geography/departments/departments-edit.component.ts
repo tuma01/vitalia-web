@@ -23,7 +23,7 @@ import { CountryService } from 'app/api/services/country.service';
     `
 })
 export class DepartmentsEditComponent extends CrudBaseAddEditComponent<Departamento> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.geography.department.singular';
+    protected override entityNameKey = 'catalog.geography.departments.singular';
     public readonly config = DEPARTMENTS_CRUD_CONFIG();
     private countryService = inject(CountryService);
     private cdr = inject(ChangeDetectorRef);

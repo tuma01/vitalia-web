@@ -23,7 +23,7 @@ import { MedicalProcedure } from 'app/api/models/medical-procedure';
   `
 })
 export class ProceduresAddComponent extends CrudBaseAddEditComponent<MedicalProcedure> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.procedures.singular';
+    protected override entityNameKey = 'catalog.procedures.singular';
     public readonly config = PROCEDURES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

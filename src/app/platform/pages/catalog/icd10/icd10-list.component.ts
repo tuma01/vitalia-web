@@ -36,7 +36,7 @@ export class Icd10ListComponent {
                 {
                     editHandler: (record: Icd10) => this.edit(record),
                     deleteHandler: (record: Icd10) => this.deleteIcd10(record),
-                    entityType: 'menu.catalog.icd10.singular',
+                    entityType: 'catalog.icd10.singular',
                     fieldForMessage: 'description'
                 },
                 this.confirmDialog

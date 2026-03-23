@@ -4,7 +4,7 @@
     "menu": [
         {
             "id": "dashboard",
-            "name": "tenant_admin.dashboard.title",
+            "name": "tenant.admin.dashboard.title",
             "type": "link",
             "icon": "dashboard",
             "route": "/admin/dashboard",
@@ -12,28 +12,28 @@
         },
         {
             "id": "patients",
-            "name": "tenant_admin.patients.title",
+            "name": "tenant.admin.patients.title",
             "type": "sub",
             "icon": "personal_injury",
             "visible": true,
             "children": [
                 {
-                    "id": "patients-registration",
-                    "name": "tenant_admin.patients.registration",
+                    "id": "patients.registration",
+                    "name": "tenant.admin.patients.registration",
                     "type": "link",
                     "route": "/admin/patients/registration",
                     "icon": "how_to_reg"
                 },
                 {
-                    "id": "medical-records",
-                    "name": "tenant_admin.patients.records",
+                    "id": "patients.records",
+                    "name": "tenant.admin.patients.records",
                     "type": "link",
                     "route": "/admin/patients/records",
                     "icon": "history_edu"
                 },
                 {
-                    "id": "patient-documents",
-                    "name": "tenant_admin.patients.documents",
+                    "id": "patients.documents",
+                    "name": "tenant.admin.patients.documents",
                     "type": "link",
                     "route": "/admin/patients/documents",
                     "icon": "description"
@@ -42,35 +42,35 @@
         },
         {
             "id": "admissions",
-            "name": "tenant_admin.admissions.title",
+            "name": "tenant.admin.admissions.title",
             "type": "sub",
             "icon": "login",
             "visible": true,
             "children": [
                 {
-                    "id": "hospital-admission",
-                    "name": "tenant_admin.admissions.admission",
+                    "id": "admissions.admission",
+                    "name": "tenant.admin.admissions.admission",
                     "type": "link",
                     "route": "/admin/admissions/admission",
                     "icon": "hotel"
                 },
                 {
-                    "id": "emergency-admission",
-                    "name": "tenant_admin.admissions.emergency",
+                    "id": "admissions.emergency",
+                    "name": "tenant.admin.admissions.emergency",
                     "type": "link",
                     "route": "/admin/admissions/emergency",
                     "icon": "emergency"
                 },
                 {
-                    "id": "internal-transfers",
-                    "name": "tenant_admin.admissions.transfers",
+                    "id": "admissions.transfers",
+                    "name": "tenant.admin.admissions.transfers",
                     "type": "link",
                     "route": "/admin/admissions/transfers",
                     "icon": "move_up"
                 },
                 {
-                    "id": "medical-discharges",
-                    "name": "tenant_admin.admissions.discharges",
+                    "id": "admissions.discharges",
+                    "name": "tenant.admin.admissions.discharges",
                     "type": "link",
                     "route": "/admin/admissions/discharges",
                     "icon": "logout"
@@ -79,28 +79,28 @@
         },
         {
             "id": "appointments",
-            "name": "tenant_admin.appointments.title",
+            "name": "tenant.admin.appointments.title",
             "type": "sub",
             "icon": "event",
             "visible": true,
             "children": [
                 {
-                    "id": "medical-schedule",
-                    "name": "tenant_admin.appointments.calendar",
+                    "id": "appointments.calendar",
+                    "name": "tenant.admin.appointments.calendar",
                     "type": "link",
                     "route": "/admin/appointments/calendar",
                     "icon": "calendar_month"
                 },
                 {
-                    "id": "outpatient-care",
-                    "name": "tenant_admin.appointments.outpatient",
+                    "id": "appointments.outpatient",
+                    "name": "tenant.admin.appointments.outpatient",
                     "type": "link",
                     "route": "/admin/appointments/outpatient",
                     "icon": "medical_services"
                 },
                 {
-                    "id": "telemedicine",
-                    "name": "tenant_admin.appointments.telemedicine",
+                    "id": "appointments.telemedicine",
+                    "name": "tenant.admin.appointments.telemedicine",
                     "type": "link",
                     "route": "/admin/appointments/telemedicine",
                     "icon": "videocam"
@@ -109,21 +109,21 @@
         },
         {
             "id": "hospitalization",
-            "name": "tenant_admin.hospitalization.title",
+            "name": "tenant.admin.hospitalization.title",
             "type": "sub",
             "icon": "bed",
             "visible": true,
             "children": [
                 {
-                    "id": "bed-map",
-                    "name": "tenant_admin.hospitalization.beds",
+                    "id": "hospitalization.beds",
+                    "name": "tenant.admin.hospitalization.beds",
                     "type": "link",
                     "route": "/admin/hospitalization/beds",
                     "icon": "grid_view"
                 },
                 {
-                    "id": "inpatient-list",
-                    "name": "tenant_admin.hospitalization.list",
+                    "id": "hospitalization.list",
+                    "name": "tenant.admin.hospitalization.list",
                     "type": "link",
                     "route": "/admin/hospitalization/list",
                     "icon": "list_alt"
@@ -131,29 +131,29 @@
             ]
         },
         {
-            "id": "clinical-services",
-            "name": "tenant_admin.clinical_services.title",
+            "id": "clinical.services",
+            "name": "tenant.admin.clinical.services.title",
             "type": "sub",
             "icon": "biotech",
             "visible": true,
             "children": [
                 {
-                    "id": "lab-services",
-                    "name": "tenant_admin.clinical_services.lab",
+                    "id": "clinical.services.lab",
+                    "name": "tenant.admin.clinical.services.lab",
                     "type": "link",
                     "route": "/admin/clinical/lab",
                     "icon": "science"
                 },
                 {
-                    "id": "imaging-services",
-                    "name": "tenant_admin.clinical_services.imaging",
+                    "id": "clinical.services.imaging",
+                    "name": "tenant.admin.clinical.services.imaging",
                     "type": "link",
                     "route": "/admin/clinical/imaging",
                     "icon": "settings_brightness"
                 },
                 {
-                    "id": "diagnostic-results",
-                    "name": "tenant_admin.clinical_services.results",
+                    "id": "clinical.services.results",
+                    "name": "tenant.admin.clinical.services.results",
                     "type": "link",
                     "route": "/admin/clinical/results",
                     "icon": "task_alt"
@@ -162,28 +162,28 @@
         },
         {
             "id": "pharmacy",
-            "name": "tenant_admin.pharmacy.title",
+            "name": "tenant.admin.pharmacy.title",
             "type": "sub",
             "icon": "medication",
             "visible": true,
             "children": [
                 {
-                    "id": "drug-inventory",
-                    "name": "tenant_admin.pharmacy.inventory",
+                    "id": "pharmacy.inventory",
+                    "name": "tenant.admin.pharmacy.inventory",
                     "type": "link",
                     "route": "/admin/pharmacy/inventory",
                     "icon": "inventory"
                 },
                 {
-                    "id": "e-prescriptions",
-                    "name": "tenant_admin.pharmacy.prescriptions",
+                    "id": "pharmacy.prescriptions",
+                    "name": "tenant.admin.pharmacy.prescriptions",
                     "type": "link",
                     "route": "/admin/pharmacy/prescriptions",
                     "icon": "receipt_long"
                 },
                 {
-                    "id": "pharmacy-purchases",
-                    "name": "tenant_admin.pharmacy.purchases",
+                    "id": "pharmacy.purchases",
+                    "name": "tenant.admin.pharmacy.purchases",
                     "type": "link",
                     "route": "/admin/pharmacy/purchases",
                     "icon": "shopping_cart"
@@ -191,29 +191,29 @@
             ]
         },
         {
-            "id": "medical-staff",
-            "name": "tenant_admin.medical_staff.title",
+            "id": "medical.staff",
+            "name": "tenant.admin.medical.staff.title",
             "type": "sub",
             "icon": "groups",
             "visible": true,
             "children": [
                 {
-                    "id": "staff-directory",
-                    "name": "tenant_admin.medical_staff.directory",
+                    "id": "medical.staff.directory",
+                    "name": "tenant.admin.medical.staff.directory",
                     "type": "link",
                     "route": "/admin/staff/list",
                     "icon": "contacts"
                 },
                 {
-                    "id": "staff-shifts",
-                    "name": "tenant_admin.medical_staff.shifts",
+                    "id": "medical.staff.shifts",
+                    "name": "tenant.admin.medical.staff.shifts",
                     "type": "link",
                     "route": "/admin/staff/shifts",
                     "icon": "schedule"
                 },
                 {
-                    "id": "medical-teams",
-                    "name": "tenant_admin.medical_staff.teams",
+                    "id": "medical.staff.teams",
+                    "name": "tenant.admin.medical.staff.teams",
                     "type": "link",
                     "route": "/admin/staff/teams",
                     "icon": "diversity_3"
@@ -222,28 +222,28 @@
         },
         {
             "id": "finance",
-            "name": "tenant_admin.finance.title",
+            "name": "tenant.admin.finance.title",
             "type": "sub",
             "icon": "payments",
             "visible": true,
             "children": [
                 {
-                    "id": "billing",
-                    "name": "tenant_admin.finance.billing",
+                    "id": "finance.billing",
+                    "name": "tenant.admin.finance.billing",
                     "type": "link",
                     "route": "/admin/finance/billing",
                     "icon": "point_of_sale"
                 },
                 {
-                    "id": "contracts",
-                    "name": "tenant_admin.finance.contracts",
+                    "id": "finance.contracts",
+                    "name": "tenant.admin.finance.contracts",
                     "type": "link",
                     "route": "/admin/finance/contracts",
                     "icon": "handshake"
                 },
                 {
-                    "id": "payments",
-                    "name": "tenant_admin.finance.payments",
+                    "id": "finance.payments",
+                    "name": "tenant.admin.finance.payments",
                     "type": "link",
                     "route": "/admin/finance/payments",
                     "icon": "account_balance_wallet"
@@ -252,28 +252,28 @@
         },
         {
             "id": "resources",
-            "name": "tenant_admin.resources.title",
+            "name": "tenant.admin.resources.title",
             "type": "sub",
             "icon": "inventory_2",
             "visible": true,
             "children": [
                 {
-                    "id": "medical-equipment",
-                    "name": "tenant_admin.resources.equipment",
+                    "id": "resources.equipment",
+                    "name": "tenant.admin.resources.equipment",
                     "type": "link",
                     "route": "/admin/resources/equipment",
                     "icon": "precision_manufacturing"
                 },
                 {
-                    "id": "rooms-operating",
-                    "name": "tenant_admin.resources.rooms",
+                    "id": "resources.rooms",
+                    "name": "tenant.admin.resources.rooms",
                     "type": "link",
                     "route": "/admin/resources/rooms",
                     "icon": "meeting_room"
                 },
                 {
-                    "id": "maintenance",
-                    "name": "tenant_admin.resources.maintenance",
+                    "id": "resources.maintenance",
+                    "name": "tenant.admin.resources.maintenance",
                     "type": "link",
                     "route": "/admin/resources/maintenance",
                     "icon": "build"
@@ -282,21 +282,21 @@
         },
         {
             "id": "reports",
-            "name": "tenant_admin.reports.title",
+            "name": "tenant.admin.reports.title",
             "type": "sub",
             "icon": "analytics",
             "visible": true,
             "children": [
                 {
-                    "id": "patient-stats",
-                    "name": "tenant_admin.reports.statistics",
+                    "id": "reports.statistics",
+                    "name": "tenant.admin.reports.statistics",
                     "type": "link",
                     "route": "/admin/reports/statistics",
                     "icon": "bar_chart"
                 },
                 {
-                    "id": "hospital-kpis",
-                    "name": "tenant_admin.reports.kpis",
+                    "id": "reports.kpis",
+                    "name": "tenant.admin.reports.kpis",
                     "type": "link",
                     "route": "/admin/reports/kpis",
                     "icon": "speed"
@@ -305,35 +305,35 @@
         },
         {
             "id": "admin",
-            "name": "tenant_admin.admin.title",
+            "name": "tenant.admin.admin.title",
             "type": "sub",
             "icon": "settings",
             "visible": true,
             "children": [
                 {
-                    "id": "hospital-profile",
-                    "name": "tenant_admin.admin.profile.title",
+                    "id": "admin.profile",
+                    "name": "tenant.admin.admin.profile.title",
                     "type": "link",
                     "route": "/admin/admin/profile",
                     "icon": "account_balance"
                 },
                 {
-                    "id": "tenant-users",
-                    "name": "tenant_admin.admin.users.title",
+                    "id": "admin.users",
+                    "name": "tenant.admin.admin.users.title",
                     "type": "sub",
                     "icon": "manage_accounts",
                     "visible": true,
                     "children": [
                         {
-                            "id": "users-list",
-                            "name": "tenant_admin.admin.users.list",
+                            "id": "admin.users.list",
+                            "name": "tenant.admin.admin.users.list",
                             "type": "link",
                             "route": "/admin/admin/users/list",
                             "visible": true
                         },
                         {
-                            "id": "users-add",
-                            "name": "tenant_admin.admin.users.add",
+                            "id": "admin.users.add",
+                            "name": "tenant.admin.admin.users.add",
                             "type": "link",
                             "route": "/admin/admin/users/add",
                             "visible": true
@@ -341,30 +341,30 @@
                     ]
                 },
                 {
-                    "id": "invitations",
-                    "name": "tenant_admin.admin.invitations.plural",
+                    "id": "admin.invitations",
+                    "name": "tenant.admin.admin.invitations.plural",
                     "type": "link",
                     "route": "/admin/admin/invitations",
                     "icon": "mail",
                     "visible": true
                 },
                 {
-                    "id": "tenant-roles",
-                    "name": "tenant_admin.admin.roles.title",
+                    "id": "admin.roles",
+                    "name": "tenant.admin.admin.roles.title",
                     "type": "link",
                     "route": "/admin/admin/roles",
                     "icon": "verified_user"
                 },
                 {
-                    "id": "audit-logs",
-                    "name": "tenant_admin.admin.audit",
+                    "id": "admin.audit",
+                    "name": "tenant.admin.admin.audit",
                     "type": "link",
                     "route": "/admin/admin/audit",
                     "icon": "fact_check"
                 },
                 {
-                    "id": "api-integrations",
-                    "name": "tenant_admin.admin.integrations",
+                    "id": "admin.integrations",
+                    "name": "tenant.admin.admin.integrations",
                     "type": "link",
                     "route": "/admin/admin/integrations",
                     "icon": "api"

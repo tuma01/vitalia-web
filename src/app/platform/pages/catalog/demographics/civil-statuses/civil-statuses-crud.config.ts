@@ -8,8 +8,8 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
     const service = inject(CivilStatusService);
 
     return {
-        entityName: 'menu.catalog.demographics.civil_status.singular',
-        entityNamePlural: 'menu.catalog.demographics.civil_status.plural',
+        entityName: 'catalog.demographics.civil.statuses.singular',
+        entityNamePlural: 'catalog.demographics.civil.statuses.plural',
 
         getId: (entity: CivilStatus) => entity.id!,
 
@@ -22,12 +22,12 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.demographics.civil_status.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.demographics.civil_status.fields.code', sortable: true, width: '150px' },
-            { field: 'name', header: 'menu.catalog.demographics.civil_status.fields.name', sortable: true, width: '300px' },
+            { field: 'id', header: 'catalog.demographics.civil.statuses.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.demographics.civil.statuses.fields.code', sortable: true, width: '150px' },
+            { field: 'name', header: 'catalog.demographics.civil.statuses.fields.name', sortable: true, width: '300px' },
             {
                 field: 'active',
-                header: 'menu.catalog.demographics.civil_status.fields.active',
+                header: 'catalog.demographics.civil.statuses.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.demographics.civil_status.fields.code',
+                    label: 'catalog.demographics.civil.statuses.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.demographics.civil_status.fields.name',
+                    label: 'catalog.demographics.civil.statuses.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -61,7 +61,7 @@ export const CIVIL_STATUSES_CRUD_CONFIG = (): CrudConfig<CivilStatus> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.demographics.civil_status.fields.active',
+                    label: 'catalog.demographics.civil.statuses.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [
