@@ -20,6 +20,7 @@ export type { Employee } from './models/employee';
 export type { Gender } from './models/gender';
 export type { GenderSearchDto } from './models/gender-search-dto';
 export type { HealthcareProvider } from './models/healthcare-provider';
+export type { Hospital } from './models/hospital';
 export type { Icd10 } from './models/icd-10';
 export type { IdentificationType } from './models/identification-type';
 export type { IdentificationTypeSearchDto } from './models/identification-type-search-dto';
@@ -39,6 +40,7 @@ export type { PageResponseDtoDepartamento } from './models/page-response-dto-dep
 export type { PageResponseDtoEmployee } from './models/page-response-dto-employee';
 export type { PageResponseDtoGender } from './models/page-response-dto-gender';
 export type { PageResponseDtoHealthcareProvider } from './models/page-response-dto-healthcare-provider';
+export type { PageResponseDtoHospital } from './models/page-response-dto-hospital';
 export type { PageResponseDtoIcd10 } from './models/page-response-dto-icd-10';
 export type { PageResponseDtoIdentificationType } from './models/page-response-dto-identification-type';
 export type { PageResponseDtoInvitationResponse } from './models/page-response-dto-invitation-response';

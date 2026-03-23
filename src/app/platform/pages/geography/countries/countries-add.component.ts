@@ -23,7 +23,7 @@ import { Country } from 'app/api/models/country';
     `
 })
 export class CountriesAddComponent extends CrudBaseAddEditComponent<Country> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.geography.country.singular';
+    protected override entityNameKey = 'catalog.geography.countries.singular';
     public readonly config = COUNTRIES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

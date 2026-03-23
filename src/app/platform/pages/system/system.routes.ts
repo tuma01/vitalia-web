@@ -26,17 +26,17 @@ export const routes: Routes = [
                     {
                         path: 'list',
                         loadComponent: () => import('./super-admins/super-admins-list.component').then(m => m.SuperAdminsListComponent),
-                        data: { title: 'menu.platform_governance.super_admins.list', icon: 'list' }
+                        data: { title: 'menu.platform.governance.super.admins.list', icon: 'list' }
                     },
                     {
                         path: 'add',
                         loadComponent: () => import('./super-admins/super-admins-add.component').then(m => m.SuperAdminsAddComponent),
-                        data: { title: 'menu.platform_governance.super_admins.add', icon: 'add' }
+                        data: { title: 'menu.platform.governance.super.admins.add', icon: 'add' }
                     },
                     {
                         path: 'edit',
                         loadComponent: () => import('./super-admins/super-admins-edit.component').then(m => m.SuperAdminsEditComponent),
-                        data: { title: 'menu.platform_governance.super_admins.edit', icon: 'edit' }
+                        data: { title: 'menu.platform.governance.super.admins.edit', icon: 'edit' }
                     }
                 ]
             },

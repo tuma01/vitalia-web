@@ -11,50 +11,50 @@
             "visible": true
         },
         {
-            "id": "my_health",
-            "name": "my_health_record",
+            "id": "health",
+            "name": "patient.health.title",
             "type": "group",
             "icon": "folder_shared",
             "visible": true,
             "children": [
                 {
-                    "id": "summary",
-                    "name": "health_summary",
+                    "id": "health.summary",
+                    "name": "patient.health.summary",
                     "type": "link",
                     "route": "/patient/health/summary",
                     "icon": "summarize"
                 },
                 {
-                    "id": "lab-results",
-                    "name": "lab_results",
+                    "id": "health.labs",
+                    "name": "patient.health.labs",
                     "type": "link",
                     "route": "/patient/health/labs",
                     "icon": "science"
                 },
                 {
-                    "id": "medications",
-                    "name": "medications",
+                    "id": "health.medications",
+                    "name": "patient.health.medications",
                     "type": "link",
                     "route": "/patient/health/medications",
                     "icon": "medication"
                 },
                 {
-                    "id": "allergies",
-                    "name": "allergies_immunizations",
+                    "id": "health.allergies",
+                    "name": "patient.health.allergies",
                     "type": "link",
                     "route": "/patient/health/allergies",
                     "icon": "warning_amber"
                 },
                 {
-                    "id": "imaging",
-                    "name": "imaging_reports",
+                    "id": "health.imaging",
+                    "name": "patient.health.imaging",
                     "type": "link",
                     "route": "/patient/health/imaging",
                     "icon": "image"
                 },
                 {
-                    "id": "documents",
-                    "name": "clinical_documents",
+                    "id": "health.documents",
+                    "name": "patient.health.documents",
                     "type": "link",
                     "route": "/patient/health/documents",
                     "icon": "article"
@@ -62,47 +62,43 @@
             ]
         },
         {
-            "id": "care_services",
-            "name": "care_services",
+            "id": "services",
+            "name": "patient.services.title",
             "type": "group",
             "icon": "medical_services",
             "visible": true,
             "children": [
                 {
-                    "id": "book-appointment",
-                    "name": "book_appointment",
+                    "id": "services.appointments.book",
+                    "name": "patient.services.appointments.book",
                     "type": "link",
                     "route": "/patient/appointments/book",
                     "icon": "edit_calendar"
                 },
                 {
-                    "id": "appointments",
-                    "name": "my_appointments",
+                    "id": "services.appointments.list",
+                    "name": "patient.services.appointments.list",
                     "type": "link",
                     "route": "/patient/appointments/list",
-                    "icon": "calendar_month",
-                    "badge": {
-                        "value": "1",
-                        "color": "#1976d2"
-                    }
+                    "icon": "calendar_month"
                 },
                 {
-                    "id": "find-doctor",
-                    "name": "find_doctor",
+                    "id": "services.directory",
+                    "name": "patient.services.directory",
                     "type": "link",
                     "route": "/patient/directory",
                     "icon": "search"
                 },
                 {
-                    "id": "telehealth",
-                    "name": "virtual_visits",
+                    "id": "services.telehealth",
+                    "name": "patient.services.telehealth",
                     "type": "link",
                     "route": "/patient/telehealth",
                     "icon": "video_camera_front"
                 },
                 {
-                    "id": "chat",
-                    "name": "chat_provider",
+                    "id": "services.chat",
+                    "name": "patient.services.chat",
                     "type": "link",
                     "route": "/patient/chat",
                     "icon": "chat"
@@ -111,21 +107,21 @@
         },
         {
             "id": "financial",
-            "name": "financial",
+            "name": "patient.financial.title",
             "type": "group",
             "icon": "attach_money",
             "visible": true,
             "children": [
                 {
-                    "id": "bills",
-                    "name": "my_bills",
+                    "id": "financial.bills",
+                    "name": "patient.financial.bills",
                     "type": "link",
                     "route": "/patient/billing/invoices",
                     "icon": "receipt"
                 },
                 {
-                    "id": "insurance",
-                    "name": "insurance_info",
+                    "id": "financial.insurance",
+                    "name": "patient.financial.insurance",
                     "type": "link",
                     "route": "/patient/billing/insurance",
                     "icon": "card_membership"
@@ -134,26 +130,26 @@
         },
         {
             "id": "account",
-            "name": "account_settings",
+            "name": "patient.account.title",
             "type": "sub",
             "icon": "manage_accounts",
             "visible": true,
             "children": [
                 {
-                    "id": "profile",
-                    "name": "my_profile",
+                    "id": "account.profile",
+                    "name": "patient.account.profile",
                     "type": "link",
                     "route": "/patient/profile"
                 },
                 {
-                    "id": "consent",
-                    "name": "privacy_consent",
+                    "id": "account.consent",
+                    "name": "patient.account.consent",
                     "type": "link",
                     "route": "/patient/consent"
                 },
                 {
-                    "id": "family-access",
-                    "name": "family_access",
+                    "id": "account.family",
+                    "name": "patient.account.family",
                     "type": "link",
                     "route": "/patient/family-access"
                 }

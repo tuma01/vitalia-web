@@ -36,7 +36,7 @@ export class KinshipsListComponent {
                 {
                     editHandler: (record: Kinship) => this.edit(record),
                     deleteHandler: (record: Kinship) => this.deleteKinship(record),
-                    entityType: 'menu.catalog.kinship.singular',
+                    entityType: 'catalog.kinships.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

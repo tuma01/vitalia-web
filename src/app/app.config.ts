@@ -14,7 +14,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { routes } from './app.routes';
 import { TokenService } from './core/token/token.service';
 import { RefreshTokenService } from './core/token/refresh-token.service';
-import { API_ROOT_URL } from './api/api-configuration';
+import { ApiConfiguration, API_ROOT_URL } from './api/api-configuration';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 import {
@@ -51,6 +51,7 @@ export function initializeTheme(themeService: ThemeService) {
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: API_ROOT_URL, useValue: environment.apiRootUrl },
+    { provide: ApiConfiguration, useClass: ApiConfiguration, deps: [API_ROOT_URL] },
 
     provideBrowserGlobalErrorListeners(),
 

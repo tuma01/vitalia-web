@@ -15,7 +15,9 @@ export function baseUrlInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
   const prependBaseUrl = (url: string) =>
     [baseUrl?.replace(/\/$/g, ''), url.replace(/^\.?\//, '')].filter(val => val).join('/');
 
-  return hasScheme(req.url) === false
+  const isAsset = req.url.startsWith('./assets/') || req.url.startsWith('assets/');
+
+  return hasScheme(req.url) === false && !isAsset
     ? next(req.clone({ url: prependBaseUrl(req.url) }))
     : next(req);
 }

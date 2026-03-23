@@ -12,7 +12,7 @@ import { ThemeService } from 'app/api/services/theme.service';
 @Component({
     selector: 'app-organizations-add',
     standalone: true,
-    imports: [CrudTemplateComponent, TranslateModule, ReactiveFormsModule, AddressSelectorComponent],
+    imports: [CrudTemplateComponent, ReactiveFormsModule],
     template: `
         <app-crud-template
             mode="add"
@@ -20,21 +20,14 @@ import { ThemeService } from 'app/api/services/theme.service';
             [formGroup]="form"
             (save)="onSubmit()"
             (cancel)="onCancel()">
-            <!-- Address section rendered outside the CRUD grid, in the manual [form] slot -->
-            <div form>
-                <app-address-selector [addressForm]="addressForm"></app-address-selector>
-            </div>
         </app-crud-template>
     `
 })
 export class OrganizationsAddComponent extends CrudBaseAddEditComponent<Tenant> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_governance.organizations.singular';
+    protected override entityNameKey = 'tenant_governance.organizations.singular';
     public readonly config = ORGANIZATIONS_CRUD_CONFIG();
     private themeService = inject(ThemeService);
     private readonly _fb = inject(FormBuilder);
-
-    /** Address sub-FormGroup — managed by AddressSelectorComponent */
-    addressForm: FormGroup = AddressSelectorComponent.buildAddressFormGroup(this._fb);
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(
         inject(FormBuilder), this.config
@@ -58,22 +51,8 @@ export class OrganizationsAddComponent extends CrudBaseAddEditComponent<Tenant> 
     }
 
     protected override saveEntity(formData: any): Observable<Tenant> {
-        const addressValues = this.addressForm.value;
-        const payload: Tenant = {
-            ...formData,
-            address: {
-                direccion: addressValues.direccion,
-                ciudad: addressValues.ciudad || undefined,
-                numero: addressValues.numero || undefined,
-                piso: addressValues.piso || undefined,
-                casillaPostal: addressValues.casillaPostal || undefined,
-                countryId: addressValues.countryId || undefined,
-                departamentoId: addressValues.departamentoId || undefined,
-                provinciaId: addressValues.provinciaId || undefined,
-                municipioId: addressValues.municipioId || undefined,
-            }
-        };
-        return this.config.apiService.create(payload);
+        // formData now includes the 'address' object automatically from the FormGroup
+        return this.config.apiService.create(formData);
     }
 
     onCancel(): void {

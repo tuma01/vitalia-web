@@ -36,7 +36,7 @@ export class IdentificationTypesListComponent {
                 {
                     editHandler: (record: IdentificationType) => this.edit(record),
                     deleteHandler: (record: IdentificationType) => this.deleteIdentificationType(record),
-                    entityType: 'menu.catalog.identification_type.singular',
+                    entityType: 'catalog.identification.types.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

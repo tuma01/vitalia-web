@@ -217,3 +217,43 @@ body {
 .mat-sort-header:hover .mat-sort-header-content .mtx-grid-icon {
     opacity: 0.5 !important;
 }
+
+/* ── 8️⃣ FORM FIELD HINTS — Premium Style ───────────────────────── */
+mat-form-field .mat-mdc-form-field-hint {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.015em !important;
+    color: color-mix(in srgb, var(--mat-sys-on-surface-variant), transparent 15%) !important;
+    margin-top: 6px !important;
+    display: flex !important;
+    align-items: center;
+    gap: 6px;
+    font-style: italic;
+
+    // Subtle indicator icon for information
+    &::before {
+        content: 'info' !important;
+        font-family: 'Material Icons' !important;
+        font-size: 14px !important;
+        color: var(--mat-sys-primary) !important;
+        opacity: 0.7 !important;
+        font-style: normal !important;
+        flex-shrink: 0 !important;
+        display: inline-block !important;
+    }
+
+    // Animation for entrance
+    animation: hint-fade-in 0.3s ease-out !important;
+}
+
+@keyframes hint-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(-2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

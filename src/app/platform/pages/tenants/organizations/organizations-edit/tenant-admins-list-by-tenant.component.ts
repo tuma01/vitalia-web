@@ -55,7 +55,7 @@ export class TenantAdminsListByTenantComponent implements OnInit {
                 {
                     editHandler: (record: TenantAdmin) => this.edit(record),
                     deleteHandler: (record: TenantAdmin) => this.deleteAdmin(record),
-                    entityType: 'menu.tenant_governance.administrators.singular',
+                    entityType: 'tenant_governance.administrators.singular',
                     fieldForMessage: 'nombre'
                 },
                 this.confirmDialog

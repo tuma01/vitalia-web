@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ToastrService } from 'ngx-toastr';
 
 // Material Components
@@ -62,6 +62,7 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private themeService = inject(ThemeService);
   private toastService = inject(ToastrService);
+  private translate = inject(TranslateService);
   public appContext = inject(AppContextService); // 🔥 CHANGED to public for template access
 
   // Signals
@@ -79,11 +80,11 @@ export class LoginComponent {
   //   { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: 'var(--color-info)', enabled: true }
   // ];
   roles: RoleOption[] = [
-    { value: 'ROLE_ADMIN', label: 'Admin', icon: 'admin_panel_settings', color: ROLE_COLORS.ROLE_ADMIN, enabled: true },
-    { value: 'ROLE_DOCTOR', label: 'Doctor', icon: 'medical_services', color: ROLE_COLORS.ROLE_DOCTOR, enabled: true },
-    { value: 'ROLE_NURSE', label: 'Nurse', icon: 'local_hospital', color: ROLE_COLORS.ROLE_NURSE, enabled: true },
-    { value: 'ROLE_EMPLOYEE', label: 'Employee', icon: 'badge', color: ROLE_COLORS.ROLE_EMPLOYEE, enabled: true },
-    { value: 'ROLE_PATIENT', label: 'Patient', icon: 'person', color: ROLE_COLORS.ROLE_PATIENT, enabled: true }
+    { value: 'ROLE_ADMIN', label: 'common.person_types.admin', icon: 'admin_panel_settings', color: ROLE_COLORS.ROLE_ADMIN, enabled: true },
+    { value: 'ROLE_DOCTOR', label: 'common.person_types.doctor', icon: 'medical_services', color: ROLE_COLORS.ROLE_DOCTOR, enabled: true },
+    { value: 'ROLE_NURSE', label: 'common.person_types.nurse', icon: 'local_hospital', color: ROLE_COLORS.ROLE_NURSE, enabled: true },
+    { value: 'ROLE_EMPLOYEE', label: 'common.person_types.employee', icon: 'badge', color: ROLE_COLORS.ROLE_EMPLOYEE, enabled: true },
+    { value: 'ROLE_PATIENT', label: 'common.person_types.patient', icon: 'person', color: ROLE_COLORS.ROLE_PATIENT, enabled: true }
   ];
 
   // Form
@@ -107,7 +108,10 @@ export class LoginComponent {
   private checkInitialTenant(): void {
     const detectedTenant = this.appContext.tenant();
     if (detectedTenant?.code) {
-      console.log('[Login] 🌐 Initial tenant ready from URL detection');
+      console.log('[Login] 🌐 Initial tenant ready from URL detection:', detectedTenant.code);
+      // 🔥 CRITICAL: Pre-populate the form so it becomes VALID even if the selector is hidden
+      this.loginForm.get('tenantCode')?.setValue(detectedTenant.code);
+      this.applyTenantBranding(detectedTenant.code);
     }
   }
 
@@ -206,9 +210,9 @@ export class LoginComponent {
         // Si es un error de red (status 0), mostrar mensaje más específico
         if (error.status === 0) {
           console.warn('[Login] Network error loading tenants - backend may not be available');
-          this.toastService.warning('No se pudo conectar al servidor. Verifica tu conexión.');
+          this.toastService.warning(this.translate.instant('login.messages.network_error'));
         } else {
-          this.toastService.error('Error al cargar la lista de hospitales');
+          this.toastService.error(this.translate.instant('login.messages.server_error'));
         }
       }
     });
@@ -218,7 +222,7 @@ export class LoginComponent {
     const role = this.roles.find(r => r.value === roleValue);
 
     if (!role?.enabled) {
-      this.toastService.info('Este rol estará disponible próximamente');
+      this.toastService.info(this.translate.instant('login.messages.role_unavailable'));
       return;
     }
 
@@ -239,7 +243,7 @@ export class LoginComponent {
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      this.toastService.warning('Por favor verifica los datos del formulario.');
+      this.toastService.warning(this.translate.instant('login.messages.verify_form'));
       return;
     }
 
@@ -253,6 +257,7 @@ export class LoginComponent {
       next: () => {
         this.isLoading.set(false);
         console.log('[Login] Login successful, theme will load automatically');
+        this.toastService.success(this.translate.instant('login.messages.login_success'));
         // 🔥 PASS THE SELECTED ROLE to prioritize dashboard
         this.authService.navigateBasedOnRole(this.selectedRole());
       },
@@ -268,10 +273,10 @@ export class LoginComponent {
           case 401:
           case 403:
             if (backendMsg === 'ACCOUNT_LOCKED' || (backendMsg && backendMsg.includes('locked'))) {
-              this.toastService.error('Tu cuenta está bloqueada. Contacta a soporte.');
+              this.toastService.error(this.translate.instant('login.messages.account_locked'));
             } else {
               // 🛡️ Unificar mensaje para errores de credenciales (backend suele devolver 400 o 401)
-              this.toastService.error('Correo o contraseña incorrectos.');
+              this.toastService.error(this.translate.instant('login.messages.invalid_credentials'));
             }
             break;
 

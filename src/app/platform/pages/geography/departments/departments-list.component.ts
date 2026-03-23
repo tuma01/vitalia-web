@@ -40,7 +40,7 @@ export class DepartmentsListComponent implements OnInit {
                 {
                     editHandler: (record: Departamento) => this.edit(record),
                     deleteHandler: (record: Departamento) => this.deleteDepartamento(record),
-                    entityType: 'menu.catalog.geography.department.singular',
+                    entityType: 'catalog.geography.departments.singular',
                     fieldForMessage: 'nombre'
                 },
                 this.confirmDialog

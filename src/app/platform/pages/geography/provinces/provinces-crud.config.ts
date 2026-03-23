@@ -8,8 +8,8 @@ export const PROVINCES_CRUD_CONFIG = (): CrudConfig<Provincia> => {
     const service = inject(ProvinciaService);
 
     return {
-        entityName: 'menu.catalog.geography.province.singular',
-        entityNamePlural: 'menu.catalog.geography.province.plural',
+        entityName: 'catalog.geography.provinces.singular',
+        entityNamePlural: 'catalog.geography.provinces.plural',
 
         getId: (entity: Provincia) => entity.id!,
 
@@ -23,19 +23,19 @@ export const PROVINCES_CRUD_CONFIG = (): CrudConfig<Provincia> => {
 
         columns: [
             { field: 'id', header: 'common.id', sortable: true, width: '80px' },
-            { field: 'nombre', header: 'menu.catalog.geography.province.fields.name', sortable: true },
-            { field: 'departamentoId', header: 'menu.catalog.geography.province.fields.department', sortable: false, width: '250px' }
+            { field: 'nombre', header: 'catalog.geography.provinces.fields.name', sortable: true },
+            { field: 'departamentoId', header: 'catalog.geography.provinces.fields.department', sortable: false, width: '250px' }
         ],
 
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'nombre', label: 'menu.catalog.geography.province.fields.name', type: 'text', required: true, colSpan: 1 },
-                { name: 'poblacion', label: 'menu.catalog.geography.province.fields.population', type: 'number', colSpan: 1 },
-                { name: 'superficie', label: 'menu.catalog.geography.province.fields.surface', type: 'number', colSpan: 1 },
+                { name: 'nombre', label: 'catalog.geography.provinces.fields.name', type: 'text', required: true, colSpan: 1 },
+                { name: 'poblacion', label: 'catalog.geography.provinces.fields.population', type: 'number', colSpan: 1 },
+                { name: 'superficie', label: 'catalog.geography.provinces.fields.surface', type: 'number', colSpan: 1 },
                 {
                     name: 'departamentoId',
-                    label: 'menu.catalog.geography.province.fields.department',
+                    label: 'catalog.geography.provinces.fields.department',
                     type: 'select',
                     required: true,
                     colSpan: 1,

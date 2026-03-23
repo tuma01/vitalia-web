@@ -22,7 +22,7 @@
                                 <div class="role-icon-wrapper">
                                     <mat-icon>{{ role.icon }}</mat-icon>
                                 </div>
-                                <span class="role-label">{{ role.label }}</span>
+                                <span class="role-label">{{ role.label | translate }}</span>
 
                                 @if (selectedRole() === role.value) {
                                 <div class="active-indicator">

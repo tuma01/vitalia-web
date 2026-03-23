@@ -36,7 +36,7 @@ export class CivilStatusesListComponent {
                 {
                     editHandler: (record: CivilStatus) => this.edit(record),
                     deleteHandler: (record: CivilStatus) => this.deleteCivilStatus(record),
-                    entityType: 'menu.catalog.demographics.civil_status.singular',
+                    entityType: 'catalog.demographics.civil.statuses.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

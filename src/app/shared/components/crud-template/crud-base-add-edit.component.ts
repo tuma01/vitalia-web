@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { CrudConfig } from './crud-config';
+import { AddressSelectorComponent } from '../address-selector/address-selector.component';
 
 @Injectable()
 export abstract class CrudBaseAddEditComponent<T> {
@@ -52,10 +53,15 @@ export abstract class CrudBaseAddEditComponent<T> {
             if (field.validators?.length) validators.push(...field.validators);
 
             const defaultValue = field.value !== undefined ? field.value : (field.type === 'number' ? null : '');
-            controls[field.name as string] = [
-                { value: defaultValue, disabled: field.disabled ?? false },
-                validators
-            ];
+            
+            if (field.type === 'address') {
+                controls[field.name as string] = AddressSelectorComponent.buildAddressFormGroup(fb);
+            } else {
+                controls[field.name as string] = [
+                    { value: defaultValue, disabled: field.disabled ?? false },
+                    validators
+                ];
+            }
         }
 
         return fb.group(controls);

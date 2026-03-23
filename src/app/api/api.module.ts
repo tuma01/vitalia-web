@@ -28,6 +28,7 @@ import { GenderService } from './services/gender.service';
 import { CivilStatusService } from './services/civil-status.service';
 import { BloodTypeService } from './services/blood-type.service';
 import { AllergyService } from './services/allergy.service';
+import { HospitalService } from './services/hospital.service';
 import { EmployeeService } from './services/employee.service';
 import { DepartamentoService } from './services/departamento.service';
 import { CountryService } from './services/country.service';
@@ -66,6 +67,7 @@ import { AccountService } from './services/account.service';
     CivilStatusService,
     BloodTypeService,
     AllergyService,
+    HospitalService,
     EmployeeService,
     DepartamentoService,
     CountryService,

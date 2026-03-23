@@ -24,6 +24,7 @@ export { GenderService } from './services/gender.service';
 export { CivilStatusService } from './services/civil-status.service';
 export { BloodTypeService } from './services/blood-type.service';
 export { AllergyService } from './services/allergy.service';
+export { HospitalService } from './services/hospital.service';
 export { EmployeeService } from './services/employee.service';
 export { DepartamentoService } from './services/departamento.service';
 export { CountryService } from './services/country.service';

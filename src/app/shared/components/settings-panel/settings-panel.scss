@@ -43,10 +43,9 @@
     }
 }
 
-/* Main Panel Drawer */
 .settings-panel {
     position: fixed;
-    top: 0;
+    top: var(--app-header-height, 64px);
     bottom: 0;
     right: calc(-1 * var(--panel-width));
     width: var(--panel-width);
@@ -313,12 +312,12 @@ mat-button-toggle {
 
 .settings-backdrop {
     position: fixed;
-    top: 0;
+    top: var(--app-header-height, 64px);
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - var(--app-header-height, 64px));
     background: rgba(0, 0, 0, 0.2);
-    z-index: 1005;
+    z-index: 999;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

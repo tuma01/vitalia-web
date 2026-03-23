@@ -12,8 +12,8 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
     const service = inject(SuperAdminService);
 
     return {
-        entityName: 'menu.platform_governance.super_admins.singular',
-        entityNamePlural: 'menu.platform_governance.super_admins.plural',
+        entityName: 'platform_governance.super_admins.singular',
+        entityNamePlural: 'platform_governance.super_admins.plural',
 
         getId: (entity: SuperAdmin) => entity.id!,
 
@@ -26,29 +26,29 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
         }),
 
         columns: [
-            { field: 'id', header: 'menu.platform_governance.super_admins.fields.id', sortable: true, width: '80px' },
+            { field: 'id', header: 'platform_governance.super_admins.fields.id', sortable: true, width: '80px' },
             {
                 field: 'nombre',
-                header: 'menu.platform_governance.super_admins.fields.nombre',
+                header: 'platform_governance.super_admins.fields.nombre',
                 sortable: true,
                 width: '180px'
             },
             {
                 field: 'apellidoPaterno',
-                header: 'menu.platform_governance.super_admins.fields.apellidoPaterno',
+                header: 'platform_governance.super_admins.fields.apellidoPaterno',
                 sortable: true,
                 width: '180px'
             },
             {
                 field: 'email',
-                header: 'menu.platform_governance.super_admins.fields.email',
+                header: 'platform_governance.super_admins.fields.email',
                 sortable: true,
                 width: '220px',
                 formatter: (record: SuperAdmin) => record.user?.email || '-'
             },
             {
                 field: 'level',
-                header: 'menu.platform_governance.super_admins.fields.level',
+                header: 'platform_governance.super_admins.fields.level',
                 width: '120px',
                 tag: {
                     'LEVEL_1': { text: 'LEVEL_1', color: 'red' },
@@ -58,7 +58,7 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
             },
             {
                 field: 'globalAccess',
-                header: 'menu.platform_governance.super_admins.fields.globalAccess',
+                header: 'platform_governance.super_admins.fields.globalAccess',
                 sortable: true,
                 width: '100px',
                 type: 'tag',
@@ -75,7 +75,7 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
             fields: [
                 {
                     name: 'userEmail',
-                    label: 'menu.platform_governance.super_admins.fields.email',
+                    label: 'platform_governance.super_admins.fields.email',
                     type: 'text',
                     icon: 'email',
                     required: true,
@@ -84,7 +84,7 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
                 },
                 {
                     name: 'level',
-                    label: 'menu.platform_governance.super_admins.fields.level',
+                    label: 'platform_governance.super_admins.fields.level',
                     type: 'select',
                     icon: 'admin_panel_settings',
                     required: true,
@@ -97,7 +97,7 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
                 },
                 {
                     name: 'globalAccess',
-                    label: 'menu.platform_governance.super_admins.fields.globalAccess',
+                    label: 'platform_governance.super_admins.fields.globalAccess',
                     type: 'checkbox',
                     icon: 'public',
                     colSpan: 1,
@@ -105,24 +105,24 @@ export const SUPER_ADMINS_CRUD_CONFIG = (mode: 'add' | 'edit' | 'list' = 'list')
                 },
                 {
                     name: 'password',
-                    label: 'menu.platform_governance.super_admins.fields.password',
+                    label: 'platform_governance.super_admins.fields.password',
                     type: 'password',
                     icon: 'lock',
                     required: mode === 'add',
                     disabled: mode === 'edit',
                     showPasswordToggle: true,
                     placeholder: mode === 'add'
-                        ? 'menu.platform_governance.super_admins.fields.password'
-                        : 'menu.platform_governance.super_admins.fields.password_placeholder_edit',
+                        ? 'platform_governance.super_admins.fields.password'
+                        : 'platform_governance.super_admins.fields.password_placeholder_edit',
                     hint: mode === 'edit'
-                        ? 'menu.platform_governance.super_admins.fields.password_hint'
+                        ? 'platform_governance.super_admins.fields.password_hint'
                         : undefined,
                     colSpan: 1,
                     groupWithNext: mode === 'edit'
                 },
                 ...(mode === 'edit' ? [{
                     name: 'changePassword',
-                    label: 'menu.platform_governance.super_admins.fields.change_password',
+                    label: 'platform_governance.super_admins.fields.change_password',
                     type: 'checkbox' as const,
                     colSpan: 1
                 }] : [])

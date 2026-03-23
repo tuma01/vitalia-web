@@ -36,7 +36,7 @@ export class BloodTypesListComponent {
                 {
                     editHandler: (record: BloodType) => this.edit(record),
                     deleteHandler: (record: BloodType) => this.deleteBloodType(record),
-                    entityType: 'menu.catalog.blood_type.singular',
+                    entityType: 'catalog.blood.types.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

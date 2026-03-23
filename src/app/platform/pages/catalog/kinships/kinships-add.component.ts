@@ -23,7 +23,7 @@ import { Kinship } from 'app/api/models/kinship';
   `
 })
 export class KinshipsAddComponent extends CrudBaseAddEditComponent<Kinship> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.kinship.singular';
+    protected override entityNameKey = 'catalog.kinships.singular';
     public readonly config = KINSHIPS_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

@@ -36,7 +36,7 @@ export class TenantConfigsListComponent {
                 {
                     editHandler: (record: TenantConfig) => this.edit(record),
                     deleteHandler: (record: TenantConfig) => this.deleteTenantConfig(record),
-                    entityType: 'menu.tenant_governance.tenant_config.singular',
+                    entityType: 'tenant_config.singular',
                     fieldForMessage: 'id' // Using id as fallback if name is not applicable
                 },
                 this.confirmDialog

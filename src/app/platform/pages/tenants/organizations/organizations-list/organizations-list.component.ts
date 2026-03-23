@@ -56,7 +56,7 @@ export class OrganizationsListComponent {
                 {
                     editHandler: (record: Tenant) => this.edit(record),
                     deleteHandler: (record: Tenant) => this.deleteOrganization(record),
-                    entityType: 'menu.tenant_governance.organizations.singular',
+                    entityType: 'tenant_governance.organizations.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

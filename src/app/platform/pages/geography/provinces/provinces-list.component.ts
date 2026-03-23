@@ -40,7 +40,7 @@ export class ProvincesListComponent implements OnInit {
                 {
                     editHandler: (record: Provincia) => this.edit(record),
                     deleteHandler: (record: Provincia) => this.deleteProvincia(record),
-                    entityType: 'menu.catalog.geography.province.singular',
+                    entityType: 'catalog.geography.provinces.singular',
                     fieldForMessage: 'nombre'
                 },
                 this.confirmDialog

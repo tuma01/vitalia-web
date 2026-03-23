@@ -8,8 +8,8 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
     const service = inject(MedicalSpecialtyService);
 
     return {
-        entityName: 'menu.catalog.specialty.singular',
-        entityNamePlural: 'menu.catalog.specialty.plural',
+        entityName: 'catalog.specialties.singular',
+        entityNamePlural: 'catalog.specialties.plural',
 
         getId: (entity: MedicalSpecialty) => entity.id!,
 
@@ -22,13 +22,13 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.specialty.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.specialty.fields.code', sortable: true, width: '120px' },
-            { field: 'name', header: 'menu.catalog.specialty.fields.name', sortable: true, width: '250px' },
-            { field: 'targetProfession', header: 'menu.catalog.specialty.fields.targetProfession', sortable: true, width: '150px' },
+            { field: 'id', header: 'catalog.specialties.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.specialties.fields.code', sortable: true, width: '120px' },
+            { field: 'name', header: 'catalog.specialties.fields.name', sortable: true, width: '250px' },
+            { field: 'targetProfession', header: 'catalog.specialties.fields.targetProfession', sortable: true, width: '150px' },
             {
                 field: 'active',
-                header: 'menu.catalog.specialty.fields.active',
+                header: 'catalog.specialties.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -44,7 +44,7 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.specialty.fields.code',
+                    label: 'catalog.specialties.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -53,7 +53,7 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.specialty.fields.name',
+                    label: 'catalog.specialties.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -62,20 +62,20 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                 },
                 {
                     name: 'targetProfession',
-                    label: 'menu.catalog.specialty.fields.targetProfession',
+                    label: 'catalog.specialties.fields.targetProfession',
                     type: 'select',
                     required: true,
                     colSpan: 1,
                     icon: 'group',
                     options: [
-                        { label: 'menu.catalog.specialty.fields.targetProfession_options.doctor', value: 'DOCTOR' },
-                        { label: 'menu.catalog.specialty.fields.targetProfession_options.nurse', value: 'NURSE' },
-                        { label: 'menu.catalog.specialty.fields.targetProfession_options.both', value: 'BOTH' }
+                        { label: 'catalog.specialties.fields.targetProfession_options.doctor', value: 'DOCTOR' },
+                        { label: 'catalog.specialties.fields.targetProfession_options.nurse', value: 'NURSE' },
+                        { label: 'catalog.specialties.fields.targetProfession_options.both', value: 'BOTH' }
                     ]
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.specialty.fields.active',
+                    label: 'catalog.specialties.fields.active',
                     type: 'radio',
                     colSpan: 1,
                     options: [
@@ -85,7 +85,7 @@ export const SPECIALTIES_CRUD_CONFIG = (): CrudConfig<MedicalSpecialty> => {
                 },
                 {
                     name: 'description',
-                    label: 'menu.catalog.specialty.fields.description',
+                    label: 'catalog.specialties.fields.description',
                     type: 'textarea',
                     required: false,
                     colSpan: 2,

@@ -258,8 +258,15 @@ export class AppContextService {
                 } else {
                     // Get tenant from session
                     const tenantId = sessionStorage.getItem('tenant-id');
-                    const tenantCode = sessionStorage.getItem('tenant-code');
+                    let tenantCode = sessionStorage.getItem('tenant-code');
                     const tenantName = sessionStorage.getItem('tenant-name');
+
+                    // 🔄 Fallback: if sessionStorage is empty (cross-domain navigation),
+                    // recover tenantCode from localStorage (shared across subdomains)
+                    if (!tenantCode) {
+                        tenantCode = localStorage.getItem('vitalia-tenant-code') || '';
+                        console.log(`[AppContext] 🔄 tenantCode recovered from localStorage: ${tenantCode}`);
+                    }
 
                     this.setContext('app', {
                         id: tenantId ? Number(tenantId) : undefined,

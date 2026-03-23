@@ -8,8 +8,8 @@ export const GENDERS_CRUD_CONFIG = (): CrudConfig<Gender> => {
     const service = inject(GenderService);
 
     return {
-        entityName: 'menu.catalog.demographics.gender.singular',
-        entityNamePlural: 'menu.catalog.demographics.gender.plural',
+        entityName: 'catalog.demographics.genders.singular',
+        entityNamePlural: 'catalog.demographics.genders.plural',
 
         getId: (entity: Gender) => entity.id!,
 
@@ -22,12 +22,12 @@ export const GENDERS_CRUD_CONFIG = (): CrudConfig<Gender> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.demographics.gender.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.demographics.gender.fields.code', sortable: true, width: '150px' },
-            { field: 'name', header: 'menu.catalog.demographics.gender.fields.name', sortable: true, width: '300px' },
+            { field: 'id', header: 'catalog.demographics.genders.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.demographics.genders.fields.code', sortable: true, width: '150px' },
+            { field: 'name', header: 'catalog.demographics.genders.fields.name', sortable: true, width: '300px' },
             {
                 field: 'active',
-                header: 'menu.catalog.demographics.gender.fields.active',
+                header: 'catalog.demographics.genders.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const GENDERS_CRUD_CONFIG = (): CrudConfig<Gender> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.demographics.gender.fields.code',
+                    label: 'catalog.demographics.genders.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const GENDERS_CRUD_CONFIG = (): CrudConfig<Gender> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.demographics.gender.fields.name',
+                    label: 'catalog.demographics.genders.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -61,7 +61,7 @@ export const GENDERS_CRUD_CONFIG = (): CrudConfig<Gender> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.demographics.gender.fields.active',
+                    label: 'catalog.demographics.genders.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

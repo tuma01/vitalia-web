@@ -23,7 +23,7 @@ import { CivilStatus } from 'app/api/models/civil-status';
   `
 })
 export class CivilStatusesEditComponent extends CrudBaseAddEditComponent<CivilStatus> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.demographics.civil_status.singular';
+    protected override entityNameKey = 'catalog.demographics.civil.statuses.singular';
     public readonly config = CIVIL_STATUSES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

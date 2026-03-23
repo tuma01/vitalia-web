@@ -24,7 +24,7 @@ import { IdentificationType } from 'app/api/models/identification-type';
     `
 })
 export class IdentificationTypesAddComponent extends CrudBaseAddEditComponent<IdentificationType> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.identification_type.singular';
+    protected override entityNameKey = 'catalog.identification.types.singular';
     public readonly config = IDENTIFICATION_TYPES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

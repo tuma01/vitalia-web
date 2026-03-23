@@ -8,8 +8,8 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
     const service = inject(MedicationService);
 
     return {
-        entityName: 'menu.catalog.medications.singular',
-        entityNamePlural: 'menu.catalog.medications.plural',
+        entityName: 'catalog.medications.singular',
+        entityNamePlural: 'catalog.medications.plural',
 
         getId: (entity: Medication) => entity.id!,
 
@@ -22,13 +22,13 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.medications.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.medications.fields.code', sortable: true, width: '120px' },
-            { field: 'genericName', header: 'menu.catalog.medications.fields.genericName', sortable: true, width: '250px' },
-            { field: 'commercialName', header: 'menu.catalog.medications.fields.commercialName', sortable: true, width: '250px' },
+            { field: 'id', header: 'catalog.medications.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.medications.fields.code', sortable: true, width: '120px' },
+            { field: 'genericName', header: 'catalog.medications.fields.genericName', sortable: true, width: '250px' },
+            { field: 'commercialName', header: 'catalog.medications.fields.commercialName', sortable: true, width: '250px' },
             {
                 field: 'active',
-                header: 'menu.catalog.medications.fields.active',
+                header: 'catalog.medications.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -44,7 +44,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.medications.fields.code',
+                    label: 'catalog.medications.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -53,7 +53,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'genericName',
-                    label: 'menu.catalog.medications.fields.genericName',
+                    label: 'catalog.medications.fields.genericName',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -62,7 +62,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'commercialName',
-                    label: 'menu.catalog.medications.fields.commercialName',
+                    label: 'catalog.medications.fields.commercialName',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -71,7 +71,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'concentration',
-                    label: 'menu.catalog.medications.fields.concentration',
+                    label: 'catalog.medications.fields.concentration',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -80,7 +80,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'pharmaceuticalForm',
-                    label: 'menu.catalog.medications.fields.pharmaceuticalForm',
+                    label: 'catalog.medications.fields.pharmaceuticalForm',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -89,7 +89,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'presentation',
-                    label: 'menu.catalog.medications.fields.presentation',
+                    label: 'catalog.medications.fields.presentation',
                     type: 'text',
                     required: false,
                     colSpan: 1,
@@ -98,7 +98,7 @@ export const MEDICATIONS_CRUD_CONFIG = (): CrudConfig<Medication> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.medications.fields.active',
+                    label: 'catalog.medications.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

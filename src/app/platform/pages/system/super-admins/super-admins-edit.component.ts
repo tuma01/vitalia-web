@@ -27,7 +27,7 @@ import { PersonFormComponent, PersonFormConfig } from '@shared/components/person
     `
 })
 export class SuperAdminsEditComponent extends CrudBaseAddEditComponent<SuperAdmin> implements OnInit {
-    protected override entityNameKey = 'menu.platform_governance.super_admins.singular';
+    protected override entityNameKey = 'platform_governance.super_admins.singular';
     public readonly config = SUPER_ADMINS_CRUD_CONFIG('edit');
 
     private readonly _fb = inject(FormBuilder);

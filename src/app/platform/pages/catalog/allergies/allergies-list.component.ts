@@ -36,7 +36,7 @@ export class AllergiesListComponent {
                 {
                     editHandler: (record: Allergy) => this.edit(record),
                     deleteHandler: (record: Allergy) => this.deleteAllergy(record),
-                    entityType: 'menu.catalog.allergy.singular',
+                    entityType: 'catalog.allergies.singular',
                     fieldForMessage: 'name'
                 },
                 this.confirmDialog

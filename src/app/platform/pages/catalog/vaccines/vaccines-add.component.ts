@@ -23,7 +23,7 @@ import { Vaccine } from 'app/api/models/vaccine';
   `
 })
 export class VaccinesAddComponent extends CrudBaseAddEditComponent<Vaccine> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.vaccines.singular';
+    protected override entityNameKey = 'catalog.vaccines.singular';
     public readonly config = VACCINES_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

@@ -13,7 +13,6 @@
     (rowSelectedChange)="onRowSelectionChange($event)" (rowClick)="onRowClick($event)" (page)="onPageChange($event)">
 
     <!-- Static tag badge template — assigned to columns via ngAfterViewInit -->
-    <!-- Context: rowData = row object, colDef = column definition (MtxGridCell provides both) -->
     <ng-template #tagCellTemplate let-rowData="rowData" let-colDef="colDef">
         @let field = $any(colDef)?.field;
         @let val = rowData && field && rowData[field] != null ? '' + rowData[field] : null;
@@ -33,10 +32,7 @@
     <!-- ── Toolbar ─────────────────────────────────────────────────────── -->
     <ng-template #toolbarTemplate>
         <div class="toolbar-container">
-
-            <!-- Left: search (always) + selection chip (alongside, when ≥1 selected) -->
             <div class="toolbar-left">
-                <!-- Search always visible -->
                 <mat-form-field appearance="outline" class="search-field mb-0" subscriptSizing="dynamic">
                     <input matInput #searchInput (keyup)="onSearch(searchInput.value)"
                         [placeholder]="'common.search' | translate">
@@ -48,7 +44,6 @@
                     }
                 </mat-form-field>
 
-                <!-- Selection chip — slides in next to search when ≥1 row selected -->
                 @if (selectedRows.length > 0) {
                 <div class="selection-chip">
                     <mat-icon class="selection-chip-icon">check_circle</mat-icon>
@@ -61,10 +56,7 @@
                 }
             </div>
 
-            <!-- Right: contextual actions -->
             <div class="toolbar-right">
-
-                <!-- Bulk Delete (only when multiSelectable is on) -->
                 @if (config.enableDelete !== false && config.table?.multiSelectable) {
                 <button mat-icon-button class="btn-bulk-delete" [class.has-selection]="selectedRows.length >= 2"
                     [disabled]="selectedRows.length < 2" (click)="onBulkDelete(selectedRows)" [matTooltip]="selectedRows.length >= 2
@@ -72,15 +64,12 @@
                         : ('common.delete_selection' | translate)" matTooltipPosition="above">
                     <mat-icon>delete_sweep</mat-icon>
                 </button>
-
-                <!-- Deselect All -->
                 <button mat-icon-button [disabled]="selectedRows.length < 1" (click)="clearSelection()"
                     [matTooltip]="'common.deselect_all' | translate" matTooltipPosition="above">
                     <mat-icon>deselect</mat-icon>
                 </button>
                 }
 
-                <!-- Add -->
                 @if (config.enableAdd !== false) {
                 <button mat-icon-button (click)="create.emit()"
                     [matTooltip]="('common.add' | translate) + ' ' + (config.entityName | translate)"
@@ -89,7 +78,6 @@
                 </button>
                 }
 
-                <!-- Refresh -->
                 <button mat-icon-button (click)="onRefresh()" [matTooltip]="'common.refresh' | translate"
                     matTooltipPosition="above">
                     <mat-icon>refresh</mat-icon>
@@ -100,161 +88,171 @@
 </mtx-grid>
 } @else {
 <div class="form-page">
-<mat-card class="crud-form-card">
-    <!-- HEADER (ERP Standard) -->
-    <div class="form-header">
-        <mat-card-header>
-            <mat-card-title>
-                {{ (mode === 'add' ? 'common.add' : 'common.edit') | translate }} {{ config.entityName | translate }}
-            </mat-card-title>
-        </mat-card-header>
-    </div>
+    <mat-card class="crud-form-card">
+        <div class="form-header">
+            <mat-card-header>
+                <mat-card-title>
+                    {{ (mode === 'add' ? 'common.add' : 'common.edit') | translate }} {{ config.entityName | translate }}
+                </mat-card-title>
+            </mat-card-header>
+        </div>
 
-    <!-- BODY — Scrollable Zone -->
-    <div class="form-body">
-        <mat-card-content>
-            <!-- Dynamic Form Grid (if config.form is provided) -->
-            @if (config.form && formGroup) {
-            <form [formGroup]="formGroup" class="m-t-16">
-                <!-- Use custom template if provided, otherwise use the auto-generated grid -->
-                @if (customFormTemplate) {
-                <ng-container *ngTemplateOutlet="customFormTemplate; context: { formGroup: formGroup }"></ng-container>
-                } @else {
-                <div class="dynamic-form-grid"
-                    [style.gridTemplateColumns]="'repeat(' + config.form.layout.columns + ', 1fr)'">
-                    @for (field of config.form.fields; track field.name; let i = $index) {
-                    <!-- Skip if this field was already grouped with previous one -->
-                    @if (i > 0 && config.form.fields[i-1].groupWithNext) {
-                    <!-- Skip -->
-                    } @else {
-                    <div class="form-field-wrapper" [class.flex-row-group]="field.groupWithNext"
-                        [style.gridColumn]="'span ' + (field.colSpan || 1)">
-
-                        <!-- Render this field -->
-                        <div class="field-item main-field">
-                            <ng-container *ngTemplateOutlet="fieldRenderer; context: { field: field }"></ng-container>
-                        </div>
-
-                        <!-- Render next field if grouped (Horizontal alignment) -->
-                        @if (field.groupWithNext && config.form.fields[i+1]) {
-                        <div class="field-item grouped-item">
-                            <ng-container
-                                *ngTemplateOutlet="fieldRenderer; context: { field: config.form.fields[i+1] }"></ng-container>
-                        </div>
-                        }
-                    </div>
-                    }
-                    }
-                </div>
-                } <!-- end @else (no customFormTemplate) -->
-
-                <!-- Reusable Field Renderer Template -->
-                <ng-template #fieldRenderer let-field="field">
-                    @if (field.type === 'checkbox') {
-                    <div class="checkbox-field-container">
-                        <mat-checkbox [formControlName]="$any(field.name)">
-                            {{ field.label | translate }}
-                        </mat-checkbox>
-                    </div>
-                    } @else if (field.type === 'radio') {
-                    <div class="radio-field-container">
-                        <label class="radio-group-label">{{ field.label | translate }}</label>
-                        <mat-radio-group [formControlName]="$any(field.name)" class="radio-group">
-                            @for (opt of field.options; track opt.value) {
-                            <mat-radio-button [value]="opt.value">
-                                {{ opt.label | translate }}
-                            </mat-radio-button>
-                            }
-                        </mat-radio-group>
-                    </div>
-                    } @else if (field.type === 'password') {
-                    <!--
-                        PASSWORD FIELD — dedicated branch, NOT nested inside @else.
-                        The matSuffix button is a STATIC DIRECT CHILD of mat-form-field.
-                        Angular Material needs this for content projection to the icon-suffix slot.
-                        This is the exact same structure as the super-admin login page.
-                    -->
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{ field.label | translate }}</mat-label>
-                        @if (field.icon) {
-                        <mat-icon matPrefix>{{ field.icon }}</mat-icon>
-                        }
-                        <input matInput [type]="isPasswordVisible(field.name) ? 'text' : 'password'"
-                            [formControlName]="$any(field.name)" [placeholder]="(field.placeholder || '') | translate">
-                        <button mat-icon-button matSuffix type="button"
-                            [hidden]="formGroup.get($any(field.name))?.disabled"
-                            (click)="togglePasswordVisibility(field.name)"
-                            [attr.aria-label]="'Toggle password visibility'">
-                            <mat-icon>{{ isPasswordVisible(field.name) ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                        @if (field.hint) {
-                        <mat-hint>{{ field.hint | translate }}</mat-hint>
-                        }
-                        @if (formGroup.get($any(field.name))?.invalid && formGroup.get($any(field.name))?.touched) {
-                        <mat-error>{{ getErrorMessage($any(field.name)) }}</mat-error>
-                        }
-                    </mat-form-field>
-                    } @else {
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>{{ field.label | translate }}</mat-label>
-                        @if (field.icon) {
-                        <mat-icon matPrefix>{{ field.icon }}</mat-icon>
-                        }
-
-                        @if (field.type === 'number') {
-                        <input matInput type="number" [formControlName]="$any(field.name)"
-                            [placeholder]="(field.placeholder || '') | translate">
-                        } @else if (field.type === 'select') {
-                        <mat-select [formControlName]="$any(field.name)">
-                            @for (opt of field.options; track opt.value) {
-                            <mat-option [value]="opt.value">{{ opt.label | translate }}</mat-option>
-                            }
-                        </mat-select>
-                        } @else if (field.type === 'textarea') {
-                        <textarea matInput [formControlName]="$any(field.name)" rows="3"></textarea>
+        <div class="form-body">
+            <mat-card-content>
+                <!-- Dynamic Form Engine -->
+                @if (config.form && formGroup) {
+                    <form [formGroup]="$any(formGroup)" class="m-t-16">
+                        @if (customFormTemplate) {
+                            <ng-container *ngTemplateOutlet="customFormTemplate; context: { formGroup: formGroup }"></ng-container>
                         } @else {
-                        <input matInput [type]="field.type" [formControlName]="$any(field.name)"
-                            [placeholder]="(field.placeholder || '') | translate">
+                            
+                            <!-- TABS MODE -->
+                            @if (config.form.layout.mode === 'tabs') {
+                                <mat-tab-group class="form-tabs-group" color="primary">
+                                    @for (section of formSections; track section.title) {
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                                <div class="tab-label-wrapper">
+                                                    @if (section.icon) {
+                                                        <mat-icon class="tab-icon">{{ section.icon }}</mat-icon>
+                                                    }
+                                                    <span class="tab-text">{{ section.title | translate }}</span>
+                                                </div>
+                                            </ng-template>
+                                            
+                                            <div class="tab-content-wrapper p-t-24">
+                                                <div class="dynamic-form-grid" [style.gridTemplateColumns]="'repeat(' + config.form.layout.columns + ', 1fr)'">
+                                                    @for (field of section.fields; track field.name) {
+                                                        <ng-container *ngTemplateOutlet="fieldRenderer; context: { field: field }"></ng-container>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </mat-tab>
+                                    }
+                                </mat-tab-group>
+                            } @else {
+                                <!-- SECTION MODE (Default) -->
+                                <div class="sections-container">
+                                    @for (section of formSections; track section.title) {
+                                        @if (section.title) {
+                                            <div class="form-section-header">
+                                                @if (section.icon) {
+                                                    <div class="section-icon-wrapper">
+                                                        <mat-icon>{{ section.icon }}</mat-icon>
+                                                    </div>
+                                                }
+                                                <span class="section-title-text">{{ section.title | translate }}</span>
+                                                <div class="section-divider"></div>
+                                            </div>
+                                        }
+                                        <div class="dynamic-form-grid" [style.gridTemplateColumns]="'repeat(' + config.form.layout.columns + ', 1fr)'">
+                                            @for (field of section.fields; track field.name) {
+                                                <ng-container *ngTemplateOutlet="fieldRenderer; context: { field: field }"></ng-container>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
                         }
 
-                        @if (field.hint) {
-                        <mat-hint>{{ field.hint | translate }}</mat-hint>
-                        }
+                        <!-- Field Renderer Template -->
+                        <ng-template #fieldRenderer let-field="field">
+                            <div class="form-field-wrapper" [class.flex-row-group]="field.groupWithNext"
+                                [style.gridColumn]="'span ' + (field.colSpan || 1)">
+                                
+                                <div class="field-item main-field">
+                                    <ng-container *ngTemplateOutlet="baseFieldRenderer; context: { field: field }"></ng-container>
+                                </div>
 
-                        @if (formGroup.get($any(field.name))?.invalid && formGroup.get($any(field.name))?.touched) {
-                        <mat-error>{{ getErrorMessage($any(field.name)) }}</mat-error>
-                        }
-                    </mat-form-field>
-                    }
-                </ng-template>
-            </form>
-            }
+                                @if (field.groupWithNext) {
+                                    @let nextIdx = config.form.fields.indexOf(field) + 1;
+                                    @let nextField = config.form.fields[nextIdx];
+                                    @if (nextField) {
+                                        <div class="field-item grouped-item">
+                                            <ng-container *ngTemplateOutlet="baseFieldRenderer; context: { field: nextField }"></ng-container>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </ng-template>
 
-            <!-- Manual content (for custom forms) -->
-            <ng-content select="[form]"></ng-content>
-        </mat-card-content>
+                        <!-- Base Inputs Renderer -->
+                        <ng-template #baseFieldRenderer let-field="field">
+                            @if (field.type === 'address') {
+                                <div class="address-field-container mb-4">
+                                    <app-address-selector [addressForm]="getFormGroup(field.name)"></app-address-selector>
+                                </div>
+                            } @else if (field.type === 'checkbox') {
+                                <div class="checkbox-field-container">
+                                    <mat-checkbox [formControlName]="$any(field.name)" color="primary">
+                                        {{ field.label | translate }}
+                                    </mat-checkbox>
+                                </div>
+                            } @else if (field.type === 'radio') {
+                                <div class="radio-field-container">
+                                    <label class="radio-group-label">{{ field.label | translate }}</label>
+                                    <mat-radio-group [formControlName]="$any(field.name)" class="radio-group" color="primary">
+                                        @for (opt of field.options; track opt.value) {
+                                            <mat-radio-button [value]="opt.value">{{ opt.label | translate }}</mat-radio-button>
+                                        }
+                                    </mat-radio-group>
+                                </div>
+                            } @else if (field.type === 'password') {
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>{{ field.label | translate }}</mat-label>
+                                    @if (field.icon) { <mat-icon matPrefix color="primary">{{ field.icon }}</mat-icon> }
+                                    <input matInput [type]="isPasswordVisible(field.name) ? 'text' : 'password'"
+                                        [formControlName]="$any(field.name)" [placeholder]="(field.placeholder || '') | translate">
+                                    <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility(field.name)">
+                                        <mat-icon>{{ isPasswordVisible(field.name) ? 'visibility_off' : 'visibility' }}</mat-icon>
+                                    </button>
+                                    @if (getErrorMessage(field.name)) { <mat-error>{{ getErrorMessage(field.name) }}</mat-error> }
+                                </mat-form-field>
+                            } @else {
+                                <mat-form-field appearance="outline" class="w-100">
+                                    <mat-label>{{ field.label | translate }}</mat-label>
+                                    @if (field.icon) { <mat-icon matPrefix color="primary">{{ field.icon }}</mat-icon> }
+                                    
+                                    @if (field.type === 'select') {
+                                        <mat-select [formControlName]="$any(field.name)">
+                                            @for (opt of field.options; track opt.value) {
+                                                <mat-option [value]="opt.value">{{ opt.label | translate }}</mat-option>
+                                            }
+                                        </mat-select>
+                                    } @else if (field.type === 'textarea') {
+                                        <textarea matInput [formControlName]="$any(field.name)" rows="3"></textarea>
+                                    } @else {
+                                        <input matInput [type]="field.type" [formControlName]="$any(field.name)"
+                                            [placeholder]="(field.placeholder || '') | translate" [readonly]="field.disabled">
+                                    }
+                                    @if (getErrorMessage(field.name)) { <mat-error>{{ getErrorMessage(field.name) }}</mat-error> }
+                                </mat-form-field>
+                            }
+                        </ng-template>
+                    </form>
+                }
+                <ng-content select="[form]"></ng-content>
+            </mat-card-content>
+        </div>
+    </mat-card>
+
+    <div class="form-footer">
+        <div class="footer-left">
+            <span class="footer-hint">
+                <mat-icon class="footer-hint-icon">info_outline</mat-icon>
+                {{ 'common.required_fields' | translate }}
+            </span>
+        </div>
+        <div class="footer-actions">
+            <button mat-stroked-button type="button" class="btn-cancel" (click)="cancel.emit()">
+                <mat-icon>close</mat-icon>
+                {{ 'common.cancel' | translate }}
+            </button>
+            <button mat-flat-button color="primary" type="button" class="btn-save" (click)="save.emit()">
+                <mat-icon>save</mat-icon>
+                {{ 'common.save' | translate }}
+            </button>
+        </div>
     </div>
-
-</mat-card>
-
-<!-- FOOTER — Sticky Action Bar (Full Width, always visible) -->
-<div class="form-footer">
-    <div class="footer-left">
-        <span class="footer-hint">
-            <mat-icon class="footer-hint-icon">info_outline</mat-icon>
-            {{ 'common.required_fields' | translate }}
-        </span>
-    </div>
-    <div class="footer-actions">
-        <button mat-stroked-button type="button" class="btn-cancel" (click)="cancel.emit()">
-            <mat-icon>close</mat-icon>
-            {{ 'common.cancel' | translate }}
-        </button>
-        <button mat-flat-button color="primary" type="button" class="btn-save" (click)="save.emit()">
-            <mat-icon>save</mat-icon>
-            {{ 'common.save' | translate }}
-        </button>
-    </div>
-</div>
 </div>
 }

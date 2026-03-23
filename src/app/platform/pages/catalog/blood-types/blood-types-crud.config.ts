@@ -8,8 +8,8 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
     const service = inject(BloodTypeService);
 
     return {
-        entityName: 'menu.catalog.blood_type.singular',
-        entityNamePlural: 'menu.catalog.blood_type.plural',
+        entityName: 'catalog.blood.types.singular',
+        entityNamePlural: 'catalog.blood.types.plural',
 
         getId: (entity: BloodType) => entity.id!,
 
@@ -22,12 +22,12 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.catalog.blood_type.fields.id', sortable: true, width: '80px' },
-            { field: 'code', header: 'menu.catalog.blood_type.fields.code', sortable: true, width: '120px' },
-            { field: 'name', header: 'menu.catalog.blood_type.fields.name', sortable: true, width: '300px' },
+            { field: 'id', header: 'catalog.blood.types.fields.id', sortable: true, width: '80px' },
+            { field: 'code', header: 'catalog.blood.types.fields.code', sortable: true, width: '120px' },
+            { field: 'name', header: 'catalog.blood.types.fields.name', sortable: true, width: '300px' },
             {
                 field: 'active',
-                header: 'menu.catalog.blood_type.fields.active',
+                header: 'catalog.blood.types.fields.active',
                 sortable: true,
                 width: '120px',
                 type: 'tag',
@@ -43,7 +43,7 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
             fields: [
                 {
                     name: 'code',
-                    label: 'menu.catalog.blood_type.fields.code',
+                    label: 'catalog.blood.types.fields.code',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -52,7 +52,7 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
                 },
                 {
                     name: 'name',
-                    label: 'menu.catalog.blood_type.fields.name',
+                    label: 'catalog.blood.types.fields.name',
                     type: 'text',
                     required: true,
                     colSpan: 1,
@@ -61,7 +61,7 @@ export const BLOOD_TYPES_CRUD_CONFIG = (): CrudConfig<BloodType> => {
                 },
                 {
                     name: 'active',
-                    label: 'menu.catalog.blood_type.fields.active',
+                    label: 'catalog.blood.types.fields.active',
                     type: 'radio',
                     colSpan: 2,
                     options: [

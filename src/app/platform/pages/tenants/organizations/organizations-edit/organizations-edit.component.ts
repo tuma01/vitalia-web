@@ -28,7 +28,7 @@ import { TenantAdminsListByTenantComponent } from './tenant-admins-list-by-tenan
     template: `
         <mat-tab-group color="primary" animationDuration="0ms">
             <!-- TAB 1: Información General -->
-            <mat-tab [label]="'menu.tenant_governance.organizations.tabs.general' | translate">
+            <mat-tab [label]="'tenant_governance.organizations.tabs.general' | translate">
                 <div class="p-4">
                     <app-crud-template
                         mode="edit"
@@ -45,7 +45,7 @@ import { TenantAdminsListByTenantComponent } from './tenant-admins-list-by-tenan
             </mat-tab>
 
             <!-- TAB 2: Administradores -->
-            <mat-tab [label]="'menu.tenant_governance.organizations.tabs.admins' | translate">
+            <mat-tab [label]="'tenant_governance.organizations.tabs.admins' | translate">
                 <div class="p-4">
                     <app-tenant-admins-list-by-tenant [tenantId]="entityId!"></app-tenant-admins-list-by-tenant>
                 </div>
@@ -59,7 +59,7 @@ import { TenantAdminsListByTenantComponent } from './tenant-admins-list-by-tenan
     `]
 })
 export class OrganizationsEditComponent extends CrudBaseAddEditComponent<Tenant> implements OnInit {
-    protected override entityNameKey = 'menu.tenant_governance.organizations.singular';
+    protected override entityNameKey = 'tenant_governance.organizations.singular';
     public readonly config = ORGANIZATIONS_CRUD_CONFIG();
     private themeService = inject(ThemeService);
     private readonly _fb = inject(FormBuilder);

@@ -9,8 +9,8 @@ export const ORGANIZATIONS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
     const service = inject(TenantService);
 
     return {
-        entityName: 'menu.tenant_governance.organizations.singular',
-        entityNamePlural: 'menu.tenant_governance.organizations.plural',
+        entityName: 'tenant_governance.organizations.singular',
+        entityNamePlural: 'tenant_governance.organizations.plural',
 
         getId: (entity: Tenant) => entity.id!,
 
@@ -23,13 +23,13 @@ export const ORGANIZATIONS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
         }),
 
         columns: [
-            { field: 'id', header: 'menu.tenant_governance.organizations.fields.id', sortable: true, width: '100px' },
-            { field: 'code', header: 'menu.tenant_governance.organizations.fields.code', sortable: true, width: '150px' },
-            { field: 'name', header: 'menu.tenant_governance.organizations.fields.name', sortable: true },
-            { field: 'type', header: 'menu.tenant_governance.organizations.fields.type', sortable: true, width: '120px' },
+            { field: 'id', header: 'tenant_governance.organizations.fields.id', sortable: true, width: '100px' },
+            { field: 'code', header: 'tenant_governance.organizations.fields.code', sortable: true, width: '150px' },
+            { field: 'name', header: 'tenant_governance.organizations.fields.name', sortable: true },
+            { field: 'type', header: 'tenant_governance.organizations.fields.type', sortable: true, width: '120px' },
             {
                 field: 'isActive',
-                header: 'menu.tenant_governance.organizations.fields.isActive',
+                header: 'tenant_governance.organizations.fields.isActive',
                 width: '130px',
                 type: 'tag',
                 tag: {
@@ -39,7 +39,7 @@ export const ORGANIZATIONS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
             },
             {
                 field: 'themeName',
-                header: 'menu.tenant_governance.organizations.fields.themeId',
+                header: 'tenant_governance.organizations.fields.themeId',
                 width: '160px'
             },
         ],
@@ -47,25 +47,25 @@ export const ORGANIZATIONS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
         form: {
             layout: { columns: 2 },
             fields: [
-                { name: 'code', label: 'menu.tenant_governance.organizations.fields.code', type: 'text', required: true, colSpan: 1, icon: 'badge' },
-                { name: 'name', label: 'menu.tenant_governance.organizations.fields.name', type: 'text', required: true, colSpan: 1, icon: 'business' },
+                { name: 'code', label: 'tenant_governance.organizations.fields.code', type: 'text', required: true, colSpan: 1, icon: 'badge' },
+                { name: 'name', label: 'tenant_governance.organizations.fields.name', type: 'text', required: true, colSpan: 1, icon: 'business' },
                 {
                     name: 'type',
-                    label: 'menu.tenant_governance.organizations.fields.type',
+                    label: 'tenant_governance.organizations.fields.type',
                     type: 'select',
                     required: true,
                     colSpan: 1,
                     options: [
-                        { label: 'menu.tenant_governance.organizations.types.hospital', value: 'HOSPITAL' },
-                        { label: 'menu.tenant_governance.organizations.types.clinic', value: 'Clinic' },
-                        { label: 'menu.tenant_governance.organizations.types.pharmacy', value: 'PHARMACY' },
-                        { label: 'menu.tenant_governance.organizations.types.laboratory', value: 'LABORATORY' },
+                        { label: 'tenant_governance.organizations.types.hospital', value: 'HOSPITAL' },
+                        { label: 'tenant_governance.organizations.types.clinic', value: 'Clinic' },
+                        { label: 'tenant_governance.organizations.types.pharmacy', value: 'PHARMACY' },
+                        { label: 'tenant_governance.organizations.types.laboratory', value: 'LABORATORY' },
                     ],
                     icon: 'category'
                 },
                 {
                     name: 'themeId',
-                    label: 'menu.tenant_governance.organizations.fields.themeId',
+                    label: 'tenant_governance.organizations.fields.themeId',
                     type: 'select',
                     required: true,
                     colSpan: 1,
@@ -73,8 +73,14 @@ export const ORGANIZATIONS_CRUD_CONFIG = (): CrudConfig<Tenant> => {
                     options: [],
                     icon: 'palette'
                 },
-                { name: 'isActive', label: 'menu.tenant_governance.organizations.fields.isActive', type: 'checkbox', colSpan: 1 },
-                { name: 'description', label: 'menu.tenant_governance.organizations.fields.description', type: 'textarea', colSpan: 2 },
+                { name: 'isActive', label: 'tenant_governance.organizations.fields.isActive', type: 'checkbox', colSpan: 1 },
+                {
+                    name: 'address',
+                    label: 'common.address',
+                    type: 'address',
+                    colSpan: 2
+                },
+                { name: 'description', label: 'tenant_governance.organizations.fields.description', type: 'textarea', colSpan: 2 },
             ]
         },
 

@@ -16,8 +16,11 @@ import { MtxGridModule, MtxGrid } from '@ng-matero/extensions/grid';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTabsModule } from '@angular/material/tabs';
+import { AddressSelectorComponent } from '@shared/components/address-selector/address-selector.component';
 import { CrudBaseComponent } from './crud-base.component';
-import { CrudConfig, CrudMode } from './crud-config';
+import { CrudConfig, CrudMode, CrudFormFieldConfig } from './crud-config';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-crud-template',
@@ -40,7 +43,9 @@ import { CrudConfig, CrudMode } from './crud-config';
         MatTooltipModule,
         MatSnackBarModule,
         MatDatepickerModule,
-        MatRadioModule
+        MatRadioModule,
+        MatTabsModule,
+        AddressSelectorComponent
     ],
     templateUrl: './crud-template.component.html',
     styleUrls: ['./crud-template.component.scss']
@@ -68,6 +73,40 @@ export class CrudTemplateComponent<T> extends CrudBaseComponent<T> implements Af
 
     constructor() {
         super();
+    }
+
+    /**
+     * Groups fields by their sectionTitle for rendering in tabs or sections.
+     * This logic ensures fields are always grouped logically based on the first occurrence of sectionTitle.
+     */
+    get formSections(): { title?: string; icon?: string; fields: CrudFormFieldConfig<T>[] }[] {
+        const sections: { title?: string; icon?: string; fields: CrudFormFieldConfig<T>[] }[] = [];
+        const fields = this.config?.form?.fields || [];
+
+        let currentSection: { title?: string; icon?: string; fields: CrudFormFieldConfig<T>[] } = { fields: [] };
+
+        fields.forEach(field => {
+            if (field.sectionTitle) {
+                // If we already have fields in the current section, push it before starting a new one
+                if (currentSection.fields.length > 0 || currentSection.title) {
+                    sections.push(currentSection);
+                }
+                currentSection = {
+                    title: field.sectionTitle,
+                    icon: field.sectionIcon,
+                    fields: [field]
+                };
+            } else {
+                currentSection.fields.push(field);
+            }
+        });
+
+        // Push the last section
+        if (currentSection.fields.length > 0 || currentSection.title) {
+            sections.push(currentSection);
+        }
+
+        return sections;
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -144,6 +183,10 @@ export class CrudTemplateComponent<T> extends CrudBaseComponent<T> implements Af
     clearSelection(): void {
         this.grid.rowSelection.clear();
         this.selectedRows = [];
+    }
+
+    getFormGroup(name: string): FormGroup {
+        return this.formGroup?.get(name) as FormGroup;
     }
 
     /**

@@ -23,7 +23,7 @@ import { ProvinciaService } from 'app/api/services/provincia.service';
     `
 })
 export class MunicipalitiesEditComponent extends CrudBaseAddEditComponent<Municipio> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.geography.municipality.singular';
+    protected override entityNameKey = 'catalog.geography.municipalities.singular';
     public readonly config = MUNICIPALITIES_CRUD_CONFIG();
     private provinciaService = inject(ProvinciaService);
     private cdr = inject(ChangeDetectorRef);

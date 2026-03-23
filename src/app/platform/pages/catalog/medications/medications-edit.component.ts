@@ -23,7 +23,7 @@ import { Medication } from 'app/api/models/medication';
   `
 })
 export class MedicationsEditComponent extends CrudBaseAddEditComponent<Medication> implements OnInit {
-    protected override entityNameKey = 'menu.catalog.medications.singular';
+    protected override entityNameKey = 'catalog.medications.singular';
     public readonly config = MEDICATIONS_CRUD_CONFIG();
 
     protected override form: FormGroup = CrudBaseAddEditComponent.buildFormFromConfig(

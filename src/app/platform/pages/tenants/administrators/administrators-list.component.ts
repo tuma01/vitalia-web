@@ -37,7 +37,7 @@ export class AdministratorsListComponent {
                 {
                     editHandler: (record: TenantAdmin) => this.edit(record),
                     deleteHandler: (record: TenantAdmin) => this.deleteAdministrator(record),
-                    entityType: 'menu.tenant_governance.administrators.singular',
+                    entityType: 'tenant_governance.administrators.singular',
                     fieldForMessage: 'nombre'
                 },
                 this.confirmDialog
